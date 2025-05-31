@@ -10,16 +10,18 @@
 		"astro": "astro"
 	},
 	"dependencies": {
+		"@astrojs/mdx": "^4.3.0",
 		"@packages/react-components": "workspace:*",
 		"astro": "^5.7.13",
+		"classnames": "^2.5.1",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0"
 	},
 	"devDependencies": {
+		"@astrojs/react": "^4.2.7",
+		"@tailwindcss/vite": "^4.1.7",
 		"@types/react": "^19.1.4",
 		"@types/react-dom": "^19.1.5",
-		"tailwindcss": "^4.1.7",
-		"@tailwindcss/vite": "^4.1.7",
-		"@astrojs/react": "^4.2.7"
+		"tailwindcss": "^4.1.7"
 	}
 }

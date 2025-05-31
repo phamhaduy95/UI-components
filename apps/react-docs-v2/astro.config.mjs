@@ -5,19 +5,21 @@ import path from 'path';
 
 import tailwindcss from '@tailwindcss/vite';
 
+import mdx from '@astrojs/mdx';
+
 // https://astro.build/config
 export default defineConfig({
-	integrations: [react()],
+    integrations: [react(), mdx()],
 
-	vite: {
-		plugins: [tailwindcss()],
-		resolve: {
-			alias: {
-				src: path.resolve(path.dirname('.'), './src'),
-				'@styles': path.resolve(path.dirname('.'), './src/styles'),
-				'@pages': path.resolve(path.dirname('.'), './src/pages'),
-				'@component': path.resolve(path.dirname('.'), './src/components')
-			}
-		}
-	}
+    vite: {
+        plugins: [tailwindcss()],
+        resolve: {
+            alias: {
+                src: path.resolve(path.dirname('.'), './src'),
+                '@styles': path.resolve(path.dirname('.'), './src/styles'),
+                '@pages': path.resolve(path.dirname('.'), './src/pages'),
+                '@component': path.resolve(path.dirname('.'), './src/components')
+            }
+        }
+    }
 });
