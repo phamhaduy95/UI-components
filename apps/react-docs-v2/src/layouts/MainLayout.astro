@@ -1,0 +1,39 @@
+---
+import Sidebar from '@components/Sidebar';
+import '@styles/global.css';
+import type { ComponentProps } from 'react';
+
+const items: ComponentProps<typeof Sidebar>['items'] = [
+	{ type: 'link', title: 'Combobox', href: '' },
+	{ type: 'link', title: 'Select', href: '' },
+	{ type: 'link', title: 'DatePicker', href: '' }
+];
+---
+
+<!doctype html>
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='viewport' content='width=device-width' />
+		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+		<meta name='generator' content={Astro.generator} />
+		<title>Library</title>
+	</head>
+	<body class='min-h-[100dvh] w-[100dvw] overflow-y-auto overflow-x-hidden'>
+		<header
+			class='w-full h-[var(--header-height)] border-b border-outline fixed bg-background z-10'
+		>
+			Header
+		</header>
+		<div class='main-container flex pt-[var(--header-height)]'>
+			<Sidebar
+				items={items}
+				className='sticky top-[var(--header-height)] min-w-[150px] h-[100vh]'
+			/>
+			<main class='h-[200dvh]'>
+				<slot />
+			</main>
+		</div>
+		<footer>Footer</footer>
+	</body>
+</html>

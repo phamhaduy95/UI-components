@@ -2,6 +2,7 @@
 @import '@packages/react-components/themes/default.css';
 
 @theme {
+	--header-height: 32px;
 	--radius-select: var(--field-border-radius);
 	--color-primary: var(--color-primary);
 	--color-surface-tint: var(--color-surface-tint);
