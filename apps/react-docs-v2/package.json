@@ -14,6 +14,7 @@
 		"@packages/react-components": "workspace:*",
 		"astro": "^5.7.13",
 		"classnames": "^2.5.1",
+		"prettier": "3.5.3",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0"
 	},
