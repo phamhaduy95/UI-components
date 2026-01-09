@@ -1,0 +1,63 @@
+---
+import Footer from '@components/Footer';
+import Header from '@components/Header';
+import Sidebar from '@components/Sidebar';
+import TableOfContent from '@components/TableOfContent';
+import '@styles/global.css';
+import type { ComponentProps } from 'react';
+
+interface Props {
+	title?: string;
+	headings?: { depth: number; slug: string; text: string }[];
+}
+
+const { title = 'React UI Library', headings = [] } = Astro.props;
+
+const items: ComponentProps<typeof Sidebar>['items'] = [
+	{
+		type: 'group',
+		title: 'Components',
+		items: [
+			{
+				type: 'link',
+				title: 'Select',
+				href: '/components/select',
+				active: Astro.url.pathname.includes('/components/select')
+			},
+			{ type: 'link', title: 'Combobox', href: '#', disabled: true },
+			{ type: 'link', title: 'DatePicker', href: '#', disabled: true }
+		]
+	}
+];
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+		<title>{title}</title>
+	</head>
+	<body class="bg-background text-on-surface">
+		<Header />
+		<div class="pt-(--header-height) relative mx-auto flex max-w-[1440px]">
+			<Sidebar items={items} />
+			<main class="w-full shrink">
+				<article class="content-container">
+					<slot />
+				</article>
+			</main>
+			<TableOfContent headings={headings} client:load />
+		</div>
+		<Footer />
+	</body>
+</html>
