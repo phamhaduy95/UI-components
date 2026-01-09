@@ -1,0 +1,20 @@
+@reference "@styles/global.css";
+
+.CodeBlock {
+	@apply relative;
+
+	> .CopyButton {
+		@apply absolute right-2 top-2 cursor-pointer rounded-md bg-transparent px-2 py-1 text-xs text-gray-600 transition-colors;
+		&:hover {
+			@apply text-gray-300;
+		}
+	}
+
+	> pre {
+		@apply bg-code-bg text-code-text my-4 overflow-x-auto rounded-md px-4 py-4;
+	}
+
+	> pre > code {
+		@apply rounded-md px-1 py-0.5 font-mono text-sm;
+	}
+}

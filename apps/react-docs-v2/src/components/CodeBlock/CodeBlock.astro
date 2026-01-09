@@ -1,0 +1,43 @@
+---
+import { Code } from 'astro:components';
+import { format } from 'prettier';
+import CopyIcon from './CopyIcon.svg';
+import './CodeBlock.css';
+
+interface Props {
+	code: string;
+	lang: 'typescript' | 'javascript' | 'css' | 'html' | 'json' | 'tsx' | 'jsx';
+	shouldFormat?: boolean;
+}
+
+const PARSER_TARGET: Record<Props['lang'], string> = {
+	typescript: 'typescript',
+	javascript: 'babel',
+	css: 'css',
+	html: 'html',
+	json: 'json',
+	tsx: 'typescript',
+	jsx: 'babel'
+};
+
+const { code, lang, shouldFormat = false } = Astro.props;
+
+const formattedCode = shouldFormat ? await format(code, { parser: PARSER_TARGET[lang] }) : code;
+---
+
+<div class="CodeBlock" data-code={formattedCode}>
+	<button class="CopyButton" aria-label="Copy code to clipboard">
+		<CopyIcon />
+	</button>
+	<Code code={formattedCode} lang={lang} />
+</div>
+
+<script>
+	const codeblocks = document.querySelectorAll('.CodeBlock');
+	codeblocks.forEach((block) => {
+		block.addEventListener('click', () => {
+			const code = block.getAttribute('data-code') as string;
+			navigator.clipboard.writeText(code);
+		});
+	});
+</script>
