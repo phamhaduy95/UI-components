@@ -1,0 +1,21 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	iconGradient?: string;
+}
+
+const { title, description, iconGradient = 'from-orange-500 to-red-600' } = Astro.props;
+---
+
+<div class="feature-card group">
+	<div
+		class={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-linear-to-br text-white shadow-lg ${iconGradient}`}
+	>
+		<slot name="icon" />
+	</div>
+	<h3 class="mb-3 text-xl font-bold">{title}</h3>
+	<p class="text-on-surface-variant leading-relaxed">
+		{description}
+	</p>
+</div>
