@@ -38,6 +38,12 @@ const items: ComponentProps<typeof Sidebar>['items'] = [
 			},
 			{
 				type: 'link',
+				title: 'Collapsible',
+				href: '/components/collapsible',
+				active: Astro.url.pathname.includes('/components/collapsible')
+			},
+			{
+				type: 'link',
 				title: 'DatePicker',
 				href: '/components/datepicker',
 				active: Astro.url.pathname.includes('/components/datepicker')

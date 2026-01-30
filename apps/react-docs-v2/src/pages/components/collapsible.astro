@@ -1,0 +1,15 @@
+---
+import { getEntry, render } from 'astro:content';
+import DocumentLayout from '@layouts/DocumentLayout.astro';
+
+const entry = await getEntry('components', 'Collapsible');
+if (!entry) {
+	throw new Error('Could not find Collapsible component documentation');
+}
+
+const { Content, headings } = await render(entry);
+---
+
+<DocumentLayout title="Collapsible Component | React UI" headings={headings}>
+	<Content />
+</DocumentLayout>
