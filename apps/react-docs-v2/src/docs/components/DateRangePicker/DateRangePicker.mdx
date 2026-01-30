@@ -1,0 +1,80 @@
+---
+slug: DateRangePicker
+---
+
+import CodeBlock from '@components/CodeBlock/CodeBlock.astro';
+import {
+	BasicDateRangePicker,
+	ControlledDateRangePicker,
+	DateRangePickerWithLabel
+} from './DateRangePickerExample';
+
+# DateRangePicker
+
+The DateRangePicker component allows users to select a date range (start and end date) from a calendar view.
+
+### Basic Example
+
+<CodeBlock code={`
+import { DateRangePicker } from '@packages/react-components';
+
+function App() {
+return <DateRangePicker label="Select Date Range" />;
+}
+`} lang="tsx" shouldFormat={true}/>
+
+<BasicDateRangePicker client:visible />
+
+### Controlled State
+
+Use the `value` and `onValueChange` props to control the date range state. The `value` should be an array of date strings `[startDate, endDate]`.
+
+<CodeBlock code={`
+import { useState } from 'react';
+import { DateRangePicker } from '@packages/react-components';
+
+export const ControlledDateRangePicker = () => {
+	const [dateRange, setDateRange] = useState<string[]>(['2024-01-01', '2024-01-10']);
+
+    return (
+    	<>
+    		<DateRangePicker
+    			value={dateRange}
+    			onValueChange={(val) => setDateRange(val || [])}
+    			label="Controlled Range"
+    		/>
+    		<p>Start: {dateRange[0]}</p>
+    		<p>End: {dateRange[1]}</p>
+    	</>
+    );
+
+};
+`} lang="tsx" shouldFormat/>
+
+<ControlledDateRangePicker client:visible />
+
+### Labels
+
+The `label` prop adds a descriptive label to the date range picker.
+
+<CodeBlock code={`<DateRangePicker label="Travel Dates" />`} lang="tsx" shouldFormat />
+
+<DateRangePickerWithLabel client:visible />
+
+### Props
+
+| Prop            | Type                                   | Default     | Description                                     |
+| :-------------- | :------------------------------------- | :---------- | :---------------------------------------------- |
+| `label`         | `string`                               | `undefined` | Label above the input field.                    |
+| `value`         | `string[]`                             | `undefined` | The selected date range as `[start, end]`.      |
+| `onValueChange` | `(value?: string[]) => void`           | `undefined` | Callback fired when the selected range changes. |
+| `open`          | `boolean`                              | `undefined` | Whether the calendar popover is open.           |
+| `onOpenChange`  | `(details: OpenChangeDetails) => void` | `undefined` | Callback fired when the open state changes.     |
+| `aria-label`    | `string`                               | `undefined` | ARIA label for accessibility.                   |
+| `id`            | `string`                               | `undefined` | Unique identifier for the component.            |
+
+### Accessibility
+
+- **Keyboard Navigation**: Supports arrow keys for navigating the calendar grid.
+- **ARIA**: Includes proper roles and labels for screen readers.
+- **Focus Management**: Manages focus between input and calendar popup.
