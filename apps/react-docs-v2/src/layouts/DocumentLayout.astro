@@ -36,7 +36,12 @@ const items: ComponentProps<typeof Sidebar>['items'] = [
 				href: '/components/combobox',
 				active: Astro.url.pathname.includes('/components/combobox')
 			},
-			{ type: 'link', title: 'DatePicker', href: '#', disabled: true }
+			{
+				type: 'link',
+				title: 'DatePicker',
+				href: '/components/datepicker',
+				active: Astro.url.pathname.includes('/components/datepicker')
+			}
 		]
 	}
 ];
