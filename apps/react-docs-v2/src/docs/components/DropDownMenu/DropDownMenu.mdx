@@ -1,0 +1,190 @@
+---
+slug: DropDownMenu
+---
+
+import { DropDownMenu, Button } from '@packages/react-components';
+
+import CodeBlock from '@components/CodeBlock/CodeBlock.astro';
+
+import {
+	BasicDropDownMenu,
+	DropDownMenuWithCustomItem,
+	DropDownMenuWithCustomTrigger,
+	NestedDropDownMenu,
+	DropDownMenuWithDisabledItem
+} from './DropDownMenuExample';
+
+# DropDownMenu
+
+## Introduction
+
+DropDownMenus are used to display a list of actions or options that a user can choose from. They are typically triggered by a button or icon.
+
+### Basic
+
+<CodeBlock code={`
+    import { Button, DropDownMenu } from '@packages/react-components';
+
+    const SimpleDropDownMenu = () => {
+    return (
+
+    <DropDownMenu
+        items={[
+            { value: 'profile', label: 'Profile' },
+            { value: 'settings', label: 'Settings' },
+            { value: 'logout', label: 'Logout' }
+        ]}
+    >
+        <Button>Open Menu</Button>
+    </DropDownMenu>
+    ); };
+
+    export default SimpleDropDownMenu;
+
+`} lang="tsx" shouldFormat/>
+
+<BasicDropDownMenu client:only="react" />
+
+---
+
+## Component Properties
+
+### Custom Trigger
+
+You can use the `CustomTrigger` prop or simply pass `children` to define what triggers the menu.
+
+<CodeBlock
+	code={`
+        <DropDownMenu 
+            items={[{ value: 'edit', label: 'Edit' }, { value: 'delete', label: 'Delete' }]}
+            CustomTrigger={<button className="p-2 border rounded">kebab</button>}
+        />
+`}
+	lang="tsx"
+	shouldFormat
+/>
+
+<DropDownMenuWithCustomTrigger client:only="react" />
+
+### Custom Item
+
+<CodeBlock
+	code={`
+        <DropDownMenu
+			items={[
+				{ value: 'profile', label: 'Profile' },
+				{ value: 'settings', label: 'Settings' },
+				{ value: 'logout', label: 'Logout' }
+			]}
+			CustomItem={({ label, value }) => (
+				<p>
+					{label}-{value}
+				</p>
+			)}
+		>
+			<Button>Open Menu</Button>
+		</DropDownMenu>
+`}
+	lang="tsx"
+	shouldFormat
+/>
+
+<DropDownMenuWithCustomItem client:only="react" />
+
+### Nested Items
+
+You can create nested menus by setting the `type` of an item to `nested` and providing an `items` array.
+
+<CodeBlock code={`
+   	<DropDownMenu
+		items={[
+            { value: 'new', label: 'New File' },
+            {
+                label: 'Open Recent',
+                type: 'nested',
+                value: 'open-recent',
+                items: [
+                    { value: 'project-1', label: 'Project 1' },
+                    { value: 'project-2', label: 'Project 2' }
+                ]
+            },
+            { value: 'save', label: 'Save' }
+        ]}
+		>
+        <Button>File</Button>
+	</DropDownMenu>
+
+`} lang="tsx" shouldFormat />
+
+<NestedDropDownMenu client:visible />
+
+### Disabled Items
+
+You can disable specific items by setting the `disabled` property to `true`.
+
+<CodeBlock
+	code={`
+    <DropDownMenu
+        items={[
+            { value: 'profile', label: 'Profile' },
+            { value: 'settings', label: 'Settings', disabled: true },
+            { value: 'logout', label: 'Logout' }
+        ]}
+    >
+        <Button>Open Menu</Button>
+    </DropDownMenu>
+`}
+	lang="tsx"
+	shouldFormat
+/>
+
+<DropDownMenuWithDisabledItem client:visible />
+
+---
+
+## API Reference
+
+### DropDownMenu
+
+#### Props
+
+| Prop            | Type                                    | Default     | Description                                         |
+| :-------------- | :-------------------------------------- | :---------- | :-------------------------------------------------- |
+| `items`         | `MenuItem[]`                            | `[]`        | Array of items to display in the menu.              |
+| `className`     | `string`                                | `undefined` | Additional CSS classes for the trigger.             |
+| `children`      | `React.ReactNode`                       | `undefined` | The trigger element (if CustomTrigger is not used). |
+| `CustomTrigger` | `React.ReactNode`                       | `undefined` | Custom trigger element.                             |
+| `CustomItem`    | `(item: ItemObject) => React.ReactNode` | `undefined` | Custom render function for menu items.              |
+
+### MenuItem Type
+
+The `items` prop accepts an array of objects which can be a standard item, a nested menu, or a group.
+
+```typescript
+type MenuItem = StandardItem | NestedMenu | GroupItem;
+
+type StandardItem = {
+	value: string;
+	label: string;
+	disabled?: boolean;
+};
+
+type NestedMenu = {
+	value: string;
+	label: string;
+	type: 'nested';
+	items: MenuItem[];
+	disabled?: boolean;
+};
+```
+
+---
+
+## Accessibility
+
+- **Keyboard Navigation**:
+  - `Enter` or `Space` opens the menu.
+  - `Arrow Up`/`Arrow Down` navigates between items.
+  - `Arrow Right` expands a submenu.
+  - `Arrow Left` collapses a submenu.
+  - `Escape` closes the menu.
