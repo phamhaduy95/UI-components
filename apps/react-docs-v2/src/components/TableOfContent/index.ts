@@ -1,2 +1,2 @@
-export { default as TableOfContent } from './TableOfContent';
+export { default } from './TableOfContent';
 export type { TableOfContentProps } from './TableOfContent';

@@ -1,97 +1,162 @@
 ---
+import LandingLayout from '@layouts/LandingLayout.astro';
+import FeatureCard from '@components/FeatureCard/FeatureCard.astro';
 
+import IconAccessible from 'public/icon-accessible.svg';
+import IconFast from 'public/icon-fast.svg';
+import IconShield from 'public/icon-shield.svg';
+import IconSettings from 'public/icon-settings.svg';
+import IconDocs from 'public/icon-docs.svg';
+import IconCommunity from 'public/icon-community.svg';
 ---
 
-<div class="py-12 md:py-24">
-	<h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8">
-		Build <span class="text-primary">faster</span> with <br />
-		elegant components.
-	</h1>
-	<p class="text-xl text-on-surface-variant max-w-2xl mb-10 leading-relaxed">
-		A professional React component library designed for speed, accessibility, and modern aesthetics.
-		Inspired by the best design systems and built with performance in mind.
-	</p>
-	<div class="flex flex-wrap gap-4">
-		<a
-			href="/components/select"
-			class="px-8 py-4 bg-primary text-on-primary rounded-lg font-bold hover:opacity-90 transition-opacity"
-		>
-			Get Started
-		</a>
-		<a
-			href="#"
-			class="px-8 py-4 border border-outline rounded-lg font-bold hover:bg-surface transition-colors"
-		>
-			View on GitHub
-		</a>
-	</div>
+<LandingLayout>
+	<!-- Hero Section -->
+	<section class="hero-gradient relative overflow-hidden px-6 py-24 md:py-32">
+		<div class="mx-auto max-w-[1200px] text-center">
+			<h1
+				class="mb-6 text-5xl font-black tracking-tight md:text-7xl lg:text-8xl"
+				style="line-height: 1.1;"
+			>
+				Build <span
+					class="bg-linear-to-r from-purple-500 to-purple-600 bg-clip-text text-transparent"
+					>faster</span
+				> with<br />
+				<span class="bg-linear-to-r from-indigo-500 to-indigo-600 bg-clip-text text-transparent"
+					>elegant</span
+				> components
+			</h1>
+			<p class="text-on-surface-variant mx-auto mb-12 max-w-2xl text-lg leading-relaxed md:text-xl">
+				A professional React component library designed for speed, accessibility, and modern
+				aesthetics. Inspired by the best design systems and built with performance in mind.
+			</p>
+			<div class="flex flex-wrap items-center justify-center gap-4">
+				<a
+					href="/components/select"
+					class="bg-primary text-on-primary group relative overflow-hidden rounded-xl px-8 py-4 font-bold shadow-lg transition-all hover:scale-105 hover:shadow-xl"
+				>
+					<span class="relative z-10">Get Started</span>
+					<div
+						class="bg-linear-to-r absolute inset-0 z-0 from-indigo-600 to-purple-600 opacity-0 transition-opacity group-hover:opacity-100"
+					>
+					</div>
+				</a>
+				<a
+					href="/components/select"
+					class="border-outline hover:bg-surface group rounded-xl border-2 px-8 py-4 font-bold transition-all hover:scale-105"
+				>
+					View Components
+				</a>
+				<a
+					href="https://github.com"
+					class="text-on-surface-variant hover:text-primary flex items-center gap-2 font-semibold transition-colors"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="currentColor"
+					>
+						<path
+							d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+						></path>
+					</svg>
+					Star on GitHub
+				</a>
+			</div>
+		</div>
+	</section>
 
-	<div class="mt-24 grid grid-cols-1 md:grid-cols-3 gap-8">
-		<div class="p-6 rounded-xl border border-outline/30 bg-surface/50">
-			<div
-				class="h-10 w-10 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center mb-4"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path
-						d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"></path><path d="M7 21h10"
-					></path><path d="M12 3v18"></path></svg
-				>
+	<!-- Stats Section -->
+	<section class="border-outline/30 bg-surface/50 border-y px-6 py-12">
+		<div class="mx-auto grid max-w-[1200px] grid-cols-2 gap-8 md:grid-cols-4">
+			<div class="text-center">
+				<div class="text-primary mb-2 text-4xl font-black md:text-5xl">10+</div>
+				<div class="text-on-surface-variant text-sm font-medium">Components</div>
 			</div>
-			<h3 class="text-lg font-bold mb-2">Accessible</h3>
-			<p class="text-sm text-on-surface-variant">
-				Built following WAI-ARIA patterns for maximum accessibility and usability.
-			</p>
-		</div>
-		<div class="p-6 rounded-xl border border-outline/30 bg-surface/50">
-			<div
-				class="h-10 w-10 rounded-lg bg-sky-100 text-sky-600 flex items-center justify-center mb-4"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg
-				>
+			<div class="text-center">
+				<div class="text-primary mb-2 text-4xl font-black md:text-5xl">100%</div>
+				<div class="text-on-surface-variant text-sm font-medium">Accessible</div>
 			</div>
-			<h3 class="text-lg font-bold mb-2">Performant</h3>
-			<p class="text-sm text-on-surface-variant">
-				Lightweight and optimized for speed, ensuring a smooth user experience.
-			</p>
-		</div>
-		<div class="p-6 rounded-xl border border-outline/30 bg-surface/50">
-			<div
-				class="h-10 w-10 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="24"
-					height="24"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg
-				>
+			<div class="text-center">
+				<div class="text-primary mb-2 text-4xl font-black md:text-5xl">&lt;50kb</div>
+				<div class="text-on-surface-variant text-sm font-medium">Bundle Size</div>
 			</div>
-			<h3 class="text-lg font-bold mb-2">Reliable</h3>
-			<p class="text-sm text-on-surface-variant">
-				Extensively tested and documented components you can trust in production.
-			</p>
+			<div class="text-center">
+				<div class="text-primary mb-2 text-4xl font-black md:text-5xl">TS</div>
+				<div class="text-on-surface-variant text-sm font-medium">TypeScript</div>
+			</div>
 		</div>
-	</div>
-</div>
+	</section>
+
+	<!-- Features Section -->
+	<section class="px-6 py-24">
+		<div class="mx-auto max-w-[1200px]">
+			<div class="mb-16 text-center">
+				<h2 class="mb-4 text-4xl font-black tracking-tight md:text-5xl">
+					Why Choose <span class="gradient-text">React UI</span>?
+				</h2>
+				<p class="text-on-surface-variant mx-auto max-w-2xl text-lg">
+					Built with modern best practices and designed for developers who care about quality.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+				<!-- Feature Card 1 -->
+				<FeatureCard
+					title="Fully Accessible"
+					description="Built following WAI-ARIA patterns with keyboard navigation, screen reader support, and focus management out of the box."
+					iconGradient="from-indigo-500 to-purple-600"
+				>
+					<IconAccessible slot="icon" />
+				</FeatureCard>
+
+				<!-- Feature Card 2 -->
+				<FeatureCard
+					title="Lightning Fast"
+					description="Optimized for performance with minimal bundle size, tree-shaking support, and efficient rendering strategies."
+					iconGradient="from-sky-500 to-blue-600"
+				>
+					<IconFast slot="icon" />
+				</FeatureCard>
+
+				<!-- Feature Card 3 -->
+				<FeatureCard
+					title="Production Ready"
+					description="Extensively tested with comprehensive test coverage, TypeScript support, and detailed documentation."
+					iconGradient="from-emerald-500 to-green-600"
+				>
+					<IconShield slot="icon" />
+				</FeatureCard>
+
+				<!-- Feature Card 4 -->
+				<FeatureCard
+					title="Highly Customizable"
+					description="Flexible theming system with CSS variables, allowing you to match your brand identity perfectly."
+					iconGradient="from-orange-500 to-red-600"
+				>
+					<IconSettings slot="icon" />
+				</FeatureCard>
+
+				<!-- Feature Card 5 -->
+				<FeatureCard
+					title="Comprehensive Docs"
+					description="Clear documentation with live examples, API references, and best practices to get you started quickly."
+					iconGradient="from-pink-500 to-rose-600"
+				>
+					<IconDocs slot="icon" />
+				</FeatureCard>
+
+				<!-- Feature Card 6 -->
+				<FeatureCard
+					title="Active Community"
+					description="Join our growing community of developers building amazing products with React UI components."
+					iconGradient="from-violet-500 to-purple-600"
+				>
+					<IconCommunity slot="icon" />
+				</FeatureCard>
+			</div>
+		</div>
+	</section>
+</LandingLayout>
