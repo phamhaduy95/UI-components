@@ -1,0 +1,70 @@
+---
+slug: ScrollArea
+---
+
+import CodeBlock from '@components/CodeBlock/CodeBlock.astro';
+import { BasicScrollArea, HorizontalScrollArea } from './ScrollAreaExample';
+
+# ScrollArea
+
+Augments native scroll functionality for custom-styled, cross-browser scrollbars.
+
+### Basic Example
+
+A simple vertical ScrollArea with a fixed height.
+
+<CodeBlock code={`
+import { ScrollArea } from '@packages/react-components';
+
+function App() {
+const tags = Array.from({ length: 50 }).map((\_, i, a) => \`v1.2.0-beta.\${a.length - i}\`);
+
+return (
+
+<ScrollArea className="h-72 w-48 rounded-md border p-4">
+	<div className="p-4">
+		<h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
+		{tags.map((tag) => (
+			<div key={tag}>
+				<div className="text-sm">{tag}</div>
+				<div className="my-2 h-px bg-gray-200" />
+			</div>
+		))}
+	</div>
+</ScrollArea>
+); } `} lang="tsx" shouldFormat={true}/>
+
+<BasicScrollArea client:visible />
+
+### Horizontal Scroll
+
+ScrollArea supports horizontal scrolling by setting the orientation on the viewport or by having content that exceeds the width.
+
+<CodeBlock code={`
+import { ScrollArea } from '@packages/react-components';
+
+function HorizontalExample() {
+return (
+
+<ScrollArea className="w-96 whitespace-nowrap rounded-md border p-4">
+	<div className="flex w-max space-x-4 p-4">{/* Horizontal content */}</div>
+</ScrollArea>
+); } `} lang="tsx" shouldFormat={true}/>
+
+<HorizontalScrollArea client:visible />
+
+### Props
+
+| Prop              | Type                                        | Default     | Description                                           |
+| :---------------- | :------------------------------------------ | :---------- | :---------------------------------------------------- |
+| `children`        | `React.ReactNode`                           | `undefined` | The content to be scrolled.                           |
+| `maxHeight`       | `string`                                    | `undefined` | Maximum height of the scroll viewport.                |
+| `className`       | `string`                                    | `undefined` | Additional CSS classes for the root element.          |
+| `type`            | `'auto' \| 'always' \| 'scroll' \| 'hover'` | `'hover'`   | Describes the nature of scrollbar visibility.         |
+| `scrollHideDelay` | `number`                                    | `600`       | The delay in milliseconds before the scrollbars hide. |
+
+### Accessibility
+
+- **Keyboard Navigation**: The viewport is focusable and can be scrolled using arrow keys when focused.
+- **Screen Readers**: Uses native scroll semantics, ensuring compatibility with assistive technologies.
+- **Custom Scrollbars**: Maintained for visual consistency while preserving functional accessibility.
