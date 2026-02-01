@@ -1,0 +1,275 @@
+---
+slug: Select
+---
+
+import CodeBlock from '@components/CodeBlock/CodeBlock.astro';
+import {
+	BasicSelect,
+	SelectWithDisabledItem,
+	SelectWithStatus,
+	ClearableSelect,
+	ControlledSingleSelect,
+	ControlledMultipleSelect,
+	BasicMultipleSelect,
+	DisabledSelect,
+	SelectWithSupportingText
+} from './SelectExample';
+
+# Select
+
+The Select component provides a dropdown interface for users to choose one or multiple options from a list. It comes in two variants: `SingleSelect` for selecting a single item and `MultipleSelect` for selecting multiple items.
+
+### Basic Example
+
+<CodeBlock code={`
+import { SingleSelect } from '@packages/react-components';
+
+const items = [
+{ value: 'react', label: 'React' },
+{ value: 'vue', label: 'Vue' },
+{ value: 'angular', label: 'Angular' },
+{ value: 'svelte', label: 'Svelte' }
+];
+
+function App() {
+return <SingleSelect items={items} placeholder="Select a framework" label="Framework" />;
+}
+`} lang="tsx" shouldFormat={true}/>
+
+<BasicSelect client:visible />
+
+### Items
+
+The `items` prop defines the list of options available in the dropdown. Each item must have a `value` and `label`, and can optionally be disabled.
+
+<CodeBlock code={`
+    import { SingleSelect } from '@packages/react-components';
+
+    const items = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3', disabled: true }
+    ];
+    function App(){
+        return  <SingleSelect items={items} placeholder="Select an option" />
+    }
+
+`} lang="tsx" shouldFormat />
+
+<SelectWithDisabledItem client:visible />
+
+### Status States
+
+The Select component supports different status states to provide visual feedback: `default`, `error`, `success`, and `warning`.
+
+<CodeBlock code={`
+<SingleSelect
+	items={items}
+	status="error"
+	label="Error State"
+	supportingText="This field has an error"
+/>
+
+<SingleSelect
+	items={items}
+	status="success"
+	label="Success State"
+	supportingText="Selection is valid"
+/>
+
+<SingleSelect
+	items={items}
+	status="warning"
+	label="Warning State"
+	supportingText="Please review your selection"
+/>
+`} lang="tsx" />
+
+<SelectWithStatus client:visible />
+
+### Clearable
+
+Enable the `clearable` prop to allow users to clear their selection with a clear button.
+
+<CodeBlock
+	code={`<SingleSelect items={items} label="Clearable Select" placeholder="Select an option" clearable />`}
+	lang="tsx"
+	shouldFormat
+/>
+
+<ClearableSelect client:visible />
+
+### Controlled State
+
+Use the `value` and `onValueChange` props to control the Select component's state.
+
+**SingleSelect:**
+
+<CodeBlock code={`import { useState } from 'react';
+
+export const ControlledSingleSelect = () => {
+	const [selected, setSelected] = useState<string>();
+
+    return (
+    	<>
+    		<SingleSelect
+    			items={items}
+    			value={selected}
+    			onValueChange={(value) => {
+    				setSelected(value);
+    			}}
+    			label="Controlled Select"
+    		/>
+    		<p>Selected Value: {selected}</p>
+    	</>
+    );
+
+};`} lang="tsx" shouldFormat />
+
+<ControlledSingleSelect client:visible />
+
+**MultipleSelect:**
+
+<CodeBlock code={`import { useState } from 'react';
+
+export const ControlledMultipleSelect = () => {
+	const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+    return (
+    	<>
+    		<MultipleSelect
+    			items={items}
+    			value={selectedItems}
+    			onValueChange={(values) => {
+    				setSelectedItems(values);
+    			}}
+    			label="Multiple Select"
+    		/>
+    		<p>Selected Items: {selectedItems.join(', ')}</p>
+    	</>
+    );
+
+};`} lang="tsx" shouldFormat />
+
+<ControlledMultipleSelect client:visible />
+
+### Multiple Selection
+
+Use `MultipleSelect` to allow users to select multiple options. Selected items are displayed as removable tags.
+
+<CodeBlock
+	code={`<MultipleSelect items={items} placeholder="Select multiple options" label="Multiple Select" />`}
+	lang="tsx"
+	shouldFormat
+/>
+
+<BasicMultipleSelect client:visible />
+
+### Disabled State
+
+Disable the entire Select component using the `disabled` prop.
+
+<CodeBlock
+	code={`<SingleSelect items={items} disabled label="Disabled Select" placeholder="Cannot select" />`}
+	lang="tsx"
+	shouldFormat
+/>
+
+<DisabledSelect client:visible />
+
+### Supporting Text
+
+Add helpful text below the Select using the `supportingText` prop. The text color changes based on the `status` prop.
+
+<CodeBlock
+	code={`<SingleSelect
+  items={items}
+  label="Select with Help Text"
+  supportingText="Choose your preferred option from the list"
+/>`}
+	lang="tsx"
+	shouldFormat
+/>
+
+<SelectWithSupportingText client:visible />
+
+### SingleSelect Props
+
+| Name             | Type                                             | Default     | Description                                   |
+| ---------------- | ------------------------------------------------ | ----------- | --------------------------------------------- |
+| `items`          | `SelectItem[]`                                   | `[]`        | Array of items to display in the dropdown     |
+| `value`          | `string`                                         | `undefined` | Controlled value of the selected item         |
+| `onValueChange`  | `(value: string, item: SelectItem) => void`      | `undefined` | Callback fired when selection changes         |
+| `label`          | `string`                                         | `undefined` | Label text displayed above the select         |
+| `placeholder`    | `string`                                         | `undefined` | Placeholder text when no item is selected     |
+| `supportingText` | `string`                                         | `undefined` | Helper text displayed below the select        |
+| `status`         | `'default' \| 'error' \| 'success' \| 'warning'` | `'default'` | Visual status state of the select             |
+| `disabled`       | `boolean`                                        | `false`     | Whether the select is disabled                |
+| `clearable`      | `boolean`                                        | `false`     | Whether to show a clear button                |
+| `deselectable`   | `boolean`                                        | `false`     | Whether clicking a selected item deselects it |
+| `loopFocus`      | `boolean`                                        | `false`     | Whether focus loops from last to first item   |
+| `name`           | `string`                                         | `undefined` | Name attribute for form submission            |
+| `className`      | `string`                                         | `undefined` | Additional CSS class names                    |
+
+### MultipleSelect Props
+
+| Name             | Type                                              | Default     | Description                                   |
+| ---------------- | ------------------------------------------------- | ----------- | --------------------------------------------- |
+| `items`          | `SelectItem[]`                                    | `[]`        | Array of items to display in the dropdown     |
+| `value`          | `string[]`                                        | `undefined` | Controlled array of selected item values      |
+| `onValueChange`  | `(values: string[], items: SelectItem[]) => void` | `undefined` | Callback fired when selection changes         |
+| `label`          | `string`                                          | `undefined` | Label text displayed above the select         |
+| `placeholder`    | `string`                                          | `undefined` | Placeholder text when no items are selected   |
+| `supportingText` | `string`                                          | `undefined` | Helper text displayed below the select        |
+| `status`         | `'default' \| 'error' \| 'success' \| 'warning'`  | `'default'` | Visual status state of the select             |
+| `disabled`       | `boolean`                                         | `false`     | Whether the select is disabled                |
+| `clearable`      | `boolean`                                         | `false`     | Whether to show a clear button                |
+| `deselectable`   | `boolean`                                         | `false`     | Whether clicking a selected item deselects it |
+| `loopFocus`      | `boolean`                                         | `false`     | Whether focus loops from last to first item   |
+| `name`           | `string`                                          | `undefined` | Name attribute for form submission            |
+| `className`      | `string`                                          | `undefined` | Additional CSS class names                    |
+
+### SelectItem
+
+Type definition for items in the Select dropdown.
+
+<CodeBlock
+	code={`type SelectItem = {
+  value: string;      // Unique identifier for the item
+  label: string;      // Display text for the item
+  disabled?: boolean; // Whether the item is disabled
+};`}
+	lang="typescript"
+/>
+
+### FieldStatus
+
+Type definition for the status states.
+
+<CodeBlock
+	code={`type FieldStatus = 'default' | 'error' | 'success' | 'warning';`}
+	lang="typescript"
+/>
+
+### Accessibility
+
+The Select component is built with accessibility in mind:
+
+- **Keyboard Navigation**: Full keyboard support with arrow keys, Enter, Escape, and Tab
+- **ARIA Attributes**: Proper ARIA labels and roles for screen readers
+- **Focus Management**: Clear focus indicators and logical focus order
+- **Screen Reader Support**: Announces selected items and state changes
+- **Disabled Items**: Properly marked and skipped during keyboard navigation
+
+### Keyboard Shortcuts
+
+| Key               | Action                               |
+| ----------------- | ------------------------------------ |
+| `Space` / `Enter` | Open dropdown or select focused item |
+| `↑` / `↓`         | Navigate through items               |
+| `Escape`          | Close dropdown                       |
+| `Tab`             | Move focus to next element           |
+| `Home`            | Focus first item                     |
+| `End`             | Focus last item                      |
+
+---

@@ -1,0 +1,138 @@
+---
+slug: Collapsible
+---
+
+import { Collapsible, Button } from '@packages/react-components';
+import DemoBlock from '@components/DemoBlock/DemoBlock.astro';
+import { BasicCollapsible, DisabledCollapsible, ControlledCollapsible } from './CollapsibleExample';
+import CodeBlock from '@components/CodeBlock/CodeBlock.astro';
+
+# Collapsible
+
+`Collapsible` allows you to toggle the visibility of content. It is useful for showing and hiding details, such as FAQs, menus, or additional information.
+
+## Basic Example
+
+<CodeBlock
+	code={`
+   <Collapsible Trigger={({ open }) => <Button>{open ? 'Hide Details' : 'Show Details'}</Button>}>
+        <div className="mt-2 rounded-md border border-gray-300 p-4">
+            This is the collapsible content. It can contain any elements.
+        </div>
+	</Collapsible>
+ `}
+	lang="tsx"
+	shouldFormat
+/>
+<DemoBlock className="my-4 h-[250px] items-start justify-start">
+	<BasicCollapsible client:load />
+</DemoBlock>
+---
+
+## Default Open
+
+You can set the initial state of the collapsible using the `defaultOpen` prop.
+
+<CodeBlock
+	code={`
+import { Collapsible } from '@packages/react-components';
+import { Button } from '@packages/react-components';
+
+const BasicCollapsible = () => {
+return (
+
+    <Collapsible Trigger={({ open }) => <Button>{open ? 'Hide Details' : 'Show Details'}</Button>}>
+        <div className="rounded-b-md border border-t-0 p-4">
+            This is the collapsible content. It can contain any elements.
+        </div>
+    </Collapsible>
+
+)
+};
+export default BasicCollapsible;
+`} lang="tsx" shouldFormat />
+
+## Disabled State
+
+The `disabled` prop prevents interaction with the collapsible trigger.
+
+<CodeBlock
+	code={`
+    <Collapsible disabled Trigger={({ open }) => <Button disabled>{open ? 'Close' : 'Open'}</Button>}>
+        <div className="p-4">This cannot be toggled.</div>
+    </Collapsible>
+`}
+	lang="tsx"
+	shouldFormat
+/>
+
+## Controlled State
+
+Use `isOpen` and `onOpenChange` to control the state programmatically.
+
+<CodeBlock code={`
+import { useState } from 'react';
+import { Collapsible, Button } from '@packages/react-components';
+
+function ControlledCollapsible() {
+const [isOpen, setIsOpen] = useState(false);
+
+return (
+
+<>
+<div className="mb-4">
+<Button onClick={() => setIsOpen(!isOpen)} variant="filled">
+External Toggle (Current: {isOpen ? 'Open' : 'Closed'})
+</Button>
+</div>
+
+      <Collapsible
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        Trigger={({ open }) => (
+            <Button variant="outlined">
+                {open ? 'Collapse Me' : 'Expand Me'}
+            </Button>
+        )}
+      >
+        <div className="p-4 border rounded mt-2">
+          Controlled content
+        </div>
+      </Collapsible>
+    </>
+
+);
+}
+`} lang="tsx" shouldFormat />
+
+<DemoBlock className="my-4 block h-[250px] items-start justify-start gap-2">
+	<ControlledCollapsible client:load />
+</DemoBlock>
+---
+
+## Collapsible
+
+### Props
+
+| Prop              | Type                                                            | Default      | Description                                                                      |
+| :---------------- | :-------------------------------------------------------------- | :----------- | :------------------------------------------------------------------------------- |
+| `isOpen`          | `boolean`                                                       | `undefined`  | Controlled open state                                                            |
+| `defaultOpen`     | `boolean`                                                       | `false`      | The open state of the collapsible when it is initially rendered                  |
+| `disabled`        | `boolean`                                                       | `false`      | When true, prevents the user from interacting with the collapsible               |
+| `onOpenChange`    | `(isOpen: boolean) => void`                                     | `undefined`  | Event handler called when the open state of the collapsible changes              |
+| `Trigger`         | `(props: { open: boolean; className?: string }) => JSX.Element` | **Required** | A function that returns the trigger element. It receives the current open state. |
+| `overrideTrigger` | `boolean`                                                       | `false`      | Change the default `RadixCollapsible.Trigger` `asChild` prop                     |
+| `overrideContent` | `boolean`                                                       | `false`      | Change the default `RadixCollapsible.Content` `asChild` prop                     |
+| `className`       | `string`                                                        | `undefined`  | Additional CSS classes                                                           |
+| `children`        | `React.ReactNode`                                               | `undefined`  | The content to expand/collapse                                                   |
+
+---
+
+## Accessibility
+
+The Collapsible component adheres to the WAI-ARIA design pattern for disclosure widgets.
+
+- **Trigger Identity**: The trigger has the `button` role and `aria-expanded` state.
+- **Content Identity**: The content is identified with an ID and controlled by the trigger.
+- **Keyboard Navigation**:
+  - `Space` or `Enter` activates the trigger to toggle visibility.

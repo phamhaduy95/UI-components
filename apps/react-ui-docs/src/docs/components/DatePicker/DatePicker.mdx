@@ -1,0 +1,92 @@
+---
+slug: DatePicker
+---
+
+import CodeBlock from '@components/CodeBlock/CodeBlock.astro';
+import { BasicDatePicker, ControlledDatePicker, DatePickerWithLabel } from './DatePickerExample';
+import DemoBlock from '@components/DemoBlock/DemoBlock.astro';
+
+# DatePicker
+
+DatePicker simplifies date selection with a visual calendar interface. It supports controlled updates, customizable labels, and ensures valid date input.
+
+### Basic Example
+
+<CodeBlock code={`
+import { DatePicker } from '@packages/react-components';
+
+function App() {
+return <DatePicker label="Select Date" />;
+}
+`} lang="tsx" shouldFormat={true}/>
+
+<DemoBlock className="my-4 flex items-center justify-center">
+	<BasicDatePicker client:visible />
+</DemoBlock>
+
+---
+
+### Controlled State
+
+Use the `value` and `onValueChange` props to control the date picker state. The `value` should be a date string (ISO format is recommended).
+
+<CodeBlock code={`
+import { useState } from 'react';
+import { DatePicker } from '@packages/react-components';
+
+export const ControlledDatePicker = () => {
+	const [date, setDate] = useState<string>('2024-01-01');
+
+    return (
+    	<div className="flex flex-col gap-2">
+    		<DatePicker
+    			value={date}
+    			onValueChange={(val) => setDate(val || '')}
+    			label="Controlled Date"
+    		/>
+    		<p>Selected Date: {date}</p>
+    	</div>
+    );
+
+};
+`} lang="tsx" shouldFormat/>
+
+<DemoBlock className="my-4 flex items-center justify-center">
+	<ControlledDatePicker client:visible />
+</DemoBlock>
+
+### Labels
+
+The `label` prop adds a descriptive label to the date picker.
+
+<CodeBlock code={`<DatePicker label="Birth Date" />`} lang="tsx" shouldFormat />
+
+<DemoBlock className="my-4 flex items-center justify-center">
+	<DatePickerWithLabel client:visible />
+</DemoBlock>
+
+---
+
+## API Reference
+
+### DatePicker
+
+#### Props
+
+| Prop            | Type                                         | Default     | Description                                       |
+| --------------- | -------------------------------------------- | ----------- | ------------------------------------------------- |
+| `label`         | `string`                                     | `undefined` | Label above the input field.                      |
+| `value`         | `string`                                     | `undefined` | The selected date value (ISO string recommended). |
+| `onValueChange` | `(value?: string, date?: DateValue) => void` | `undefined` | Callback fired when the selected date changes.    |
+| `open`          | `boolean`                                    | `undefined` | Whether the calendar popover is open.             |
+| `onOpenChange`  | `(details: OpenChangeDetails) => void`       | `undefined` | Callback fired when the open state changes.       |
+| `aria-label`    | `string`                                     | `undefined` | ARIA label for accessibility.                     |
+| `id`            | `string`                                     | `undefined` | Unique identifier for the component.              |
+
+---
+
+## Accessibility
+
+- **Keyboard Navigation**: Supports arrow keys for navigating the calendar grid.
+- **ARIA**: Includes proper roles and labels for screen readers.
+- **Focus Management**: Manages focus between input and calendar popup.

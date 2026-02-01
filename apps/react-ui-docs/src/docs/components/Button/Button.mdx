@@ -1,0 +1,104 @@
+---
+slug: Button
+---
+
+import { Button } from '@packages/react-components';
+import DemoBlock from '@components/DemoBlock/DemoBlock.astro';
+
+import CodeBlock from '@components/CodeBlock/CodeBlock.astro';
+
+# Button
+
+The `Button` component is a fundamental UI element that comes in three distinct variants: `filled`, `outlined`, and `text`. It supports all standard HTML button attributes and is fully accessible.
+
+## Basic
+
+<CodeBlock code={`
+import { Button } from '@packages/react-components';
+
+function App() {
+return <Button>Click me</Button>;
+}
+`} lang="tsx" shouldFormat/>
+
+<DemoBlock className="my-4 flex items-center justify-center">
+	<Button>Click me</Button>
+</DemoBlock>
+
+## Variants
+
+The `variant` prop controls the visual style of the button. It defaults to `filled` if not specified.
+
+- **Filled**: High emphasis, used for primary actions.
+- **Outlined**: Medium emphasis, used for secondary actions.
+- **Text**: Low emphasis, used for less important actions.
+
+<CodeBlock
+	code={`
+<Button variant="filled">Filled</Button>
+<Button variant="outlined">Outlined</Button>
+<Button variant="text">Text</Button>
+`}
+	lang="tsx"
+/>
+
+<DemoBlock className="my-4 flex items-center justify-center gap-4">
+	<Button variant="filled">Filled</Button>
+	<Button variant="outlined">Outlined</Button>
+	<Button variant="text">Text</Button>
+</DemoBlock>
+
+## Disabled
+
+Add the `disabled` boolean prop to indicate that the button is not currently interactive.
+
+<CodeBlock
+	code={`<Button disabled>Disabled</Button>
+<Button variant="outlined" disabled>Disabled</Button>
+<Button variant="text" disabled>Disabled</Button>
+`}
+	lang="tsx"
+/>
+
+<DemoBlock className="my-4 flex items-center justify-center">
+	<Button disabled>Disabled</Button>
+</DemoBlock>
+
+## HTML Attributes
+
+The `Button` component passes through all standard HTML button attributes, such as `type`, `onClick`, `aria-*`, etc.
+
+<CodeBlock
+	code={`
+<Button type="submit" onClick={() => console.log('clicked')}>
+  Submit
+</Button>
+`}
+	lang="tsx"
+	shouldFormat
+/>
+
+---
+
+## API Reference
+
+### Button Props
+
+| Name        | Type                               | Default     | Description                                                                 |
+| ----------- | ---------------------------------- | ----------- | --------------------------------------------------------------------------- |
+| `variant`   | `'filled' \| 'outlined' \| 'text'` | `'filled'`  | The visual style of the button.                                             |
+| `children`  | `React.ReactNode`                  | `undefined` | The content to display inside the button.                                   |
+| `className` | `string`                           | `undefined` | Additional CSS class names.                                                 |
+| `ref`       | `Ref<HTMLButtonElement>`           | `undefined` | Ref to the underlying button element.                                       |
+| `...`       | `React.ButtonHTMLAttributes`       | -           | Inherits all standard HTML button attributes (e.g., `onClick`, `disabled`). |
+
+---
+
+## Accessibility
+
+The Button component is built to be accessible:
+
+- **Keyboard Focus**: Fully focusable using the `Tab` key.
+- **Keyboard Interaction**: Can be activated using `Enter` or `Space` keys.
+- **ARIA**: Supports `aria-label`, `aria-expanded`, and other ARIA attributes via prop spreading.
+- **Disabled State**: When `disabled`, it includes the `disabled` attribute and is skipped in tab order.

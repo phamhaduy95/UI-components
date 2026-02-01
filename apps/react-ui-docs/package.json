@@ -1,0 +1,28 @@
+{
+	"name": "@apps/react-docs-v2",
+	"type": "module",
+	"private": true,
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/mdx": "^4.3.13",
+		"@packages/react-components": "workspace:*",
+		"astro": "^5.17.0",
+		"classnames": "^2.5.1",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4"
+	},
+	"devDependencies": {
+		"@astrojs/react": "^4.4.2",
+		"@tailwindcss/vite": "^4.1.18",
+		"@types/react": "^19.2.10",
+		"@types/react-dom": "^19.2.3",
+		"prettier": "3.5.3",
+		"tailwindcss": "^4.1.18"
+	}
+}

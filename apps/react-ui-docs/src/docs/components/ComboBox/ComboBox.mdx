@@ -1,0 +1,187 @@
+---
+slug: ComboBox
+---
+
+import CodeBlock from '@components/CodeBlock/CodeBlock.astro';
+import DemoBlock from '@components/DemoBlock/DemoBlock.astro';
+
+import {
+	BasicCombobox,
+	ControlledCombobox,
+	BasicMultipleComboBox,
+	ComboBoxWithMultipleStatuses
+} from './ComboBoxExample';
+
+# ComboBox
+
+The ComboBox component combines a text input with a listbox, allowing users to filter a list of options to select one or more values. It provides 'SingleCombobox' for single selection and 'MultipleCombobox' for multiple selections.
+
+### Basic Example
+
+<CodeBlock code={`
+import { SingleCombobox } from '@packages/react-components';
+
+const items = [
+{ value: 'react', label: 'React' },
+{ value: 'vue', label: 'Vue' },
+{ value: 'angular', label: 'Angular' },
+{ value: 'svelte', label: 'Svelte' }
+];
+
+function App() {
+return <SingleCombobox items={items} placeholder="Select a framework" label="Framework" />;
+}
+`} lang="tsx" shouldFormat/>
+
+<DemoBlock className="my-4 flex items-center justify-center">
+	<BasicCombobox client:load />
+</DemoBlock>
+
+### Controllable State
+
+<CodeBlock
+	code={`export const ControlledCombobox = () => {
+	const [value, setValue] = useState<string>('');
+
+    const items = [
+    	{ value: 'react', label: 'React' },
+    	{ value: 'vue', label: 'Vue' },
+    	{ value: 'angular', label: 'Angular' },
+    	{ value: 'svelte', label: 'Svelte' }
+    ];
+    return (
+    	<div>
+    		<SingleCombobox
+    			items={items}
+    			className="pb-2"
+    			label="Framework"
+    			value={value}
+    			onValueChange={setValue}
+    		/>
+    		<p>Selected value: {value}</p>
+    	</div>
+    );
+
+};`}
+lang="tsx"  
+ shouldFormat
+/>
+
+<DemoBlock className="my-4 flex items-center justify-center">
+	<ControlledCombobox client:visible />
+</DemoBlock>
+
+### Status States
+
+Support `default`, `error`, `success`, and `warning` states.
+
+<CodeBlock
+	code={`
+<SingleCombobox
+    items={[{ value: '1', label: 'Option 1' }]}
+    status="error"
+    label="Error"
+    supportingText="Invalid selection"
+/>
+<SingleCombobox
+    items={[{ value: '1', label: 'Option 1' }]}
+    status="success"
+    label="Success"
+    supportingText="Valid selection"
+/>
+<SingleCombobox
+    items={[{ value: '1', label: 'Option 1' }]}
+    status="warning"
+    label="Warning"
+    supportingText="Warning selection"
+/>
+`}
+	lang="tsx"
+/>
+<DemoBlock className="my-4 flex items-center justify-center pb-9">
+	<ComboBoxWithMultipleStatuses client:load />
+</DemoBlock>
+
+### Multiple Selection
+
+Use `MultipleCombobox` to allow selecting multiple items. Selected items appear as tags.
+
+<CodeBlock
+	code={`
+export const BasicMultipleComboBox = () => {
+	const [value, setValue] = useState<string[]>([]);
+
+    const items = [
+    	{ value: 'react', label: 'React' },
+    	{ value: 'vue', label: 'Vue' },
+    	{ value: 'angular', label: 'Angular' },
+    	{ value: 'svelte', label: 'Svelte' }
+    ];
+    return (
+    	<div>
+    		<MultipleCombobox items={items} label="Framework" value={value} onValueChange={setValue} />
+    		<p>Selected values: {value.join(', ')}</p>
+    	</div>
+    )
+
+    };`}
+    lang="tsx"
+    shouldFormat
+
+/>
+
+<DemoBlock className="my-4 block items-start justify-start gap-2">
+	<BasicMultipleComboBox client:load />
+</DemoBlock>
+
+## API Reference
+
+### SingleCombobox
+
+#### Props
+
+| Prop             | Type                                         | Default     | Description                      |
+| ---------------- | -------------------------------------------- | ----------- | -------------------------------- |
+| `items`          | `SelectItem[]`                               | `[]`        | Options to display.              |
+| `value`          | `string`                                     | `undefined` | Selected value.                  |
+| `onValueChange`  | `(value: string, item?: SelectItem) => void` | `undefined` | Callback when selection changes. |
+| `label`          | `string`                                     | `undefined` | Label above the input.           |
+| `placeholder`    | `string`                                     | `undefined` | Placeholder text.                |
+| `supportingText` | `string`                                     | `undefined` | Helper text below the input.     |
+| `status`         | `FieldStatus`                                | `'default'` | Validation status.               |
+| `disabled`       | `boolean`                                    | `false`     | Disables the combobox.           |
+| `loopFocus`      | `boolean`                                    | `false`     | Loop focus in the list.          |
+
+### MultipleCombobox
+
+#### Props
+
+| Prop            | Type                                             | Default     | Description                      |
+| --------------- | ------------------------------------------------ | ----------- | -------------------------------- |
+| `items`         | `SelectItem[]`                                   | `[]`        | Options to display.              |
+| `value`         | `string[]`                                       | `undefined` | Selected values.                 |
+| `onValueChange` | `(value: string[], item?: SelectItem[]) => void` | `undefined` | Callback when selection changes. |
+| `label`         | `string`                                         | `undefined` | Label above the input.           |
+| `placeholder`   | `string`                                         | `undefined` | Placeholder text.                |
+| `status`        | `FieldStatus`                                    | `'default'` | Validation status.               |
+| `disabled`      | `boolean`                                        | `false`     | Disables the combobox.           |
+
+### Types
+
+**SelectItem**
+
+<CodeBlock
+	code={`type SelectItem = { value: string; label: string; disabled?: boolean; };`}
+	lang="ts"
+/>
+
+**FieldStatus**
+
+<CodeBlock code={`type FieldStatus = 'default' | 'error' | 'success' | 'warning';`} lang="ts" />
+
+---
+
+## Accessibility
+
+- **Keyboard Support**: Arrow keys to navigate options, Enter to select.
+- **Screen Readers**: ARIA attributes manage state and focus.
