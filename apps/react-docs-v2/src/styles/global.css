@@ -6,7 +6,6 @@
 	--sidebar-width: 280px;
 	--toc-width: 240px;
 	--max-content-width: 800px;
-
 	--radius-select: 8px;
 	--radius-md: 8px;
 	--radius-lg: 12px;
@@ -53,39 +52,51 @@
 		-moz-osx-font-smoothing: grayscale;
 	}
 
-	h1 {
+	h1.mdx-heading {
 		@apply mb-6 text-4xl font-extrabold tracking-tight;
 	}
-	h2 {
-		@apply border-outline-variant mb-4 mt-8 border-b pb-2 text-2xl font-bold tracking-tight;
+	h2.mdx-heading {
+		@apply border-outline-variant mb-4 mt-8 pb-2 text-2xl font-bold tracking-tight;
 	}
-	h3 {
+	h3.mdx-heading {
 		@apply mb-3 mt-6 text-xl font-semibold tracking-tight;
 	}
-	p {
+	h4.mdx-heading {
+		@apply mb-3 mt-6 text-lg font-semibold tracking-tight;
+	}
+
+	p.mdx-paragraph {
 		@apply text-on-surface-variant mb-4 leading-7;
 	}
 
-	table {
+	table.mdx-table {
 		@apply my-6 w-full border-collapse text-sm;
 	}
 
-	th {
-		@apply border-outline-variant text-on-surface bg-surface border-b p-3 text-left font-semibold;
+	table.mdx-table th {
+		@apply border-outline-variant bg-surface border-b px-3 py-2 text-left font-semibold;
 	}
 
-	td {
-		@apply border-outline-variant text-on-surface-variant border-b p-3;
+	table.mdx-table td {
+		@apply border-outline-variant text-on-surface-variant border-b px-3 py-2;
 	}
 
-	hr {
+	table.mdx-table tr:first-child td {
+		@apply font-bold;
+	}
+
+	code.mdx-inline-code {
+		@apply bg-primary-container text-primary rounded-md p-1;
+	}
+
+	hr.mdx-hr {
 		@apply hidden;
 	}
 }
 
 @layer utilities {
 	.content-container {
-		@apply max-w-(--max-content-width) mx-auto px-6 py-10;
+		@apply max-w-(--max-content-width) mx-auto px-10 py-10;
 	}
 
 	.glass {
