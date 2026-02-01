@@ -1,0 +1,177 @@
+---
+slug: TextInput
+---
+
+import CodeBlock from '@components/CodeBlock/CodeBlock.astro';
+import {
+	BasicTextInput,
+	TextInputWithStatus,
+	ClearableTextInput,
+	ControlledTextInput,
+	DisabledTextInput,
+	TextInputWithSupportingText,
+	RequiredTextInput
+} from './TextInputExample';
+
+# TextInput
+
+The `TextInput` component is a standard form element that allows users to enter and edit text. It supports various states, labels, supporting text, and validation styles.
+
+## Introduction
+
+`TextInput` is a versatile component built with accessibility and usability in mind. It handles label associations, supporting text alignment, and status feedback automatically.
+
+### Basic Example
+
+<CodeBlock code={`
+import { TextInput } from '@packages/react-components';
+
+function App() {
+return <TextInput labelText="Username" placeholder="Enter your username" />;
+}
+`} lang="tsx" shouldFormat={true}/>
+
+<BasicTextInput client:visible />
+
+---
+
+## Component Properties
+
+### Status States
+
+The `TextInput` component supports different status states to provide visual feedback: `default`, `error`, `success`, and `warning`.
+
+<CodeBlock code={`
+<TextInput
+	status="error"
+	labelText="Error State"
+	supportingText="This field has an error"
+/>
+
+<TextInput status="success" labelText="Success State" supportingText="Input is valid" />
+
+<TextInput status="warning" labelText="Warning State" supportingText="Please review your input" />
+`} lang="tsx" />
+
+<TextInputWithStatus client:visible />
+
+### Clearable
+
+Enable the `clearable` prop to allow users to clear their entry with a clear button (Note: functionality depends on your implementation of the clear icon in CSS/JS).
+
+<CodeBlock
+	code={`<TextInput labelText="Clearable Input" placeholder="Type something..." clearable />`}
+	lang="tsx"
+	shouldFormat
+/>
+
+<ClearableTextInput client:visible />
+
+### Controlled State
+
+Use the `value` and `onValueChange` props to control the `TextInput` component's state.
+
+<CodeBlock code={`import { useState } from 'react';
+import { TextInput } from '@packages/react-components';
+
+export const ControlledTextInput = () => {
+	const [value, setValue] = useState('');
+
+    return (
+    	<>
+    		<TextInput
+    			value={value}
+    			onValueChange={(val) => {
+    				setValue(val);
+    			}}
+    			labelText="Controlled Input"
+    		/>
+    		<p>Current Value: {value}</p>
+    	</>
+    );
+
+};`} lang="tsx" shouldFormat />
+
+<ControlledTextInput client:visible />
+
+### Disabled State
+
+Disable the `TextInput` using the `disabled` prop.
+
+<CodeBlock
+	code={`<TextInput disabled labelText="Disabled Input" placeholder="Cannot type" />`}
+	lang="tsx"
+	shouldFormat
+/>
+
+<DisabledTextInput client:visible />
+
+### Required State
+
+Mark the field as required using the `required` prop, which adds a visual indicator to the label.
+
+<CodeBlock
+	code={`<TextInput required labelText="Password" type="password" />`}
+	lang="tsx"
+	shouldFormat
+/>
+
+<RequiredTextInput client:visible />
+
+### Supporting Text
+
+Add helpful text below the input using the `supportingText` prop.
+
+<CodeBlock
+	code={`<TextInput
+  labelText="Email Address"
+  supportingText="We'll never share your email with anyone else."
+  placeholder="email@example.com"
+/>`}
+	lang="tsx"
+	shouldFormat
+/>
+
+<TextInputWithSupportingText client:visible />
+
+---
+
+## API Reference
+
+### TextInput
+
+#### Props
+
+`TextInput` extends all standard `HTMLInputElement` attributes.
+
+| Prop             | Type                                             | Default     | Description                           |
+| ---------------- | ------------------------------------------------ | ----------- | ------------------------------------- |
+| `value`          | `string`                                         | `undefined` | Controlled value of the input         |
+| `onValueChange`  | `(value: string) => void`                        | `undefined` | Callback fired when the value changes |
+| `labelText`      | `string`                                         | `undefined` | Label text displayed above the input  |
+| `status`         | `'default' \| 'error' \| 'success' \| 'warning'` | `'default'` | Visual status state of the input      |
+| `supportingText` | `string`                                         | `undefined` | Helper text displayed below the input |
+| `clearable`      | `boolean`                                        | `false`     | Whether to show a clear button        |
+| `disabled`       | `boolean`                                        | `false`     | Whether the input is disabled         |
+| `required`       | `boolean`                                        | `false`     | Whether the field is required         |
+| `className`      | `string`                                         | `undefined` | Additional CSS class names            |
+
+### FieldStatus
+
+Type definition for the status states.
+
+<CodeBlock
+	code={`type FieldStatus = 'default' | 'error' | 'success' | 'warning';`}
+	lang="typescript"
+/>
+
+---
+
+## Accessibility
+
+The `TextInput` component is built with accessibility in mind:
+
+- **Label Association**: Automatically links labels to inputs using generated unique IDs.
+- **Aria Attributes**: Uses `aria-invalid` based on status and `aria-describedby` for supporting text.
+- **Keyboard Support**: Native input behavior for keyboard interactions.
+- **Visual Cues**: Clear visual indicators for focus, error, and required states.
