@@ -17,9 +17,10 @@
 		"skipLibCheck": true,
 		"baseUrl": "./",
 		"paths": {
-			"@components/*": ["lib/components/*"]
+			"@components/*": ["lib/components/*"],
+			"@themes/*": ["lib/themes/*"]
 		}
 	},
-	"include": ["lib/**/*.ts", "lib/**/*.tsx"],
+	"include": ["lib/**/*.ts", "lib/**/*.tsx", "stories/**/*.tsx", "stories/**/*.mdx"],
 	"exclude": ["dist", "node_modules", "src"]
 }
