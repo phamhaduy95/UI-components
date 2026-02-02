@@ -1,4 +1,4 @@
-import { FormEvent, HTMLAttributes, JSX, useId } from 'react';
+import { ChangeEvent, HTMLAttributes, JSX, useId } from 'react';
 
 import '@components/FormField/FormField.css';
 import FormLabel from '@components/FormLabel/FormLabel';
@@ -39,7 +39,7 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 	const inputId = useId();
 	const supportingTextId = useId();
 
-	const handleInputChanged = (e: FormEvent<HTMLInputElement>) => {
+	const handleInputChanged = (e: ChangeEvent<HTMLInputElement>) => {
 		if (onChange) onChange(e);
 		const value = (e.target as HTMLInputElement).value;
 		if (onValueChange) onValueChange(value);
