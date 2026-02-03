@@ -1,4 +1,4 @@
-.CollapsibleContent {
+.Collapsible_Content {
 	overflow: hidden;
 
 	&[data-state='open'] {

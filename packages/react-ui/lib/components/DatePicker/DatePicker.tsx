@@ -8,7 +8,7 @@ import { CalendarIcon } from '@radix-ui/react-icons';
 
 import './DatePicker.css';
 
-interface DatePickerProps
+export interface DatePickerProps
 	extends AriaAttributes,
 		Pick<
 			ArkDatePicker.RootProps,
@@ -20,17 +20,32 @@ interface DatePickerProps
 	'data-testid'?: string;
 	value?: string;
 	onValueChange?: (value?: string, date?: DateValue) => void;
+	disabled?: boolean;
 }
 
 const DatePicker = (props: DatePickerProps): JSX.Element => {
-	const { label, 'aria-label': ariaLabel, id, value, onValueChange, open, onOpenChange } = props;
+	const {
+		label,
+		'aria-label': ariaLabel,
+		id,
+		value,
+		selectionMode = 'single',
+		open,
+		'data-testid': dataTestId,
+		disabled,
+		onValueChange,
+		onOpenChange,
+		format,
+		fixedWeeks,
+		...rest
+	} = props;
 
 	const uuid = useId();
 
 	const internalValue = useMemo(() => (value ? [parseDate(value)] : undefined), [value]);
 
 	const handleDateChange: ArkDatePicker.RootProps['onValueChange'] = (data) => {
-		const dateStr = data.value[0].toString();
+		const dateStr = data.value[0]?.toString();
 		if (onValueChange) onValueChange(dateStr, data.value[0]);
 	};
 
@@ -40,26 +55,37 @@ const DatePicker = (props: DatePickerProps): JSX.Element => {
 			id={id}
 			value={internalValue}
 			onValueChange={handleDateChange}
-			selectionMode="single"
+			selectionMode={selectionMode}
 			open={open}
 			onOpenChange={onOpenChange}
+			fixedWeeks={fixedWeeks}
+			format={format}
+			disabled={disabled}
+			data-testid={dataTestId}
 		>
-			<FormLabel type="p" id={uuid}>
+			<FormLabel
+				type="p"
+				id={uuid}
+			>
 				{label}
 			</FormLabel>
 			<ArkDatePicker.Control
-				className="DatePicker_InputField"
+				className="FormField_Field DatePicker_InputField"
 				aria-role="group"
 				aria-labelledby={uuid}
 				aria-label={ariaLabel}
+				aria-disabled={disabled}
 			>
 				<ArkDatePicker.Input className="DatePicker_Input" />
 				<ArkDatePicker.Trigger>
-					<CalendarIcon height={16} width={16} className="cursor-pointer" />
+					<CalendarIcon
+						height={16}
+						width={16}
+					/>
 				</ArkDatePicker.Trigger>
 			</ArkDatePicker.Control>
 			<Portal>
-				<ArkDatePicker.Positioner>
+				<ArkDatePicker.Positioner className="Menu_Positioner">
 					<ArkDatePicker.Content>
 						<BaseCalendarView />
 					</ArkDatePicker.Content>

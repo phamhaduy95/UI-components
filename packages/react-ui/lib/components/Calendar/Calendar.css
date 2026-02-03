@@ -9,7 +9,7 @@
 	isolation: isolate;
 }
 
-.CalendarViewControl {
+.CalendarView_Control {
 	display: flex;
 	justify-content: space-between;
 	font-weight: 500;
@@ -17,35 +17,37 @@
 	align-items: center;
 }
 
-.CalendarNavTrigger {
+.Calendar_NavTrigger {
 	cursor: pointer;
 	width: 36px;
+	border: 1px solid transparent;
+	background-color: transparent;
 	height: 36px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	/* border: 1px solid var(--color-outline-variant); */
+	border: 1px solid var(--color-outline-variant);
 	box-shadow: var(--shadow-xs);
 	border-radius: 8px;
 
 	&:hover {
-		border: 1px solid var(--color-outline-variant);
+		border-color: var(--color-outline-variant);
 	}
 }
 
-.CalendarHeadCol {
+.Calendar_HeadCol {
 	width: 42px;
 	height: 42px;
 	text-align: center;
 }
 
-.CalendarTableCell {
+.Calendar_TableCell {
 	width: 42px;
 	height: 42px;
 	text-align: center;
 }
 
-.CalendarTableTrigger {
+.Calendar_TableCellTrigger {
 	user-select: none;
 	width: 40px;
 	height: 40px;

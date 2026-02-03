@@ -15,7 +15,14 @@ export interface FormLabelProps extends HTMLAttributes<HTMLLabelElement> {
 const FormLabel = (props: FormLabelProps): JSX.Element => {
 	const { type = 'label', status, children, className, required, ...rest } = props;
 
-	const renderLabelContent = () => (required ? <>{children} '*'</> : children);
+	const renderLabelContent = () =>
+		required ? (
+			<>
+				{children} <span className="FormLabel_Required">*</span>
+			</>
+		) : (
+			children
+		);
 
 	const Component = createElement(
 		type,

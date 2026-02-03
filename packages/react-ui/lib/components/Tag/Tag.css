@@ -17,6 +17,9 @@
 	> .Tag_RemoveButton {
 		cursor: pointer;
 		transition: transform 100ms ease-in-out;
+		background-color: transparent;
+		border: none;
+		outline: none;
 	}
 
 	&[data-removable] {

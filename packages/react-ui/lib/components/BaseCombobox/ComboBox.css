@@ -21,10 +21,18 @@
 	.Combobox_Input {
 		outline: none;
 		flex-grow: 1;
+		border: none;
+		background: transparent;
 		caret-color: var(--color-on-surface);
+		font-size: var(--field-font-size);
+		color: var(--color-on-background);
+		background: transparent;
 	}
 
 	& > .Combobox_Trigger {
+		background: transparent;
+		border: none;
+		outline: none;
 		margin-left: auto;
 	}
 

@@ -18,7 +18,13 @@ const SingleCombobox = (props: SingleComboboxProps): JSX.Element => {
 		if (onValueChange) onValueChange(data.value[0], data.items[0]);
 	};
 
-	return <BaseCombobox value={internalValue} onValueChange={handleValueChange} {...rest} />;
+	return (
+		<BaseCombobox
+			value={internalValue}
+			onValueChange={handleValueChange}
+			{...rest}
+		/>
+	);
 };
 
 export default SingleCombobox;
