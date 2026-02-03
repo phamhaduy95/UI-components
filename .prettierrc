@@ -4,13 +4,14 @@
 	"trailingComma": "none",
 	"printWidth": 100,
 	"tabWidth": 2,
-	"plugins": ["prettier-plugin-astro","prettier-plugin-tailwindcss"],
-    "overrides": [
-    {
-      "files": "*.astro",
-      "options": {
-        "parser": "astro"
-      }
-    }
-  ]
+	"singleAttributePerLine": true,
+	"plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
+	"overrides": [
+		{
+			"files": "*.astro",
+			"options": {
+				"parser": "astro"
+			}
+		}
+	]
 }
