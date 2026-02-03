@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Collapsible as RadixCollapsible } from 'radix-ui';
+import { Collapsible as ArkCollapsible } from '@ark-ui/react/collapsible';
 import { JSX, useState } from 'react';
 import './Collapsible.css';
 
@@ -31,25 +31,32 @@ const Collapsible = (props: CollapsibleProps) => {
 
 	const open = isOpen ?? internalOpen;
 
-	const handleOpenChange = (open: boolean) => {
-		if (onOpenChange) onOpenChange(open);
-		setInternalOpen(open);
+	const handleOpenChange: ArkCollapsible.RootProps['onOpenChange'] = (details) => {
+		const isOpen = details.open;
+		if (onOpenChange) onOpenChange(isOpen);
+		setInternalOpen(isOpen);
 	};
 
 	return (
-		<RadixCollapsible.Root
-			className={classNames('CollapsibleRoot', className)}
+		<ArkCollapsible.Root
+			className={classNames('Collapsible_Root', className)}
 			open={open}
 			onOpenChange={handleOpenChange}
 			disabled={disabled}
 		>
-			<RadixCollapsible.Trigger className="CollapsibleTrigger" asChild={overrideTrigger}>
+			<ArkCollapsible.Trigger
+				className="Collapsible_Trigger"
+				asChild={overrideTrigger}
+			>
 				{Trigger({ open })}
-			</RadixCollapsible.Trigger>
-			<RadixCollapsible.Content className="CollapsibleContent" asChild={overrideContent}>
+			</ArkCollapsible.Trigger>
+			<ArkCollapsible.Content
+				className="Collapsible_Content"
+				asChild={overrideContent}
+			>
 				{children}
-			</RadixCollapsible.Content>
-		</RadixCollapsible.Root>
+			</ArkCollapsible.Content>
+		</ArkCollapsible.Root>
 	);
 };
 

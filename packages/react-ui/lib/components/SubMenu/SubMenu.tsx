@@ -2,6 +2,7 @@ import { Menu } from '@ark-ui/react/menu';
 import { NestedMenu } from '@components/DropDownMenu';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
 import { JSX } from 'react';
+import '../DropDownMenu/Menu.css';
 
 export type SubMenuProps = NestedMenu;
 
@@ -11,7 +12,11 @@ const SubMenu = (props: SubMenuProps): JSX.Element => {
 		<Menu.Root>
 			<Menu.TriggerItem className="Menu_Item">
 				{label}
-				<ChevronRightIcon className="ml-auto" height={16} width={16} />
+				<ChevronRightIcon
+					className="Menu_ExpandItemIcon"
+					height={16}
+					width={16}
+				/>
 			</Menu.TriggerItem>
 			<Menu.Positioner>
 				<Menu.Content className="Menu">

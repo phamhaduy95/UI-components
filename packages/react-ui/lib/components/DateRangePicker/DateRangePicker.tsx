@@ -1,7 +1,7 @@
 import {
-    DatePicker as ArkDatePicker,
-    parseDate,
-    useDatePickerContext
+	DatePicker as ArkDatePicker,
+	parseDate,
+	useDatePickerContext
 } from '@ark-ui/react/date-picker';
 
 import { Portal } from '@ark-ui/react/portal';
@@ -11,6 +11,7 @@ import { CalendarIcon } from '@radix-ui/react-icons';
 import { AriaAttributes, useId, useMemo } from 'react';
 
 import './DateRangePicker.css';
+import '../FormField/FormField.css';
 
 export interface DateRangePickerProps
 	extends AriaAttributes,
@@ -24,10 +25,20 @@ export interface DateRangePickerProps
 	'data-testid'?: string;
 	value?: string[];
 	onValueChange?: (value?: string[]) => void;
+	disabled?: boolean;
 }
 
 const DateRangePicker = (props: DateRangePickerProps) => {
-	const { label, 'aria-label': ariaLabel, id, value, onValueChange, open, onOpenChange } = props;
+	const {
+		label,
+		'aria-label': ariaLabel,
+		id,
+		value,
+		onValueChange,
+		open,
+		onOpenChange,
+		disabled
+	} = props;
 
 	const uuid = useId();
 
@@ -49,21 +60,29 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 			selectionMode="range"
 			open={open}
 			onOpenChange={onOpenChange}
+			disabled={disabled}
 		>
-			<FormLabel type="p" id={uuid}>
+			<FormLabel
+				type="p"
+				id={uuid}
+			>
 				{label}
 			</FormLabel>
 			<ArkDatePicker.Control
-				className="DatePicker_InputField"
+				className="FormField_Field DatePicker_InputField"
 				aria-role="group"
 				aria-labelledby={uuid}
 				aria-label={ariaLabel}
+				aria-disabled={disabled}
 				asChild
 			>
 				<ArkDatePicker.Trigger>
 					<DateRangeDisplay />
 					<div className="Field_TrailingIcon">
-						<CalendarIcon height={16} width={16} />
+						<CalendarIcon
+							height={16}
+							width={16}
+						/>
 					</div>
 				</ArkDatePicker.Trigger>
 			</ArkDatePicker.Control>

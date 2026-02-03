@@ -1,5 +1,6 @@
 .FormLabel {
 	pointer-events: none;
+	margin: 0.25rem;
 	color: var(--color-on-surface-variant);
 
 	&[data-status='error'] {
@@ -11,4 +12,8 @@
 	&[data-status='success'] {
 		color: var(--color-success);
 	}
+}
+
+.FormLabel_Required {
+	color: var(--color-error);
 }

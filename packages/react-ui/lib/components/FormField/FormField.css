@@ -1,26 +1,30 @@
 .FormField {
-	position: relative;
 	--color-focused: var(--color-primary);
 }
 .FormField > .SupportingText {
-	padding-top: 0px;
-	position: absolute;
-	bottom: -20px;
+	padding: 0;
+	margin-top: 4px;
 }
 .FormField_Field {
 	display: flex;
+	width: 100%;
 	align-items: center;
 	position: relative;
-	height: var(--spacing-container-lg);
+	height: var(--field-height);
 	border: 1px solid var(--color-outline);
 	border-radius: var(--field-border-radius);
 	color: var(--color-on-surface);
-	padding-inline: 16px;
-	padding-block: 8px;
+	padding-inline: var(--field-padding-inline);
+	padding-block: var(--field-padding-block);
 
 	&:focus-within {
 		border-width: 2px;
 		border-color: var(--color-focused);
+	}
+
+	&[aria-disabled='true'] {
+		background-color: var(--color-surface-container-highest);
+		pointer-events: none;
 	}
 
 	&[data-status='error'] {
