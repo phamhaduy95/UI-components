@@ -8,17 +8,6 @@
 }
 
 .DatePicker_InputField {
-	min-height: var(--spacing-container-lg);
-	cursor: pointer;
-	border: 1px solid var(--color-outline);
-	border-radius: var(--radius-sm);
-	width: 100%;
-	padding-inline: 16px;
-	padding-block: 8px;
-	align-items: center;
-	display: flex;
-	color: var(--color-on-background);
-
 	> .Field_TrailingIcon {
 		margin-left: auto;
 	}

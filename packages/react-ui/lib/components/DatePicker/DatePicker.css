@@ -8,20 +8,20 @@
 }
 
 .DatePicker_InputField {
-	min-height: var(--spacing-container-lg);
-	cursor: pointer;
-	border: 1px solid var(--color-outline);
-	border-radius: var(--radius-sm);
-	width: 100%;
-	padding-inline: 16px;
-	padding-block: 8px;
-	align-items: center;
-	display: flex;
-	color: var(--color-on-background);
-
-	> .DatePicker_Input {
+	.DatePicker_Input {
 		flex-grow: 1;
 		outline: none;
+		border: none;
+		font-size: var(--field-font-size);
+		color: var(--color-on-background);
+		background: transparent;
+	}
+
+	> button[data-part='trigger'] {
+		border: none;
+		outline: none;
+		cursor: pointer;
+		background-color: transparent;
 	}
 
 	&[data-placeholder-shown] {

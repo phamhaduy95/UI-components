@@ -1,7 +1,3 @@
-.MenuTrigger {
-	cursor: pointer;
-}
-
 .Menu {
 	border-radius: 6px;
 	border-style: solid;
@@ -13,7 +9,17 @@
 	box-shadow: var(--shadow);
 	overflow: auto;
 	outline: none;
+	--layer-index: var(--menu-popup-z-index);
 }
+
+.Menu_Trigger {
+	cursor: pointer;
+}
+
+.Menu_ExpandItemIcon {
+	margin-left: auto;
+}
+
 .Menu_Item {
 	cursor: pointer;
 	padding-inline: 16px;

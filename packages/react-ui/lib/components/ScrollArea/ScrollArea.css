@@ -1,33 +1,48 @@
-.ScrollAreaRoot {
+.ScrollArea {
 	position: relative;
 	overflow: hidden;
 }
-.ScrollAreaViewport {
+.ScrollArea_Viewport {
 	width: 100%;
 	height: 100%;
+
+	&[data-scope='scroll-area'][data-part='viewport'] {
+		scrollbar-width: none;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
 }
-.ScrollAreaScrollbar {
+.ScrollArea_Scrollbar {
 	touch-action: none;
-	border-radius: var(--radius-max);
-	background-color: var(--color-surface-container-low);
+	background-color: var(--scrollbar-bg-color);
 	opacity: 0.85;
 	user-select: none;
 	display: flex;
 }
-.ScrollAreaScrollbar[data-orientation='horizontal'] {
-	height: var(--scrollbar-size);
+
+.ScrollArea_Scrollbar[data-overflow-x=''] {
+	&[data-orientation='horizontal'] {
+		height: var(--scrollbar-size);
+	}
+
+	&[data-orientation='horizontal']:hover {
+		height: var(--scrollbar-hovered-size);
+	}
 }
-.ScrollAreaScrollbar[data-orientation='horizontal']:hover {
-	height: var(--scrollbar-hovered-size);
+
+.ScrollArea_Scrollbar[data-overflow-y=''] {
+	&[data-orientation='vertical'] {
+		width: var(--scrollbar-size);
+		flex-direction: column;
+	}
+
+	&[data-orientation='vertical']:hover {
+		width: var(--scrollbar-hovered-size);
+	}
 }
-.ScrollAreaScrollbar[data-orientation='vertical'] {
-	width: var(--scrollbar-size);
-	flex-direction: column;
-}
-.ScrollAreaScrollbar[data-orientation='vertical']:hover {
-	width: var(--scrollbar-hovered-size);
-}
-.ScrollAreaThumb {
-	border-radius: var(--radius-max);
+
+.ScrollArea_Thumb {
+	border-radius: var(--scrollbar-thumb-radius);
 	background-color: var(--color-on-surface-variant);
 }

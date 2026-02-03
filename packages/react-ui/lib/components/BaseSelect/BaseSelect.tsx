@@ -7,7 +7,7 @@ import { CheckIcon, ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 import SupportingText from '../SupportingText';
 
-import '../DropDownMenu/DropDownMenu.css';
+import '../DropDownMenu/Menu.css';
 import '../FormField/FormField.css';
 import './Select.css';
 
@@ -64,13 +64,17 @@ const BaseSelect = ({
 			onValueChange={onValueChange}
 			name={name}
 		>
-			<Select.Label className="FormLabel" data-status={status}>
+			<Select.Label
+				className="FormLabel"
+				data-status={status}
+			>
 				{label}
 			</Select.Label>
 
 			<Select.Trigger
 				ref={ref}
 				className="FormField_Field Select_InputField"
+				aria-disabled={disabled}
 				data-status={status}
 				{...rest}
 				asChild
@@ -78,41 +82,56 @@ const BaseSelect = ({
 			>
 				<div tabIndex={0}>
 					{CustomValueText ?? (
-						<Select.ValueText className="Select_Value" placeholder={placeholder} />
+						<Select.ValueText
+							className="Select_Value"
+							placeholder={placeholder}
+						/>
 					)}
 					<div className="FormField_TrailingIcon">
-						<ChevronDownIcon className="Select_ToggleIcon" width={20} height={20} />
+						<ChevronDownIcon
+							className="Select_ToggleIcon"
+							width={20}
+							height={20}
+						/>
 						{clearable ? (
 							<Select.ClearTrigger className="Select_ClearButton">
-								<Cross2Icon width={20} height={20} />
+								<Cross2Icon
+									width={20}
+									height={20}
+								/>
 							</Select.ClearTrigger>
 						) : null}
 					</div>
 				</div>
 			</Select.Trigger>
-			<SupportingText show={!!supportingText} status={status} id={supportingTextId}>
+			<SupportingText
+				show={!!supportingText}
+				status={status}
+				id={supportingTextId}
+			>
 				{supportingText}
 			</SupportingText>
 			<Portal>
-				<Select.Positioner className="Positioner">
-					<Select.Content className="Menu SelectContent" asChild>
-						<ul>
-							{collection.items.map((item) => (
-								<Select.Item
-									className="Menu_Item SelectItem"
-									key={item.value}
-									item={item}
-									asChild
-								>
-									<li>
-										<Select.ItemText>{item.label}</Select.ItemText>
-										<Select.ItemIndicator className="MenuItem_TrailingIcon">
-											<CheckIcon height={16} width={16} />
-										</Select.ItemIndicator>
-									</li>
-								</Select.Item>
-							))}
-						</ul>
+				<Select.Positioner
+					className="Positioner"
+					style={{ zIndex: 'var(--menu-popup-z-index)' }}
+				>
+					<Select.Content className="Menu SelectContent">
+						{collection.items.map((item) => (
+							<Select.Item
+								className="Menu_Item SelectItem"
+								key={item.value}
+								item={item}
+							>
+								<Select.ItemText>{item.label}</Select.ItemText>
+								<Select.ItemIndicator className="MenuItem_TrailingIcon">
+									<CheckIcon
+										height={16}
+										width={16}
+									/>
+								</Select.ItemIndicator>
+							</Select.Item>
+						))}
 					</Select.Content>
 				</Select.Positioner>
 			</Portal>

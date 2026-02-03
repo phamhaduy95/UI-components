@@ -4,42 +4,51 @@ import '../Calendar/Calendar.css';
 
 const BaseCalendarView = () => {
 	return (
-		<DatePicker.View view="day" className="CalendarView">
+		<DatePicker.View
+			view="day"
+			className="CalendarView"
+		>
 			<DatePicker.Context>
 				{(datePicker) => (
 					<>
-						<DatePicker.ViewControl className="CalendarViewControl">
-							<DatePicker.PrevTrigger className="CalendarNavTrigger">
-								<ChevronLeftIcon height={20} width={20} />
+						<DatePicker.ViewControl className="CalendarView_Control">
+							<DatePicker.PrevTrigger className="Calendar_NavTrigger">
+								<ChevronLeftIcon
+									height={20}
+									width={20}
+								/>
 							</DatePicker.PrevTrigger>
 							<DatePicker.RangeText />
-							<DatePicker.NextTrigger className="CalendarNavTrigger">
-								<ChevronRightIcon height={20} width={20} />
+							<DatePicker.NextTrigger className="Calendar_NavTrigger">
+								<ChevronRightIcon
+									height={20}
+									width={20}
+								/>
 							</DatePicker.NextTrigger>
 						</DatePicker.ViewControl>
-						<DatePicker.Table className="CalendarTable">
-							<DatePicker.TableHead className="CalendarHeader">
+						<DatePicker.Table className="Calendar_Table">
+							<DatePicker.TableHead className="Calendar_Header">
 								<DatePicker.TableRow>
 									{datePicker.weekDays.map((weekDay, id) => (
 										<DatePicker.TableHeader
 											key={id}
-											className="CalendarHeadCol"
+											className="Calendar_HeadCol"
 										>
 											{weekDay.short}
 										</DatePicker.TableHeader>
 									))}
 								</DatePicker.TableRow>
 							</DatePicker.TableHead>
-							<DatePicker.TableBody className="CalendarBody">
+							<DatePicker.TableBody className="Calendar_Body">
 								{datePicker.weeks.map((week, id) => (
 									<DatePicker.TableRow key={id}>
 										{week.map((day, id) => (
 											<DatePicker.TableCell
 												key={id}
 												value={day}
-												className="CalendarTableCell"
+												className="Calendar_TableCell"
 											>
-												<DatePicker.TableCellTrigger className="CalendarTableTrigger">
+												<DatePicker.TableCellTrigger className="Calendar_TableCellTrigger">
 													{day.day}
 												</DatePicker.TableCellTrigger>
 											</DatePicker.TableCell>

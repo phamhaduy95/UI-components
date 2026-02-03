@@ -25,9 +25,11 @@ export interface BaseComboboxProps extends HTMLAttributes<HTMLInputElement> {
 	loopFocus?: boolean;
 	value?: string[];
 	onValueChange?: Combobox.RootProps<SelectItem>['onValueChange'];
+	onOpenChange?: Combobox.RootProps<SelectItem>['onOpenChange'];
 	multiple?: boolean;
 	CustomValueText?: React.ReactNode;
 	'data-testid'?: string;
+	open?: boolean;
 }
 
 const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
@@ -35,7 +37,6 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 		label,
 		items = [],
 		value,
-		onValueChange,
 		loopFocus,
 		multiple,
 		disabled,
@@ -46,6 +47,9 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 		inputRef,
 		'data-testid': dataTestid,
 		CustomValueText,
+		open,
+		onValueChange,
+		onOpenChange,
 		...rest
 	} = props;
 
@@ -88,11 +92,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 	const renderEmptyItemMessage = () => {
 		if (filteredItems.length === 0)
 			return (
-				<Combobox.Item
-					className="Menu_Item"
-					key={'no item'}
-					item={{}}
-				>
+				<Combobox.Item className="Menu_Item" key={'no item'} item={{}}>
 					<Combobox.ItemText asChild>
 						<p>No Item founded</p>
 					</Combobox.ItemText>
@@ -109,6 +109,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 			}}
 			value={value}
 			onValueChange={onValueChange}
+			onOpenChange={onOpenChange}
 			loopFocus={loopFocus}
 			disabled={disabled}
 			multiple={multiple}
@@ -116,51 +117,39 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 			onExitComplete={() => setSearchValue('')}
 			onFocusOutside={() => setSearchValue('')}
 			ref={ref}
+			open={open}
 			data-testid={dataTestid}
 		>
-			<Combobox.Label
-				className="FormLabel"
-				data-status={status}
-			>
+			<Combobox.Label className="FormLabel" data-status={status}>
 				{label}
 			</Combobox.Label>
 			<Combobox.Control
 				className="FormField_Field Combobox_Field"
 				data-status={status}
+				aria-disabled={disabled}
 			>
 				{CustomValueText ?? (
-					<Combobox.Input
-						className="Combobox_Input"
-						disabled={disabled}
-						ref={inputRef}
-						{...rest}
-					/>
+					<Combobox.Input className="Combobox_Input" disabled={disabled} ref={inputRef} {...rest} />
 				)}
-				<Combobox.Trigger
-					className="Combobox_Trigger"
-					aria-label="Trigger popup"
-				>
+				<Combobox.Trigger className="Combobox_Trigger" aria-label="Trigger popup">
 					<ChevronDownIcon className="Combobox_TriggerIcon" />
 				</Combobox.Trigger>
 			</Combobox.Control>
+
 			<SupportingText>{supportingText}</SupportingText>
 			<Portal>
-				<Combobox.Positioner>
+				<Combobox.Positioner
+					className="Menu_Positioner"
+					style={{ zIndex: 'var(--menu-popup-z-index)' }}
+				>
 					<Combobox.Content className="Menu Combobox_Content">
 						{collection.items.map((item) => (
-							<Combobox.Item
-								className="Menu_Item"
-								key={item.value}
-								item={item}
-							>
+							<Combobox.Item className="Menu_Item" key={item.value} item={item}>
 								<Combobox.ItemText asChild>
 									<p>{highlightMatchedSearchValue(item.label)}</p>
 								</Combobox.ItemText>
 								<Combobox.ItemIndicator className="MenuItem_TrailingIcon">
-									<CheckIcon
-										height={16}
-										width={16}
-									/>
+									<CheckIcon height={16} width={16} />
 								</Combobox.ItemIndicator>
 							</Combobox.Item>
 						))}

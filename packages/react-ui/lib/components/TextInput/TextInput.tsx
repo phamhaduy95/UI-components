@@ -19,6 +19,8 @@ export interface TextInputProp extends HTMLAttributes<HTMLInputElement> {
 	className?: string;
 	required?: boolean;
 	name?: string;
+	placeholder?: string;
+	'data-testId'?: string;
 }
 
 const TextInput = (props: TextInputProp): JSX.Element => {
@@ -31,8 +33,10 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 		clearable,
 		disabled,
 		supportingText,
+		placeholder,
 		onChange,
 		onValueChange,
+		'data-testId': dataTestId,
 		...rest
 	} = props;
 
@@ -46,9 +50,12 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 	};
 
 	return (
-		<div className={classNames('FormField TextInput', className)}>
+		<div
+			className={classNames('FormField TextInput', className)}
+			data-testId={dataTestId}
+		>
 			<FormLabel
-				className="TextInputLabel"
+				className="TextInput_Label"
 				htmlFor={inputId}
 				status={status}
 				required={required}
@@ -59,10 +66,13 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 				className="FormField_Field TextInput_InputField"
 				data-status={status}
 				data-clearable={clearable}
+				aria-disabled={disabled}
 			>
 				<input
 					className="TextInput_Input"
 					id={inputId}
+					placeholder={placeholder}
+					disabled={disabled}
 					aria-disabled={disabled}
 					aria-describedby={supportingTextId}
 					aria-invalid={status === 'error'}

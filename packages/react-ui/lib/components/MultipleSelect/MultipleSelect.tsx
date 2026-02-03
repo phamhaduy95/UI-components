@@ -4,6 +4,8 @@ import Tag from '@components/Tag';
 import { SelectItem } from '@components/type';
 import { JSX } from 'react';
 
+import './MultipleSelect.css';
+
 export interface MultipleSelectProps extends Omit<BaseSelectProps, 'value' | 'onValueChange'> {
 	value?: string[];
 	onValueChange?: (value: string[], item: SelectItem[]) => void;
@@ -27,10 +29,10 @@ const MultipleSelect = (props: MultipleSelectProps): JSX.Element => {
 
 export default MultipleSelect;
 
-type DisplayedSelectValueProps = {
+interface DisplayedSelectValueProps {
 	placeholder?: string;
 	className?: string;
-};
+}
 
 const DisplayedSelectValue = ({ placeholder }: DisplayedSelectValueProps) => {
 	const {
@@ -41,7 +43,7 @@ const DisplayedSelectValue = ({ placeholder }: DisplayedSelectValueProps) => {
 
 	if (selectedItems.length === 0) return <span className="Select_Value">{placeholder}</span>;
 	return (
-		<div className="flex flex-wrap gap-2">
+		<div className="Select_DisplayedValue">
 			{selectedItems.map((item) => (
 				<Tag
 					label={item.label}

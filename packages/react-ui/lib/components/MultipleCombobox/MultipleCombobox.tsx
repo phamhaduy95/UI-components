@@ -1,4 +1,4 @@
-import { Combobox, useComboboxContext, UseComboboxContext } from '@ark-ui/react';
+import { Combobox, useComboboxContext, UseComboboxContext } from '@ark-ui/react/combobox';
 import BaseCombobox, { BaseComboboxProps } from '@components/BaseCombobox';
 import { JSX, Ref } from 'react';
 
@@ -25,7 +25,10 @@ const MultipleCombobox = (props: MultipleComboboxProps): JSX.Element => {
 			onValueChange={handleValueChange}
 			multiple
 			CustomValueText={
-				<MultipleComboboxDisplayValue placeholder={placeholder} ref={inputRef} />
+				<MultipleComboboxDisplayValue
+					placeholder={placeholder}
+					ref={inputRef}
+				/>
 			}
 		/>
 	);
@@ -55,8 +58,7 @@ const MultipleComboboxDisplayValue = ({ placeholder, ref }: MultipleComboboxDisp
 		}
 	};
 
-	const displayedPlaceholder =
-		placeholder && selectedItems.length === 0 ? placeholder : undefined;
+	const displayedPlaceholder = placeholder && selectedItems.length === 0 ? placeholder : undefined;
 
 	return (
 		<div className="Combobox_DisplayArea">
