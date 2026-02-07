@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import SingleCombobox from '@components/SingleCombobox';
+import MultipleCombobox from '@components/MultipleCombobox';
 
-const meta: Meta<typeof SingleCombobox> = {
-	title: 'Components/Combobox',
-	component: SingleCombobox,
+const meta: Meta<typeof MultipleCombobox> = {
+	title: 'Components/FormField/MultipleCombobox',
+	component: MultipleCombobox,
 	tags: ['autodocs'],
 	parameters: {
 		layout: 'padded'
@@ -33,47 +33,35 @@ const items = [
 ];
 
 /**
- * The default single combobox with a label.
+ * The default multiple combobox with a label.
  */
 export const Default: Story = {
 	args: {
-		label: 'Framework',
-		placeholder: 'Search for a framework',
-		items,
-		open: true
-	}
-};
-
-/**
- * Single combobox with a pre-selected value.
- */
-export const WithValue: Story = {
-	args: {
-		label: 'Framework',
-		value: 'react',
+		label: 'Frameworks',
+		placeholder: 'Search for frameworks',
 		items
 	}
 };
 
 /**
- * Single combobox with error status.
+ * Multiple combobox with pre-selected values.
+ */
+export const WithValues: Story = {
+	args: {
+		label: 'Frameworks',
+		value: ['react', 'vue'],
+		items
+	}
+};
+
+/**
+ * Multiple combobox with error status.
  */
 export const Error: Story = {
 	args: {
-		label: 'Framework',
+		label: 'Frameworks',
 		status: 'error',
-		supportingText: 'Please select a framework.',
-		items
-	}
-};
-
-/**
- * Disabled single combobox.
- */
-export const Disabled: Story = {
-	args: {
-		label: 'Framework',
-		disabled: true,
+		supportingText: 'Please select at least one framework.',
 		items
 	}
 };

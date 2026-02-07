@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import SingleSelect from '@components/SingleSelect';
+import SingleCombobox from '@components/SingleCombobox';
 
-const meta: Meta<typeof SingleSelect> = {
-	title: 'Components/Select',
-	component: SingleSelect,
+const meta: Meta<typeof SingleCombobox> = {
+	title: 'Components/FormField/Combobox',
+	component: SingleCombobox,
 	tags: ['autodocs'],
 	parameters: {
 		layout: 'padded'
@@ -25,22 +25,27 @@ const items = [
 	{ label: 'React', value: 'react' },
 	{ label: 'Vue', value: 'vue' },
 	{ label: 'Angular', value: 'angular' },
-	{ label: 'Svelte', value: 'svelte' }
+	{ label: 'Svelte', value: 'svelte' },
+	{ label: 'Next.js', value: 'nextjs' },
+	{ label: 'Nuxt.js', value: 'nuxtjs' },
+	{ label: 'Remix', value: 'remix' },
+	{ label: 'Astro', value: 'astro' }
 ];
 
 /**
- * The default single select with a label.
+ * The default single combobox with a label.
  */
 export const Default: Story = {
 	args: {
 		label: 'Framework',
-		placeholder: 'Select a framework',
-		items
+		placeholder: 'Search for a framework',
+		items,
+		open: true
 	}
 };
 
 /**
- * Single select with a pre-selected value.
+ * Single combobox with a pre-selected value.
  */
 export const WithValue: Story = {
 	args: {
@@ -51,7 +56,7 @@ export const WithValue: Story = {
 };
 
 /**
- * Single select with error status.
+ * Single combobox with error status.
  */
 export const Error: Story = {
 	args: {
@@ -63,23 +68,12 @@ export const Error: Story = {
 };
 
 /**
- * Disabled single select.
+ * Disabled single combobox.
  */
 export const Disabled: Story = {
 	args: {
 		label: 'Framework',
 		disabled: true,
-		items
-	}
-};
-
-/**
- * Clearable single select.
- */
-export const Clearable: Story = {
-	args: {
-		label: 'Framework',
-		clearable: true,
 		items
 	}
 };

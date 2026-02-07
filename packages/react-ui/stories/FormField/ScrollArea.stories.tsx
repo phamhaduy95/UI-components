@@ -3,7 +3,7 @@ import ScrollArea from '@components/ScrollArea';
 import React from 'react';
 
 const meta: Meta<typeof ScrollArea> = {
-	title: 'Components/ScrollArea',
+	title: 'Components/FormField/ScrollArea',
 	component: ScrollArea,
 	tags: ['autodocs'],
 	parameters: {
