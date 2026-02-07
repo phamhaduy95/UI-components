@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import DatePicker from '@components/DatePicker';
+import DateRangePicker from '@components/DateRangePicker';
 
-const meta: Meta<typeof DatePicker> = {
-	title: 'Components/DatePicker',
-	component: DatePicker,
+const meta: Meta<typeof DateRangePicker> = {
+	title: 'Components/FormField/DateRangePicker',
+	component: DateRangePicker,
 	tags: ['autodocs'],
 	parameters: {
 		layout: 'padded'
@@ -19,36 +19,36 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 /**
- * The default date picker with a label.
+ * The default date range picker with a label.
  */
 export const Default: Story = {
 	args: {
-		label: 'Select a date'
+		label: 'Select a range'
 	}
 };
 
 /**
- * Date picker with a pre-selected value.
+ * Date range picker with a pre-selected range.
  */
 export const WithValue: Story = {
 	args: {
-		label: 'Selected date',
-		value: '2024-05-20'
+		label: 'Selected range',
+		value: ['2024-05-20', '2024-05-25']
 	}
 };
 
 /**
- * Date picker without a label.
+ * Date range picker without a label.
  */
 export const NoLabel: Story = {
 	args: {
-		'aria-label': 'Select date'
+		'aria-label': 'Select date range'
 	}
 };
 
 export const Disabled: Story = {
 	args: {
-		label: 'Disabled date picker',
+		label: 'Disabled',
 		disabled: true
 	}
 };

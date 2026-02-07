@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import MultipleSelect from '@components/MultipleSelect';
 
 const meta: Meta<typeof MultipleSelect> = {
-	title: 'Components/MultipleSelect',
+	title: 'Components/FormField/MultipleSelect',
 	component: MultipleSelect,
 	tags: ['autodocs'],
 	parameters: {
