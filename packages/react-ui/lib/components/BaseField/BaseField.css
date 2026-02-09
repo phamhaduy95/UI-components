@@ -1,11 +1,11 @@
-.FormField {
+.BaseField {
 	--color-focused: var(--color-primary);
 }
-.FormField > .SupportingText {
+.BaseField > .SupportingText {
 	padding: 0;
 	margin-top: 4px;
 }
-.FormField_Field {
+.BaseField_Field {
 	display: flex;
 	width: 100%;
 	align-items: center;
@@ -40,7 +40,7 @@
 		--color-focused: var(--color-success);
 	}
 
-	& > .FormField_TrailingIcon {
+	& > .BaseField_TrailingIcon {
 		display: flex;
 		align-items: center;
 		margin-left: auto;

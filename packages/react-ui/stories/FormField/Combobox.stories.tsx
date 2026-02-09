@@ -39,8 +39,7 @@ export const Default: Story = {
 	args: {
 		label: 'Framework',
 		placeholder: 'Search for a framework',
-		items,
-		open: true
+		items
 	}
 };
 

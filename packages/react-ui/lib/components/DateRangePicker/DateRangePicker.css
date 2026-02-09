@@ -12,6 +12,19 @@
 		margin-left: auto;
 	}
 
+	> .DatePicker_InputGroup {
+		display: flex;
+		width: 100%;
+		gap: 4px;
+		> input {
+			flex-grow: 0;
+			padding: 0;
+			outline: none;
+			field-sizing: content;
+			color: inherit;
+		}
+	}
+
 	&[data-placeholder-shown] {
 		color: var(--color-outline);
 	}

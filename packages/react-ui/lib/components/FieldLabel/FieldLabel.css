@@ -1,4 +1,4 @@
-.FormLabel {
+.FieldLabel {
 	pointer-events: none;
 	margin: 0.25rem;
 	color: var(--color-on-surface-variant);
@@ -14,6 +14,6 @@
 	}
 }
 
-.FormLabel_Required {
+.FieldLabel_Required {
 	color: var(--color-error);
 }

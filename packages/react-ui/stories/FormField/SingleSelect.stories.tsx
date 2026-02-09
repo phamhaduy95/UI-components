@@ -13,7 +13,13 @@ const meta: Meta<typeof SingleSelect> = {
 		status: {
 			control: 'select',
 			options: ['default', 'error', 'success', 'warning']
-		}
+		},
+		clearable: { control: 'boolean' },
+		disabled: { control: 'boolean' },
+		supportingText: { control: 'text' }
+	},
+	args: {
+		supportingText: 'Please select a item.'
 	}
 };
 
@@ -35,14 +41,14 @@ export const Default: Story = {
 	args: {
 		label: 'Framework',
 		placeholder: 'Select a framework',
-		items
+		items,
+		supportingText: 'Please select a framework.'
 	}
 };
-
 /**
  * Single select with a pre-selected value.
  */
-export const WithValue: Story = {
+export const Controllable: Story = {
 	args: {
 		label: 'Framework',
 		value: 'react',
@@ -80,6 +86,14 @@ export const Clearable: Story = {
 	args: {
 		label: 'Framework',
 		clearable: true,
+		items
+	}
+};
+
+export const Required: Story = {
+	args: {
+		label: 'Framework',
+		required: true,
 		items
 	}
 };

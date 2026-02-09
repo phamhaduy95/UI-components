@@ -6,12 +6,14 @@ import {
 
 import { Portal } from '@ark-ui/react/portal';
 import BaseCalendarView from '@components/BaseCalendarView/BaseCalendarView';
-import FormLabel from '@components/FormLabel/FormLabel';
+
 import { CalendarIcon } from '@radix-ui/react-icons';
-import { AriaAttributes, useId, useMemo } from 'react';
+import { AriaAttributes, memo, useId, useMemo } from 'react';
 
 import './DateRangePicker.css';
-import '../FormField/FormField.css';
+
+import BaseField from '@components/BaseField';
+import { FieldStatus } from '@components/type';
 
 export interface DateRangePickerProps
 	extends AriaAttributes,
@@ -26,6 +28,8 @@ export interface DateRangePickerProps
 	value?: string[];
 	onValueChange?: (value?: string[]) => void;
 	disabled?: boolean;
+	supportingText?: string;
+	status?: FieldStatus;
 }
 
 const DateRangePicker = (props: DateRangePickerProps) => {
@@ -34,13 +38,13 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 		'aria-label': ariaLabel,
 		id,
 		value,
-		onValueChange,
 		open,
+		onValueChange,
 		onOpenChange,
-		disabled
+		disabled,
+		supportingText,
+		status
 	} = props;
-
-	const uuid = useId();
 
 	const internalValue = useMemo(() => (value ? parseDate(value) : undefined), [value]);
 
@@ -50,6 +54,8 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 			onValueChange(dates);
 		}
 	};
+
+	const supportingTextId = supportingText ? useId() : undefined;
 
 	return (
 		<ArkDatePicker.Root
@@ -61,38 +67,39 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 			open={open}
 			onOpenChange={onOpenChange}
 			disabled={disabled}
+			asChild
 		>
-			<FormLabel
-				type="p"
-				id={uuid}
+			<BaseField
+				label={label}
+				supportingText={supportingText}
+				supportingTextId={supportingTextId}
+				status={status}
+				labelElement={ArkDatePicker.Label}
 			>
-				{label}
-			</FormLabel>
-			<ArkDatePicker.Control
-				className="FormField_Field DatePicker_InputField"
-				aria-role="group"
-				aria-labelledby={uuid}
-				aria-label={ariaLabel}
-				aria-disabled={disabled}
-				asChild
-			>
-				<ArkDatePicker.Trigger>
+				<ArkDatePicker.Control
+					className="BaseField_Field DatePicker_InputField"
+					aria-label={ariaLabel}
+					aria-disabled={disabled}
+					aria-describedby={supportingTextId}
+				>
 					<DateRangeDisplay />
-					<div className="Field_TrailingIcon">
-						<CalendarIcon
-							height={16}
-							width={16}
-						/>
-					</div>
-				</ArkDatePicker.Trigger>
-			</ArkDatePicker.Control>
-			<Portal>
-				<ArkDatePicker.Positioner>
-					<ArkDatePicker.Content>
-						<BaseCalendarView />
-					</ArkDatePicker.Content>
-				</ArkDatePicker.Positioner>
-			</Portal>
+					<ArkDatePicker.Trigger>
+						<div className="Field_TrailingIcon">
+							<CalendarIcon
+								height={16}
+								width={16}
+							/>
+						</div>
+					</ArkDatePicker.Trigger>
+				</ArkDatePicker.Control>
+				<Portal>
+					<ArkDatePicker.Positioner>
+						<ArkDatePicker.Content>
+							<BaseCalendarView />
+						</ArkDatePicker.Content>
+					</ArkDatePicker.Positioner>
+				</Portal>
+			</BaseField>
 		</ArkDatePicker.Root>
 	);
 };
@@ -100,13 +107,33 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 export default DateRangePicker;
 
 const DateRangeDisplay = () => {
-	const { valueAsString } = useDatePickerContext();
+	const { valueAsString, getInputProps } = useDatePickerContext();
+
+	const { placeholder } = getInputProps();
+
+	console.log(valueAsString);
 	const [startDate, endDate] = valueAsString;
 
-	if (startDate)
-		return (
-			<span>
-				{startDate} - {endDate}
-			</span>
-		);
+	const defaultWidth = placeholder ? `${placeholder.length}ch` : '12ch';
+
+	const startInputWidth = startDate ? `${startDate.length}ch` : defaultWidth;
+	const endInputWidth = endDate ? `${endDate.length}ch` : defaultWidth;
+
+	return (
+		<div className="DatePicker_InputGroup">
+			<ArkDatePicker.Input
+				index={0}
+				name="startDate"
+				value={startDate}
+				style={{ width: startInputWidth }}
+			/>
+			<span>&mdash;</span>
+			<ArkDatePicker.Input
+				index={1}
+				name="endDate"
+				value={endDate}
+				style={{ width: endInputWidth }}
+			/>
+		</div>
+	);
 };
