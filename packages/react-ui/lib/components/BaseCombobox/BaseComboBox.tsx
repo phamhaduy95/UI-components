@@ -1,15 +1,14 @@
 import { Combobox, createListCollection } from '@ark-ui/react/combobox';
 import { Portal } from '@ark-ui/react/portal';
 
-import SupportingText from '@components/SupportingText';
 import { FieldStatus, SelectItem } from '@components/type';
 import { CheckIcon, ChevronDownIcon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
-import { HTMLAttributes, JSX, Ref, useMemo, useState } from 'react';
+import { HTMLAttributes, JSX, Ref, useId, useMemo, useState } from 'react';
 
-import '../FormField/FormField.css';
 import './ComboBox.css';
 import '../DropDownMenu/Menu.css';
+import BaseField from '@components/BaseField';
 
 export interface BaseComboboxProps extends HTMLAttributes<HTMLInputElement> {
 	className?: string;
@@ -44,6 +43,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 		className,
 		supportingText,
 		ref,
+		required,
 		inputRef,
 		'data-testid': dataTestid,
 		CustomValueText,
@@ -52,6 +52,8 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 		onOpenChange,
 		...rest
 	} = props;
+
+	const supportingTextId = supportingText ? useId() : undefined;
 
 	const [searchValue, setSearchValue] = useState('');
 
@@ -92,7 +94,11 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 	const renderEmptyItemMessage = () => {
 		if (filteredItems.length === 0)
 			return (
-				<Combobox.Item className="Menu_Item" key={'no item'} item={{}}>
+				<Combobox.Item
+					className="Menu_Item"
+					key={'no item'}
+					item={{}}
+				>
 					<Combobox.ItemText asChild>
 						<p>No Item founded</p>
 					</Combobox.ItemText>
@@ -102,7 +108,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 
 	return (
 		<Combobox.Root
-			className={classNames('FormField Combobox', className)}
+			className={classNames('Combobox', className)}
 			collection={collection}
 			onInputValueChange={(data) => {
 				setSearchValue(data.inputValue.trim());
@@ -120,43 +126,65 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 			open={open}
 			data-testid={dataTestid}
 		>
-			<Combobox.Label className="FormLabel" data-status={status}>
-				{label}
-			</Combobox.Label>
-			<Combobox.Control
-				className="FormField_Field Combobox_Field"
-				data-status={status}
-				aria-disabled={disabled}
+			<BaseField
+				label={label}
+				supportingText={supportingText}
+				status={status}
+				disabled={disabled}
+				required={required}
+				labelElement={Combobox.Label}
+				supportingTextId={supportingTextId}
 			>
-				{CustomValueText ?? (
-					<Combobox.Input className="Combobox_Input" disabled={disabled} ref={inputRef} {...rest} />
-				)}
-				<Combobox.Trigger className="Combobox_Trigger" aria-label="Trigger popup">
-					<ChevronDownIcon className="Combobox_TriggerIcon" />
-				</Combobox.Trigger>
-			</Combobox.Control>
-
-			<SupportingText>{supportingText}</SupportingText>
-			<Portal>
-				<Combobox.Positioner
-					className="Menu_Positioner"
-					style={{ zIndex: 'var(--menu-popup-z-index)' }}
+				<Combobox.Control
+					className="BaseField_Field Combobox_Field"
+					data-status={status}
+					aria-disabled={disabled}
 				>
-					<Combobox.Content className="Menu Combobox_Content">
-						{collection.items.map((item) => (
-							<Combobox.Item className="Menu_Item" key={item.value} item={item}>
-								<Combobox.ItemText asChild>
-									<p>{highlightMatchedSearchValue(item.label)}</p>
-								</Combobox.ItemText>
-								<Combobox.ItemIndicator className="MenuItem_TrailingIcon">
-									<CheckIcon height={16} width={16} />
-								</Combobox.ItemIndicator>
-							</Combobox.Item>
-						))}
-						{renderEmptyItemMessage()}
-					</Combobox.Content>
-				</Combobox.Positioner>
-			</Portal>
+					{CustomValueText ?? (
+						<Combobox.Input
+							className="Combobox_Input"
+							disabled={disabled}
+							ref={inputRef}
+							{...rest}
+							aria-describedby={supportingTextId}
+						/>
+					)}
+					<Combobox.Trigger
+						className="Combobox_Trigger"
+						aria-label="Trigger popup"
+					>
+						<ChevronDownIcon className="Combobox_TriggerIcon" />
+					</Combobox.Trigger>
+				</Combobox.Control>
+
+				<Portal>
+					<Combobox.Positioner
+						className="Menu_Positioner"
+						style={{ zIndex: 'var(--menu-popup-z-index)' }}
+					>
+						<Combobox.Content className="Menu Combobox_Content">
+							{collection.items.map((item) => (
+								<Combobox.Item
+									className="Menu_Item"
+									key={item.value}
+									item={item}
+								>
+									<Combobox.ItemText asChild>
+										<p>{highlightMatchedSearchValue(item.label)}</p>
+									</Combobox.ItemText>
+									<Combobox.ItemIndicator className="MenuItem_TrailingIcon">
+										<CheckIcon
+											height={16}
+											width={16}
+										/>
+									</Combobox.ItemIndicator>
+								</Combobox.Item>
+							))}
+							{renderEmptyItemMessage()}
+						</Combobox.Content>
+					</Combobox.Positioner>
+				</Portal>
+			</BaseField>
 		</Combobox.Root>
 	);
 };

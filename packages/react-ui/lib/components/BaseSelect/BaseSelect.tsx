@@ -1,15 +1,16 @@
 import { HTMLAttributes, Ref, useId } from 'react';
 
 import { Portal } from '@ark-ui/react/portal';
-import { Select, createListCollection } from '@ark-ui/react/select';
+import { Select as ArkSelect, createListCollection } from '@ark-ui/react/select';
 import { FieldStatus, SelectItem } from '@components/type';
 import { CheckIcon, ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
-import SupportingText from '../SupportingText';
 
 import '../DropDownMenu/Menu.css';
-import '../FormField/FormField.css';
+
 import './Select.css';
+
+import BaseField from '@components/BaseField';
 
 export type BaseSelectProps = HTMLAttributes<HTMLButtonElement> & {
 	className?: string;
@@ -28,7 +29,7 @@ export type BaseSelectProps = HTMLAttributes<HTMLButtonElement> & {
 	name?: string;
 	multiple?: boolean;
 	CustomValueText?: React.ReactNode;
-	onValueChange?: Select.RootProps<SelectItem>['onValueChange'];
+	onValueChange?: ArkSelect.RootProps<SelectItem>['onValueChange'];
 };
 
 const BaseSelect = ({
@@ -44,6 +45,7 @@ const BaseSelect = ({
 	loopFocus,
 	clearable,
 	value,
+	required,
 	multiple,
 	onValueChange,
 	CustomValueText,
@@ -52,9 +54,11 @@ const BaseSelect = ({
 }: BaseSelectProps) => {
 	const collection = createListCollection({ items });
 	const supportingTextId = useId();
+	const inputId = useId();
+
 	return (
-		<Select.Root
-			className={classNames('FormField Select_Root', className)}
+		<ArkSelect.Root
+			className={classNames('Select_Root', className)}
 			collection={collection}
 			disabled={disabled}
 			deselectable={deselectable}
@@ -63,80 +67,83 @@ const BaseSelect = ({
 			multiple={multiple}
 			onValueChange={onValueChange}
 			name={name}
+			asChild
 		>
-			<Select.Label
-				className="FormLabel"
-				data-status={status}
-			>
-				{label}
-			</Select.Label>
-
-			<Select.Trigger
-				ref={ref}
-				className="FormField_Field Select_InputField"
-				aria-disabled={disabled}
-				data-status={status}
-				{...rest}
-				asChild
-				aria-describedby={supportingTextId}
-			>
-				<div tabIndex={0}>
-					{CustomValueText ?? (
-						<Select.ValueText
-							className="Select_Value"
-							placeholder={placeholder}
-						/>
-					)}
-					<div className="FormField_TrailingIcon">
-						<ChevronDownIcon
-							className="Select_ToggleIcon"
-							width={20}
-							height={20}
-						/>
-						{clearable ? (
-							<Select.ClearTrigger className="Select_ClearButton">
-								<Cross2Icon
-									width={20}
-									height={20}
-								/>
-							</Select.ClearTrigger>
-						) : null}
-					</div>
-				</div>
-			</Select.Trigger>
-			<SupportingText
-				show={!!supportingText}
+			<BaseField
+				label={label}
+				supportingText={supportingText}
 				status={status}
-				id={supportingTextId}
+				labelElement={ArkSelect.Label}
+				supportingTextId={supportingTextId}
+				disabled={disabled}
+				clearable={clearable}
+				required={required}
 			>
-				{supportingText}
-			</SupportingText>
-			<Portal>
-				<Select.Positioner
-					className="Positioner"
-					style={{ zIndex: 'var(--menu-popup-z-index)' }}
+				<ArkSelect.Trigger
+					ref={ref}
+					className="BaseField_Field Select_InputField"
+					aria-disabled={disabled}
+					data-status={status}
+					{...rest}
+					asChild
+					aria-describedby={supportingTextId}
 				>
-					<Select.Content className="Menu SelectContent">
-						{collection.items.map((item) => (
-							<Select.Item
-								className="Menu_Item SelectItem"
-								key={item.value}
-								item={item}
-							>
-								<Select.ItemText>{item.label}</Select.ItemText>
-								<Select.ItemIndicator className="MenuItem_TrailingIcon">
-									<CheckIcon
-										height={16}
-										width={16}
+					<div tabIndex={0}>
+						{CustomValueText ?? (
+							<ArkSelect.ValueText
+								className="Select_Value"
+								placeholder={placeholder}
+							/>
+						)}
+						<div className="BaseField_TrailingIcon">
+							<ChevronDownIcon
+								className="Select_ToggleIcon"
+								width={20}
+								height={20}
+							/>
+							{clearable ? (
+								<ArkSelect.ClearTrigger className="Select_ClearButton">
+									<Cross2Icon
+										width={20}
+										height={20}
 									/>
-								</Select.ItemIndicator>
-							</Select.Item>
-						))}
-					</Select.Content>
-				</Select.Positioner>
-			</Portal>
-			<Select.HiddenSelect name={name} />
-		</Select.Root>
+								</ArkSelect.ClearTrigger>
+							) : null}
+						</div>
+					</div>
+				</ArkSelect.Trigger>
+
+				<ArkSelect.HiddenSelect
+					name={name}
+					id={inputId}
+					aria-describedby={supportingTextId}
+				/>
+				<Portal>
+					<ArkSelect.Positioner
+						className="Positioner"
+						style={{ zIndex: 'var(--menu-popup-z-index)' }}
+					>
+						<ArkSelect.Content className="Menu SelectContent">
+							{collection.items.map((item) => (
+								<ArkSelect.Item
+									className="Menu_Item SelectItem"
+									key={item.value}
+									item={item}
+								>
+									<ArkSelect.ItemText>{item.label}</ArkSelect.ItemText>
+									<ArkSelect.ItemIndicator className="MenuItem_TrailingIcon">
+										<CheckIcon
+											height={16}
+											width={16}
+										/>
+									</ArkSelect.ItemIndicator>
+								</ArkSelect.Item>
+							))}
+						</ArkSelect.Content>
+					</ArkSelect.Positioner>
+				</Portal>
+			</BaseField>
+		</ArkSelect.Root>
 	);
 };
 

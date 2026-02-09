@@ -3,10 +3,12 @@ import { AriaAttributes, JSX, useId, useMemo } from 'react';
 import { DatePicker as ArkDatePicker, DateValue, parseDate } from '@ark-ui/react/date-picker';
 import { Portal } from '@ark-ui/react/portal';
 import BaseCalendarView from '@components/BaseCalendarView/BaseCalendarView';
-import FormLabel from '@components/FormLabel/FormLabel';
+
 import { CalendarIcon } from '@radix-ui/react-icons';
 
 import './DatePicker.css';
+import BaseField from '@components/BaseField';
+import { FieldStatus } from '@components/type';
 
 export interface DatePickerProps
 	extends AriaAttributes,
@@ -19,8 +21,10 @@ export interface DatePickerProps
 	inputId?: string;
 	'data-testid'?: string;
 	value?: string;
-	onValueChange?: (value?: string, date?: DateValue) => void;
 	disabled?: boolean;
+	supportingText?: string;
+	status?: FieldStatus;
+	onValueChange?: (value?: string, date?: DateValue) => void;
 }
 
 const DatePicker = (props: DatePickerProps): JSX.Element => {
@@ -37,10 +41,12 @@ const DatePicker = (props: DatePickerProps): JSX.Element => {
 		onOpenChange,
 		format,
 		fixedWeeks,
+		supportingText,
+		status,
 		...rest
 	} = props;
 
-	const uuid = useId();
+	const supportingTextId = supportingText ? useId() : undefined;
 
 	const internalValue = useMemo(() => (value ? [parseDate(value)] : undefined), [value]);
 
@@ -52,45 +58,48 @@ const DatePicker = (props: DatePickerProps): JSX.Element => {
 	return (
 		<ArkDatePicker.Root
 			className="DatePicker"
-			id={id}
 			value={internalValue}
-			onValueChange={handleDateChange}
 			selectionMode={selectionMode}
 			open={open}
-			onOpenChange={onOpenChange}
 			fixedWeeks={fixedWeeks}
 			format={format}
 			disabled={disabled}
 			data-testid={dataTestId}
+			onValueChange={handleDateChange}
+			onOpenChange={onOpenChange}
+			asChild
 		>
-			<FormLabel
-				type="p"
-				id={uuid}
+			<BaseField
+				label={label}
+				supportingText={supportingText}
+				status={status}
+				disabled={disabled}
+				labelElement={ArkDatePicker.Label}
+				supportingTextId={supportingTextId}
 			>
-				{label}
-			</FormLabel>
-			<ArkDatePicker.Control
-				className="FormField_Field DatePicker_InputField"
-				aria-role="group"
-				aria-labelledby={uuid}
-				aria-label={ariaLabel}
-				aria-disabled={disabled}
-			>
-				<ArkDatePicker.Input className="DatePicker_Input" />
-				<ArkDatePicker.Trigger>
-					<CalendarIcon
-						height={16}
-						width={16}
+				<ArkDatePicker.Control
+					className="BaseField_Field DatePicker_InputField"
+					aria-disabled={disabled}
+				>
+					<ArkDatePicker.Input
+						className="DatePicker_Input"
+						aria-describedby={supportingTextId}
 					/>
-				</ArkDatePicker.Trigger>
-			</ArkDatePicker.Control>
-			<Portal>
-				<ArkDatePicker.Positioner className="Menu_Positioner">
-					<ArkDatePicker.Content>
-						<BaseCalendarView />
-					</ArkDatePicker.Content>
-				</ArkDatePicker.Positioner>
-			</Portal>
+					<ArkDatePicker.Trigger aria-label="Open/Close Calendar">
+						<CalendarIcon
+							height={16}
+							width={16}
+						/>
+					</ArkDatePicker.Trigger>
+				</ArkDatePicker.Control>
+				<Portal>
+					<ArkDatePicker.Positioner className="Menu_Positioner">
+						<ArkDatePicker.Content>
+							<BaseCalendarView />
+						</ArkDatePicker.Content>
+					</ArkDatePicker.Positioner>
+				</Portal>
+			</BaseField>
 		</ArkDatePicker.Root>
 	);
 };

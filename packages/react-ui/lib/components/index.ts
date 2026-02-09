@@ -19,8 +19,8 @@ export { default as DatePicker } from './DatePicker';
 export * from './DateRangePicker';
 
 export { default as DateRangePicker } from './DateRangePicker';
-export * from './FormLabel';
-export { default as FormLabel } from './FormLabel';
+export * from './FieldLabel';
+export { default as FieldLabel } from './FieldLabel';
 
 export * from './DropDownMenu';
 export { default as DropDownMenu } from './DropDownMenu';

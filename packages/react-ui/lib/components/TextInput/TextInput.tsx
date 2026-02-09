@@ -1,22 +1,16 @@
-import { ChangeEvent, HTMLAttributes, JSX, useId } from 'react';
+import { ChangeEvent, HTMLAttributes, JSX, useId, useState } from 'react';
 
-import '@components/FormField/FormField.css';
-import FormLabel from '@components/FormLabel/FormLabel';
-import SupportingText from '@components/SupportingText/SupportingText';
-import { FieldStatus } from '@components/type';
 import classNames from 'classnames';
 
 import './TextInput.css';
+import BaseField, { BaseFieldProps } from '@components/BaseField';
+import { Cross2Icon } from '@radix-ui/react-icons';
 
-export interface TextInputProp extends HTMLAttributes<HTMLInputElement> {
+export interface TextInputProp
+	extends HTMLAttributes<HTMLInputElement>,
+		Omit<BaseFieldProps, 'children'> {
 	value?: string;
 	onValueChange?: (value: string) => void;
-	labelText?: string;
-	status?: FieldStatus;
-	supportingText?: string;
-	clearable?: boolean;
-	disabled?: boolean;
-	className?: string;
 	required?: boolean;
 	name?: string;
 	placeholder?: string;
@@ -25,45 +19,54 @@ export interface TextInputProp extends HTMLAttributes<HTMLInputElement> {
 
 const TextInput = (props: TextInputProp): JSX.Element => {
 	const {
-		labelText,
 		value,
 		className,
 		status,
 		required,
-		clearable,
-		disabled,
+		label,
 		supportingText,
 		placeholder,
 		onChange,
 		onValueChange,
+		disabled,
+		clearable,
 		'data-testId': dataTestId,
 		...rest
 	} = props;
 
 	const inputId = useId();
-	const supportingTextId = useId();
+	const supportingTextId = supportingText ? useId() : undefined;
+
+	const [internalValue, setInternalValue] = useState(value);
+
+	const state = value ? value : internalValue;
 
 	const handleInputChanged = (e: ChangeEvent<HTMLInputElement>) => {
 		if (onChange) onChange(e);
 		const value = (e.target as HTMLInputElement).value;
+		setInternalValue(value);
 		if (onValueChange) onValueChange(value);
 	};
 
+	const handleClear = () => {
+		setInternalValue('');
+		if (onValueChange) onValueChange('');
+	};
+
+	const shouldShowClearIcon = clearable && state && state.length > 0;
+
 	return (
-		<div
-			className={classNames('FormField TextInput', className)}
-			data-testId={dataTestId}
+		<BaseField
+			className={classNames('TextInput', className)}
+			label={label}
+			supportingText={supportingText}
+			status={status}
+			required={required}
+			inputId={inputId}
+			supportingTextId={supportingTextId}
 		>
-			<FormLabel
-				className="TextInput_Label"
-				htmlFor={inputId}
-				status={status}
-				required={required}
-			>
-				{labelText}
-			</FormLabel>
 			<div
-				className="FormField_Field TextInput_InputField"
+				className="BaseField_Field TextInput_InputField"
 				data-status={status}
 				data-clearable={clearable}
 				aria-disabled={disabled}
@@ -76,20 +79,24 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 					aria-disabled={disabled}
 					aria-describedby={supportingTextId}
 					aria-invalid={status === 'error'}
-					value={value}
+					value={state}
 					onChange={handleInputChanged}
 					{...rest}
 				/>
+				{shouldShowClearIcon && (
+					<button
+						type="button"
+						aria-label="Clear"
+						onClick={handleClear}
+					>
+						<Cross2Icon
+							width={20}
+							height={20}
+						/>
+					</button>
+				)}
 			</div>
-			<SupportingText
-				className="FormField_SupportingText TextInput_SupportingText"
-				id={supportingTextId}
-				status={status}
-				show={!!supportingText}
-			>
-				{supportingText}
-			</SupportingText>
-		</div>
+		</BaseField>
 	);
 };
 
