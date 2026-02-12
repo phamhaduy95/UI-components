@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import Button, { ButtonProps } from '@components/Button';
 import './IconButton.css';
+import { JSX } from 'react';
 
 export interface IconButtonProps extends ButtonProps {
 	children: React.ReactNode;
 }
 
-const IconButton = (props: IconButtonProps) => {
+const IconButton = (props: IconButtonProps): JSX.Element => {
 	const { className, ref, children, ...rest } = props;
 
 	return (

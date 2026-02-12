@@ -1,13 +1,13 @@
 import BaseSelect, { BaseSelectProps } from '@components/BaseSelect';
 import { SelectItem } from '@components/type';
-import { useMemo } from 'react';
+import { JSX, useMemo } from 'react';
 
 export interface SingleSelectProps extends Omit<BaseSelectProps, 'value' | 'onValueChange'> {
 	value?: string;
 	onValueChange?: (value: string, item: SelectItem) => void;
 }
 
-const SingleSelect = (props: SingleSelectProps) => {
+const SingleSelect = (props: SingleSelectProps): JSX.Element => {
 	const { value, onValueChange, ...rest } = props;
 	const mappedValue = useMemo(() => {
 		return value ? [value] : undefined;

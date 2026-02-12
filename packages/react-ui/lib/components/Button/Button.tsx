@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Ref } from 'react';
+import { JSX, Ref } from 'react';
 
 import './Button.css';
 
@@ -17,7 +17,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 	color?: ButtonColor;
 }
 
-const Button = (props: ButtonProps) => {
+const Button = (props: ButtonProps): JSX.Element => {
 	const {
 		children,
 		className,

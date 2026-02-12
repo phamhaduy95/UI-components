@@ -1,4 +1,4 @@
-import { HTMLAttributes, Ref, useId } from 'react';
+import { HTMLAttributes, JSX, Ref, useId } from 'react';
 
 import { Portal } from '@ark-ui/react/portal';
 import { Select as ArkSelect, createListCollection } from '@ark-ui/react/select';
@@ -51,7 +51,7 @@ const BaseSelect = ({
 	CustomValueText,
 	name,
 	...rest
-}: BaseSelectProps) => {
+}: BaseSelectProps): JSX.Element => {
 	const collection = createListCollection({ items });
 	const supportingTextId = useId();
 	const inputId = useId();
