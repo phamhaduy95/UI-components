@@ -23,32 +23,40 @@ type Story = StoryObj<typeof meta>;
  */
 export const Default: Story = {
 	args: {
-		label: 'Select a date'
+		label: 'Select a date',
+		format: 'MMMM DD, YYYY'
 	}
 };
 
-/**
- * Date picker with a pre-selected value.
- */
-export const WithValue: Story = {
+export const Clearable: Story = {
 	args: {
-		label: 'Selected date',
-		value: '2024-05-20'
+		label: 'Clearable',
+		clearable: true
 	}
 };
 
-/**
- * Date picker without a label.
- */
-export const NoLabel: Story = {
-	args: {
-		'aria-label': 'Select date'
-	}
-};
+// /**
+//  * Date picker with a pre-selected value.
+//  */
+// export const WithValue: Story = {
+// 	args: {
+// 		label: 'Selected date',
+// 		value: '2024-05-20'
+// 	}
+// };
 
-export const Disabled: Story = {
-	args: {
-		label: 'Disabled date picker',
-		disabled: true
-	}
-};
+// /**
+//  * Date picker without a label.
+//  */
+// export const NoLabel: Story = {
+// 	args: {
+// 		'aria-label': 'Select date'
+// 	}
+// };
+
+// export const Disabled: Story = {
+// 	args: {
+// 		label: 'Disabled date picker',
+// 		disabled: true
+// 	}
+// };

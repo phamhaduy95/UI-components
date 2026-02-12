@@ -1,11 +1,12 @@
 import FieldLabel, { FieldLabelProps } from '@components/FieldLabel';
-import SupportingText, { SupportingTextProps } from '@components/SupportingText';
+import SupportingText from '@components/SupportingText';
 import { FieldStatus } from '@components/type';
 import classNames from 'classnames';
 
 import './BaseField.css';
+import { ComponentProps, Ref } from 'react';
 
-export interface BaseFieldProps {
+export interface BaseFieldProps extends ComponentProps<'div'> {
 	children: React.ReactNode;
 	className?: string;
 	label?: string;
@@ -13,12 +14,12 @@ export interface BaseFieldProps {
 	labelId?: string;
 	supportingText?: string;
 	status?: FieldStatus;
+	ref?: Ref<HTMLDivElement>;
 	required?: boolean;
 	inputId?: string;
 	supportingTextId?: string;
 	disabled?: boolean;
 	clearable?: boolean;
-	CustomLabel?: (props: FieldLabelProps) => React.ReactNode;
 }
 
 const BaseField = ({
@@ -28,14 +29,15 @@ const BaseField = ({
 	supportingText,
 	status,
 	required,
+	ref,
 	labelId,
 	labelElement,
 	inputId,
 	supportingTextId,
-	CustomLabel
+	...rest
 }: BaseFieldProps) => {
 	return (
-		<div className={classNames('BaseField', className)}>
+		<div ref={ref} className={classNames('BaseField', className)} data-status={status} {...rest}>
 			<FieldLabel
 				className="BaseField_Label"
 				status={status}

@@ -28,9 +28,6 @@ const items = [
 	{ label: 'Svelte', value: 'svelte' }
 ];
 
-/**
- * The default multiple select with a label.
- */
 export const Default: Story = {
 	args: {
 		label: 'Frameworks',
@@ -39,9 +36,6 @@ export const Default: Story = {
 	}
 };
 
-/**
- * Multiple select with pre-selected values.
- */
 export const WithValues: Story = {
 	args: {
 		label: 'Frameworks',
@@ -50,9 +44,6 @@ export const WithValues: Story = {
 	}
 };
 
-/**
- * Multiple select with error status.
- */
 export const Error: Story = {
 	args: {
 		label: 'Frameworks',

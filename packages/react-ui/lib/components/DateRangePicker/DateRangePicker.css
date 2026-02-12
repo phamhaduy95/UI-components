@@ -1,41 +1,31 @@
 .DatePicker {
 	&:is(:focus-within, [data-state='open']) {
-		> .DatePicker_InputField {
+		> .BaseField_Field {
 			border: 2px solid var(--color-primary);
 			outline-style: none;
 		}
 	}
 }
 
-.DatePicker_InputField {
-	> .Field_TrailingIcon {
+.DateRangePicker_InputField {
+	width: 100%;
+	display: flex;
+	align-items: center;
+
+	> .DateRangePicker_TrailingIcon {
 		margin-left: auto;
 	}
 
-	> .DatePicker_InputGroup {
+	> .DateRangePicker_DisplayArea {
 		display: flex;
 		width: 100%;
 		gap: 4px;
-		> input {
-			flex-grow: 0;
-			padding: 0;
-			outline: none;
-			field-sizing: content;
-			color: inherit;
+
+		> span {
+			width: max-content;
+			&[data-greyout='true'] {
+				color: var(--color-outline);
+			}
 		}
-	}
-
-	&[data-placeholder-shown] {
-		color: var(--color-outline);
-	}
-
-	&[data-status='error'] {
-		border-color: var(--color-error);
-	}
-	&[data-status='warning'] {
-		border-color: var(--color-warning);
-	}
-	&[data-status='success'] {
-		border-color: var(--color-success);
 	}
 }

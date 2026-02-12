@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { ScrollArea as ArkScrollArea } from '@ark-ui/react/scroll-area';
 import './ScrollArea.css';
+import { JSX } from 'react';
 
 export interface ScrollAreaProps extends ArkScrollArea.RootProps {
 	children?: React.ReactNode;
@@ -8,7 +9,7 @@ export interface ScrollAreaProps extends ArkScrollArea.RootProps {
 	className?: string;
 }
 
-const ScrollArea = (props: ScrollAreaProps) => {
+const ScrollArea = (props: ScrollAreaProps): JSX.Element => {
 	const { children, maxHeight, className, ...rest } = props;
 
 	return (

@@ -10,12 +10,12 @@ type StandardItem = ItemObject & {
 	type?: never;
 };
 
-interface NestedMenu extends ItemObject {
+export interface NestedMenu extends ItemObject {
 	type: 'nested';
 	items: MenuItem[];
 }
 
-interface GroupItem extends ItemObject {
+export interface GroupItem extends ItemObject {
 	type: 'group';
 	items: MenuItem[];
 }

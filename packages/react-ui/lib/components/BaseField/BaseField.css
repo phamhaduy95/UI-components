@@ -48,7 +48,7 @@
 		border-color: var(--color-focused);
 	}
 
-	& > .BaseField_TrailingIcon {
+	& > .BaseField_Trailing {
 		display: flex;
 		align-items: center;
 		margin-left: auto;

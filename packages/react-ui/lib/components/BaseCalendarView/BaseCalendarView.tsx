@@ -1,8 +1,9 @@
 import { DatePicker } from '@ark-ui/react/date-picker';
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 import '../Calendar/Calendar.css';
+import { JSX } from 'react';
 
-const BaseCalendarView = () => {
+const BaseCalendarView = (): JSX.Element => {
 	return (
 		<DatePicker.View view="day" className="CalendarView">
 			<DatePicker.Context>
