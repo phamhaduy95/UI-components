@@ -44,16 +44,10 @@ const Collapsible = (props: CollapsibleProps) => {
 			onOpenChange={handleOpenChange}
 			disabled={disabled}
 		>
-			<ArkCollapsible.Trigger
-				className="Collapsible_Trigger"
-				asChild={overrideTrigger}
-			>
+			<ArkCollapsible.Trigger className="Collapsible_Trigger" asChild={overrideTrigger}>
 				{Trigger({ open })}
 			</ArkCollapsible.Trigger>
-			<ArkCollapsible.Content
-				className="Collapsible_Content"
-				asChild={overrideContent}
-			>
+			<ArkCollapsible.Content className="Collapsible_Content" asChild={overrideContent}>
 				{children}
 			</ArkCollapsible.Content>
 		</ArkCollapsible.Root>

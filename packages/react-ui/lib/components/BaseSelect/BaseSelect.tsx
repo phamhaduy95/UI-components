@@ -90,34 +90,20 @@ const BaseSelect = ({
 				>
 					<div tabIndex={0}>
 						{CustomValueText ?? (
-							<ArkSelect.ValueText
-								className="Select_Value"
-								placeholder={placeholder}
-							/>
+							<ArkSelect.ValueText className="Select_Value" placeholder={placeholder} />
 						)}
 						<div className="BaseField_TrailingIcon">
-							<ChevronDownIcon
-								className="Select_ToggleIcon"
-								width={20}
-								height={20}
-							/>
+							<ChevronDownIcon className="Select_ToggleIcon" width={20} height={20} />
 							{clearable ? (
 								<ArkSelect.ClearTrigger className="Select_ClearButton">
-									<Cross2Icon
-										width={20}
-										height={20}
-									/>
+									<Cross2Icon width={20} height={20} />
 								</ArkSelect.ClearTrigger>
 							) : null}
 						</div>
 					</div>
 				</ArkSelect.Trigger>
 
-				<ArkSelect.HiddenSelect
-					name={name}
-					id={inputId}
-					aria-describedby={supportingTextId}
-				/>
+				<ArkSelect.HiddenSelect name={name} id={inputId} aria-describedby={supportingTextId} />
 				<Portal>
 					<ArkSelect.Positioner
 						className="Positioner"
@@ -125,17 +111,10 @@ const BaseSelect = ({
 					>
 						<ArkSelect.Content className="Menu SelectContent">
 							{collection.items.map((item) => (
-								<ArkSelect.Item
-									className="Menu_Item SelectItem"
-									key={item.value}
-									item={item}
-								>
+								<ArkSelect.Item className="Menu_Item SelectItem" key={item.value} item={item}>
 									<ArkSelect.ItemText>{item.label}</ArkSelect.ItemText>
 									<ArkSelect.ItemIndicator className="MenuItem_TrailingIcon">
-										<CheckIcon
-											height={16}
-											width={16}
-										/>
+										<CheckIcon height={16} width={16} />
 									</ArkSelect.ItemIndicator>
 								</ArkSelect.Item>
 							))}

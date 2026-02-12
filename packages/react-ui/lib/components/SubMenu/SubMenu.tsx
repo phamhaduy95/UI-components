@@ -12,11 +12,7 @@ const SubMenu = (props: SubMenuProps): JSX.Element => {
 		<Menu.Root>
 			<Menu.TriggerItem className="Menu_Item">
 				{label}
-				<ChevronRightIcon
-					className="Menu_ExpandItemIcon"
-					height={16}
-					width={16}
-				/>
+				<ChevronRightIcon className="Menu_ExpandItemIcon" height={16} width={16} />
 			</Menu.TriggerItem>
 			<Menu.Positioner>
 				<Menu.Content className="Menu">

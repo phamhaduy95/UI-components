@@ -8,7 +8,7 @@
 		"target": "ESNext",
 		"module": "ESNext",
 		"jsx": "preserve",
-        "jsxImportSource": "react",
+		"jsxImportSource": "react",
 		"incremental": true,
 		"esModuleInterop": true,
 		"moduleResolution": "bundler",

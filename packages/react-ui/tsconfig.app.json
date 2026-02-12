@@ -23,7 +23,7 @@
 		"noUncheckedSideEffectImports": true,
 		"baseUrl": ".",
 		"paths": {
-			"@components/*": ["lib/components/*"],
+			"@components/*": ["lib/components/*"]
 		}
 	},
 	"include": ["tailwind.config.js", "lib/components", "dist"]

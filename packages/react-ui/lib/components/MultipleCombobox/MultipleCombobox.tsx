@@ -24,12 +24,7 @@ const MultipleCombobox = (props: MultipleComboboxProps): JSX.Element => {
 			value={value}
 			onValueChange={handleValueChange}
 			multiple
-			CustomValueText={
-				<MultipleComboboxDisplayValue
-					placeholder={placeholder}
-					ref={inputRef}
-				/>
-			}
+			CustomValueText={<MultipleComboboxDisplayValue placeholder={placeholder} ref={inputRef} />}
 		/>
 	);
 };
