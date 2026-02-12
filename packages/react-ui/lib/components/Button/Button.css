@@ -1,21 +1,275 @@
 .Button {
 	cursor: pointer;
-	border-radius: var(--radius-sm);
-	border-style: solid;
-	padding-inline: 12px;
-	padding-block: 8px;
+	border-radius: var(--radius-xs);
+	border: 1px solid var(--color-outline);
 	font-weight: 500;
-	border-width: 1px;
+	outline: none;
+	transition:
+		color,
+		background-color,
+		border-color 0.2s ease-in-out;
 
-	&[data-variant='filled'] {
-		border-color: var(--color-primary);
-		background-color: var(--color-primary);
-		color: var(--color-on-primary);
-	}
-	&[data-variant='outlined'] {
-		border-color: var(--color-outline);
-	}
 	&[data-variant='text'] {
-		border-color: #0000;
+		border-color: transparent;
+		background-color: transparent;
+	}
+
+	&[data-size='small'] {
+		padding-inline: var(--button-small-padding-inline);
+		padding-block: var(--button-small-padding-block);
+		font-size: var(--font-size-sm);
+	}
+	&[data-size='medium'] {
+		padding-inline: var(--button-medium-padding-inline);
+		padding-block: var(--button-medium-padding-block);
+		font-size: var(--font-size-md);
+	}
+	&[data-size='large'] {
+		padding-inline: var(--button-large-padding-inline);
+		padding-block: var(--button-large-padding-block);
+		font-size: var(--font-size-lg);
+	}
+
+	&:not(:disabled) {
+		&[data-color='primary'] {
+			&[data-variant='contained'] {
+				border-color: var(--color-primary);
+				background-color: var(--color-primary);
+				color: var(--color-on-primary);
+			}
+			&[data-variant='outlined'] {
+				border-color: var(--color-primary);
+				color: var(--color-primary);
+			}
+			&[data-variant='text'] {
+				border-color: transparent;
+				color: var(--color-primary);
+				background-color: transparent;
+			}
+
+			&:is(:hover, :focus) {
+				&[data-variant='contained'] {
+					background-color: var(--color-primary-hover);
+					border-color: var(--color-primary);
+				}
+
+				&[data-variant='outlined'] {
+					background-color: var(--color-primary-hover-layer);
+				}
+
+				&[data-variant='text'] {
+					background-color: var(--color-primary-hover-layer);
+				}
+			}
+
+			&:active {
+				&[data-variant='contained'] {
+					background-color: var(--color-primary-pressed);
+				}
+
+				&[data-variant='outlined'] {
+					background-color: var(--color-primary-pressed-layer);
+				}
+
+				&[data-variant='text'] {
+					background-color: var(--color-primary-pressed-layer);
+				}
+			}
+		}
+
+		&[data-color='secondary'] {
+			&[data-variant='contained'] {
+				border-color: var(--color-secondary);
+				background-color: var(--color-secondary);
+				color: var(--color-on-secondary);
+			}
+			&[data-variant='outlined'] {
+				border-color: var(--color-secondary);
+				color: var(--color-secondary);
+			}
+			&[data-variant='text'] {
+				border-color: transparent;
+				color: var(--color-secondary);
+				background-color: transparent;
+			}
+
+			&:hover {
+				&[data-variant='contained'] {
+					background-color: var(--color-secondary-hover);
+				}
+
+				&[data-variant='outlined'] {
+					background-color: var(--color-secondary-hover-layer);
+				}
+
+				&[data-variant='text'] {
+					background-color: var(--color-secondary-hover-layer);
+				}
+			}
+
+			&:active {
+				&[data-variant='contained'] {
+					background-color: var(--color-secondary-pressed);
+				}
+
+				&[data-variant='outlined'] {
+					background-color: var(--color-secondary-pressed-layer);
+				}
+
+				&[data-variant='text'] {
+					background-color: var(--color-secondary-pressed-layer);
+				}
+			}
+		}
+
+		&[data-color='success'] {
+			&[data-variant='contained'] {
+				border-color: var(--color-success);
+				background-color: var(--color-success);
+				color: var(--color-on-success);
+			}
+			&[data-variant='outlined'] {
+				border-color: var(--color-success);
+				color: var(--color-success);
+			}
+			&[data-variant='text'] {
+				border-color: transparent;
+				color: var(--color-success);
+				background-color: transparent;
+			}
+
+			&:hover {
+				&[data-variant='contained'] {
+					background-color: var(--color-success-hover);
+				}
+
+				&[data-variant='outlined'] {
+					background-color: var(--color-success-hover-layer);
+				}
+
+				&[data-variant='text'] {
+					background-color: var(--color-success-hover-layer);
+				}
+			}
+
+			&:active {
+				&[data-variant='contained'] {
+					background-color: var(--color-success-pressed);
+				}
+
+				&[data-variant='outlined'] {
+					background-color: var(--color-success-pressed-layer);
+				}
+
+				&[data-variant='text'] {
+					background-color: var(--color-success-pressed-layer);
+				}
+			}
+		}
+
+		&[data-color='warning'] {
+			&[data-variant='contained'] {
+				border-color: var(--color-warning);
+				background-color: var(--color-warning);
+				color: var(--color-on-warning);
+			}
+			&[data-variant='outlined'] {
+				border-color: var(--color-warning);
+				color: var(--color-warning);
+			}
+			&[data-variant='text'] {
+				border-color: transparent;
+				color: var(--color-warning);
+				background-color: transparent;
+			}
+
+			&:hover {
+				&[data-variant='contained'] {
+					background-color: var(--color-warning-hover);
+				}
+
+				&[data-variant='outlined'] {
+					background-color: var(--color-warning-hover-layer);
+				}
+
+				&[data-variant='text'] {
+					background-color: var(--color-warning-hover-layer);
+				}
+			}
+
+			&:active {
+				&[data-variant='contained'] {
+					background-color: var(--color-warning-pressed);
+				}
+
+				&[data-variant='outlined'] {
+					background-color: var(--color-warning-pressed-layer);
+				}
+
+				&[data-variant='text'] {
+					background-color: var(--color-warning-pressed-layer);
+				}
+			}
+		}
+
+		&[data-color='error'] {
+			&[data-variant='contained'] {
+				border-color: var(--color-error);
+				background-color: var(--color-error);
+				color: var(--color-on-error);
+			}
+			&[data-variant='outlined'] {
+				border-color: var(--color-error);
+				color: var(--color-error);
+			}
+			&[data-variant='text'] {
+				border-color: transparent;
+				color: var(--color-error);
+				background-color: transparent;
+			}
+
+			&:hover {
+				&[data-variant='contained'] {
+					background-color: var(--color-error-hover);
+				}
+
+				&[data-variant='outlined'] {
+					background-color: var(--color-error-hover-layer);
+				}
+
+				&[data-variant='text'] {
+					background-color: var(--color-error-hover-layer);
+				}
+			}
+
+			&:active {
+				&[data-variant='contained'] {
+					background-color: var(--color-error-pressed);
+				}
+
+				&[data-variant='outlined'] {
+					background-color: var(--color-error-pressed-layer);
+				}
+
+				&[data-variant='text'] {
+					background-color: var(--color-error-pressed-layer);
+				}
+			}
+		}
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		color: var(--color-text-disabled);
+
+		&[data-variant='contained'] {
+			background-color: var(--color-primary-disabled);
+			border-color: var(--color-outline-disabled);
+		}
+
+		&[data-variant='outlined'] {
+			background-color: transparent;
+			border-color: var(--color-outline-disabled);
+		}
 	}
 }

@@ -1,26 +1,41 @@
 import classNames from 'classnames';
-import { JSX, Ref } from 'react';
+import { Ref } from 'react';
 
 import './Button.css';
 
-type ButtonVariant = 'filled' | 'outlined' | 'text';
+type ButtonVariant = 'contained' | 'outlined' | 'text';
+type ButtonSize = 'small' | 'medium' | 'large';
+type ButtonColor = 'primary' | 'secondary' | 'success' | 'warning' | 'error';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	children?: React.ReactNode;
 	ref?: Ref<HTMLButtonElement>;
 	variant?: ButtonVariant;
+	loading?: boolean;
+	size?: ButtonSize;
 	className?: string;
-	a?: string;
+	color?: ButtonColor;
 }
 
-const Button = (props: ButtonProps): JSX.Element => {
-	const { children, className, ref, variant = 'filled', type = 'button', ...rest } = props;
+const Button = (props: ButtonProps) => {
+	const {
+		children,
+		className,
+		ref,
+		variant = 'contained',
+		size = 'medium',
+		type = 'button',
+		color = 'primary',
+		...rest
+	} = props;
 
 	return (
 		<button
 			className={classNames('Button', className)}
 			ref={ref}
 			data-variant={variant}
+			data-size={size}
+			data-color={color}
 			type={type}
 			{...rest}
 		>
