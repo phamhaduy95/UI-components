@@ -6,13 +6,14 @@ import Tag from '@components/Tag';
 import { SelectItem } from '@components/type';
 
 export interface MultipleComboboxProps
-	extends Omit<BaseComboboxProps, 'value' | 'onValueChange' | 'multiple'> {
+	extends Omit<BaseComboboxProps, 'value' | 'onValueChange' | 'multiple' | 'defaultValue'> {
 	value?: string[];
+	defaultValue?: string[];
 	onValueChange?: (value: string[], item?: SelectItem[]) => void;
 }
 
 const MultipleCombobox = (props: MultipleComboboxProps): JSX.Element => {
-	const { value, onValueChange, placeholder, inputRef, ...rest } = props;
+	const { value, defaultValue, onValueChange, placeholder, inputRef, ...rest } = props;
 
 	const handleValueChange: BaseComboboxProps['onValueChange'] = (data) => {
 		if (onValueChange) onValueChange(data.value, data.items);
@@ -24,6 +25,7 @@ const MultipleCombobox = (props: MultipleComboboxProps): JSX.Element => {
 			value={value}
 			onValueChange={handleValueChange}
 			multiple
+			defaultValue={defaultValue}
 			CustomValueText={<MultipleComboboxDisplayValue placeholder={placeholder} ref={inputRef} />}
 		/>
 	);

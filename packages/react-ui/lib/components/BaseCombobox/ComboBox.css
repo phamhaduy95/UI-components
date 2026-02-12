@@ -1,7 +1,5 @@
 .Combobox_Field {
 	cursor: pointer;
-	width: 100%;
-	height: unset;
 	min-height: var(--spacing-container-lg);
 
 	& > .Combobox_Value {
@@ -44,7 +42,7 @@
 	&[data-placeholder-shown] {
 		color: var(--color-outline);
 	}
-	&:is(:focus-within, [data-state='open']) {
+	&:is([data-state='open']) {
 		border: 2px solid var(--color-primary);
 		outline-style: none;
 	}
