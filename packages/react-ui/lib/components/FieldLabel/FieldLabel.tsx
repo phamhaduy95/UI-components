@@ -10,27 +10,27 @@ export interface FieldLabelProps extends HTMLAttributes<HTMLLabelElement> {
 	className?: string;
 	required?: boolean;
 	htmlFor?: string;
+	showLabel?: boolean;
 }
 
 const FieldLabel = (props: FieldLabelProps): JSX.Element => {
-	const { type = 'label', status, children, className, required, ...rest } = props;
-
-	const renderLabelContent = () =>
-		required ? (
-			<>
-				{children} <span className="FieldLabel_Required">*</span>
-			</>
-		) : (
-			children
-		);
+	const { type = 'label', status, children, className, required, showLabel, ...rest } = props;
 
 	const Component = createElement(
 		type,
 		{ ...rest, className: classNames('FieldLabel', className), 'data-status': status },
-		renderLabelContent()
+		children
 	);
 
-	return Component;
+	if (showLabel)
+		return (
+			<p>
+				{Component}
+				{required && <span className="FieldLabel_Required">*</span>}
+			</p>
+		);
+
+	return <></>;
 };
 
 export default FieldLabel;

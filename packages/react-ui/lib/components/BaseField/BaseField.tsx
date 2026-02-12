@@ -1,25 +1,18 @@
 import FieldLabel, { FieldLabelProps } from '@components/FieldLabel';
 import SupportingText from '@components/SupportingText';
-import { FieldStatus } from '@components/type';
+import { CommonFieldProps } from '@components/type';
 import classNames from 'classnames';
 
 import './BaseField.css';
-import { ComponentProps, Ref } from 'react';
+import { HTMLAttributes, Ref } from 'react';
 
-export interface BaseFieldProps extends ComponentProps<'div'> {
+export interface BaseFieldProps extends HTMLAttributes<HTMLDivElement>, CommonFieldProps {
 	children: React.ReactNode;
 	className?: string;
-	label?: string;
 	labelElement?: FieldLabelProps['type'];
 	labelId?: string;
-	supportingText?: string;
-	status?: FieldStatus;
 	ref?: Ref<HTMLDivElement>;
-	required?: boolean;
 	inputId?: string;
-	supportingTextId?: string;
-	disabled?: boolean;
-	clearable?: boolean;
 }
 
 const BaseField = ({
@@ -29,15 +22,27 @@ const BaseField = ({
 	supportingText,
 	status,
 	required,
+	clearable,
+	disabled,
 	ref,
 	labelId,
 	labelElement,
 	inputId,
+	size,
 	supportingTextId,
 	...rest
 }: BaseFieldProps) => {
 	return (
-		<div ref={ref} className={classNames('BaseField', className)} data-status={status} {...rest}>
+		<div
+			ref={ref}
+			className={classNames('BaseField', className)}
+			data-status={status}
+			data-size={size}
+			data-required={required}
+			aria-disabled={disabled}
+			data-clearable={clearable}
+			{...rest}
+		>
 			<FieldLabel
 				className="BaseField_Label"
 				status={status}
@@ -45,6 +50,7 @@ const BaseField = ({
 				type={labelElement}
 				id={labelId}
 				htmlFor={inputId}
+				showLabel={Boolean(label)}
 			>
 				{label}
 			</FieldLabel>
@@ -53,7 +59,7 @@ const BaseField = ({
 				className="BaseField_SupportingText"
 				id={supportingTextId}
 				status={status}
-				show={!!supportingText}
+				show={Boolean(supportingText)}
 			>
 				{supportingText}
 			</SupportingText>
