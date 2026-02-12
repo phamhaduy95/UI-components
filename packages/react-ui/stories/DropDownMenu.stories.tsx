@@ -65,7 +65,7 @@ export const Nested: Story = {
 export const CustomTrigger: Story = {
 	args: {
 		items: items,
-		CustomTrigger: <Button variant="filled">Custom Trigger</Button>
+		CustomTrigger: <Button variant="contained">Custom Trigger</Button>
 	}
 };
 
