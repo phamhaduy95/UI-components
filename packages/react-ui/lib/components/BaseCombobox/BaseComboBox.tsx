@@ -94,11 +94,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 	const renderEmptyItemMessage = () => {
 		if (filteredItems.length === 0)
 			return (
-				<Combobox.Item
-					className="Menu_Item"
-					key={'no item'}
-					item={{}}
-				>
+				<Combobox.Item className="Menu_Item" key={'no item'} item={{}}>
 					<Combobox.ItemText asChild>
 						<p>No Item founded</p>
 					</Combobox.ItemText>
@@ -149,10 +145,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 							aria-describedby={supportingTextId}
 						/>
 					)}
-					<Combobox.Trigger
-						className="Combobox_Trigger"
-						aria-label="Trigger popup"
-					>
+					<Combobox.Trigger className="Combobox_Trigger" aria-label="Trigger popup">
 						<ChevronDownIcon className="Combobox_TriggerIcon" />
 					</Combobox.Trigger>
 				</Combobox.Control>
@@ -164,19 +157,12 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 					>
 						<Combobox.Content className="Menu Combobox_Content">
 							{collection.items.map((item) => (
-								<Combobox.Item
-									className="Menu_Item"
-									key={item.value}
-									item={item}
-								>
+								<Combobox.Item className="Menu_Item" key={item.value} item={item}>
 									<Combobox.ItemText asChild>
 										<p>{highlightMatchedSearchValue(item.label)}</p>
 									</Combobox.ItemText>
 									<Combobox.ItemIndicator className="MenuItem_TrailingIcon">
-										<CheckIcon
-											height={16}
-											width={16}
-										/>
+										<CheckIcon height={16} width={16} />
 									</Combobox.ItemIndicator>
 								</Combobox.Item>
 							))}

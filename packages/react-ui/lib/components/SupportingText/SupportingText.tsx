@@ -14,11 +14,7 @@ const SupportingText = (props: SupportingTextProps): React.ReactNode => {
 	const { children, className, status, show = true, ...rest } = props;
 	if (show)
 		return (
-			<p
-				{...rest}
-				className={classNames(className, 'SupportingText')}
-				data-status={status}
-			>
+			<p {...rest} className={classNames(className, 'SupportingText')} data-status={status}>
 				{children}
 			</p>
 		);

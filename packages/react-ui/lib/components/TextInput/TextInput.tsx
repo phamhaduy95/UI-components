@@ -84,15 +84,8 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 					{...rest}
 				/>
 				{shouldShowClearIcon && (
-					<button
-						type="button"
-						aria-label="Clear"
-						onClick={handleClear}
-					>
-						<Cross2Icon
-							width={20}
-							height={20}
-						/>
+					<button type="button" aria-label="Clear" onClick={handleClear}>
+						<Cross2Icon width={20} height={20} />
 					</button>
 				)}
 			</div>
