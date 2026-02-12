@@ -30,7 +30,7 @@
 	display: flex;
 
 	&[data-highlighted] {
-		background-color: var(--color-surface-container-low);
+		background-color: var(--color-surface-container);
 		border-style: none;
 		outline-style: none;
 	}
@@ -40,7 +40,7 @@
 
 	&[data-disabled] {
 		background-color: inherit;
-		color: var(--color-outline-variant);
+		color: var(--color-text-disabled);
 		pointer-events: none;
 	}
 
