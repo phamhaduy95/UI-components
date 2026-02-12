@@ -1,5 +1,31 @@
 .BaseField {
 	--color-focused: var(--color-primary);
+
+	&[aria-disabled='true'] {
+		.BaseField_Field {
+			background-color: var(--color-surface-container-highest);
+			pointer-events: none;
+		}
+	}
+
+	&[data-status='error'] {
+		.BaseField_Field {
+			border-color: var(--color-error);
+			--color-focused: var(--color-error);
+		}
+	}
+	&[data-status='warning'] {
+		.BaseField_Field {
+			border-color: var(--color-warning);
+			--color-focused: var(--color-warning);
+		}
+	}
+	&[data-status='success'] {
+		.BaseField_Field {
+			border-color: var(--color-success);
+			--color-focused: var(--color-success);
+		}
+	}
 }
 .BaseField > .SupportingText {
 	padding: 0;
@@ -20,24 +46,6 @@
 	&:focus-within {
 		border-width: 2px;
 		border-color: var(--color-focused);
-	}
-
-	&[aria-disabled='true'] {
-		background-color: var(--color-surface-container-highest);
-		pointer-events: none;
-	}
-
-	&[data-status='error'] {
-		border-color: var(--color-error);
-		--color-focused: var(--color-error);
-	}
-	&[data-status='warning'] {
-		border-color: var(--color-warning);
-		--color-focused: var(--color-warning);
-	}
-	&[data-status='success'] {
-		border-color: var(--color-success);
-		--color-focused: var(--color-success);
 	}
 
 	& > .BaseField_TrailingIcon {
