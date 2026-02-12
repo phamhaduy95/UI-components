@@ -22,9 +22,6 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/**
- * The default text input with a label.
- */
 export const Default: Story = {
 	args: {
 		label: 'Email',
@@ -33,9 +30,6 @@ export const Default: Story = {
 	}
 };
 
-/**
- * Text input with a value.
- */
 export const Controllable: Story = {
 	args: {
 		label: 'Username',
@@ -46,11 +40,7 @@ export const Controllable: Story = {
 
 		return (
 			<div>
-				<TextInput
-					{...args}
-					value={value}
-					onValueChange={setValue}
-				/>
+				<TextInput {...args} value={value} onValueChange={setValue} />
 
 				<p className="ml-2 mt-3">Value: {value}</p>
 			</div>
@@ -58,21 +48,6 @@ export const Controllable: Story = {
 	}
 };
 
-/**
- * Text input with error status.
- */
-export const Error: Story = {
-	args: {
-		label: 'Email',
-		value: 'invalid-email',
-		status: 'error',
-		supportingText: 'Please enter a valid email address.'
-	}
-};
-
-/**
- * Disabled text input.
- */
 export const Disabled: Story = {
 	args: {
 		label: 'Disabled Input',
@@ -81,9 +56,6 @@ export const Disabled: Story = {
 	}
 };
 
-/**
- * Required text input.
- */
 export const Required: Story = {
 	args: {
 		label: 'Required Field',
@@ -93,12 +65,36 @@ export const Required: Story = {
 	}
 };
 
-/**
- * Clearable text input.
- */
 export const Clearable: Story = {
 	args: {
 		label: 'Search',
 		clearable: true
+	}
+};
+
+export const Statuses: Story = {
+	render() {
+		return (
+			<div className="flex flex-col gap-4">
+				<TextInput
+					label="Error"
+					placeholder="Enter your email"
+					supportingText="Please enter your email address."
+					status="error"
+				/>
+				<TextInput
+					label="Warning"
+					placeholder="Enter your email"
+					supportingText="Please enter your email address."
+					status="warning"
+				/>
+				<TextInput
+					label="Success"
+					placeholder="Enter your email"
+					supportingText="Please enter your email address."
+					status="success"
+				/>
+			</div>
+		);
 	}
 };

@@ -1,5 +1,5 @@
 .DatePicker {
-	&:is(:focus-within, [data-state='open']) {
+	&:is([data-state='open']) {
 		> .DatePicker_InputField {
 			border: 2px solid var(--color-primary);
 			outline-style: none;
@@ -15,26 +15,12 @@
 		font-size: var(--field-font-size);
 		color: var(--color-on-background);
 		background: transparent;
+		caret-color: transparent;
 	}
+}
 
-	> button[data-part='trigger'] {
-		border: none;
-		outline: none;
-		cursor: pointer;
-		background-color: transparent;
-	}
-
-	&[data-placeholder-shown] {
+.DatePicker_DisplayArea {
+	&[data-greyout='true'] {
 		color: var(--color-outline);
-	}
-
-	&[data-status='error'] {
-		border-color: var(--color-error);
-	}
-	&[data-status='warning'] {
-		border-color: var(--color-warning);
-	}
-	&[data-status='success'] {
-		border-color: var(--color-success);
 	}
 }

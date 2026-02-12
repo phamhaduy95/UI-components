@@ -93,7 +93,7 @@
 				background-color: transparent;
 			}
 
-			&:hover {
+			&:is(:hover, :focus) {
 				&[data-variant='contained'] {
 					background-color: var(--color-secondary-hover);
 				}
@@ -138,7 +138,7 @@
 				background-color: transparent;
 			}
 
-			&:hover {
+			&:is(:hover, :focus) {
 				&[data-variant='contained'] {
 					background-color: var(--color-success-hover);
 				}
@@ -183,7 +183,7 @@
 				background-color: transparent;
 			}
 
-			&:hover {
+			&:is(:hover, :focus) {
 				&[data-variant='contained'] {
 					background-color: var(--color-warning-hover);
 				}
@@ -228,7 +228,7 @@
 				background-color: transparent;
 			}
 
-			&:hover {
+			&:is(:hover, :focus) {
 				&[data-variant='contained'] {
 					background-color: var(--color-error-hover);
 				}

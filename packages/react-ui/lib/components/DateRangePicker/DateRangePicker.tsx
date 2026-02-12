@@ -7,25 +7,27 @@ import {
 import { Portal } from '@ark-ui/react/portal';
 import BaseCalendarView from '@components/BaseCalendarView/BaseCalendarView';
 
-import { CalendarIcon } from '@radix-ui/react-icons';
-import { AriaAttributes, memo, useId, useMemo } from 'react';
+import { CalendarIcon, Cross2Icon } from '@radix-ui/react-icons';
+import { AriaAttributes, useId } from 'react';
+import dayjs from 'dayjs';
 
 import './DateRangePicker.css';
 
 import BaseField from '@components/BaseField';
 import { FieldStatus } from '@components/type';
+import IconButton from '@components/IconButton';
 
 export interface DateRangePickerProps
 	extends AriaAttributes,
-		Pick<
-			ArkDatePicker.RootProps,
-			'selectionMode' | 'open' | 'onOpenChange' | 'fixedWeeks' | 'format'
-		> {
+		Pick<ArkDatePicker.RootProps, 'selectionMode' | 'open' | 'onOpenChange' | 'fixedWeeks'> {
 	label?: string;
 	id?: string;
 	inputId?: string;
 	'data-testid'?: string;
-	value?: string[];
+	format: string;
+	// support ISO 8601 date format or Date object
+	value?: string[] | Date[];
+	defaultValue?: string[] | Date[];
 	onValueChange?: (value?: string[]) => void;
 	disabled?: boolean;
 	supportingText?: string;
@@ -38,15 +40,28 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 		'aria-label': ariaLabel,
 		id,
 		value,
+		defaultValue,
 		open,
-		onValueChange,
-		onOpenChange,
+		format = 'DD-MM-YYYY',
 		disabled,
 		supportingText,
-		status
+		status,
+		'data-testid': dataTestId,
+		onValueChange,
+		onOpenChange
 	} = props;
 
-	const internalValue = useMemo(() => (value ? parseDate(value) : undefined), [value]);
+	const parsedDateValue = (() => {
+		if (value) {
+			return value.map((e) => parseDate(e));
+		}
+	})();
+
+	const parsedDateDefaultValue = (() => {
+		if (defaultValue) {
+			return defaultValue.map((e) => parseDate(e));
+		}
+	})();
 
 	const handleDateChange: ArkDatePicker.RootProps['onValueChange'] = (data) => {
 		if (onValueChange) {
@@ -59,14 +74,19 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 
 	return (
 		<ArkDatePicker.Root
-			className="DatePicker"
 			id={id}
-			value={internalValue}
-			onValueChange={handleDateChange}
+			className="DatePicker"
 			selectionMode="range"
 			open={open}
-			onOpenChange={onOpenChange}
 			disabled={disabled}
+			data-testid={dataTestId}
+			value={parsedDateValue}
+			defaultValue={parsedDateDefaultValue}
+			format={(date, { locale }) => {
+				return dayjs(date.toString()).locale(locale).format(format);
+			}}
+			onValueChange={handleDateChange}
+			onOpenChange={onOpenChange}
 			asChild
 		>
 			<BaseField
@@ -77,20 +97,25 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 				labelElement={ArkDatePicker.Label}
 			>
 				<ArkDatePicker.Control
-					className="BaseField_Field DatePicker_InputField"
+					className="BaseField_Field DateRangePicker_InputField"
 					aria-label={ariaLabel}
 					aria-disabled={disabled}
 					aria-describedby={supportingTextId}
 				>
-					<DateRangeDisplay />
-					<ArkDatePicker.Trigger>
-						<div className="Field_TrailingIcon">
-							<CalendarIcon
-								height={16}
-								width={16}
-							/>
-						</div>
-					</ArkDatePicker.Trigger>
+					<DateRangeDisplay formatAsStr={format} />
+					<div className="BaseField_Trailing">
+						<ArkDatePicker.ClearTrigger asChild>
+							<IconButton variant="text" size="medium" color="secondary">
+								<Cross2Icon />
+							</IconButton>
+						</ArkDatePicker.ClearTrigger>
+						<ArkDatePicker.Trigger asChild>
+							<IconButton variant="text" size="medium" color="secondary">
+								<CalendarIcon />
+							</IconButton>
+						</ArkDatePicker.Trigger>
+					</div>
+					<DateRangePickerHiddenInput />
 				</ArkDatePicker.Control>
 				<Portal>
 					<ArkDatePicker.Positioner>
@@ -106,34 +131,45 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 
 export default DateRangePicker;
 
-const DateRangeDisplay = () => {
-	const { valueAsString, getInputProps } = useDatePickerContext();
+interface DateRangeDisplayProps {
+	formatAsStr: string;
+}
 
-	const { placeholder } = getInputProps();
+const DateRangeDisplay = ({ formatAsStr }: DateRangeDisplayProps) => {
+	const { valueAsString } = useDatePickerContext();
 
-	console.log(valueAsString);
 	const [startDate, endDate] = valueAsString;
 
-	const defaultWidth = placeholder ? `${placeholder.length}ch` : '12ch';
-
-	const startInputWidth = startDate ? `${startDate.length}ch` : defaultWidth;
-	const endInputWidth = endDate ? `${endDate.length}ch` : defaultWidth;
+	const startDateStr = startDate ?? formatAsStr;
+	const endDateStr = endDate ?? formatAsStr;
 
 	return (
-		<div className="DatePicker_InputGroup">
-			<ArkDatePicker.Input
-				index={0}
-				name="startDate"
-				value={startDate}
-				style={{ width: startInputWidth }}
-			/>
-			<span>&mdash;</span>
-			<ArkDatePicker.Input
-				index={1}
-				name="endDate"
-				value={endDate}
-				style={{ width: endInputWidth }}
-			/>
-		</div>
+		<p className="DateRangePicker_DisplayArea" aria-label="date range display">
+			<span data-greyout={!Boolean(startDate)}>{startDateStr}</span>
+			<span data-greyout={!Boolean(startDate)}>&mdash;</span>
+			<span data-greyout={!Boolean(endDate)}>{endDateStr}</span>
+		</p>
 	);
+};
+
+const DateRangePickerHiddenInput = () => {
+	const { value, setValue, getInputProps } = useDatePickerContext();
+
+	const { id } = getInputProps();
+
+	const textValue = value.map((e) => e.toString()).join(',');
+
+	const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const value = e.target.value;
+
+		if (value && value.length > 0) {
+			const [startDate, endDate] = value.split(',');
+
+			if (startDate && endDate) {
+				setValue([parseDate(startDate), parseDate(endDate)]);
+			}
+		}
+	};
+
+	return <input id={id} hidden onChange={handleValueChange} value={textValue} tabIndex={-1} />;
 };

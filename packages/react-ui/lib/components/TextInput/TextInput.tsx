@@ -8,7 +8,17 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 
 export interface TextInputProp
 	extends HTMLAttributes<HTMLInputElement>,
-		Omit<BaseFieldProps, 'children'> {
+		Pick<
+			BaseFieldProps,
+			| 'label'
+			| 'supportingText'
+			| 'status'
+			| 'required'
+			| 'inputId'
+			| 'supportingTextId'
+			| 'disabled'
+			| 'clearable'
+		> {
 	value?: string;
 	onValueChange?: (value: string) => void;
 	required?: boolean;
@@ -67,7 +77,6 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 		>
 			<div
 				className="BaseField_Field TextInput_InputField"
-				data-status={status}
 				data-clearable={clearable}
 				aria-disabled={disabled}
 			>
