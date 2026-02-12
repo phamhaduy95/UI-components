@@ -1,0 +1,39 @@
+.IconButton.Button {
+	padding: 0;
+	border-radius: var(--radius-full);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 1;
+
+	/* Size map */
+	&[data-size='small'] {
+		width: var(--icon-button-size-sm);
+		height: var(--icon-button-size-sm);
+
+		& svg {
+			width: var(--icon-size-sm);
+			height: var(--icon-size-sm);
+		}
+	}
+
+	&[data-size='medium'] {
+		width: var(--icon-button-size-md);
+		height: var(--icon-button-size-md);
+
+		& svg {
+			width: var(--icon-size-md);
+			height: var(--icon-size-md);
+		}
+	}
+
+	&[data-size='large'] {
+		width: var(--icon-button-size-lg);
+		height: var(--icon-button-size-lg);
+
+		& svg {
+			width: var(--icon-size-lg);
+			height: var(--icon-size-lg);
+		}
+	}
+}
