@@ -6,22 +6,25 @@ import { JSX } from 'react';
 
 import './MultipleSelect.css';
 
-export interface MultipleSelectProps extends Omit<BaseSelectProps, 'value' | 'onValueChange'> {
+export interface MultipleSelectProps
+	extends Omit<BaseSelectProps, 'value' | 'onValueChange' | 'defaultValue'> {
 	value?: string[];
+	defaultValue?: string[];
 	onValueChange?: (value: string[], item: SelectItem[]) => void;
 }
 
 const MultipleSelect = (props: MultipleSelectProps): JSX.Element => {
-	const { value, onValueChange, ...rest } = props;
+	const { value, onValueChange, placeholder, ...rest } = props;
 
 	return (
 		<BaseSelect
 			multiple
 			value={value}
+			placeholder={placeholder}
 			onValueChange={(selectedValue) => {
 				if (onValueChange) onValueChange(selectedValue.value, selectedValue.items);
 			}}
-			CustomValueText={<DisplayedSelectValue />}
+			CustomValueText={<DisplayedSelectValue placeholder={placeholder} />}
 			{...rest}
 		/>
 	);
@@ -31,7 +34,6 @@ export default MultipleSelect;
 
 interface DisplayedSelectValueProps {
 	placeholder?: string;
-	className?: string;
 }
 
 const DisplayedSelectValue = ({ placeholder }: DisplayedSelectValueProps) => {
@@ -41,7 +43,8 @@ const DisplayedSelectValue = ({ placeholder }: DisplayedSelectValueProps) => {
 		focus
 	}: UseSelectContext<SelectItem> = useSelectContext();
 
-	if (selectedItems.length === 0) return <span className="Select_Value">{placeholder}</span>;
+	if (selectedItems.length === 0)
+		return <span className="Select_DisplayedValue">{placeholder}</span>;
 	return (
 		<div className="Select_DisplayedValue">
 			{selectedItems.map((item) => (

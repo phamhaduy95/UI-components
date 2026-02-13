@@ -28,7 +28,7 @@ const BaseField = ({
 	labelId,
 	labelElement,
 	inputId,
-	size,
+	size = 'medium',
 	supportingTextId,
 	...rest
 }: BaseFieldProps) => {

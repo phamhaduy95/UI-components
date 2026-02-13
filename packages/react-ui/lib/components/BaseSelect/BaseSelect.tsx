@@ -2,35 +2,33 @@ import { HTMLAttributes, JSX, Ref, useId } from 'react';
 
 import { Portal } from '@ark-ui/react/portal';
 import { Select as ArkSelect, createListCollection } from '@ark-ui/react/select';
-import { FieldStatus, SelectItem } from '@components/type';
+import { CommonFieldProps, SelectItem } from '@components/type';
 import { CheckIcon, ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 
-import '../DropDownMenu/Menu.css';
+import '@components/DropDownMenu/Menu.css';
 
 import './Select.css';
 
 import BaseField from '@components/BaseField';
+import IconButton from '@components/IconButton';
 
-export type BaseSelectProps = HTMLAttributes<HTMLButtonElement> & {
+export interface BaseSelectProps extends HTMLAttributes<HTMLButtonElement>, CommonFieldProps {
 	className?: string;
 	disabled?: boolean;
 	items?: Array<SelectItem>;
-	label?: string;
 	placeholder?: string;
-	supportingText?: string;
-	ref?: Ref<HTMLButtonElement>;
-	status?: FieldStatus;
-	required?: boolean;
+	ref?: Ref<HTMLDivElement>;
 	deselectable?: boolean;
 	loopFocus?: boolean;
-	clearable?: boolean;
 	value?: string[];
 	name?: string;
 	multiple?: boolean;
 	CustomValueText?: React.ReactNode;
 	onValueChange?: ArkSelect.RootProps<SelectItem>['onValueChange'];
-};
+	'data-testId'?: string;
+	defaultValue?: string[];
+}
 
 const BaseSelect = ({
 	items = [],
@@ -38,6 +36,7 @@ const BaseSelect = ({
 	label,
 	className,
 	ref,
+	size,
 	placeholder,
 	disabled,
 	deselectable,
@@ -50,60 +49,64 @@ const BaseSelect = ({
 	onValueChange,
 	CustomValueText,
 	name,
-	...rest
+	'data-testId': dataTestId,
+	defaultValue
 }: BaseSelectProps): JSX.Element => {
 	const collection = createListCollection({ items });
 	const supportingTextId = useId();
-	const inputId = useId();
 
 	return (
 		<ArkSelect.Root
-			className={classNames('Select_Root', className)}
+			className={classNames('Select', className)}
 			collection={collection}
 			disabled={disabled}
+			required={required}
 			deselectable={deselectable}
 			loopFocus={loopFocus}
 			value={value}
 			multiple={multiple}
 			onValueChange={onValueChange}
 			name={name}
+			ref={ref}
+			defaultValue={defaultValue}
+			data-testId={dataTestId}
 			asChild
 		>
 			<BaseField
 				label={label}
 				supportingText={supportingText}
 				status={status}
+				size={size}
+				disabled={disabled}
+				required={required}
 				labelElement={ArkSelect.Label}
 				supportingTextId={supportingTextId}
-				disabled={disabled}
-				clearable={clearable}
-				required={required}
 			>
-				<ArkSelect.Trigger
-					ref={ref}
-					className="BaseField_Field Select_InputField"
-					aria-disabled={disabled}
-					data-status={status}
-					{...rest}
-					asChild
-					aria-describedby={supportingTextId}
-				>
-					<div tabIndex={0}>
+				<ArkSelect.Control className="Select_Control" data-status={status}>
+					<ArkSelect.Trigger
+						className="BaseField_Field Select_Trigger"
+						aria-describedby={supportingTextId}
+					>
 						{CustomValueText ?? (
 							<ArkSelect.ValueText className="Select_Value" placeholder={placeholder} />
 						)}
-						<div className="BaseField_TrailingIcon">
-							<ChevronDownIcon className="Select_ToggleIcon" width={20} height={20} />
-							{clearable ? (
-								<ArkSelect.ClearTrigger className="Select_ClearButton">
-									<Cross2Icon width={20} height={20} />
-								</ArkSelect.ClearTrigger>
-							) : null}
-						</div>
-					</div>
-				</ArkSelect.Trigger>
+					</ArkSelect.Trigger>
 
-				<ArkSelect.HiddenSelect name={name} id={inputId} aria-describedby={supportingTextId} />
+					<div className="Select_Trailing">
+						{clearable && (
+							<ArkSelect.ClearTrigger className="Select_ClearButton" asChild>
+								<IconButton variant="text" color="secondary" size="medium">
+									<Cross2Icon />
+								</IconButton>
+							</ArkSelect.ClearTrigger>
+						)}
+						<ArkSelect.Indicator className="Select_Indicator" aria-label="select indicator">
+							<ChevronDownIcon width={20} height={20} />
+						</ArkSelect.Indicator>
+					</div>
+
+					<ArkSelect.HiddenSelect name={name} aria-describedby={supportingTextId} tabIndex={-1} />
+				</ArkSelect.Control>
 				<Portal>
 					<ArkSelect.Positioner
 						className="Positioner"

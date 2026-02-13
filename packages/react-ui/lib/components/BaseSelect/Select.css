@@ -1,30 +1,10 @@
-.Select_InputField {
-	min-height: var(--spacing-container-lg);
+.Select_Control {
+	position: relative;
+}
+
+.Select_Trigger {
 	cursor: pointer;
-	width: 100%;
-	caret-color: #0000;
-
-	& > .Select_Value {
-		text-wrap: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-	}
-
-	& > .FormField_TrailingIcon {
-		display: flex;
-		align-items: center;
-		color: var(--color-outline);
-
-		.Select_ClearButton {
-			cursor: pointer;
-		}
-
-		&:has(.Select_ClearButton:not([hidden])) {
-			> .Select_ToggleIcon {
-				display: none;
-			}
-		}
-	}
+	user-select: none;
 
 	&[data-placeholder-shown] {
 		color: var(--color-outline);
@@ -34,6 +14,25 @@
 		border: 2px solid var(--color-focused);
 		outline-style: none;
 	}
+}
+
+.Select_Trailing {
+	display: flex;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	top: 0;
+	pointer-events: none;
+	align-items: center;
+}
+
+.Select_ClearButton {
+	pointer-events: auto;
+}
+
+.Select_Indicator {
+	margin-right: 12px;
+	color: var(--color-secondary);
 }
 
 .Menu.SelectContent {
