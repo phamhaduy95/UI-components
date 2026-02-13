@@ -1,16 +1,18 @@
 import { Combobox, createListCollection } from '@ark-ui/react/combobox';
 import { Portal } from '@ark-ui/react/portal';
 
-import { FieldStatus, SelectItem } from '@components/type';
-import { CheckIcon, ChevronDownIcon } from '@radix-ui/react-icons';
+import { CommonFieldProps, FieldStatus, SelectItem } from '@components/type';
+import { CheckIcon, ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 import { HTMLAttributes, JSX, Ref, useId, useMemo, useState } from 'react';
 
-import './ComboBox.css';
-import '../DropDownMenu/Menu.css';
+import '@components/DropDownMenu/Menu.css';
 import BaseField from '@components/BaseField';
+import IconButton from '@components/IconButton';
 
-export interface BaseComboboxProps extends HTMLAttributes<HTMLInputElement> {
+import './ComboBox.css';
+
+export interface BaseComboboxProps extends HTMLAttributes<HTMLInputElement>, CommonFieldProps {
 	className?: string;
 	disabled?: boolean;
 	items?: Array<SelectItem>;
@@ -19,6 +21,7 @@ export interface BaseComboboxProps extends HTMLAttributes<HTMLInputElement> {
 	supportingText?: string;
 	ref?: Ref<HTMLDivElement>;
 	inputRef?: Ref<HTMLInputElement>;
+	defaultValue?: string[];
 	status?: FieldStatus;
 	required?: boolean;
 	loopFocus?: boolean;
@@ -44,12 +47,15 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 		supportingText,
 		ref,
 		required,
+		defaultValue,
 		inputRef,
 		'data-testid': dataTestid,
 		CustomValueText,
 		open,
 		onValueChange,
 		onOpenChange,
+		size,
+		clearable,
 		...rest
 	} = props;
 
@@ -96,7 +102,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 			return (
 				<Combobox.Item className="Menu_Item" key={'no item'} item={{}}>
 					<Combobox.ItemText asChild>
-						<p>No Item founded</p>
+						<p>No item found</p>
 					</Combobox.ItemText>
 				</Combobox.Item>
 			);
@@ -115,12 +121,14 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 			loopFocus={loopFocus}
 			disabled={disabled}
 			multiple={multiple}
-			data-mode={multiple ? 'multiple' : undefined}
+			defaultValue={defaultValue}
 			onExitComplete={() => setSearchValue('')}
 			onFocusOutside={() => setSearchValue('')}
 			ref={ref}
 			open={open}
 			data-testid={dataTestid}
+			data-mode={multiple ? 'multiple' : undefined}
+			asChild
 		>
 			<BaseField
 				label={label}
@@ -130,6 +138,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 				required={required}
 				labelElement={Combobox.Label}
 				supportingTextId={supportingTextId}
+				size={size}
 			>
 				<Combobox.Control
 					className="BaseField_Field Combobox_Field"
@@ -145,8 +154,17 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 							aria-describedby={supportingTextId}
 						/>
 					)}
-					<Combobox.Trigger className="Combobox_Trigger" aria-label="Trigger popup">
-						<ChevronDownIcon className="Combobox_TriggerIcon" />
+					{clearable && (
+						<Combobox.ClearTrigger className="Combobox_ClearTrigger" asChild tabIndex={0}>
+							<IconButton size="medium" variant="text" color="secondary">
+								<Cross2Icon />
+							</IconButton>
+						</Combobox.ClearTrigger>
+					)}
+					<Combobox.Trigger className="Combobox_Trigger" aria-label="Trigger popup" asChild>
+						<IconButton size="medium" variant="text" color="secondary">
+							<ChevronDownIcon className="Combobox_TriggerIcon" />
+						</IconButton>
 					</Combobox.Trigger>
 				</Combobox.Control>
 
