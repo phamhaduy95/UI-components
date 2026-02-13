@@ -26,6 +26,12 @@
 			--color-focused: var(--color-success);
 		}
 	}
+	&[data-size='small'] {
+		--field-height: 40px;
+	}
+	&[data-size='medium'] {
+		--field-height: 48px;
+	}
 }
 .BaseField > .SupportingText {
 	padding: 0;

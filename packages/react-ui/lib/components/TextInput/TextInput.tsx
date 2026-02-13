@@ -3,53 +3,45 @@ import { ChangeEvent, HTMLAttributes, JSX, useId, useState } from 'react';
 import classNames from 'classnames';
 
 import './TextInput.css';
-import BaseField, { BaseFieldProps } from '@components/BaseField';
-import { Cross2Icon } from '@radix-ui/react-icons';
 
-export interface TextInputProp
-	extends HTMLAttributes<HTMLInputElement>,
-		Pick<
-			BaseFieldProps,
-			| 'label'
-			| 'supportingText'
-			| 'status'
-			| 'required'
-			| 'inputId'
-			| 'supportingTextId'
-			| 'disabled'
-			| 'clearable'
-		> {
+import BaseField from '@components/BaseField';
+import { Cross2Icon } from '@radix-ui/react-icons';
+import IconButton from '@components/IconButton';
+import { CommonFieldProps } from '@components/type';
+
+export interface TextInputProp extends HTMLAttributes<HTMLInputElement>, CommonFieldProps {
 	value?: string;
 	onValueChange?: (value: string) => void;
-	required?: boolean;
 	name?: string;
-	placeholder?: string;
 	'data-testId'?: string;
+	defaultValue?: string;
 }
 
 const TextInput = (props: TextInputProp): JSX.Element => {
 	const {
-		value,
+		value: externalValue,
 		className,
 		status,
 		required,
 		label,
 		supportingText,
 		placeholder,
-		onChange,
-		onValueChange,
+		size,
 		disabled,
 		clearable,
 		'data-testId': dataTestId,
+		defaultValue,
+		onChange,
+		onValueChange,
 		...rest
 	} = props;
 
 	const inputId = useId();
 	const supportingTextId = supportingText ? useId() : undefined;
 
-	const [internalValue, setInternalValue] = useState(value);
+	const [internalValue, setInternalValue] = useState(defaultValue);
 
-	const state = value ? value : internalValue;
+	const value = externalValue ?? internalValue;
 
 	const handleInputChanged = (e: ChangeEvent<HTMLInputElement>) => {
 		if (onChange) onChange(e);
@@ -63,7 +55,7 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 		if (onValueChange) onValueChange('');
 	};
 
-	const shouldShowClearIcon = clearable && state && state.length > 0;
+	const shouldShowClearIcon = clearable && value && value.length > 0;
 
 	return (
 		<BaseField
@@ -73,7 +65,10 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 			status={status}
 			required={required}
 			inputId={inputId}
+			disabled={disabled}
 			supportingTextId={supportingTextId}
+			size={size}
+			data-testId={dataTestId}
 		>
 			<div
 				className="BaseField_Field TextInput_InputField"
@@ -87,16 +82,26 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 					disabled={disabled}
 					aria-disabled={disabled}
 					aria-describedby={supportingTextId}
+					defaultValue={defaultValue}
 					aria-invalid={status === 'error'}
-					value={state}
+					value={value}
+					required={required}
 					onChange={handleInputChanged}
 					{...rest}
 				/>
-				{shouldShowClearIcon && (
-					<button type="button" aria-label="Clear" onClick={handleClear}>
-						<Cross2Icon width={20} height={20} />
-					</button>
-				)}
+				<div className="BaseField_Trailing">
+					{shouldShowClearIcon && (
+						<IconButton
+							aria-label="Clear"
+							size="medium"
+							variant="text"
+							color="secondary"
+							onClick={handleClear}
+						>
+							<Cross2Icon />
+						</IconButton>
+					)}
+				</div>
 			</div>
 		</BaseField>
 	);
