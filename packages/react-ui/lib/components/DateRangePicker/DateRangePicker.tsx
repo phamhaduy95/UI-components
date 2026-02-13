@@ -14,24 +14,20 @@ import dayjs from 'dayjs';
 import './DateRangePicker.css';
 
 import BaseField from '@components/BaseField';
-import { FieldStatus } from '@components/type';
+import { CommonFieldProps } from '@components/type';
 import IconButton from '@components/IconButton';
 
 export interface DateRangePickerProps
 	extends AriaAttributes,
-		Pick<ArkDatePicker.RootProps, 'selectionMode' | 'open' | 'onOpenChange' | 'fixedWeeks'> {
-	label?: string;
+		Pick<ArkDatePicker.RootProps, 'selectionMode' | 'open' | 'onOpenChange' | 'fixedWeeks'>,
+		CommonFieldProps {
 	id?: string;
-	inputId?: string;
 	'data-testid'?: string;
-	format: string;
+	format?: string;
 	// support ISO 8601 date format or Date object
 	value?: string[] | Date[];
 	defaultValue?: string[] | Date[];
 	onValueChange?: (value?: string[]) => void;
-	disabled?: boolean;
-	supportingText?: string;
-	status?: FieldStatus;
 }
 
 const DateRangePicker = (props: DateRangePickerProps) => {
@@ -39,6 +35,7 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 		label,
 		'aria-label': ariaLabel,
 		id,
+		inputId,
 		value,
 		defaultValue,
 		open,
@@ -47,6 +44,9 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 		supportingText,
 		status,
 		'data-testid': dataTestId,
+		required,
+		size,
+		clearable,
 		onValueChange,
 		onOpenChange
 	} = props;
@@ -94,6 +94,9 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 				supportingText={supportingText}
 				supportingTextId={supportingTextId}
 				status={status}
+				required={required}
+				size={size}
+				inputId={inputId}
 				labelElement={ArkDatePicker.Label}
 			>
 				<ArkDatePicker.Control
@@ -104,13 +107,15 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 				>
 					<DateRangeDisplay formatAsStr={format} />
 					<div className="BaseField_Trailing">
-						<ArkDatePicker.ClearTrigger asChild>
-							<IconButton variant="text" size="medium" color="secondary">
-								<Cross2Icon />
-							</IconButton>
-						</ArkDatePicker.ClearTrigger>
+						{clearable && (
+							<ArkDatePicker.ClearTrigger asChild>
+								<IconButton variant="text" size="medium" color="secondary" aria-label="Clear value">
+									<Cross2Icon />
+								</IconButton>
+							</ArkDatePicker.ClearTrigger>
+						)}
 						<ArkDatePicker.Trigger asChild>
-							<IconButton variant="text" size="medium" color="secondary">
+							<IconButton variant="text" size="medium" color="secondary" aria-label="Open calendar">
 								<CalendarIcon />
 							</IconButton>
 						</ArkDatePicker.Trigger>

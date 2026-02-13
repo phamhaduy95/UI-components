@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import DatePicker from '@components/DatePicker';
 import { useState } from 'react';
-import dayjs from 'dayjs';
+import { getDateCellAriaLabel, formatDate } from '../utils/date';
 import { expect, within, userEvent, screen, fn } from 'storybook/test';
 
 const mockedOnValueChange = fn();
@@ -306,13 +306,4 @@ export const Size: Story = {
 			<DatePicker {...args} size="medium" label="Medium size" />
 		</div>
 	)
-};
-
-const getDateCellAriaLabel = (date: string) => {
-	const dateStr = dayjs(date).format('dddd, MMMM D, YYYY');
-	return `Choose ${dateStr}`;
-};
-
-const formatDate = (date: string, format: string) => {
-	return dayjs(date).format(format);
 };
