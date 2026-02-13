@@ -18,6 +18,9 @@ const meta: Meta<typeof TextInput> = {
 			control: 'select',
 			options: ['default', 'error', 'success', 'warning']
 		}
+	},
+	beforeEach() {
+		mockedOnValueChange.mockClear();
 	}
 };
 
@@ -136,15 +139,18 @@ export const Clearable: Story = {
 			expect(clearButton).toBeInTheDocument();
 		});
 
-		await step(
-			'Check if input is cleared when clear button is clicked and clear button is not displayed',
-			async () => {
-				const clearButton = within(container).getByRole('button', { name: 'Clear' });
-				await userEvent.click(clearButton);
-				expect(input).toHaveValue('');
-				expect(clearButton).not.toBeInTheDocument();
-			}
-		);
+		const clearButton = within(container).getByRole('button', { name: 'Clear' });
+		await step('Click on Clear button', async () => {
+			await userEvent.click(clearButton);
+		});
+
+		await step('Check if input is cleared when clear button is clicked', async () => {
+			expect(input).toHaveValue('');
+		});
+
+		await step('Check if clear Button is not displayed', async () => {
+			expect(clearButton).not.toBeInTheDocument();
+		});
 	}
 };
 
@@ -177,14 +183,16 @@ export const Controllable: Story = {
 	play: async ({ canvas, args, step }) => {
 		const { label = '' } = args;
 
+		const input = canvas.getByLabelText(label);
 		await step('Check if input displays initial value', async () => {
-			const input = canvas.getByLabelText(label);
 			expect(input).toHaveValue(args.value);
 		});
 
-		await step('Check if onValueChange is called with correct arguments', async () => {
-			const input = canvas.getByLabelText(label);
+		await step('Type in value into TextInput', async () => {
 			await userEvent.type(input, ' new value');
+		});
+
+		await step('Check if onValueChange is called with correct arguments', async () => {
 			expect(mockedOnValueChange).toBeCalled();
 			expect(mockedOnValueChange.mock.lastCall).toEqual(['initial value new value']);
 
@@ -192,12 +200,17 @@ export const Controllable: Story = {
 			expect(displayedValue).toHaveTextContent('Value: initial value new value');
 		});
 
-		await step('Check if value should be empty string when user clicks clear button', async () => {
+		await step('Check if clear button is displayed', () => {
 			const clearButton = canvas.getByRole('button', { name: 'Clear' });
 			expect(clearButton).toBeInTheDocument();
+		});
 
+		await step('Click in Clear button', async () => {
+			const clearButton = canvas.getByRole('button', { name: 'Clear' });
 			await userEvent.click(clearButton);
+		});
 
+		await step('Check if value should be empty string when user clicks clear button', async () => {
 			expect(mockedOnValueChange).toBeCalled();
 			expect(mockedOnValueChange.mock.lastCall).toEqual(['']);
 
