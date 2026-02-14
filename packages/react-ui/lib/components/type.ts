@@ -6,7 +6,7 @@ export type ItemObject = { value: string; label: string; disabled?: boolean };
 
 export type SelectItem = { value: string; label: string; disabled?: boolean };
 
-export interface CommonFieldProps {
+export interface CommonFieldProps<TValue> {
 	label?: string;
 	labelId?: string;
 	status?: FieldStatus;
@@ -18,4 +18,6 @@ export interface CommonFieldProps {
 	supportingText?: string;
 	supportingTextId?: string;
 	placeholder?: string;
+	value?: TValue;
+	defaultValue?: TValue;
 }

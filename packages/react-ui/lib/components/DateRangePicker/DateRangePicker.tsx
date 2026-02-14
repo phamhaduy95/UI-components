@@ -20,12 +20,13 @@ import IconButton from '@components/IconButton';
 export interface DateRangePickerProps
 	extends AriaAttributes,
 		Pick<ArkDatePicker.RootProps, 'selectionMode' | 'open' | 'onOpenChange' | 'fixedWeeks'>,
-		CommonFieldProps {
+		CommonFieldProps<string[] | Date[]> {
 	id?: string;
 	'data-testid'?: string;
 	format?: string;
 	// support ISO 8601 date format or Date object
 	value?: string[] | Date[];
+	// support ISO 8601 date format or Date object
 	defaultValue?: string[] | Date[];
 	onValueChange?: (value?: string[]) => void;
 }

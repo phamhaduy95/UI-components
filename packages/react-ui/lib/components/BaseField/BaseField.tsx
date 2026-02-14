@@ -4,14 +4,13 @@ import { CommonFieldProps } from '@components/type';
 import classNames from 'classnames';
 
 import './BaseField.css';
-import { HTMLAttributes, Ref } from 'react';
+import { ComponentPropsWithRef } from 'react';
 
-export interface BaseFieldProps extends HTMLAttributes<HTMLDivElement>, CommonFieldProps {
-	children: React.ReactNode;
-	className?: string;
+export interface BaseFieldProps
+	extends Omit<ComponentPropsWithRef<'div'>, 'defaultValue'>,
+		CommonFieldProps<string> {
 	labelElement?: FieldLabelProps['type'];
 	labelId?: string;
-	ref?: Ref<HTMLDivElement>;
 	inputId?: string;
 }
 
