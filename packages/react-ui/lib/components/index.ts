@@ -48,3 +48,6 @@ export { default as TextInput } from './TextInput';
 
 export * from './NumberInput';
 export { default as NumberInput } from './NumberInput';
+
+export * from './PasswordInput';
+export { default as PasswordInput } from './PasswordInput';
