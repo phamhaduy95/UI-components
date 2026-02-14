@@ -110,9 +110,11 @@ const DatePicker = (props: DatePickerProps): JSX.Element => {
 				labelElement={ArkDatePicker.Label}
 				supportingTextId={supportingTextId}
 			>
-				<ArkDatePicker.Control className="BaseField_Field DatePicker_InputField">
-					<DatePickerDisplay format={format} />
-					<div className="BaseField_Trailing">
+				<ArkDatePicker.Control className="BaseField_Field">
+					<div className="DatePicker_InputField">
+						<DatePickerDisplay format={format} />
+					</div>
+					<div className="BaseField_Trailing DatePicker_Trailing">
 						{clearable && (
 							<ArkDatePicker.ClearTrigger asChild>
 								<IconButton size="medium" variant="text" color="secondary" aria-label="Clear value">

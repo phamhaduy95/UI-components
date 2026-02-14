@@ -80,11 +80,8 @@ const BaseSelect = ({
 				labelElement={ArkSelect.Label}
 				supportingTextId={supportingTextId}
 			>
-				<ArkSelect.Control className="Select_Control" data-status={status}>
-					<ArkSelect.Trigger
-						className="BaseField_Field Select_Trigger"
-						aria-describedby={supportingTextId}
-					>
+				<ArkSelect.Control className="Select_Control BaseField_Field" data-status={status}>
+					<ArkSelect.Trigger className="Select_Trigger" aria-describedby={supportingTextId}>
 						{CustomValueText ?? (
 							<ArkSelect.ValueText className="Select_Value" placeholder={placeholder} />
 						)}

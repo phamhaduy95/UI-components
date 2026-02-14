@@ -134,7 +134,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 				size={size}
 			>
 				<Combobox.Control
-					className="BaseField_Field Combobox_Field"
+					className="BaseField_Field Combobox_Control"
 					data-status={status}
 					aria-disabled={disabled}
 				>

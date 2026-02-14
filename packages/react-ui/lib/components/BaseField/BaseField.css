@@ -3,7 +3,7 @@
 
 	&[aria-disabled='true'] {
 		.BaseField_Field {
-			background-color: var(--color-surface-container-highest);
+			background-color: var(--color-surface-container-high);
 			pointer-events: none;
 		}
 	}
@@ -46,12 +46,10 @@
 	border: 1px solid var(--color-outline);
 	border-radius: var(--field-border-radius);
 	color: var(--color-on-surface);
-	padding-inline: var(--field-padding-inline);
-	padding-block: var(--field-padding-block);
 
 	&:focus-within {
-		border-width: 2px;
 		border-color: var(--color-focused);
+		outline: 1px solid var(--color-focused);
 	}
 
 	& > .BaseField_Trailing {

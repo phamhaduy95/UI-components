@@ -69,11 +69,7 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 			size={size}
 			data-testId={dataTestId}
 		>
-			<div
-				className="BaseField_Field TextInput_InputField"
-				data-clearable={clearable}
-				aria-disabled={disabled}
-			>
+			<div className="BaseField_Field" data-clearable={clearable} aria-disabled={disabled}>
 				<input
 					className="TextInput_Input"
 					id={inputId}

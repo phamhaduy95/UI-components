@@ -1,20 +1,24 @@
 .DatePicker {
 	&:is(:focus-within, [data-state='open']) {
 		> .BaseField_Field {
-			border: 2px solid var(--color-primary);
-			outline-style: none;
+			border: 1px solid var(--color-primary);
+			outline: 1px solid var(--color-primary);
 		}
+	}
+
+	.BaseField_Trailing {
+		margin-left: auto;
+		margin-right: calc(var(--field-padding-inline) / 2);
 	}
 }
 
-.DateRangePicker_InputField {
+.DateRangePicker_Input {
 	width: 100%;
 	display: flex;
+	height: var(--field-height);
+	padding-inline: var(--field-padding-inline);
+	padding-block: var(--field-padding-block);
 	align-items: center;
-
-	> .DateRangePicker_TrailingIcon {
-		margin-left: auto;
-	}
 
 	> .DateRangePicker_DisplayArea {
 		display: flex;
