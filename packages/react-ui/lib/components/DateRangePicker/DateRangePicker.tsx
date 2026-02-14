@@ -80,6 +80,7 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 			selectionMode="range"
 			open={open}
 			disabled={disabled}
+			required={required}
 			data-testid={dataTestId}
 			value={parsedDateValue}
 			defaultValue={parsedDateDefaultValue}
@@ -96,17 +97,21 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 				supportingTextId={supportingTextId}
 				status={status}
 				required={required}
+				disabled={disabled}
+				clearable={clearable}
 				size={size}
 				inputId={inputId}
 				labelElement={ArkDatePicker.Label}
 			>
 				<ArkDatePicker.Control
-					className="BaseField_Field DateRangePicker_InputField"
+					className="BaseField_Field DateRangePicker_Control"
 					aria-label={ariaLabel}
 					aria-disabled={disabled}
 					aria-describedby={supportingTextId}
 				>
-					<DateRangeDisplay formatAsStr={format} />
+					<div className="DateRangePicker_Input">
+						<DateRangeDisplay formatAsStr={format} />
+					</div>
 					<div className="BaseField_Trailing">
 						{clearable && (
 							<ArkDatePicker.ClearTrigger asChild>

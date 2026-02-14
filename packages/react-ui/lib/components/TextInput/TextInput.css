@@ -1,6 +1,8 @@
 .TextInput_Input {
 	width: 100%;
 	height: 100%;
+	padding-inline: var(--field-padding-inline);
+	padding-block: var(--field-padding-block);
 	caret-color: var(--color-primary);
 	&:focus {
 		outline-style: none;

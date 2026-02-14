@@ -1,22 +1,28 @@
 .DatePicker {
 	&:is([data-state='open']) {
-		> .DatePicker_InputField {
-			border: 2px solid var(--color-primary);
-			outline-style: none;
+		> .BaseField_Field {
+			border-color: var(--color-focused);
+			outline: 1px solid var(--color-focused);
 		}
 	}
 }
 
 .DatePicker_InputField {
-	.DatePicker_Input {
-		flex-grow: 1;
-		outline: none;
-		border: none;
-		font-size: var(--field-font-size);
-		color: var(--color-on-background);
-		background: transparent;
-		caret-color: transparent;
-	}
+	display: flex;
+	align-items: center;
+	flex-grow: 1;
+	border: none;
+	font-size: var(--field-font-size);
+	color: var(--color-on-background);
+	padding-inline: var(--field-padding-inline);
+	padding-block: var(--field-padding-block);
+	background: transparent;
+	caret-color: transparent;
+	outline: none;
+}
+
+.DatePicker_Trailing {
+	margin-right: calc(var(--field-padding-inline) / 2);
 }
 
 .DatePicker_DisplayArea {

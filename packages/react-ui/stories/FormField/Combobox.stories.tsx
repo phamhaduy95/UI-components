@@ -216,7 +216,7 @@ export const Clearable: Story = {
 	args: {
 		label: 'Framework',
 		'data-testid': 'combobox-clearable',
-		value: items[0].value,
+		defaultValue: items[0].value,
 		clearable: true
 	},
 	play: async ({ canvas, args, step }) => {

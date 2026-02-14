@@ -4,6 +4,9 @@ import { JSX, Ref } from 'react';
 
 import Tag from '@components/Tag';
 import { SelectItem } from '@components/type';
+import classNames from 'classnames';
+
+import './MultipleCombobox.css';
 
 export interface MultipleComboboxProps
 	extends Omit<BaseComboboxProps, 'value' | 'onValueChange' | 'multiple' | 'defaultValue'> {
@@ -13,7 +16,7 @@ export interface MultipleComboboxProps
 }
 
 const MultipleCombobox = (props: MultipleComboboxProps): JSX.Element => {
-	const { value, defaultValue, onValueChange, placeholder, inputRef, ...rest } = props;
+	const { value, defaultValue, onValueChange, placeholder, inputRef, className, ...rest } = props;
 
 	const handleValueChange: BaseComboboxProps['onValueChange'] = (data) => {
 		if (onValueChange) onValueChange(data.value, data.items);
@@ -23,6 +26,7 @@ const MultipleCombobox = (props: MultipleComboboxProps): JSX.Element => {
 		<BaseCombobox
 			{...rest}
 			value={value}
+			className={classNames('MultipleCombobox', className)}
 			onValueChange={handleValueChange}
 			multiple
 			defaultValue={defaultValue}
@@ -33,10 +37,10 @@ const MultipleCombobox = (props: MultipleComboboxProps): JSX.Element => {
 
 export default MultipleCombobox;
 
-type MultipleComboboxDisplayValueProps = {
+interface MultipleComboboxDisplayValueProps {
 	placeholder?: string;
 	ref?: Ref<HTMLInputElement>;
-};
+}
 
 const MultipleComboboxDisplayValue = ({ placeholder, ref }: MultipleComboboxDisplayValueProps) => {
 	const {
@@ -58,7 +62,7 @@ const MultipleComboboxDisplayValue = ({ placeholder, ref }: MultipleComboboxDisp
 	const displayedPlaceholder = placeholder && selectedItems.length === 0 ? placeholder : undefined;
 
 	return (
-		<div className="Combobox_DisplayArea">
+		<div className="MultipleCombobox_DisplayArea">
 			{selectedItems.map((item) => (
 				<Tag
 					label={item.label}
@@ -71,7 +75,7 @@ const MultipleComboboxDisplayValue = ({ placeholder, ref }: MultipleComboboxDisp
 				/>
 			))}
 			<Combobox.Input
-				className="Combobox_Input"
+				className="MultipleCombobox_Input"
 				onKeyDown={handleKeydown}
 				placeholder={displayedPlaceholder}
 				ref={ref}
