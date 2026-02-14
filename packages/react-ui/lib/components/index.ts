@@ -45,3 +45,6 @@ export { default as Tag } from './Tag';
 
 export * from './TextInput';
 export { default as TextInput } from './TextInput';
+
+export * from './NumberInput';
+export { default as NumberInput } from './NumberInput';
