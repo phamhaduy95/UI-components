@@ -1,7 +1,7 @@
 import { Combobox, createListCollection } from '@ark-ui/react/combobox';
 import { Portal } from '@ark-ui/react/portal';
 
-import { CommonFieldProps, FieldStatus, SelectItem } from '@components/type';
+import { CommonFieldProps, SelectItem } from '@components/type';
 import { CheckIcon, ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 import { HTMLAttributes, JSX, Ref, useId, useMemo, useState } from 'react';
@@ -12,20 +12,13 @@ import IconButton from '@components/IconButton';
 
 import './ComboBox.css';
 
-export interface BaseComboboxProps extends HTMLAttributes<HTMLInputElement>, CommonFieldProps {
-	className?: string;
-	disabled?: boolean;
+export interface BaseComboboxProps
+	extends Omit<HTMLAttributes<HTMLInputElement>, 'defaultValue'>,
+		CommonFieldProps<string[]> {
 	items?: Array<SelectItem>;
-	label?: string;
-	placeholder?: string;
-	supportingText?: string;
 	ref?: Ref<HTMLDivElement>;
 	inputRef?: Ref<HTMLInputElement>;
-	defaultValue?: string[];
-	status?: FieldStatus;
-	required?: boolean;
 	loopFocus?: boolean;
-	value?: string[];
 	onValueChange?: Combobox.RootProps<SelectItem>['onValueChange'];
 	onOpenChange?: Combobox.RootProps<SelectItem>['onOpenChange'];
 	multiple?: boolean;

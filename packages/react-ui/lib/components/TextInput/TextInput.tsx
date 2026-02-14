@@ -9,8 +9,7 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 import IconButton from '@components/IconButton';
 import { CommonFieldProps } from '@components/type';
 
-export interface TextInputProp extends HTMLAttributes<HTMLInputElement>, CommonFieldProps {
-	value?: string;
+export interface TextInputProp extends HTMLAttributes<HTMLInputElement>, CommonFieldProps<string> {
 	onValueChange?: (value: string) => void;
 	name?: string;
 	'data-testId'?: string;

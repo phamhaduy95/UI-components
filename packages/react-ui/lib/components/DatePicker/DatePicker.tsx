@@ -1,4 +1,4 @@
-import { AriaAttributes, JSX, Ref, useId, useMemo } from 'react';
+import { AriaAttributes, ComponentPropsWithRef, JSX, useId, useMemo } from 'react';
 import dayjs from 'dayjs';
 
 import {
@@ -20,12 +20,9 @@ import { CommonFieldProps } from '@components/type';
 import IconButton from '@components/IconButton';
 
 export interface DatePickerProps
-	extends AriaAttributes,
+	extends Omit<ComponentPropsWithRef<'div'>, 'defaultValue' | 'children'>,
 		Pick<ArkDatePicker.RootProps, 'selectionMode' | 'open' | 'onOpenChange' | 'fixedWeeks'>,
-		CommonFieldProps {
-	// root id
-	id?: string;
-	ref?: Ref<HTMLDivElement>;
+		CommonFieldProps<string | Date> {
 	'data-testid'?: string;
 	// support ISO 8601 date format or Date object
 	value?: string | Date;

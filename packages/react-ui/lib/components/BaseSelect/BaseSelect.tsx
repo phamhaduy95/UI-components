@@ -1,4 +1,4 @@
-import { HTMLAttributes, JSX, Ref, useId } from 'react';
+import { ComponentPropsWithRef, HTMLAttributes, JSX, Ref, useId } from 'react';
 
 import { Portal } from '@ark-ui/react/portal';
 import { Select as ArkSelect, createListCollection } from '@ark-ui/react/select';
@@ -13,21 +13,19 @@ import './Select.css';
 import BaseField from '@components/BaseField';
 import IconButton from '@components/IconButton';
 
-export interface BaseSelectProps extends HTMLAttributes<HTMLButtonElement>, CommonFieldProps {
-	className?: string;
-	disabled?: boolean;
+export interface BaseSelectProps
+	extends Omit<ComponentPropsWithRef<'div'>, 'defaultValue'>,
+		CommonFieldProps<string[]> {
 	items?: Array<SelectItem>;
 	placeholder?: string;
 	ref?: Ref<HTMLDivElement>;
 	deselectable?: boolean;
 	loopFocus?: boolean;
-	value?: string[];
 	name?: string;
 	multiple?: boolean;
 	CustomValueText?: React.ReactNode;
 	onValueChange?: ArkSelect.RootProps<SelectItem>['onValueChange'];
 	'data-testId'?: string;
-	defaultValue?: string[];
 }
 
 const BaseSelect = ({
