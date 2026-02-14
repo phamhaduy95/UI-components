@@ -20,4 +20,6 @@ export interface CommonFieldProps<TValue> {
 	placeholder?: string;
 	value?: TValue;
 	defaultValue?: TValue;
+	name?: string;
+	readOnly?: boolean;
 }

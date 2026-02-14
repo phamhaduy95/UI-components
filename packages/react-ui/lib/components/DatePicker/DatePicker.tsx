@@ -1,4 +1,4 @@
-import { AriaAttributes, ComponentPropsWithRef, JSX, useId, useMemo } from 'react';
+import { ComponentPropsWithRef, JSX, useId, useMemo } from 'react';
 import dayjs from 'dayjs';
 
 import {
