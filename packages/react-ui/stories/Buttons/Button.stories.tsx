@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import Button from '@components/Button';
-import { PlusIcon, TrashIcon, RocketIcon } from '@radix-ui/react-icons';
+import { PlusIcon, RocketIcon } from '@radix-ui/react-icons';
 
 const meta: Meta<typeof Button> = {
-	title: 'Components/Button',
+	title: 'Components/Buttons/Button',
 	component: Button,
 	tags: ['autodocs'],
 	parameters: {
