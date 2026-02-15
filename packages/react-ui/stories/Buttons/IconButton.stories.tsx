@@ -3,7 +3,7 @@ import IconButton from '@components/IconButton';
 import { PlusIcon, TrashIcon, RocketIcon, ReloadIcon, BellIcon } from '@radix-ui/react-icons';
 
 const meta: Meta<typeof IconButton> = {
-	title: 'Components/IconButton',
+	title: 'Components/Buttons/IconButton',
 	component: IconButton,
 	tags: ['autodocs'],
 	parameters: {
