@@ -1,3 +1,6 @@
+export * from './Accordion';
+export { default as Accordion } from './Accordion';
+
 export * from './Button';
 export { default as Button } from './Button';
 
