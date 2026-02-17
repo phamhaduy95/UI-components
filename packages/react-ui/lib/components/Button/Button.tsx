@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { JSX, Ref } from 'react';
+import { JSX, ComponentPropsWithRef } from 'react';
 
 import './Button.css';
 
@@ -7,13 +7,11 @@ type ButtonVariant = 'contained' | 'outlined' | 'text';
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonColor = 'primary' | 'secondary' | 'success' | 'warning' | 'error';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ComponentPropsWithRef<'button'> {
 	children?: React.ReactNode;
-	ref?: Ref<HTMLButtonElement>;
 	variant?: ButtonVariant;
 	loading?: boolean;
 	size?: ButtonSize;
-	className?: string;
 	color?: ButtonColor;
 }
 
@@ -24,7 +22,6 @@ const Button = (props: ButtonProps): JSX.Element => {
 		ref,
 		variant = 'contained',
 		size = 'medium',
-		type = 'button',
 		color = 'primary',
 		...rest
 	} = props;
@@ -36,7 +33,7 @@ const Button = (props: ButtonProps): JSX.Element => {
 			data-variant={variant}
 			data-size={size}
 			data-color={color}
-			type={type}
+			type={'button'}
 			{...rest}
 		>
 			{children}
