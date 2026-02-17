@@ -49,8 +49,8 @@ export { default as SingleSelect } from './SingleSelect';
 export * from './SupportingText';
 export { default as SupportingText } from './SupportingText';
 
-export * from './Tag';
-export { default as Tag } from './Tag';
+export * from './Chip';
+export { default as Chip } from './Chip';
 
 export * from './TextInput';
 export { default as TextInput } from './TextInput';

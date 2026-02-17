@@ -2,7 +2,7 @@ import { Combobox, useComboboxContext, UseComboboxContext } from '@ark-ui/react/
 import BaseCombobox, { BaseComboboxProps } from '@components/BaseCombobox';
 import { JSX, Ref } from 'react';
 
-import Tag from '@components/Tag';
+import Chip from '@components/Chip';
 import { SelectItem } from '@components/type';
 import classNames from 'classnames';
 
@@ -64,11 +64,11 @@ const MultipleComboboxDisplayValue = ({ placeholder, ref }: MultipleComboboxDisp
 	return (
 		<div className="MultipleCombobox_DisplayArea">
 			{selectedItems.map((item) => (
-				<Tag
+				<Chip
 					label={item.label}
 					key={item.value}
 					removable
-					onRemoveClick={() => {
+					onRemove={() => {
 						clearValue(item.value);
 						focus();
 					}}

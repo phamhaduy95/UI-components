@@ -1,6 +1,6 @@
 import { useSelectContext, UseSelectContext } from '@ark-ui/react/select';
 import BaseSelect, { BaseSelectProps } from '@components/BaseSelect';
-import Tag from '@components/Tag';
+import Chip from '@components/Chip';
 import { SelectItem } from '@components/type';
 import { JSX } from 'react';
 
@@ -48,10 +48,10 @@ const DisplayedSelectValue = ({ placeholder }: DisplayedSelectValueProps) => {
 	return (
 		<div className="Select_DisplayedValue">
 			{selectedItems.map((item) => (
-				<Tag
+				<Chip
 					label={item.label}
 					removable
-					onRemoveClick={(e) => {
+					onRemove={(e) => {
 						e.stopPropagation();
 						clearValue(item.value);
 						focus();

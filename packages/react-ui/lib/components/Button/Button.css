@@ -54,11 +54,11 @@
 				}
 
 				&[data-variant='outlined'] {
-					background-color: var(--color-primary-hover-layer);
+					background-color: var(--color-primary-container-hover);
 				}
 
 				&[data-variant='text'] {
-					background-color: var(--color-primary-hover-layer);
+					background-color: var(--color-primary-container-hover);
 				}
 			}
 
@@ -68,11 +68,11 @@
 				}
 
 				&[data-variant='outlined'] {
-					background-color: var(--color-primary-pressed-layer);
+					background-color: var(--color-primary-container-pressed);
 				}
 
 				&[data-variant='text'] {
-					background-color: var(--color-primary-pressed-layer);
+					background-color: var(--color-primary-container-pressed);
 				}
 			}
 		}
@@ -99,11 +99,11 @@
 				}
 
 				&[data-variant='outlined'] {
-					background-color: var(--color-secondary-hover-layer);
+					background-color: var(--color-secondary-container-hover);
 				}
 
 				&[data-variant='text'] {
-					background-color: var(--color-secondary-hover-layer);
+					background-color: var(--color-secondary-container-hover);
 				}
 			}
 
@@ -113,11 +113,11 @@
 				}
 
 				&[data-variant='outlined'] {
-					background-color: var(--color-secondary-pressed-layer);
+					background-color: var(--color-secondary-container-pressed);
 				}
 
 				&[data-variant='text'] {
-					background-color: var(--color-secondary-pressed-layer);
+					background-color: var(--color-secondary-container-pressed);
 				}
 			}
 		}
@@ -144,11 +144,11 @@
 				}
 
 				&[data-variant='outlined'] {
-					background-color: var(--color-success-hover-layer);
+					background-color: var(--color-success-container-hover);
 				}
 
 				&[data-variant='text'] {
-					background-color: var(--color-success-hover-layer);
+					background-color: var(--color-success-container-hover);
 				}
 			}
 
@@ -158,11 +158,11 @@
 				}
 
 				&[data-variant='outlined'] {
-					background-color: var(--color-success-pressed-layer);
+					background-color: var(--color-success-container-pressed);
 				}
 
 				&[data-variant='text'] {
-					background-color: var(--color-success-pressed-layer);
+					background-color: var(--color-success-container-pressed);
 				}
 			}
 		}
@@ -189,11 +189,11 @@
 				}
 
 				&[data-variant='outlined'] {
-					background-color: var(--color-warning-hover-layer);
+					background-color: var(--color-warning-container-hover);
 				}
 
 				&[data-variant='text'] {
-					background-color: var(--color-warning-hover-layer);
+					background-color: var(--color-warning-container-hover);
 				}
 			}
 
@@ -203,11 +203,11 @@
 				}
 
 				&[data-variant='outlined'] {
-					background-color: var(--color-warning-pressed-layer);
+					background-color: var(--color-warning-container-pressed);
 				}
 
 				&[data-variant='text'] {
-					background-color: var(--color-warning-pressed-layer);
+					background-color: var(--color-warning-container-pressed);
 				}
 			}
 		}
@@ -234,11 +234,11 @@
 				}
 
 				&[data-variant='outlined'] {
-					background-color: var(--color-error-hover-layer);
+					background-color: var(--color-error-container-hover);
 				}
 
 				&[data-variant='text'] {
-					background-color: var(--color-error-hover-layer);
+					background-color: var(--color-error-container-hover);
 				}
 			}
 
@@ -248,11 +248,11 @@
 				}
 
 				&[data-variant='outlined'] {
-					background-color: var(--color-error-pressed-layer);
+					background-color: var(--color-error-container-pressed);
 				}
 
 				&[data-variant='text'] {
-					background-color: var(--color-error-pressed-layer);
+					background-color: var(--color-error-container-pressed);
 				}
 			}
 		}
