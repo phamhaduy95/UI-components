@@ -6,7 +6,7 @@ import { expect, within, userEvent, fn, waitFor } from 'storybook/test';
 const mockedOnValueChange = fn();
 
 const meta = {
-	title: 'Components/Accordion',
+	title: 'Components/DataDisplay/Accordion',
 	component: Accordion,
 	tags: ['autodocs'],
 	parameters: {

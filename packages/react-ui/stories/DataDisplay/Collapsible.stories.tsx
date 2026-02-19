@@ -4,7 +4,7 @@ import { ChevronDownIcon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 
 const meta: Meta<typeof Collapsible> = {
-	title: 'Components/Collapsible',
+	title: 'Components/DataDisplay/Collapsible',
 	component: Collapsible,
 	tags: ['autodocs'],
 	parameters: {
