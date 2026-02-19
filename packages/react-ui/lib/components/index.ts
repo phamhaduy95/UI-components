@@ -58,5 +58,8 @@ export { default as Switch } from './Switch';
 export * from './Chip';
 export { default as Chip } from './Chip';
 
+export * from './RadioGroup';
+export { default as RadioGroup } from './RadioGroup';
+
 export * from './TextInput';
 export { default as TextInput } from './TextInput';
