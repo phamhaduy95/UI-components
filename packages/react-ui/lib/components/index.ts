@@ -40,6 +40,9 @@ export { default as NumberInput } from './NumberInput';
 export * from './PasswordInput';
 export { default as PasswordInput } from './PasswordInput';
 
+export * from './Popover';
+export { default as Popover } from './Popover';
+
 export * from './ScrollArea';
 export { default as ScrollArea } from './ScrollArea';
 
