@@ -27,7 +27,7 @@ const nestedItems = [
 ];
 
 const meta: Meta<typeof DropDownMenu> = {
-	title: 'Components/DropDownMenu',
+	title: 'Components/Overlay/DropDownMenu',
 	component: DropDownMenu,
 	tags: ['autodocs'],
 	parameters: {
