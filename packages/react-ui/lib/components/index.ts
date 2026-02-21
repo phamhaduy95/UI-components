@@ -66,3 +66,6 @@ export { default as RadioGroup } from './RadioGroup';
 
 export * from './TextInput';
 export { default as TextInput } from './TextInput';
+
+export * from './ToggleButton';
+export { default as ToggleButton } from './ToggleButton';
