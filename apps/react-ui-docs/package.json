@@ -20,6 +20,7 @@
 	},
 	"devDependencies": {
 		"@astrojs/react": "^4.4.2",
+		"@configs/eslint-config": "workspace:*",
 		"@tailwindcss/vite": "^4.1.18",
 		"@types/react": "^19.2.10",
 		"@types/react-dom": "^19.2.3",
