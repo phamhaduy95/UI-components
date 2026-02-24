@@ -52,7 +52,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 		...rest
 	} = props;
 
-	const supportingTextId = supportingText ? useId() : undefined;
+	const supportingTextId = useId();
 
 	const [searchValue, setSearchValue] = useState('');
 
@@ -130,7 +130,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 				disabled={disabled}
 				required={required}
 				labelElement={Combobox.Label}
-				supportingTextId={supportingTextId}
+				supportingTextId={supportingText ? supportingTextId : undefined}
 				size={size}
 			>
 				<Combobox.Control

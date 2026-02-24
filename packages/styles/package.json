@@ -1,9 +1,8 @@
 {
 	"name": "@packages/styles",
 	"version": "1.0.0",
-	"description": "CSS styles for UI components",
-	"author": "ph.duy113@gmail.com",
-	"license": "MIT",
+	"type": "module",
+	"private": true,
 	"exports": {
 		"./components/*.css": "./components/*.css",
 		"./themes/*.css": "./themes/*.css"
@@ -11,6 +10,5 @@
 	"sideEffects": [
 		"./components/*.css",
 		"./themes/*.css"
-	],
-	"packageManager": "pnpm@10.10.0"
+	]
 }

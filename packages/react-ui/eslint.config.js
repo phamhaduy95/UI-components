@@ -1,18 +1,14 @@
-import js from '@eslint/js';
-import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
-import tseslint from 'typescript-eslint';
+import libConfig from '@configs/eslint-config/ui-library';
 
-export default tseslint.config(
-	{ ignores: ['dist'] },
+import { defineConfig } from 'eslint/config';
+/** @type {import("eslint").Linter.Config[]} */
+export default defineConfig([
+	...libConfig,
 	{
-		extends: [js.configs.recommended, ...tseslint.configs.recommended],
 		files: ['**/*.{ts,tsx}'],
-		languageOptions: {
-			ecmaVersion: 2020,
-			globals: globals.browser
-		},
+		basePath: 'lib',
 		plugins: {
 			'react-hooks': reactHooks,
 			'react-refresh': reactRefresh
@@ -22,4 +18,4 @@ export default tseslint.config(
 			'react-refresh/only-export-components': ['warn', { allowConstantExport: true }]
 		}
 	}
-);
+]);

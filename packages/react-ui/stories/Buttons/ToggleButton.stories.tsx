@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import ToggleButton from '@components/ToggleButton';
 import { useState } from 'react';
-import { expect, within, userEvent, fn } from 'storybook/test';
+import { expect, userEvent, fn } from 'storybook/test';
 import { StarIcon, StarFilledIcon } from '@radix-ui/react-icons';
 
 const mockedOnPressedChange = fn();
@@ -41,7 +41,7 @@ export const Default: Story = {
 		),
 		'aria-label': 'Toggle on/off'
 	},
-	play: async ({ canvas, args, step }) => {
+	play: async ({ canvas, step }) => {
 		const button = canvas.getByRole('button', { name: 'Toggle on/off' });
 
 		await step('Check if button exists', async () => {
@@ -81,7 +81,7 @@ export const Disabled: Story = {
 		disabled: true,
 		children: ({ pressed }) => <span>{pressed ? 'On' : 'Off'}</span>
 	},
-	play: async ({ canvas, args, step }) => {
+	play: async ({ canvas, step }) => {
 		const button = canvas.getByRole('button');
 		await step('Check if button is disabled', async () => {
 			expect(button).toBeDisabled();

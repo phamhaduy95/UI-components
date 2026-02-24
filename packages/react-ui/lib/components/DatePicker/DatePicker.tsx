@@ -50,16 +50,15 @@ const DatePicker = (props: DatePickerProps): JSX.Element => {
 		supportingText,
 		status,
 		clearable,
-		locale,
+
 		'data-testid': dataTestId,
 		required,
 		size,
 		onValueChange,
-		onOpenChange,
-		...rest
+		onOpenChange
 	} = props;
 
-	const supportingTextId = supportingText ? useId() : undefined;
+	const supportingTextId = useId();
 
 	const internalValue = useMemo(() => {
 		if (value === undefined) return undefined;
@@ -108,7 +107,7 @@ const DatePicker = (props: DatePickerProps): JSX.Element => {
 				size={size}
 				inputId={inputId}
 				labelElement={ArkDatePicker.Label}
-				supportingTextId={supportingTextId}
+				supportingTextId={supportingText ? supportingTextId : undefined}
 			>
 				<ArkDatePicker.Control className="BaseField_Field">
 					<div className="DatePicker_InputField">

@@ -1,4 +1,4 @@
-import { ComponentPropsWithRef, HTMLAttributes, JSX, Ref, useId } from 'react';
+import { ComponentPropsWithRef, JSX, Ref, useId } from 'react';
 
 import { Portal } from '@ark-ui/react/portal';
 import { Select as ArkSelect, createListCollection } from '@ark-ui/react/select';

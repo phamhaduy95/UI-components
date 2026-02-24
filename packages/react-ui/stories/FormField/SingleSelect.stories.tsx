@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import SingleSelect from '@components/SingleSelect';
+import SingleSelect, { SingleSelectProps } from '@components/SingleSelect';
 import { useState } from 'react';
 import { expect, within, userEvent, screen, fn } from 'storybook/test';
 
@@ -226,7 +226,7 @@ export const Controllable: Story = {
 	render: (args) => {
 		const [value, setValue] = useState(args.value);
 
-		const handleChange = (newValue: string, item: any) => {
+		const handleChange: SingleSelectProps['onValueChange'] = (newValue, item) => {
 			setValue(newValue);
 			if (args.onValueChange) {
 				args.onValueChange(newValue, item);

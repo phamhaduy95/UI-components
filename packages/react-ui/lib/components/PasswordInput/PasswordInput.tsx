@@ -31,7 +31,6 @@ const PasswordInput = ({
 	ref,
 	status,
 	supportingText,
-	supportingTextId,
 	placeholder,
 	name,
 	visible,
@@ -47,7 +46,7 @@ const PasswordInput = ({
 }: PasswordInputProps) => {
 	const [internalValue, setInternalValue] = useState(defaultValue);
 
-	const internalSupportingTextId = supportingTextId ?? useId();
+	const internalSupportingTextId = useId();
 
 	const value = externalValue ?? internalValue;
 
@@ -82,6 +81,7 @@ const PasswordInput = ({
 			required={required}
 			visible={visible}
 			disabled={disabled}
+			defaultVisible={defaultVisible}
 			data-testid={dataTestId}
 			invalid={status === 'error'}
 			onVisibilityChange={handleVisibilityChange}

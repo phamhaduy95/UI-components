@@ -71,7 +71,7 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 		}
 	};
 
-	const supportingTextId = supportingText ? useId() : undefined;
+	const supportingTextId = useId();
 
 	return (
 		<ArkDatePicker.Root
@@ -94,7 +94,7 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 			<BaseField
 				label={label}
 				supportingText={supportingText}
-				supportingTextId={supportingTextId}
+				supportingTextId={supportingText ? supportingTextId : undefined}
 				status={status}
 				required={required}
 				disabled={disabled}
@@ -107,7 +107,7 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 					className="BaseField_Field DateRangePicker_Control"
 					aria-label={ariaLabel}
 					aria-disabled={disabled}
-					aria-describedby={supportingTextId}
+					aria-describedby={supportingText ? supportingTextId : undefined}
 				>
 					<div className="DateRangePicker_Input">
 						<DateRangeDisplay formatAsStr={format} />

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import MultipleCombobox from '@components/MultipleCombobox';
+import MultipleCombobox, { MultipleComboboxProps } from '@components/MultipleCombobox';
 import { useState } from 'react';
 import { expect, within, userEvent, screen, fn } from 'storybook/test';
 
@@ -305,7 +305,7 @@ export const Controllable: Story = {
 	render: (args) => {
 		const [value, setValue] = useState(args.value);
 
-		const handleChange = (newValue: string[], item: any) => {
+		const handleChange: MultipleComboboxProps['onValueChange'] = (newValue, item) => {
 			console.log(newValue, item);
 			setValue(newValue);
 			if (args.onValueChange) {

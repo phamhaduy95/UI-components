@@ -321,21 +321,15 @@ export const Status: Story = {
 				label="Success status"
 				supportingText="Range is available"
 			/>
-			<DatePickerStatusWrapper args={args} />
+			<DateRangePicker
+				{...args}
+				status="warning"
+				label="Warning status"
+				supportingText="Range is almost fully booked"
+			/>
 		</div>
 	)
 };
-
-// Helper component for Status story to avoid hook issues if needed,
-// though direct render usually works in Storybook CSP.
-const DatePickerStatusWrapper = ({ args }: { args: any }) => (
-	<DateRangePicker
-		{...args}
-		status="warning"
-		label="Warning status"
-		supportingText="Range is almost fully booked"
-	/>
-);
 
 export const Size: Story = {
 	render: (args) => (
