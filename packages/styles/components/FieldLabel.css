@@ -1,0 +1,19 @@
+.FieldLabel {
+	pointer-events: none;
+	margin: 0.25rem;
+	color: var(--color-on-surface-variant);
+
+	&[data-status='error'] {
+		color: var(--color-error);
+	}
+	&[data-status='warning'] {
+		color: var(--color-warning);
+	}
+	&[data-status='success'] {
+		color: var(--color-success);
+	}
+}
+
+.FieldLabel_Required {
+	color: var(--color-error);
+}

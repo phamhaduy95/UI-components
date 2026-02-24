@@ -1,0 +1,24 @@
+.MultipleCombobox {
+	> .BaseField_Field {
+		height: unset;
+		min-height: var(--field-height);
+	}
+	.MultipleCombobox_DisplayArea {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		flex-wrap: wrap;
+		flex-grow: 1;
+		row-gap: 10px;
+		column-gap: 10px;
+		padding-inline: var(--field-padding-inline);
+		padding-block: var(--field-padding-block);
+	}
+
+	.MultipleCombobox_Input {
+		flex-grow: 1;
+		align-self: stretch;
+		outline: none;
+		border: none;
+	}
+}

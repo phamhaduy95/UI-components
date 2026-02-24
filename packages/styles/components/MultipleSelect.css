@@ -1,0 +1,11 @@
+.MultipleSelect {
+	.Select_Trigger[data-placeholder-shown] {
+		color: var(--color-text-secondary);
+	}
+}
+
+.Select_DisplayedValue {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}

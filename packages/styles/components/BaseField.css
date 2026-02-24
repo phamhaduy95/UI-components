@@ -1,0 +1,62 @@
+.BaseField {
+	--color-focused: var(--color-primary);
+
+	&[aria-disabled='true'] {
+		.BaseField_Field {
+			background-color: var(--color-surface-container-high);
+			pointer-events: none;
+			opacity: 0.7;
+			filter: grayscale(100%);
+		}
+	}
+
+	&[data-status='error'] {
+		.BaseField_Field {
+			border-color: var(--color-error);
+			--color-focused: var(--color-error);
+		}
+	}
+	&[data-status='warning'] {
+		.BaseField_Field {
+			border-color: var(--color-warning);
+			--color-focused: var(--color-warning);
+		}
+	}
+	&[data-status='success'] {
+		.BaseField_Field {
+			border-color: var(--color-success);
+			--color-focused: var(--color-success);
+		}
+	}
+	&[data-size='small'] {
+		--field-height: 40px;
+	}
+	&[data-size='medium'] {
+		--field-height: 48px;
+	}
+}
+.BaseField > .SupportingText {
+	padding: 0;
+	margin-top: 4px;
+}
+.BaseField_Field {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	position: relative;
+	height: var(--field-height);
+	border: 1px solid var(--color-outline);
+	border-radius: var(--field-border-radius);
+	color: var(--color-on-surface);
+
+	&:focus-within {
+		border-color: var(--color-focused);
+		outline: 1px solid var(--color-focused);
+	}
+
+	& > .BaseField_Trailing {
+		display: flex;
+		align-items: center;
+		margin-left: auto;
+	}
+}
