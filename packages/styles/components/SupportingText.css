@@ -1,0 +1,18 @@
+.SupportingText {
+	padding-top: 8px;
+	font-size: 12px;
+	line-height: 16px;
+	color: var(--color-on-surface-variant);
+
+	&[data-status='error'] {
+		color: var(--color-error);
+	}
+
+	&[data-status='warning'] {
+		color: var(--color-warning);
+	}
+
+	&[data-status='success'] {
+		color: var(--color-success);
+	}
+}

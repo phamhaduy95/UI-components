@@ -1,0 +1,57 @@
+.Combobox_Control {
+	cursor: pointer;
+	min-height: var(--spacing-container-lg);
+
+	& > .Combobox_Value {
+		text-wrap: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+
+	> .Combobox_Input {
+		outline: none;
+		flex-grow: 1;
+		border: none;
+		padding-inline: var(--field-padding-inline);
+		padding-block: var(--field-padding-block);
+		background: transparent;
+		caret-color: var(--color-on-surface);
+		font-size: var(--field-font-size);
+		color: var(--color-on-background);
+	}
+
+	& > .Combobox_Trigger {
+		background: transparent;
+		border: none;
+		outline: none;
+		margin-left: auto;
+		margin-right: calc(var(--field-padding-inline) / 2);
+	}
+
+	& > .Combobox_TriggerIcon {
+		color: var(--color-outline);
+		cursor: pointer;
+	}
+
+	&[data-placeholder-shown] {
+		color: var(--color-outline);
+	}
+
+	&:is([data-state='open']) {
+		border-color: var(--color-primary);
+		outline: 1px solid var(--color-primary);
+	}
+}
+
+.Menu.Combobox_Content {
+	min-width: var(--reference-width);
+	max-height: 50dvh;
+	overflow: auto;
+
+	> .Menu_Item:not([data-disabled]) {
+		.HighlightedText {
+			color: var(--color-on-primary-container);
+			font-weight: 600;
+		}
+	}
+}

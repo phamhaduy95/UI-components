@@ -1,0 +1,54 @@
+.Menu {
+	border-radius: 6px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: var(--color-outline-variant);
+	background-color: var(--color-surface-container-lowest);
+	width: max-content;
+	color: var(--color-on-surface);
+	box-shadow: var(--shadow);
+	overflow: auto;
+	outline: none;
+	--layer-index: var(--menu-popup-z-index);
+}
+
+.Menu_Trigger {
+	cursor: pointer;
+}
+
+.Menu_ExpandItemIcon {
+	margin-left: auto;
+}
+
+.Menu_Item {
+	cursor: pointer;
+	padding-inline: 16px;
+	padding-block: 8px;
+	color: var(--color-on-surface-variant);
+	caret-color: #0000;
+	align-items: center;
+	display: flex;
+
+	&[data-highlighted] {
+		background-color: var(--color-surface-container);
+		border-style: none;
+		outline-style: none;
+	}
+	& > .MenuItem_TrailingIcon {
+		margin-left: auto;
+	}
+
+	&[data-disabled] {
+		background-color: inherit;
+		color: var(--color-text-disabled);
+		pointer-events: none;
+	}
+
+	&[data-state='checked'] {
+		background-color: var(--color-primary-container);
+		color: var(--color-on-primary-container);
+	}
+	&[data-state='checked'] > .MenuItem_TrailingIcon {
+		color: var(--color-primary);
+	}
+}
