@@ -42,7 +42,7 @@ const NumberInput = (props: NumberInputProps): JSX.Element => {
 		onValueChange?.(details.value);
 	};
 
-	const internalSupportingTextId = supportingTextId ?? useId();
+	const internalSupportingTextId = useId();
 
 	return (
 		<ArkNumberInput.Root
@@ -65,7 +65,7 @@ const NumberInput = (props: NumberInputProps): JSX.Element => {
 				label={label}
 				supportingText={supportingText}
 				status={status}
-				supportingTextId={internalSupportingTextId}
+				supportingTextId={supportingTextId ?? internalSupportingTextId}
 				inputId={inputId}
 				labelElement={ArkNumberInput.Label}
 			>
@@ -73,7 +73,7 @@ const NumberInput = (props: NumberInputProps): JSX.Element => {
 					<ArkNumberInput.Input
 						className="NumberInput_Input"
 						id={inputId}
-						aria-describedby={internalSupportingTextId}
+						aria-describedby={supportingTextId ?? internalSupportingTextId}
 						placeholder={placeholder}
 					/>
 					<div className="NumberInput_Triggers">

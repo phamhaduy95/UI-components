@@ -87,7 +87,7 @@ export const Clickable: Story = {
 		const { onClick } = args;
 		return <Chip label="Clickable Tag" clickable onClick={onClick} />;
 	},
-	async play({ args, step, canvas }) {
+	async play({ step, canvas }) {
 		const chip = canvas.getByRole('button', { name: 'Clickable Tag' });
 
 		await step('Click on Chip', async () => {

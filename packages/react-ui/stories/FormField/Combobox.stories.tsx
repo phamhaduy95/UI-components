@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import SingleCombobox from '@components/SingleCombobox';
+import SingleCombobox, { SingleComboboxProps } from '@components/SingleCombobox';
 import { useState } from 'react';
 import { expect, within, userEvent, screen, fn } from 'storybook/test';
 
@@ -253,7 +253,7 @@ export const Controllable: Story = {
 	render: (args) => {
 		const [value, setValue] = useState(args.value);
 
-		const handleChange = (newValue: string, item: any) => {
+		const handleChange: SingleComboboxProps['onValueChange'] = (newValue, item) => {
 			setValue(newValue);
 			if (args.onValueChange) {
 				args.onValueChange(newValue, item);

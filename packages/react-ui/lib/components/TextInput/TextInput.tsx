@@ -36,7 +36,7 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 	} = props;
 
 	const inputId = useId();
-	const supportingTextId = supportingText ? useId() : undefined;
+	const supportingTextId = useId();
 
 	const [internalValue, setInternalValue] = useState(defaultValue);
 
@@ -65,7 +65,7 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 			required={required}
 			inputId={inputId}
 			disabled={disabled}
-			supportingTextId={supportingTextId}
+			supportingTextId={supportingText ? supportingTextId : undefined}
 			size={size}
 			data-testId={dataTestId}
 		>
@@ -76,7 +76,7 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 					placeholder={placeholder}
 					disabled={disabled}
 					aria-disabled={disabled}
-					aria-describedby={supportingTextId}
+					aria-describedby={supportingText ? supportingTextId : undefined}
 					defaultValue={defaultValue}
 					aria-invalid={status === 'error'}
 					value={value}

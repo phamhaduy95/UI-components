@@ -199,7 +199,6 @@ export const Controllable: Story = {
 		const container = canvas.getByTestId(testId);
 
 		const secondTrigger = within(container).getByRole('button', { name: items[1].title });
-		const firstTrigger = within(container).getByRole('button', { name: items[0].title });
 
 		await step('Check if initial value is correct', async () => {
 			const displayedValue = canvas.getByLabelText('Displayed value');
@@ -232,7 +231,7 @@ export const CustomTitleContent: Story = {
 						<span>Custom Title {ctx.expanded ? '(Open)' : '(Closed)'}</span>
 					</div>
 				),
-				CustomContent: (ctx) => (
+				CustomContent: () => (
 					<div className="rounded bg-gray-100 p-4 italic text-gray-700">
 						This is some custom content inside a styled div.
 					</div>

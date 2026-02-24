@@ -1,16 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import DropDownMenu from '@components/DropDownMenu';
+import DropDownMenu, { DropdownMenuProps } from '@components/DropDownMenu';
 import Button from '@components/Button';
-import { ItemObject } from '@components/type';
 
-const items: ItemObject[] = [
+const items: DropdownMenuProps['items'] = [
 	{ label: 'New Tab', value: 'new-tab' },
 	{ label: 'New Window', value: 'new-window' },
 	{ label: 'New Private Window', value: 'new-private-window', disabled: true },
 	{ label: 'Downloads', value: 'downloads' }
 ];
 
-const nestedItems = [
+const nestedItems: DropdownMenuProps['items'] = [
 	{ label: 'New Tab', value: 'new-tab' },
 	{ label: 'New Window', value: 'new-window' },
 	{
@@ -54,7 +53,7 @@ export const Default: Story = {
  */
 export const Nested: Story = {
 	args: {
-		items: nestedItems as any,
+		items: nestedItems,
 		children: <Button>Open Nested Menu</Button>
 	}
 };

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import MultipleSelect from '@components/MultipleSelect';
+import MultipleSelect, { MultipleSelectProps } from '@components/MultipleSelect';
 import { useState } from 'react';
 import { expect, within, userEvent, screen, fn } from 'storybook/test';
 
@@ -231,7 +231,7 @@ export const Controllable: Story = {
 	render: (args) => {
 		const [value, setValue] = useState(args.value);
 
-		const handleChange = (newValue: string[], item: any) => {
+		const handleChange: MultipleSelectProps['onValueChange'] = (newValue, item) => {
 			setValue(newValue);
 			if (args.onValueChange) {
 				args.onValueChange(newValue, item);
