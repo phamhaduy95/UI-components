@@ -1,0 +1,22 @@
+{
+	"name": "@configs/eslint-config",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"exports": {
+		"./base": "./base.js",
+		"./ui-library": "./ui-library.js",
+		"./prettier": "./prettier-base.js"
+	},
+	"devDependencies": {
+		"@eslint/css": "^0.14.1",
+		"@eslint/js": "^10.0.1",
+		"@eslint/json": "^1.0.1",
+		"@eslint/markdown": "^7.5.1",
+		"eslint": "^10.0.2",
+		"eslint-plugin-import": "^2.32.0",
+		"globals": "^17.3.0",
+		"typescript": "5.8.3",
+		"typescript-eslint": "^8.29.0"
+	}
+}
