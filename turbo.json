@@ -4,11 +4,14 @@
 		"build": {
 			"dependsOn": ["^build"]
 		},
-		"check-types": {
-			"dependsOn": ["^check-types"]
+		"type-check": {
+			"dependsOn": []
 		},
-		"prettier": {
-			"dependsOn": ["^prettier"]
+		"lint": {
+			"dependsOn": []
+		},
+		"format": {
+			"dependsOn": []
 		},
 		"dev": {
 			"persistent": true,

@@ -9,6 +9,7 @@
 		"preview": "vite preview",
 		"build-only": "vite build",
 		"lint": "eslint .",
+		"format": "prettier --write .",
 		"type-check": "vue-tsc --build",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"

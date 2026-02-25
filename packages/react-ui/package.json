@@ -11,10 +11,10 @@
 		"ui"
 	],
 	"scripts": {
-		"type-checks": "tsc --noEmit",
+		"type-check": "tsc --noEmit",
 		"build": " vite build",
-		"prettier": "prettier . --write --cache",
 		"lint": "eslint .",
+		"format": "prettier --write .",
 		"preview": "vite preview",
 		"prepack": "clean-package",
 		"postpack": "clean-package restore",

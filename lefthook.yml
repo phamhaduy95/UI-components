@@ -1,0 +1,14 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: linting staged files
+      run: pnpm lint -- {staged_files}
+      glob: '*.{js,ts,jsx,tsx,vue,json}'
+
+    - name: formatting staged files
+      run: pnpm format -- {staged_files}
+      glob: '*.{js,ts,jsx,tsx,vue,json}'
+pre-push:
+  jobs:
+    - name: perform type checks
+      run: turbo run type-check
