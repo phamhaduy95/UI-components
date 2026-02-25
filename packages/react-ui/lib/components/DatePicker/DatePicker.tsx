@@ -13,7 +13,7 @@ import BaseCalendarView from '@components/BaseCalendarView/BaseCalendarView';
 
 import { CalendarIcon, Cross2Icon } from '@radix-ui/react-icons';
 
-import './DatePicker.css';
+import '@packages/styles/components/DatePicker.css';
 
 import BaseField from '@components/BaseField';
 import { CommonFieldProps } from '@components/type';

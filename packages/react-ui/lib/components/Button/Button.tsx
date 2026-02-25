@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { JSX, ComponentPropsWithRef } from 'react';
 
-import './Button.css';
+import '@packages/styles/components/Button.css';
 
 type ButtonVariant = 'contained' | 'outlined' | 'text';
 type ButtonSize = 'small' | 'medium' | 'large';

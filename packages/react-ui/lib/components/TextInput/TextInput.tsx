@@ -2,7 +2,7 @@ import { ChangeEvent, HTMLAttributes, JSX, useId, useState } from 'react';
 
 import classNames from 'classnames';
 
-import './TextInput.css';
+import '@packages/styles/components/TextInput.css';
 
 import BaseField from '@components/BaseField';
 import { Cross2Icon } from '@radix-ui/react-icons';

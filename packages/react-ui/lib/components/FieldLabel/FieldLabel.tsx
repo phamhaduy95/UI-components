@@ -1,7 +1,7 @@
 import { FieldStatus } from '@components/type';
 import classNames from 'classnames';
 import { createElement, FunctionComponent, HTMLAttributes, HTMLElementType, JSX } from 'react';
-import './FieldLabel.css';
+import '@packages/styles/components/FieldLabel.css';
 
 export interface FieldLabelProps extends HTMLAttributes<HTMLLabelElement> {
 	type?: HTMLElementType | FunctionComponent<Record<string, unknown>>;

@@ -4,7 +4,7 @@ import Chip from '@components/Chip';
 import { SelectItem } from '@components/type';
 import { JSX } from 'react';
 
-import './MultipleSelect.css';
+import '@packages/styles/components/MultipleSelect.css';
 
 export interface MultipleSelectProps
 	extends Omit<BaseSelectProps, 'value' | 'onValueChange' | 'defaultValue'> {

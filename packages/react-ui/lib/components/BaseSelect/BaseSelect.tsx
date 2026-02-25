@@ -6,9 +6,9 @@ import { CommonFieldProps, SelectItem } from '@components/type';
 import { CheckIcon, ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 
-import '@components/DropDownMenu/Menu.css';
+import '@packages/styles/components/DropDownMenu.css';
 
-import './Select.css';
+import '@packages/styles/components/BaseSelect.css';
 
 import BaseField from '@components/BaseField';
 import IconButton from '@components/IconButton';

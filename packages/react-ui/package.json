@@ -30,8 +30,7 @@
 		"./components": {
 			"types": "./dist/components/index.d.ts",
 			"default": "./dist/components/index.js"
-		},
-		"./themes/*.css": "./dist/themes/*.css"
+		}
 	},
 	"publishConfig": {
 		"access": "public"
@@ -56,6 +55,7 @@
 		"react-dom": "^19.2.4"
 	},
 	"devDependencies": {
+		"@packages/styles": "workspace:*",
 		"@chromatic-com/storybook": "^5.0.0",
 		"@configs/eslint-config": "workspace:*",
 		"@storybook/addon-a11y": "^10.2.3",
@@ -76,7 +76,6 @@
 		"eslint": "^10.0.2",
 		"eslint-plugin-react-hooks": "^7.0.1",
 		"eslint-plugin-react-refresh": "^0.5.2",
-		"glob": "^11.1.0",
 		"playwright": "^1.58.1",
 		"storybook": "^10.2.3",
 		"tailwindcss": "^4.1.18",

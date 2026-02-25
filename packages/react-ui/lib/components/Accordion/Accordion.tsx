@@ -2,7 +2,7 @@ import { Accordion as ArkAccordion, UseAccordionItemContext } from '@ark-ui/reac
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 import { ComponentPropsWithRef } from 'react';
-import './Accordion.css';
+import '@packages/styles/components/Accordion.css';
 
 export interface AccordionItemObject {
 	// must be unique value

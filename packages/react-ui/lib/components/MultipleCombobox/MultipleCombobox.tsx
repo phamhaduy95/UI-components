@@ -6,7 +6,7 @@ import Chip from '@components/Chip';
 import { SelectItem } from '@components/type';
 import classNames from 'classnames';
 
-import './MultipleCombobox.css';
+import '@packages/styles/components/MultipleCombobox.css';
 
 export interface MultipleComboboxProps
 	extends Omit<BaseComboboxProps, 'value' | 'onValueChange' | 'multiple' | 'defaultValue'> {

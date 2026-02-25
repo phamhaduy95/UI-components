@@ -3,7 +3,7 @@ import SupportingText from '@components/SupportingText';
 import { CommonFieldProps } from '@components/type';
 import classNames from 'classnames';
 
-import './BaseField.css';
+import '@packages/styles/components/BaseField.css';
 import { ComponentPropsWithRef } from 'react';
 
 export interface BaseFieldProps
