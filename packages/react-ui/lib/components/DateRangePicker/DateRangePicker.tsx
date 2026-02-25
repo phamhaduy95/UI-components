@@ -11,7 +11,7 @@ import { CalendarIcon, Cross2Icon } from '@radix-ui/react-icons';
 import { AriaAttributes, useId } from 'react';
 import dayjs from 'dayjs';
 
-import './DateRangePicker.css';
+import '@packages/styles/components/DateRangePicker.css';
 
 import BaseField from '@components/BaseField';
 import { CommonFieldProps } from '@components/type';

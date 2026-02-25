@@ -4,7 +4,7 @@ import { EyeOpenIcon, EyeClosedIcon, Cross2Icon } from '@radix-ui/react-icons';
 import { CommonFieldProps } from '@components/type';
 import { ChangeEvent, Ref, useId, HTMLAttributes, useState } from 'react';
 
-import './PasswordInput.css';
+import '@packages/styles/components/PasswordInput.css';
 import IconButton from '@components/IconButton';
 
 export interface PasswordInputProps

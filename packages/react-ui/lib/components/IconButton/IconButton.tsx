@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import Button, { ButtonProps } from '@components/Button';
-import './IconButton.css';
+import '@packages/styles/components/IconButton.css';
 import { JSX } from 'react';
 
 export interface IconButtonProps extends ButtonProps {

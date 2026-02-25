@@ -35,6 +35,9 @@ importers:
       '@packages/react-components':
         specifier: workspace:*
         version: link:../../packages/react-ui
+      '@packages/styles':
+        specifier: workspace:*
+        version: link:../../packages/styles
       astro:
         specifier: ^5.17.0
         version: 5.17.1(@types/node@25.2.0)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.57.1)(typescript@5.9.3)(yaml@2.7.1)
@@ -124,6 +127,9 @@ importers:
       '@configs/eslint-config':
         specifier: workspace:*
         version: link:../../configs/eslint-config
+      '@packages/styles':
+        specifier: workspace:*
+        version: link:../styles
       '@storybook/addon-a11y':
         specifier: ^10.2.3
         version: 10.2.10(storybook@10.2.10(@testing-library/dom@10.4.1)(prettier@3.5.3)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
@@ -178,9 +184,6 @@ importers:
       eslint-plugin-react-refresh:
         specifier: ^0.5.2
         version: 0.5.2(eslint@10.0.2(jiti@2.6.1))
-      glob:
-        specifier: ^11.1.0
-        version: 11.1.0
       playwright:
         specifier: ^1.58.1
         version: 1.58.1

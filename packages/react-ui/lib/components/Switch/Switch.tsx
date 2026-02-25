@@ -3,7 +3,7 @@ import { CommonFieldProps } from '@components/type';
 import classNames from 'classnames';
 import { ComponentPropsWithoutRef, Ref } from 'react';
 
-import './Switch.css';
+import '@packages/styles/components/Switch.css';
 
 export interface SwitchProps
 	extends Omit<ComponentPropsWithoutRef<'input'>, 'ref' | 'children' | 'size' | 'defaultChecked'>,

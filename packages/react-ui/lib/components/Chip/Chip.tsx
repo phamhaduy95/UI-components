@@ -1,7 +1,7 @@
 import { Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 import { ComponentPropsWithRef, JSX } from 'react';
-import './Chip.css';
+import '@packages/styles/components/Chip.css';
 
 type ChipSize = 'small' | 'medium';
 type ChipColor = 'primary' | 'secondary' | 'error' | 'success' | 'warning';

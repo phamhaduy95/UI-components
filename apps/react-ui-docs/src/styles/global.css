@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import '@packages/react-components/themes/default.css';
+@import '@packages/styles/themes/default.css';
 
 @theme {
 	--header-height: 56px;

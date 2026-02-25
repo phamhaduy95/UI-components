@@ -5,7 +5,7 @@ import BaseField from '@components/BaseField';
 import { JSX, useId } from 'react';
 
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
-import './NumberInput.css';
+import '@packages/styles/components/NumberInput.css';
 
 export interface NumberInputProps extends CommonFieldProps<string> {
 	onValueChange?: (value: string) => void;

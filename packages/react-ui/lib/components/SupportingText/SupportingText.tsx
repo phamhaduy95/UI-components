@@ -1,6 +1,6 @@
 import { FieldStatus } from '@components/type';
 import classNames from 'classnames';
-import './SupportingText.css';
+import '@packages/styles/components/SupportingText.css';
 
 export interface SupportingTextProps extends React.HTMLAttributes<HTMLParagraphElement> {
 	children: React.ReactNode;

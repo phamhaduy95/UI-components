@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { JSX } from 'react';
 import SubMenu from '@components/SubMenu/SubMenu';
 import { Portal } from '@ark-ui/react/portal';
-import './Menu.css';
+import '@packages/styles/components/DropDownMenu.css';
 
 type StandardItem = ItemObject & {
 	type?: never;

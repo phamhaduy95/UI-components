@@ -3,7 +3,7 @@ import { RadioGroup as ArkRadioGroup } from '@ark-ui/react/radio-group';
 import { CommonFieldProps } from '@components/type';
 import classNames from 'classnames';
 
-import './RadioGroup.css';
+import '@packages/styles/components/RadioGroup.css';
 
 export interface RadioGroupItemObject {
 	// must be unique among list

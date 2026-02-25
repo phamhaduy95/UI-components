@@ -3,7 +3,7 @@ import { CommonFieldProps } from '@components/type';
 import { CheckIcon, MinusIcon } from '@radix-ui/react-icons';
 import { JSX, HTMLAttributes, Ref } from 'react';
 
-import './Checkbox.css';
+import '@packages/styles/components/Checkbox.css';
 import classNames from 'classnames';
 
 export type CheckboxSize = 'medium' | 'small';

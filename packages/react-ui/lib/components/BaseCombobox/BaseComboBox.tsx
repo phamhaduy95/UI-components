@@ -6,11 +6,11 @@ import { CheckIcon, ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 import { HTMLAttributes, JSX, Ref, useId, useMemo, useState } from 'react';
 
-import '@components/DropDownMenu/Menu.css';
+import '@packages/styles/components/DropDownMenu.css';
 import BaseField from '@components/BaseField';
 import IconButton from '@components/IconButton';
 
-import './ComboBox.css';
+import '@packages/styles/components/BaseCombobox.css';
 
 export interface BaseComboboxProps
 	extends Omit<HTMLAttributes<HTMLInputElement>, 'defaultValue'>,
