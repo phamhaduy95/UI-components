@@ -40,7 +40,7 @@ export const Default: Story = {
 		color: 'primary',
 		default: 'Button'
 	},
-	render: (args: any) => ({
+	render: (args) => ({
 		components: { Button },
 		setup() {
 			return { args };

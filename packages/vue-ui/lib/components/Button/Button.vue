@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type ButtonHTMLAttributes } from 'vue';
+import type { ButtonHTMLAttributes } from 'vue';
 import '@packages/styles/components/Button.css';
 
 type ButtonVariant = 'contained' | 'outlined' | 'text';
