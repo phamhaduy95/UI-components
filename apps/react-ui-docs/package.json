@@ -8,16 +8,19 @@
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
-		"prettier": "prettier --write ."
+		"type-check": "astro check",
+		"format": "prettier --write ."
 	},
 	"dependencies": {
+		"@astrojs/check": "^0.9.6",
 		"@astrojs/mdx": "^4.3.13",
 		"@packages/react-components": "workspace:*",
 		"@packages/styles": "workspace:*",
 		"astro": "^5.17.0",
 		"classnames": "^2.5.1",
 		"react": "^19.2.4",
-		"react-dom": "^19.2.4"
+		"react-dom": "^19.2.4",
+		"typescript": "^5.9.3"
 	},
 	"devDependencies": {
 		"@astrojs/react": "^4.4.2",

@@ -2,19 +2,15 @@ import { TextInput } from '@packages/react-components';
 import { useState } from 'react';
 
 export const BasicTextInput = () => {
-	return <TextInput labelText="Username" />;
+	return <TextInput label="Username" />;
 };
 
 export const TextInputWithStatus = () => {
 	return (
 		<div style={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: '1rem' }}>
-			<TextInput status="error" labelText="Error State" supportingText="This field has an error" />
-			<TextInput status="success" labelText="Success State" supportingText="Input is valid" />
-			<TextInput
-				status="warning"
-				labelText="Warning State"
-				supportingText="Please review your input"
-			/>
+			<TextInput status="error" label="Error State" supportingText="This field has an error" />
+			<TextInput status="success" label="Success State" supportingText="Input is valid" />
+			<TextInput status="warning" label="Warning State" supportingText="Please review your input" />
 		</div>
 	);
 };
@@ -22,7 +18,7 @@ export const TextInputWithStatus = () => {
 export const ClearableTextInput = () => {
 	return (
 		<TextInput
-			labelText="Clearable Input"
+			label="Clearable Input"
 			// placeholder="Type something and see the clear button"
 			clearable
 		/>
@@ -37,7 +33,7 @@ export const ControlledTextInput = () => {
 			<TextInput
 				value={value}
 				onValueChange={(val) => setValue(val)}
-				labelText="Controlled Input"
+				label="Controlled Input"
 				// placeholder="Type here..."
 			/>
 			<p>Current Value: {value}</p>
@@ -49,7 +45,7 @@ export const DisabledTextInput = () => {
 	return (
 		<TextInput
 			disabled
-			labelText="Disabled Input"
+			label="Disabled Input"
 			// placeholder="Cannot type here"
 			value="ReadOnly value"
 		/>
@@ -59,7 +55,7 @@ export const DisabledTextInput = () => {
 export const TextInputWithSupportingText = () => {
 	return (
 		<TextInput
-			labelText="Email Address"
+			label="Email Address"
 			supportingText="We'll never share your email with anyone else."
 			// placeholder="email@example.com"
 		/>
@@ -67,5 +63,5 @@ export const TextInputWithSupportingText = () => {
 };
 
 export const RequiredTextInput = () => {
-	return <TextInput required labelText="Password" />;
+	return <TextInput required label="Password" />;
 };

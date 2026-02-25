@@ -18,7 +18,7 @@ export const ControlledCollapsible = () => {
 	return (
 		<>
 			<div className="mb-4">
-				<Button onClick={() => setIsOpen(!isOpen)} variant="filled">
+				<Button onClick={() => setIsOpen(!isOpen)} variant="contained">
 					External Toggle (Current: {isOpen ? 'Open' : 'Closed'})
 				</Button>
 			</div>
@@ -27,7 +27,7 @@ export const ControlledCollapsible = () => {
 				isOpen={isOpen}
 				onOpenChange={setIsOpen}
 				Trigger={({ open }) => (
-					<Button variant="filled">{open ? 'Collapse Me' : 'Expand Me'}</Button>
+					<Button variant="contained">{open ? 'Collapse Me' : 'Expand Me'}</Button>
 				)}
 			>
 				<div className="mt-2 rounded-md border border-gray-300 p-4">Controlled content</div>
