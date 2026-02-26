@@ -7,7 +7,7 @@ pre-commit:
 
     - name: formatting staged files
       run: pnpm format -- {staged_files}
-      glob: '*.{js,ts,jsx,tsx,vue,json}'
+      glob: '*.{js,ts,jsx,tsx,vue,json,md,mdx,css,astro}'
 pre-push:
   jobs:
     - name: perform type checks
