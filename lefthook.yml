@@ -9,6 +9,7 @@ pre-commit:
       run: pnpm format -- {staged_files}
       glob: '*.{js,ts,jsx,tsx,vue,json,md,mdx,css,astro}'
 pre-push:
+  parallel: true
   jobs:
-    - name: perform type checks
+    - name: perform_type_check
       run: turbo run type-check
