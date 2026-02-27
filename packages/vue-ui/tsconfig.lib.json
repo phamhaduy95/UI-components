@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"declaration": true,
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"types": ["vue"],
+		"emitDeclarationOnly": true,
+		"outDir": "dist",
+		"target": "ESNext",
+		"module": "ESNext",
+		"incremental": true,
+		"esModuleInterop": true,
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"jsxImportSource": "vue",
+		"strict": true,
+		"skipLibCheck": true,
+		"baseUrl": "./",
+		"paths": {
+			"@components/*": ["lib/components/*"]
+		}
+	},
+	"include": ["lib/**/*.ts", "lib/**/*.tsx", "lib/**/*.vue"],
+	"exclude": ["dist", "node_modules"]
+}
