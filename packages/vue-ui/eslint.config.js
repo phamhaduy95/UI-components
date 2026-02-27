@@ -22,10 +22,12 @@ export default defineConfig([
 		},
 		rules: {
 			'vue/html-indent': 'off',
-			'vue/multi-word-component-names': [
-				'error',
+			'vue/require-default-prop': 'off',
+			'vue/prop-name-casing': [
+				'warn',
+				'camelCase',
 				{
-					ignores: ['Button']
+					ignoreProps: ['data-testid']
 				}
 			]
 		}
