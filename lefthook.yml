@@ -1,3 +1,4 @@
+# https://lefthook.dev/configuration/index.html
 pre-commit:
   parallel: true
   jobs:
@@ -8,6 +9,8 @@ pre-commit:
     - name: formatting staged files
       run: pnpm format -- {staged_files}
       glob: '*.{js,ts,jsx,tsx,vue,json,md,mdx,css,astro}'
+      stage_fixed: true
+
 pre-push:
   parallel: true
   jobs:
