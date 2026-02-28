@@ -15,4 +15,4 @@ pre-push:
   parallel: true
   jobs:
     - name: perform_type_check
-      run: turbo run type-check
+      run: turbo run type-check test:ci
