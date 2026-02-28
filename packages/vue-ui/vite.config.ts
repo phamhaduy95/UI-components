@@ -5,6 +5,14 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
 import { globbySync } from 'globby';
+import { extname, relative } from 'path';
+
+const componentEntries: Array<[string, string]> = globbySync(['lib/**/*.vue', 'lib/**/index.ts'], {
+	ignore: ['lib/**/*.d.ts', 'lib/**/type.ts']
+}).map((file) => {
+	const name = extname(file) === '.vue' ? file : file.slice(0, file.length - extname(file).length);
+	return [relative('lib', name), fileURLToPath(new URL(file, import.meta.url))];
+});
 
 export default defineConfig({
 	plugins: [
@@ -16,6 +24,9 @@ export default defineConfig({
 			tsconfigPath: './tsconfig.lib.json'
 		})
 	],
+	css: {
+		transformer: 'lightningcss'
+	},
 	resolve: {
 		alias: {
 			'@components': fileURLToPath(new URL('./lib/components', import.meta.url))
@@ -24,26 +35,23 @@ export default defineConfig({
 	build: {
 		target: 'esnext',
 		lib: {
-			entry: globbySync(['lib/**/index.ts'])
+			entry: Object.fromEntries(componentEntries)
 		},
-		minify: true,
-
 		rollupOptions: {
 			external: ['vue'],
 			output: [
 				{
 					format: 'es',
 					entryFileNames: '[name].js',
-					preserveModules: true,
 					exports: 'named',
-					preserveModulesRoot: 'lib'
+					assetFileNames: 'styles/[name].css'
 				},
 				{
 					format: 'cjs',
-					preserveModules: true,
-					preserveModulesRoot: 'lib',
 					exports: 'named',
-					entryFileNames: '[name].cjs'
+					entryFileNames: '[name].cjs',
+					chunkFileNames: 'common/[name].cjs',
+					assetFileNames: 'styles/[name].css'
 				}
 			]
 		},

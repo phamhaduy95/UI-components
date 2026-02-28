@@ -1,8 +1,15 @@
 {
 	"name": "vue-ui",
-	"version": "0.0.0",
-	"private": true,
+	"version": "0.0.1",
 	"type": "module",
+	"license": "MIT",
+	"author": "ph.duy113@gmail.com",
+	"description": "THis is a UI component library for building Vue application",
+	"keywords": [
+		"vue",
+		"components",
+		"ui"
+	],
 	"scripts": {
 		"build": "vite build",
 		"lint": "eslint .",
@@ -11,6 +18,31 @@
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"
 	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./components": {
+			"types": "./dist/components/index.d.ts",
+			"default": "./dist/components/index.js"
+		}
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/phamhaduy95/UI-components.git",
+		"directory": "packages/vue-ui"
+	},
+	"bugs": {
+		"url": "https://github.com/phamhaduy95/UI-components/issues"
+	},
+	"homepage": "https://github.com/phamhaduy95/UI-components#readme",
+	"files": [
+		"dist"
+	],
 	"dependencies": {
 		"@ark-ui/vue": "^5.32.0",
 		"@heroicons/vue": "^2.2.0",
@@ -33,6 +65,7 @@
 		"eslint-plugin-vue": "^10.8.0",
 		"globals": "^17.3.0",
 		"globby": "^16.1.1",
+		"lightningcss": "^1.31.1",
 		"npm-run-all2": "^8.0.4",
 		"storybook": "^10.2.10",
 		"typescript": "~5.9.3",
