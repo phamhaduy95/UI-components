@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import MultipleCombobox, { MultipleComboboxProps } from '@components/MultipleCombobox';
 import { useState } from 'react';
-import { expect, within, userEvent, screen, fn } from 'storybook/test';
+import { expect, within, userEvent, screen, fn, waitFor } from 'storybook/test';
 
 const mockedOnValueChange = fn();
 
@@ -173,7 +173,10 @@ export const SelectItemFlow: Story = {
 		await step('Close menu popup', async () => {
 			const trigger = within(container).getByRole('button', { name: triggerButtonLabel });
 			await userEvent.click(trigger);
-			expect(menuPopup).not.toBeVisible();
+
+			await waitFor(() => {
+				expect(menuPopup).not.toBeVisible();
+			});
 		});
 
 		await step('Check if input shows the selected values', async () => {
@@ -185,8 +188,10 @@ export const SelectItemFlow: Story = {
 		});
 
 		await step('Click directly on tag to remove item', async () => {
-			const tag2 = within(container).getByText(items[1].label);
-			await userEvent.click(tag2);
+			const tag2 = within(container).getByLabelText(items[1].label);
+			console.log(tag2);
+			const closeButton = within(tag2).getByRole('button', { name: 'Remove Chip' });
+			await userEvent.click(closeButton);
 		});
 
 		await step('Check if all items are removed', async () => {

@@ -113,6 +113,7 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 			onOpenChange={onOpenChange}
 			loopFocus={loopFocus}
 			disabled={disabled}
+			required={required}
 			multiple={multiple}
 			defaultValue={defaultValue}
 			onExitComplete={() => setSearchValue('')}

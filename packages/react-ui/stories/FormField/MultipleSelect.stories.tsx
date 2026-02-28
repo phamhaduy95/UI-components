@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import MultipleSelect, { MultipleSelectProps } from '@components/MultipleSelect';
 import { useState } from 'react';
-import { expect, within, userEvent, screen, fn } from 'storybook/test';
+import { expect, within, userEvent, screen, fn, waitFor } from 'storybook/test';
 
 const mockedOnValueChange = fn();
 
@@ -143,7 +143,9 @@ export const SelectItemFlow: Story = {
 		await step('Close menu popup', async () => {
 			const trigger = within(container).getByRole('combobox', { name: label });
 			await userEvent.click(trigger);
-			expect(menuPopup).not.toBeVisible();
+			await waitFor(() => {
+				expect(menuPopup).not.toBeVisible();
+			});
 		});
 	}
 };
