@@ -208,14 +208,14 @@ export const ControllableValue: Story = {
 
 		await step('Type in value into PasswordInput', async () => {
 			await userEvent.clear(input);
-			await userEvent.type(input, '_new_value', { delay: 5 });
+			await userEvent.type(input, 'new_value');
 		});
 
 		await step('Check if onChange is called with correct arguments', async () => {
 			expect(mockedOnValueChange).toBeCalled();
 
 			const displayedValue = canvas.getByLabelText('Displayed value');
-			expect(displayedValue).toHaveTextContent('Value: initial_password_new_value');
+			expect(displayedValue).toHaveTextContent('Value: new_value');
 		});
 	}
 };

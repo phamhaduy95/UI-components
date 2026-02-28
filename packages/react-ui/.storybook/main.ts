@@ -13,7 +13,7 @@ const config: StorybookConfig = {
 		name: '@storybook/react-vite',
 		options: {
 			builder: {
-				viteConfigPath: path.resolve(import.meta.dirname, 'vite-storybook.config.ts')
+				viteConfigPath: path.resolve(import.meta.dirname, '../vite-storybook.config.ts')
 			}
 		}
 	}

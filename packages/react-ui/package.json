@@ -20,7 +20,8 @@
 		"postpack": "clean-package restore",
 		"prepublishOnly": "npm run build",
 		"storybook": "storybook dev -p 6006",
-		"test": "vitest --project=storybook",
+		"test-storybook": "vitest --project=storybook",
+		"test:ci": "vitest run",
 		"build-storybook": "storybook build"
 	},
 	"exports": {
@@ -61,7 +62,7 @@
 		"@packages/styles": "workspace:*",
 		"@storybook/addon-a11y": "^10.2.3",
 		"@storybook/addon-docs": "^10.2.3",
-		"@storybook/addon-vitest": "^10.2.3",
+		"@storybook/addon-vitest": "^10.2.10",
 		"@storybook/react-vite": "^10.2.3",
 		"@tailwindcss/vite": "^4.1.18",
 		"@types/node": "^22.19.7",

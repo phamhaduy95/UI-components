@@ -83,6 +83,7 @@ const PasswordInput = ({
 			disabled={disabled}
 			defaultVisible={defaultVisible}
 			data-testid={dataTestId}
+			onChange={handleValueChange}
 			invalid={status === 'error'}
 			onVisibilityChange={handleVisibilityChange}
 			asChild
@@ -111,7 +112,6 @@ const PasswordInput = ({
 						value={value}
 						defaultValue={defaultValue}
 						aria-describedby={internalSupportingTextId}
-						onChange={handleValueChange}
 						{...rest}
 					/>
 					<div className="BaseField_Trailing">
