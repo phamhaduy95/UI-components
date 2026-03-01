@@ -1,10 +1,12 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference types="vitest/config" />
 import { defineConfig, mergeConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
 
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -14,6 +16,22 @@ export default mergeConfig(
 	viteStorybookConfig,
 	defineConfig({
 		test: {
+			coverage: {
+				provider: 'v8',
+				clean: true,
+				reporter: ['html', 'text', 'lcov'],
+				include: ['lib/**/*.{ts,tsx}'],
+				exclude: ['**/index.ts', '**/type.ts'],
+				thresholds: {
+					global: {
+						lines: 80,
+						functions: 80,
+						branches: 80,
+						statements: 80
+					}
+				}
+			},
+			pool: 'threads',
 			projects: [
 				{
 					extends: true,

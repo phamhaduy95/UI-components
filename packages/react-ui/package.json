@@ -20,9 +20,10 @@
 		"postpack": "clean-package restore",
 		"prepublishOnly": "npm run build",
 		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build",
 		"test-storybook": "vitest --project=storybook",
-		"test:ci": "vitest run",
-		"build-storybook": "storybook build"
+		"test:ci": "vitest run --coverage",
+		"coverage-report": "http-server ./coverage -p 9000"
 	},
 	"exports": {
 		".": {
@@ -79,6 +80,7 @@
 		"eslint-plugin-react-hooks": "^7.0.1",
 		"eslint-plugin-react-refresh": "^0.5.2",
 		"globby": "^16.1.1",
+		"http-server": "^14.1.1",
 		"lightningcss": "^1.31.1",
 		"playwright": "^1.58.1",
 		"storybook": "^10.2.3",
