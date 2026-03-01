@@ -3,7 +3,7 @@ import { TextInput } from '@components/TextInput';
 import { ref } from 'vue';
 import { expect, within, userEvent, fn } from 'storybook/test';
 
-const mockedOnValueChange = fn();
+const mockedOnModelValueUpdate = fn();
 
 const meta = {
 	title: 'Components/FormField/TextInput',
@@ -13,7 +13,6 @@ const meta = {
 		layout: 'padded'
 	},
 	argTypes: {
-		onValueChange: { action: 'valueChange' },
 		'onUpdate:modelValue': { action: 'update:modelValue' },
 		status: {
 			control: 'select',
@@ -24,8 +23,11 @@ const meta = {
 			options: ['small', 'medium', 'large']
 		}
 	},
+	args: {
+		'onUpdate:modelValue': mockedOnModelValueUpdate
+	},
 	beforeEach() {
-		mockedOnValueChange.mockClear();
+		mockedOnModelValueUpdate.mockClear();
 	}
 } satisfies Meta<typeof TextInput>;
 
@@ -200,27 +202,20 @@ export const Controllable: Story = {
 	args: {
 		label: 'Username',
 		modelValue: 'initial value',
-		onValueChange: mockedOnValueChange,
 		clearable: true
 	},
 	render: (args) => ({
 		components: { TextInput },
 		setup() {
+			const { 'onUpdate:modelValue': onModelValueUpdate } = args;
 			const value = ref(args.modelValue);
-			const handleValueChange = (v: string) => {
-				if (args.onValueChange) args.onValueChange(v);
-				value.value = v;
+			const handleValueChange = (val: string) => {
+				if (onModelValueUpdate) onModelValueUpdate(val);
+				value.value = val;
 			};
 			return () => (
 				<div>
-					<TextInput
-						{...args}
-						modelValue={value.value}
-						onUpdate:modelValue={(val: string) => {
-							value.value = val;
-						}}
-						onValueChange={handleValueChange}
-					/>
+					<TextInput {...args} modelValue={value.value} onUpdate:modelValue={handleValueChange} />
 					<p style="margin-left: 8px; margin-top: 12px;" aria-label="Displayed value">
 						Value: {value.value}
 					</p>
@@ -242,8 +237,8 @@ export const Controllable: Story = {
 		});
 
 		await step('Check if onValueChange is called with correct arguments', async () => {
-			expect(mockedOnValueChange).toBeCalled();
-			expect(mockedOnValueChange.mock.lastCall).toEqual(['initial value new value']);
+			expect(mockedOnModelValueUpdate).toBeCalled();
+			expect(mockedOnModelValueUpdate.mock.lastCall).toEqual(['initial value new value']);
 
 			const displayedValue = canvas.getByLabelText('Displayed value');
 			expect(displayedValue).toHaveTextContent('Value: initial value new value');
@@ -260,8 +255,8 @@ export const Controllable: Story = {
 		});
 
 		await step('Check if value should be empty string when user clicks clear button', async () => {
-			expect(mockedOnValueChange).toBeCalled();
-			expect(mockedOnValueChange.mock.lastCall).toEqual(['']);
+			expect(mockedOnModelValueUpdate).toBeCalled();
+			expect(mockedOnModelValueUpdate.mock.lastCall).toEqual(['']);
 
 			const displayedValue = canvas.getByLabelText('Displayed value');
 			expect(displayedValue).toHaveTextContent('Value:');

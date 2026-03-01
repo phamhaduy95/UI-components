@@ -13,7 +13,7 @@ export interface CommonFieldProps<TValue> {
 	supportingText?: string;
 	supportingTextId?: string;
 	placeholder?: string;
-	value?: TValue;
+	modelValue?: TValue;
 	defaultValue?: TValue;
 	name?: string;
 	readOnly?: boolean;
