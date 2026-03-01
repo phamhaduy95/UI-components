@@ -44,6 +44,7 @@ export default defineConfig({
 					format: 'es',
 					entryFileNames: '[name].js',
 					exports: 'named',
+					chunkFileNames: 'common/[name].js',
 					assetFileNames: 'styles/[name].css'
 				},
 				{
