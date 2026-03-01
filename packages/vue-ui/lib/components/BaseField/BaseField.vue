@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { type HTMLAttributes } from 'vue';
+	import { type HTMLAttributes, type Component } from 'vue';
 	import type { CommonFieldProps } from '@components/type';
 	import { FieldLabel } from '@components/FieldLabel';
 	import { SupportingText } from '@components/SupportingText';
@@ -8,7 +8,7 @@
 	export interface BaseFieldProps
 		extends /* @vue-ignore */ HTMLAttributes,
 			CommonFieldProps<string> {
-		labelElement?: string;
+		labelElement?: string | Component;
 		dataTestid?: string;
 	}
 

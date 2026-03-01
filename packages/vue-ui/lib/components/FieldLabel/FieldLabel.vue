@@ -1,12 +1,12 @@
 <script setup lang="ts">
-	import type { LabelHTMLAttributes } from 'vue';
+	import type { LabelHTMLAttributes, Component } from 'vue';
 	import type { FieldStatus } from '@components/type';
 	import '@packages/styles/components/FieldLabel.css';
 
 	defineOptions({ inheritAttrs: false });
 
 	export interface FieldLabelProps extends /* @vue-ignore */ LabelHTMLAttributes {
-		type?: string;
+		type?: string | Component;
 		status?: FieldStatus;
 		required?: boolean;
 		showLabel?: boolean;
