@@ -11,7 +11,20 @@ export default defineConfig([
 		plugins: {
 			js
 		},
-		extends: ['js/recommended']
+		extends: [js.configs.recommended]
 	},
-	...tseslint.configs.recommended
+	...tseslint.configs.recommended,
+	{
+		rules: {
+			'no-console': 'error',
+			'no-debugger': 'error',
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					args: 'all',
+					argsIgnorePattern: '^_'
+				}
+			]
+		}
+	}
 ]);

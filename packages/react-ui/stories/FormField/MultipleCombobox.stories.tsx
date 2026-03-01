@@ -189,7 +189,7 @@ export const SelectItemFlow: Story = {
 
 		await step('Click directly on tag to remove item', async () => {
 			const tag2 = within(container).getByLabelText(items[1].label);
-			console.log(tag2);
+
 			const closeButton = within(tag2).getByRole('button', { name: 'Remove Chip' });
 			await userEvent.click(closeButton);
 		});
@@ -311,7 +311,6 @@ export const Controllable: Story = {
 		const [value, setValue] = useState(args.value);
 
 		const handleChange: MultipleComboboxProps['onValueChange'] = (newValue, item) => {
-			console.log(newValue, item);
 			setValue(newValue);
 			if (args.onValueChange) {
 				args.onValueChange(newValue, item);

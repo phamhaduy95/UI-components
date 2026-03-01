@@ -14,5 +14,5 @@ pre-commit:
 pre-push:
   parallel: true
   jobs:
-    - name: perform_type_check
+    - name: perform quality check (type-check, test:ci)
       run: turbo run type-check test:ci
