@@ -1,3 +1,4 @@
+export * from './Accordion';
 export * from './BaseField';
 export * from './Button';
 export * from './Checkbox';
