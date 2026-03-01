@@ -5,5 +5,6 @@ export * from './IconButton';
 export * from './NumberInput';
 export * from './PasswordInput';
 export * from './SupportingText';
+export * from './Switch';
 export * from './TextInput';
 export * from './ToggleButton';
