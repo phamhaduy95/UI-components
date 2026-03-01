@@ -10,6 +10,7 @@
 			CommonFieldProps<string> {
 		labelElement?: string | Component;
 		dataTestid?: string;
+		inputId?: string;
 	}
 
 	withDefaults(defineProps<BaseFieldProps>(), {

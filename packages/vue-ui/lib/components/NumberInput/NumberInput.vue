@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { useId } from 'vue';
+	import { computed, useId } from 'vue';
 	import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/vue/20/solid';
 	import type { CommonFieldProps } from '@components/type';
 	import { BaseField } from '@components/BaseField';
@@ -31,10 +31,8 @@
 	const emit = defineEmits<NumberInputEmits>();
 
 	const internalSupportingTextId = useId();
-	const defaultInputId = useId();
 
-	const inputIdToUse = () => props.inputId ?? defaultInputId;
-	const supportingTextIdToUse = () => props.supportingTextId ?? internalSupportingTextId;
+	const supportingTextIdToUse = computed(() => props.supportingTextId ?? internalSupportingTextId);
 </script>
 
 <template>
@@ -64,16 +62,15 @@
 			:label="label"
 			:supporting-text="supportingText"
 			:status="status"
-			:supporting-text-id="supportingTextIdToUse()"
-			:input-id="inputIdToUse()"
+			:supporting-text-id="supportingTextIdToUse"
 			:label-element="ArkNumberInput.Label"
 		>
 			<ArkNumberInput.Control class="NumberInput_Control BaseField_Field">
 				<ArkNumberInput.Input
-					:id="inputIdToUse()"
 					class="NumberInput_Input"
-					:aria-describedby="supportingTextIdToUse()"
+					:aria-describedby="supportingTextIdToUse"
 					:placeholder="placeholder"
+					v-bind="$attrs"
 				/>
 				<div class="NumberInput_Triggers">
 					<ArkNumberInput.IncrementTrigger

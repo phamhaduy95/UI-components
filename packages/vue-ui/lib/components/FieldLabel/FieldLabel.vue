@@ -21,14 +21,24 @@
 
 <template>
 	<div v-if="showLabel">
-		<component
-			:is="type"
-			class="FieldLabel"
-			:data-status="status"
-			v-bind="$attrs"
-		>
-			<slot />
-		</component>
+		<template v-if="type === 'label'">
+			<label
+				class="FieldLabel"
+				:data-status="status"
+				v-bind="$attrs"
+			>
+				<slot />
+			</label>
+		</template>
+		<template v-else>
+			<component
+				:is="type"
+				class="FieldLabel"
+				:data-status="status"
+			>
+				<slot />
+			</component>
+		</template>
 		<span
 			v-if="required"
 			class="FieldLabel_Required"

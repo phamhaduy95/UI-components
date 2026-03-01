@@ -6,7 +6,6 @@ export interface CommonFieldProps<TValue> {
 	labelId?: string;
 	status?: FieldStatus;
 	required?: boolean;
-	inputId?: string;
 	disabled?: boolean;
 	clearable?: boolean;
 	size?: FieldSize;
