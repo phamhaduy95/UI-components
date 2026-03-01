@@ -10,8 +10,6 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 import viteStorybookConfig from './vite-storybook.config';
 
-console.log(path.join(dirname, '.storybook'));
-
 export default mergeConfig(
 	viteStorybookConfig,
 	defineConfig({

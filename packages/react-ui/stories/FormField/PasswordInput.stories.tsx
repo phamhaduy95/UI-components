@@ -128,7 +128,6 @@ export const Visiable: Story = {
 
 		const handleVisibilityChange = (visible: boolean) => {
 			if (args.onVisibilityChange) {
-				console.log(visible);
 				args.onVisibilityChange(visible);
 			}
 			setVisiable(visible);

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { getDateCellAriaLabel, formatDate } from '../utils/date';
 
 import { expect, within, userEvent, screen, fn } from 'storybook/test';
+import dayjs from 'dayjs';
 
 const mockedOnValueChange = fn();
 
@@ -100,8 +101,8 @@ export const SelectRangeViaCalendar: Story = {
 			expect(calendar).toBeInTheDocument();
 		});
 
-		const startDate = '2026-02-10';
-		const endDate = '2026-02-15';
+		const startDate = dayjs().date(10).format('YYYY-MM-DD');
+		const endDate = dayjs().date(15).format('YYYY-MM-DD');
 
 		await step('Select start date', async () => {
 			const calendar = screen.getByRole('application', { name: 'calendar' });
@@ -175,8 +176,8 @@ export const Clearable: Story = {
 		});
 
 		await step('Select Range', async () => {
-			const start = '2026-02-10';
-			const end = '2026-02-12';
+			const start = dayjs().date(10).format('YYYY-MM-DD');
+			const end = dayjs().date(12).format('YYYY-MM-DD');
 			const trigger = within(container).getByRole('button', { name: triggerButtonLabel });
 			await userEvent.click(trigger);
 

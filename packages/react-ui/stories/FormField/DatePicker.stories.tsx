@@ -3,11 +3,14 @@ import DatePicker from '@components/DatePicker';
 import { useState } from 'react';
 import { getDateCellAriaLabel, formatDate } from '../utils/date';
 import { expect, within, userEvent, screen, fn } from 'storybook/test';
+import dayjs from 'dayjs';
 
 const mockedOnValueChange = fn();
 
 const triggerButtonLabel = 'Open calendar';
 const clearButtonLabel = 'Clear value';
+
+const dateSelected = dayjs().date(17).format('YYYY-MM-DD');
 
 const meta: Meta<typeof DatePicker> = {
 	title: 'Components/FormField/DatePicker',
@@ -98,12 +101,10 @@ export const SelectDateViaCalendar: Story = {
 			expect(calendar).toBeInTheDocument();
 		});
 
-		const selectedDate = '2026-02-17';
-
 		await step('Select a date', async () => {
 			const calendar = screen.getByRole('application', { name: 'calendar' });
 			const dateCell = within(calendar).getAllByRole('button', {
-				name: getDateCellAriaLabel(selectedDate)
+				name: getDateCellAriaLabel(dateSelected)
 			});
 			await userEvent.click(dateCell[0]);
 		});
@@ -114,7 +115,7 @@ export const SelectDateViaCalendar: Story = {
 		});
 
 		await step('Check if date is displayed in the input', async () => {
-			const dateAsText = formatDate(selectedDate as string, format);
+			const dateAsText = formatDate(dateSelected as string, format);
 			const displayArea = within(container).getByText(dateAsText);
 			expect(displayArea).toBeInTheDocument();
 		});
@@ -162,13 +163,12 @@ export const Clearable: Story = {
 		});
 
 		await step('Select Date', async () => {
-			const selectedDate = '2026-02-17';
 			const trigger = within(container).getByRole('button', { name: triggerButtonLabel });
 			await userEvent.click(trigger);
 
 			const calendar = screen.getByRole('application', { name: 'calendar' });
 			const dateCell = within(calendar).getAllByRole('button', {
-				name: getDateCellAriaLabel(selectedDate)
+				name: getDateCellAriaLabel(dateSelected)
 			});
 			await userEvent.click(dateCell[0]);
 		});
