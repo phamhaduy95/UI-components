@@ -6,3 +6,4 @@ export * from './NumberInput';
 export * from './PasswordInput';
 export * from './SupportingText';
 export * from './TextInput';
+export * from './ToggleButton';
