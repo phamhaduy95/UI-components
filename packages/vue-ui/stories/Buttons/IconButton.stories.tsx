@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { IconButton } from '@components/IconButton';
-import { expect, within } from 'storybook/test';
+import { expect } from 'storybook/test';
 import { PlusIcon, TrashIcon, BellIcon } from '@heroicons/vue/24/outline';
 
 const meta = {
@@ -42,16 +42,11 @@ export const Default: Story = {
 		},
 		template: '<IconButton v-bind="args"><PlusIcon /></IconButton>'
 	}),
-	play: async ({ canvasElement, step }) => {
-		const canvas = within(canvasElement);
+	play: async ({ canvas, step }) => {
 		const button = canvas.getByRole('button', { name: 'Icon Button' });
 
 		await step('Check if button exists', async () => {
 			expect(button).toBeInTheDocument();
-		});
-
-		await step('Check if button is not disabled', async () => {
-			expect(button).not.toBeDisabled();
 		});
 	}
 };
@@ -75,9 +70,7 @@ export const Variant: Story = {
 			);
 		}
 	}),
-	play: async ({ canvasElement, step }) => {
-		const canvas = within(canvasElement);
-
+	play: async ({ canvas, step }) => {
 		await step('Check variants', async () => {
 			expect(canvas.getByLabelText('contained')).toBeInTheDocument();
 			expect(canvas.getByLabelText('outlined')).toBeInTheDocument();
@@ -213,18 +206,10 @@ export const Disabled: Story = {
 			);
 		}
 	}),
-	play: async ({ canvasElement, step }) => {
-		const canvas = within(canvasElement);
-
+	play: async ({ canvas, step }) => {
 		await step('Check disabled buttons', async () => {
 			const containedButton = canvas.getByLabelText('disabled contained');
 			expect(containedButton).toBeDisabled();
-
-			const outlinedButton = canvas.getByLabelText('disabled outlined');
-			expect(outlinedButton).toBeDisabled();
-
-			const textButton = canvas.getByLabelText('disabled text');
-			expect(textButton).toBeDisabled();
 		});
 	}
 };

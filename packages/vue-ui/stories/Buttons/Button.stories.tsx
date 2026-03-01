@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { Button } from '@components/Button';
+import { expect } from 'storybook/test';
 
 const meta = {
 	title: 'Components/Buttons/Button',
@@ -46,7 +47,11 @@ export const Default: Story = {
 			return { args };
 		},
 		template: '<Button v-bind="args">{{ args.default }}</Button>'
-	})
+	}),
+	play: async ({ canvas }) => {
+		const button = canvas.getByRole('button', { name: 'Button' });
+		expect(button).toBeInTheDocument();
+	}
 };
 
 export const Variants: Story = {

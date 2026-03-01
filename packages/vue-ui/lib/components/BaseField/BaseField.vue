@@ -1,16 +1,15 @@
 <script setup lang="ts">
-	import type { HTMLAttributes } from 'vue';
+	import { type HTMLAttributes } from 'vue';
 	import type { CommonFieldProps } from '@components/type';
 	import { FieldLabel } from '@components/FieldLabel';
 	import { SupportingText } from '@components/SupportingText';
 	import '@packages/styles/components/BaseField.css';
 
-	defineOptions({ inheritAttrs: false });
-
 	export interface BaseFieldProps
 		extends /* @vue-ignore */ HTMLAttributes,
 			CommonFieldProps<string> {
 		labelElement?: string;
+		dataTestid?: string;
 	}
 
 	withDefaults(defineProps<BaseFieldProps>(), {
@@ -30,6 +29,7 @@
 		:data-required="required"
 		:aria-disabled="disabled"
 		:data-clearable="clearable"
+		:data-testid="dataTestid"
 		v-bind="$attrs"
 	>
 		<FieldLabel

@@ -5,11 +5,9 @@
 	import { IconButton } from '@components/IconButton';
 	import '@packages/styles/components/TextInput.css';
 
-	defineOptions({ inheritAttrs: false });
-
 	export interface TextInputProps extends CommonFieldProps<string> {
 		modelValue?: string;
-		'data-testid'?: string;
+		dataTestid?: string;
 	}
 
 	const props = withDefaults(defineProps<TextInputProps>(), {
@@ -63,7 +61,7 @@
 		:disabled="disabled"
 		:supporting-text-id="supportingText ? supportingTextId : undefined"
 		:size="size"
-		:data-testId="$attrs['data-testId']"
+		:data-testid="dataTestid"
 	>
 		<div
 			class="BaseField_Field"

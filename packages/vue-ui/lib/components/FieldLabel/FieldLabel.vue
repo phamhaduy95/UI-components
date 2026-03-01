@@ -20,7 +20,7 @@
 </script>
 
 <template>
-	<p v-if="showLabel">
+	<div v-if="showLabel">
 		<component
 			:is="type"
 			class="FieldLabel"
@@ -35,5 +35,5 @@
 		>
 			*
 		</span>
-	</p>
+	</div>
 </template>
