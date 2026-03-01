@@ -14,7 +14,7 @@ const config: StorybookConfig = {
 		name: '@storybook/vue3-vite',
 		options: {
 			builder: {
-				viteConfigPath: resolve(import.meta.dirname, 'vite-storybook.config.ts')
+				viteConfigPath: resolve(import.meta.dirname, '../vite-storybook.config.ts')
 			},
 			docgen: {
 				plugin: 'vue-component-meta',

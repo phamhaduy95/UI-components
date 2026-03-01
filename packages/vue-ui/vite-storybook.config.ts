@@ -12,8 +12,8 @@ export default defineConfig({
 	plugins: [vue(), vueJsx()],
 	resolve: {
 		alias: {
-			'@': path.resolve(__dirname, '../lib'),
-			'@components': path.resolve(__dirname, '../lib/components')
+			'@': path.resolve(__dirname, 'lib'),
+			'@components': path.resolve(__dirname, 'lib/components')
 		}
 	}
 });
