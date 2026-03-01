@@ -3,8 +3,6 @@
 	import type { FieldStatus } from '@components/type';
 	import '@packages/styles/components/SupportingText.css';
 
-	defineOptions({ inheritAttrs: false });
-
 	export interface SupportingTextProps extends /* @vue-ignore */ HTMLAttributes {
 		status?: FieldStatus;
 		show?: boolean;
@@ -20,7 +18,6 @@
 		v-if="show"
 		class="SupportingText"
 		:data-status="status"
-		v-bind="$attrs"
 	>
 		<slot />
 	</p>

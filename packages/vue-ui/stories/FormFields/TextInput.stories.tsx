@@ -38,7 +38,7 @@ export const Default: Story = {
 		label: 'Email',
 		placeholder: 'Enter your email',
 		supportingText: 'Please enter your email address.',
-		'data-testid': 'text-input'
+		dataTestid: 'text-input'
 	},
 	render: (args) => ({
 		components: { TextInput },
@@ -49,9 +49,9 @@ export const Default: Story = {
 	}),
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
-		const { 'data-testid': testId = '', label = '' } = args;
+		const { dataTestid = '', label = '' } = args;
 
-		const container = canvas.getByTestId(testId);
+		const container = canvas.getByTestId(dataTestid);
 		await step('Check if container exists', async () => {
 			expect(container).toBeInTheDocument();
 		});
@@ -68,11 +68,13 @@ export const Default: Story = {
 
 		await step('Check if input has supporting text', async () => {
 			const input = canvas.getByLabelText(label);
+
 			expect(input).toHaveAttribute('aria-describedby');
 
 			const supportingTextId = input.getAttribute('aria-describedby');
 
 			const supportingTextEl = container.querySelector(`#${supportingTextId}`);
+
 			expect(supportingTextEl).toBeInTheDocument();
 		});
 	}
@@ -114,7 +116,7 @@ export const WithDefaultValue: Story = {
 
 export const BlankInput: Story = {
 	args: {
-		'data-testid': 'blank-input'
+		dataTestid: 'blank-input'
 	},
 	render: (args) => ({
 		components: { TextInput },
@@ -125,9 +127,9 @@ export const BlankInput: Story = {
 	}),
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
-		const { 'data-testid': testId = '' } = args;
+		const { dataTestid = '' } = args;
 
-		const container = canvas.getByTestId(testId);
+		const container = canvas.getByTestId(dataTestid);
 
 		await step('Check if input is blank', async () => {
 			const input = within(container).getByRole('textbox');
@@ -150,7 +152,7 @@ export const Clearable: Story = {
 	args: {
 		label: 'Search',
 		clearable: true,
-		'data-testid': 'clearable-text-input'
+		dataTestid: 'clearable-text-input'
 	},
 	render: (args) => ({
 		components: { TextInput },
@@ -161,9 +163,9 @@ export const Clearable: Story = {
 	}),
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
-		const { label = '', 'data-testid': testId = '' } = args;
+		const { label = '', dataTestid = '' } = args;
 
-		const container = canvas.getByTestId(testId);
+		const container = canvas.getByTestId(dataTestid);
 		const input = within(container).getByRole('textbox', { name: label });
 
 		await step('Check if input is not clearable when there is no value', async () => {

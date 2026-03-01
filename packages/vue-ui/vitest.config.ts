@@ -14,6 +14,22 @@ export default mergeConfig(
 	viteStorybookConfig,
 	defineConfig({
 		test: {
+			coverage: {
+				provider: 'v8',
+				clean: true,
+				reporter: ['html', 'text', 'lcov'],
+				include: ['lib/**/*.{ts,vue}'],
+				exclude: ['**/index.ts', '**/type.ts'],
+				thresholds: {
+					global: {
+						lines: 80,
+						functions: 80,
+						branches: 80,
+						statements: 80
+					}
+				}
+			},
+			pool: 'threads',
 			projects: [
 				{
 					extends: true,
