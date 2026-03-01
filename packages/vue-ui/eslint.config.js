@@ -29,7 +29,8 @@ export default defineConfig([
 				{
 					ignoreProps: ['data-testid']
 				}
-			]
+			],
+			'vue/html-self-closing': 'off'
 		}
 	}
 ]);
