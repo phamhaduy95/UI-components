@@ -129,9 +129,9 @@
 						>
 							<ArkPasswordInput.Indicator class="PasswordInput_Indicator">
 								<template #fallback>
-									<EyeSlashIcon class="w-4 h-4" />
+									<EyeSlashIcon />
 								</template>
-								<EyeIcon class="w-4 h-4" />
+								<EyeIcon />
 							</ArkPasswordInput.Indicator>
 						</IconButton>
 					</ArkPasswordInput.VisibilityTrigger>
