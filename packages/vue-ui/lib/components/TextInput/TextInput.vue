@@ -16,6 +16,11 @@
 		dataTestid?: string;
 	}
 
+	export interface TextInputEmits {
+		'update:modelValue': [value: string];
+		valueChange: [e: InputEvent];
+	}
+
 	const props = withDefaults(defineProps<TextInputProps>(), {
 		size: 'medium',
 		required: false,
@@ -23,9 +28,7 @@
 		clearable: false
 	});
 
-	const emit = defineEmits<{
-		(e: 'update:modelValue', value: string): void;
-	}>();
+	const emit = defineEmits<TextInputEmits>();
 
 	const inputId = useId();
 	const supportingTextId = useId();
@@ -38,6 +41,7 @@
 		const target = e.target as HTMLInputElement;
 		internalValue.value = target.value;
 		emit('update:modelValue', target.value);
+		emit('valueChange', e);
 	};
 
 	const handleClear = () => {
