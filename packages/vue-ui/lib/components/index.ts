@@ -1,5 +1,6 @@
 export * from './BaseField';
 export * from './Button';
+export * from './Checkbox';
 export * from './FieldLabel';
 export * from './IconButton';
 export * from './NumberInput';
