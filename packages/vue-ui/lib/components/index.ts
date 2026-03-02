@@ -1,5 +1,6 @@
 export * from './Accordion';
 export * from './BaseField';
+export * from './BaseSelect';
 export * from './Button';
 export * from './Checkbox';
 export * from './Chip';
