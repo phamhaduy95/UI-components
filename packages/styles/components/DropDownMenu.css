@@ -36,6 +36,11 @@
 	}
 	& > .MenuItem_TrailingIcon {
 		margin-left: auto;
+
+		> svg {
+			width: 16px;
+			height: 16px;
+		}
 	}
 
 	&[data-disabled] {

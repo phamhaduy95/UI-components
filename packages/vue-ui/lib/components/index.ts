@@ -1,5 +1,6 @@
 export * from './Accordion';
 export * from './BaseField';
+export * from './BaseSelect';
 export * from './Button';
 export * from './Checkbox';
 export * from './Chip';
@@ -7,6 +8,7 @@ export * from './FieldLabel';
 export * from './IconButton';
 export * from './NumberInput';
 export * from './PasswordInput';
+export * from './SingleSelect';
 export * from './SupportingText';
 export * from './Switch';
 export * from './TextInput';
