@@ -8,6 +8,7 @@ export * from './FieldLabel';
 export * from './IconButton';
 export * from './NumberInput';
 export * from './PasswordInput';
+export * from './SingleSelect';
 export * from './SupportingText';
 export * from './Switch';
 export * from './TextInput';
