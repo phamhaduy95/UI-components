@@ -1,0 +1,196 @@
+import type { Meta, StoryObj } from '@storybook/vue3-vite';
+import { Chip } from '@components/Chip';
+import { expect, fn, userEvent, within } from 'storybook/test';
+
+const mockedOnRemove = fn();
+const mockedOnClick = fn();
+
+const meta = {
+	title: 'Components/DataDisplay/Chip',
+	component: Chip,
+	tags: ['autodocs'],
+	parameters: {
+		layout: 'centered'
+	},
+	argTypes: {
+		color: {
+			control: 'select',
+			options: ['primary', 'secondary', 'success', 'warning', 'error', 'default']
+		},
+		size: {
+			control: 'select',
+			options: ['medium', 'small']
+		},
+		onRemove: { action: 'removed' },
+		onClick: { action: 'clicked' }
+	},
+	args: {
+		onRemove: mockedOnRemove,
+		onClick: mockedOnClick
+	},
+	beforeEach: () => {
+		mockedOnRemove.mockClear();
+		mockedOnClick.mockClear();
+	}
+} satisfies Meta<typeof Chip>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+	args: {
+		label: 'Tag Label'
+	},
+	render: (args) => ({
+		components: { Chip },
+		setup() {
+			return { args };
+		},
+		template: '<Chip v-bind="args" />'
+	})
+};
+
+export const ColorVariants: Story = {
+	render: () => ({
+		components: { Chip },
+		template: `
+			<div style="display: flex; flex-direction: column; gap: 16px;">
+				<div>
+					<p style="margin-bottom: 8px;">Non-Interactable</p>
+					<div style="display: flex; gap: 8px;">
+						<Chip label="Primary" color="primary" />
+						<Chip label="Secondary" color="secondary" />
+						<Chip label="Success" color="success" />
+						<Chip label="Warning" color="warning" />
+						<Chip label="Error" color="error" />
+					</div>
+				</div>
+				<div>
+					<p style="margin-bottom: 8px;">Clickable</p>
+					<div style="display: flex; gap: 8px;">
+						<Chip label="Primary" color="primary" clickable />
+						<Chip label="Secondary" color="secondary" clickable />
+						<Chip label="Success" color="success" clickable />
+						<Chip label="Warning" color="warning" clickable />
+						<Chip label="Error" color="error" clickable />
+					</div>
+				</div>
+				<div>
+					<p style="margin-bottom: 8px;">Removeable</p>
+					<div style="display: flex; gap: 8px;">
+						<Chip label="Primary" color="primary" removable />
+						<Chip label="Secondary" color="secondary" removable />
+						<Chip label="Success" color="success" removable />
+						<Chip label="Warning" color="warning" removable />
+						<Chip label="Error" color="error" removable />
+					</div>
+				</div>
+			</div>
+		`
+	})
+};
+
+export const Clickable: Story = {
+	args: {
+		label: 'Clickable Tag',
+		clickable: true
+	},
+	render: (args) => ({
+		components: { Chip },
+		setup() {
+			return { args, mockedOnClick };
+		},
+		template: '<Chip v-bind="args" @click="mockedOnClick" />'
+	}),
+	async play({ step, canvas }) {
+		const chip = canvas.getByRole('button', { name: 'Clickable Tag' });
+
+		await step('Click on Chip', async () => {
+			await userEvent.click(chip);
+		});
+
+		await step('Check if onclick is invoked', async () => {
+			expect(mockedOnClick).toHaveBeenCalled();
+		});
+	}
+};
+
+export const Size: Story = {
+	render: () => ({
+		components: { Chip },
+		template: `
+			<div style="display: flex; flex-direction: column; gap: 16px;">
+				<div style="display: flex; align-items: center; gap: 8px;">
+					<Chip label="Default size" size="medium" />
+					<Chip label="Default size" size="medium" color="secondary" />
+				</div>
+				<div style="display: flex; align-items: center; gap: 8px;">
+					<Chip label="Small size" size="small" />
+					<Chip label="Small size" size="small" color="secondary" />
+				</div>
+			</div>
+		`
+	})
+};
+
+export const Removable: Story = {
+	args: {
+		label: 'Removable Tag',
+		removable: true,
+		dataTestid: 'chip-remove-button'
+	},
+	render: (args) => ({
+		components: { Chip },
+		setup() {
+			return { args, mockedOnRemove };
+		},
+		template: '<Chip v-bind="args" @remove="mockedOnRemove" />'
+	}),
+	play: async ({ args, canvas, step }) => {
+		const { dataTestid = '' } = args;
+
+		const chip = canvas.getByTestId(dataTestid);
+
+		const removeButton = within(chip).getByRole('button');
+
+		await step('Click on Remove icon', async () => {
+			await userEvent.click(removeButton);
+		});
+
+		await step('Check if onRemove is called', async () => {
+			expect(mockedOnRemove).toHaveBeenCalled();
+		});
+
+		await step('Focus on Chip and press Delete', async () => {
+			await userEvent.keyboard('{delete}');
+		});
+
+		await step('Check if onRemove is called', async () => {
+			expect(mockedOnRemove).toHaveBeenCalled();
+		});
+
+		await step('Focus on Chip and press Backspace', async () => {
+			await userEvent.keyboard('{backspace}');
+		});
+
+		await step('Check if onRemove is called', async () => {
+			expect(mockedOnRemove).toHaveBeenCalled();
+		});
+	}
+};
+
+export const RemovableVariants: Story = {
+	render: () => ({
+		components: { Chip },
+		template: `
+			<div style="display: flex; gap: 8px;">
+				<Chip label="Primary" color="primary" removable />
+				<Chip label="Secondary" color="secondary" removable />
+				<Chip label="Success" color="success" removable />
+				<Chip label="Warning" color="warning" removable />
+				<Chip label="Error" color="error" removable />
+			</div>
+		`
+	})
+};
