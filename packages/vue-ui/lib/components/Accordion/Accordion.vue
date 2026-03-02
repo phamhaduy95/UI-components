@@ -68,12 +68,14 @@
 			:value="item.value"
 			:aria-label="item.title ?? item['aria-label']"
 		>
-			<ArkAccordion.ItemContext v-slot="context">
-				<ArkAccordion.ItemTrigger class="Accordion_Trigger">
+			<ArkAccordion.ItemContext>
+				<ArkAccordion.ItemTrigger
+					class="Accordion_Trigger"
+					:aria-label="item.title ?? item['aria-label']"
+				>
 					<slot
 						name="title"
 						:item="item"
-						:context="context"
 					>
 						{{ item.title }}
 					</slot>
@@ -85,7 +87,6 @@
 					<slot
 						name="content"
 						:item="item"
-						:context="context"
 					>
 						{{ item.content }}
 					</slot>
