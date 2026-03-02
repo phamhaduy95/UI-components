@@ -229,6 +229,91 @@ export const Disabled: Story = {
 	}
 };
 
+export const AriaLabelFallback: Story = {
+	args: {
+		items: [
+			{
+				value: 'item-no-title',
+				content: 'Content here',
+				'aria-label': 'Custom Aria Label Fallback'
+			}
+		],
+		dataTestid: 'accordion-aria-fallback'
+	},
+	render: (args) => ({
+		components: { Accordion },
+		setup() {
+			return { args };
+		},
+		template: `
+			<Accordion v-bind="args">
+				<template #title>
+					<span>Custom Title slot <span>🚀</span> for Aria Label Fallback</span>
+				</template>
+			</Accordion>
+		`
+	}),
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Check if trigger has correct fallback aria-label', async () => {
+			const trigger = within(container).getByRole('button', { name: 'Custom Aria Label Fallback' });
+			expect(trigger).toHaveAttribute('aria-label', 'Custom Aria Label Fallback');
+		});
+	}
+};
+
+export const CustomTitleContent: Story = {
+	args: {
+		items: [
+			{
+				value: 'custom-1',
+				title: 'Custom Title rendering via slots',
+				content: 'Custom Content rendering via slots'
+			}
+		]
+	},
+	render: (args) => ({
+		components: { Accordion },
+		setup() {
+			return () => (
+				<Accordion {...args}>
+					{{
+						title: ({ item }: { item: AccordionItemObject }) => (
+							<div
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+									gap: '8px',
+									fontWeight: 'bold',
+									color: 'blue'
+								}}
+							>
+								<span>🚀</span>
+								<span>{item.title}</span>
+							</div>
+						),
+						content: ({ item }: { item: AccordionItemObject }) => (
+							<div
+								style={{
+									backgroundColor: '#f3f4f6',
+									padding: '16px',
+									borderRadius: '4px',
+									fontStyle: 'italic',
+									color: '#374151'
+								}}
+							>
+								{item.content} - And this is styled perfectly!
+							</div>
+						)
+					}}
+				</Accordion>
+			);
+		}
+	})
+};
+
 export const Controllable: Story = {
 	args: {
 		items: defaultItems,
@@ -289,62 +374,4 @@ export const Controllable: Story = {
 			expect(displayedValue).toHaveTextContent('Selected: item-2');
 		});
 	}
-};
-
-export const CustomTitleContent: Story = {
-	args: {
-		items: [
-			{
-				value: 'custom-1',
-				title: 'Custom Title rendering via slots',
-				content: 'Custom Content rendering via slots'
-			}
-		]
-	},
-	render: (args) => ({
-		components: { Accordion },
-		setup() {
-			return () => (
-				<Accordion {...args}>
-					{{
-						title: ({
-							item,
-							context
-						}: {
-							item: AccordionItemObject;
-							context: Record<string, unknown> & { expanded: boolean };
-						}) => (
-							<div
-								style={{
-									display: 'flex',
-									alignItems: 'center',
-									gap: '8px',
-									fontWeight: 'bold',
-									color: 'blue'
-								}}
-							>
-								<span>🚀</span>
-								<span>
-									{item.title} {context.expanded ? '(Open)' : '(Closed)'}
-								</span>
-							</div>
-						),
-						content: ({ item }: { item: AccordionItemObject }) => (
-							<div
-								style={{
-									backgroundColor: '#f3f4f6',
-									padding: '16px',
-									borderRadius: '4px',
-									fontStyle: 'italic',
-									color: '#374151'
-								}}
-							>
-								{item.content} - And this is styled perfectly!
-							</div>
-						)
-					}}
-				</Accordion>
-			);
-		}
-	})
 };
