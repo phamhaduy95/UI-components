@@ -111,7 +111,7 @@
 	background-color: var(--chip-bg-color);
 	color: var(--chip-text-color);
 
-	&:is([data-clickable], [data-removable]) {
+	&:is([data-clickable='true'], [data-removable='true']) {
 		cursor: pointer;
 		user-select: none;
 
@@ -151,4 +151,9 @@
 		opacity: 1;
 		transform: scale(1.1, 1.1);
 	}
+}
+
+.Chip_RemoveIcon {
+	width: 16px;
+	height: 16px;
 }
