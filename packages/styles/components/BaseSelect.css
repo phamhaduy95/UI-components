@@ -38,6 +38,11 @@
 .Select_Indicator {
 	margin-right: var(--field-padding-inline);
 	color: var(--color-secondary);
+
+	> svg {
+		width: 20px;
+		height: 20px;
+	}
 }
 
 .Menu.SelectContent {

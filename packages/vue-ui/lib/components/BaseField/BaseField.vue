@@ -18,7 +18,8 @@
 		required: false,
 		disabled: false,
 		clearable: false,
-		labelElement: 'label'
+		labelElement: 'label',
+		status: undefined
 	});
 </script>
 
@@ -31,7 +32,6 @@
 		:aria-disabled="disabled"
 		:data-clearable="clearable"
 		:data-testid="dataTestid"
-		v-bind="$attrs"
 	>
 		<FieldLabel
 			:id="labelId"

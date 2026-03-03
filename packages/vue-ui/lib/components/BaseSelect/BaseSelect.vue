@@ -61,11 +61,10 @@
 		clearable: false,
 		disabled: false,
 		required: false,
-		open: undefined,
-		defaultOpen: undefined,
 		modelValue: undefined,
 		defaultValue: undefined,
-		name: undefined
+		open: undefined,
+		defaultOpen: undefined
 	});
 
 	const emit = defineEmits<BaseSelectEmits>();
@@ -126,27 +125,31 @@
 				</ArkSelect.Trigger>
 
 				<div class="Select_Trailing">
-					<ArkSelect.ClearTrigger
-						v-if="clearable"
-						class="Select_ClearButton"
-						as-child
-					>
-						<IconButton
-							variant="text"
-							color="secondary"
-							size="medium"
+					<ArkSelect.Context v-slot="{ setOpen }">
+						<ArkSelect.ClearTrigger
+							v-if="clearable"
+							class="Select_ClearButton"
+							as-child
 						>
-							<XMarkIcon />
-						</IconButton>
-					</ArkSelect.ClearTrigger>
+							<IconButton
+								variant="text"
+								color="secondary"
+								size="medium"
+								@click.stop="setOpen(false)"
+							>
+								<slot name="clearIcon">
+									<XMarkIcon />
+								</slot>
+							</IconButton>
+						</ArkSelect.ClearTrigger>
+					</ArkSelect.Context>
 					<ArkSelect.Indicator
 						class="Select_Indicator"
 						aria-label="select indicator"
 					>
-						<ChevronDownIcon
-							width="20"
-							height="20"
-						/>
+						<slot name="triggerIcon">
+							<ChevronDownIcon />
+						</slot>
 					</ArkSelect.Indicator>
 				</div>
 
@@ -171,9 +174,7 @@
 						>
 							<ArkSelect.ItemText>{{ item.label }}</ArkSelect.ItemText>
 							<ArkSelect.ItemIndicator class="MenuItem_TrailingIcon">
-								<slot name="triggerIcon">
-									<CheckIcon />
-								</slot>
+								<CheckIcon />
 							</ArkSelect.ItemIndicator>
 						</ArkSelect.Item>
 					</ArkSelect.Content>
