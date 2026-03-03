@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { Chip } from '@components/Chip';
-import { expect, fn, userEvent, within } from 'storybook/test';
+import { expect, fn, userEvent } from 'storybook/test';
+import { TrashIcon } from '@heroicons/vue/20/solid';
 
 const mockedOnRemove = fn();
 const mockedOnClick = fn();
@@ -48,7 +49,14 @@ export const Default: Story = {
 			return { args };
 		},
 		template: '<Chip v-bind="args" />'
-	})
+	}),
+	play: async ({ canvas, step, args }) => {
+		const chip = canvas.getByLabelText(args.label ?? '');
+
+		await step('Check if chip is displayed', async () => {
+			expect(chip).toBeInTheDocument();
+		});
+	}
 };
 
 export const ColorVariants: Story = {
@@ -99,9 +107,9 @@ export const Clickable: Story = {
 	render: (args) => ({
 		components: { Chip },
 		setup() {
-			return { args, mockedOnClick };
+			return { args };
 		},
-		template: '<Chip v-bind="args" @click="mockedOnClick" />'
+		template: '<Chip v-bind="args"  />'
 	}),
 	async play({ step, canvas }) {
 		const chip = canvas.getByRole('button', { name: 'Clickable Tag' });
@@ -112,6 +120,14 @@ export const Clickable: Story = {
 
 		await step('Check if onclick is invoked', async () => {
 			expect(mockedOnClick).toHaveBeenCalled();
+		});
+
+		await step('press Backspace', async () => {
+			await userEvent.keyboard('{backspace}');
+		});
+
+		await step('Check if onRemove is not invoked', async () => {
+			expect(mockedOnRemove).not.toHaveBeenCalled();
 		});
 	}
 };
@@ -138,6 +154,7 @@ export const Removable: Story = {
 	args: {
 		label: 'Removable Tag',
 		removable: true,
+		clickable: true,
 		dataTestid: 'chip-remove-button'
 	},
 	render: (args) => ({
@@ -148,14 +165,14 @@ export const Removable: Story = {
 		template: '<Chip v-bind="args" @remove="mockedOnRemove" />'
 	}),
 	play: async ({ args, canvas, step }) => {
-		const { dataTestid = '' } = args;
+		const { label = 'Remove' } = args;
 
-		const chip = canvas.getByTestId(dataTestid);
+		const Chips = canvas.getByRole('button', { name: label });
 
-		const removeButton = within(chip).getByRole('button');
+		const removeIcon = Chips.querySelector('[data-part="chip_remove-icon"]') as HTMLElement;
 
 		await step('Click on Remove icon', async () => {
-			await userEvent.click(removeButton);
+			await userEvent.click(removeIcon);
 		});
 
 		await step('Check if onRemove is called', async () => {
@@ -193,4 +210,37 @@ export const RemovableVariants: Story = {
 			</div>
 		`
 	})
+};
+
+export const CustomizeIconSlot: Story = {
+	args: {
+		label: 'Removable Tag',
+		removable: true,
+		dataTestid: 'chip-remove-button'
+	},
+	render: (args) => ({
+		components: { Chip, TrashIcon },
+		setup() {
+			return { args };
+		},
+		template: `
+			<Chip v-bind="args">
+				<template #removeIcon>
+					<TrashIcon class="Chip_RemoveIcon" />
+				</template>
+			</Chip>
+		`
+	}),
+	play: async ({ args, canvas, step }) => {
+		const { label = 'Remove' } = args;
+
+		const Chips = canvas.getByRole('button', { name: label });
+
+		const removeIcon = Chips.querySelector('[data-part="chip_remove-icon"]') as HTMLElement;
+
+		await step('Check if removeIcon is displayed', async () => {
+			expect(removeIcon).toBeInTheDocument();
+			// need visual testing to verify new icon is displayed
+		});
+	}
 };

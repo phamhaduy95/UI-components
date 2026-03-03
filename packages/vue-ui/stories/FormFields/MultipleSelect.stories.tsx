@@ -1,17 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { SingleSelect } from '@components/SingleSelect';
+import { MultipleSelect } from '@components/MultipleSelect';
 import { ref } from 'vue';
 import { expect, within, userEvent, screen, fn, waitFor } from 'storybook/test';
 import type { SelectItem } from '@components/type';
-import { TrashIcon } from '@heroicons/vue/24/outline';
+import { TrashIcon, ArrowDownCircleIcon } from '@heroicons/vue/20/solid';
 
 const mockedOnValueChange = fn();
 const mockedOnUpdateModelValue = fn();
 const mockedOnUpdateOpen = fn();
-const mockedOnFocusOutside = fn();
-const mockedOnExitComplete = fn();
 
-const items = [
+const items: SelectItem[] = [
 	{ label: 'React', value: 'react' },
 	{ label: 'Vue', value: 'vue' },
 	{ label: 'Angular', value: 'angular' },
@@ -22,8 +20,8 @@ const clearButtonLabel = 'Clear value';
 const selectIndicatorLabel = 'select indicator';
 
 const meta = {
-	title: 'Components/FormField/SingleSelect',
-	component: SingleSelect,
+	title: 'Components/FormField/MultipleSelect',
+	component: MultipleSelect,
 	tags: ['autodocs'],
 	parameters: {
 		layout: 'padded'
@@ -43,22 +41,18 @@ const meta = {
 		supportingText: { control: 'text' }
 	},
 	args: {
-		supportingText: 'Please select a item.',
+		supportingText: 'Please select at least one item.',
 		items: items,
 		onValueChange: mockedOnValueChange,
 		'onUpdate:modelValue': mockedOnUpdateModelValue,
-		'onUpdate:open': mockedOnUpdateOpen,
-		onFocusOutside: mockedOnFocusOutside,
-		onExitComplete: mockedOnExitComplete
+		'onUpdate:open': mockedOnUpdateOpen
 	},
 	beforeEach() {
 		mockedOnValueChange.mockClear();
 		mockedOnUpdateModelValue.mockClear();
 		mockedOnUpdateOpen.mockClear();
-		mockedOnFocusOutside.mockClear();
-		mockedOnExitComplete.mockClear();
 	}
-} satisfies Meta<typeof SingleSelect>;
+} satisfies Meta<typeof MultipleSelect>;
 
 export default meta;
 
@@ -66,17 +60,17 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	args: {
-		label: 'Framework',
-		placeholder: 'Select a framework',
-		supportingText: 'Please select a framework.',
-		dataTestid: 'single-select-default'
+		label: 'Frameworks',
+		placeholder: 'Select frameworks',
+		supportingText: 'Please select at least one framework.',
+		dataTestid: 'multiple-select-default'
 	},
 	render: (args) => ({
-		components: { SingleSelect },
+		components: { MultipleSelect },
 		setup() {
 			return { args };
 		},
-		template: '<SingleSelect v-bind="args" />'
+		template: '<MultipleSelect v-bind="args" />'
 	}),
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '', supportingText = '' } = args;
@@ -122,28 +116,62 @@ export const Default: Story = {
 	}
 };
 
-export const SelectItemFlow: Story = {
+export const WithDefaultValue: Story = {
 	args: {
-		label: 'Framework',
-		dataTestid: 'single-select-select-item-flow'
+		label: 'Frameworks',
+		dataTestid: 'multiple-select-with-default-value',
+		defaultValue: [items[0]!.value, items[1]!.value],
+		clearable: true
 	},
 	render: (args) => ({
-		components: { SingleSelect },
+		components: { MultipleSelect },
 		setup() {
 			return { args };
 		},
-		template: '<SingleSelect v-bind="args" />'
+		template: '<MultipleSelect v-bind="args" />'
+	}),
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+		const displayArea = within(container).getByRole('combobox', { name: label });
+
+		await step('Check if the chips presenting selected value are displayed', async () => {
+			const chip1 = within(displayArea).getByRole('button', { name: items[0]!.label });
+			const chip2 = within(displayArea).getByRole('button', { name: items[1]!.label });
+			expect(chip1).toBeInTheDocument();
+			expect(chip2).toBeInTheDocument();
+		});
+
+		await step('Check if the clear icon is showed', async () => {
+			const clearButton = within(container).getByLabelText(clearButtonLabel);
+			expect(clearButton).toBeVisible();
+		});
+	}
+};
+
+export const SelectItemFlow: Story = {
+	args: {
+		label: 'Frameworks',
+		dataTestid: 'multiple-select-select-item-flow'
+	},
+	render: (args) => ({
+		components: { MultipleSelect },
+		setup() {
+			return { args };
+		},
+		template: '<MultipleSelect v-bind="args" />'
 	}),
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
 
-		await step('Select Item', async () => {
+		await step('Open menu', async () => {
 			const trigger = within(container).getByRole('combobox', { name: label });
 			await userEvent.click(trigger);
 		});
 
 		const menuPopup = screen.getByRole('listbox', { name: label });
+
 		await step('Check if menu popup is displayed', async () => {
 			expect(menuPopup).toBeVisible();
 		});
@@ -159,13 +187,28 @@ export const SelectItemFlow: Story = {
 			});
 		});
 
-		await step('user click on the first option', async () => {
+		await step('Select multiple options', async () => {
 			const firstOption = within(menuPopup).getByRole('option', { name: items[0]!.label });
 			await userEvent.click(firstOption);
+			const secondOption = within(menuPopup).getByRole('option', { name: items[1]!.label });
+			await userEvent.click(secondOption);
 		});
 
-		await step('Check if menu popup is hidden', async () => {
-			// Since the popup has animation for closing, we need to wait for it to finish
+		await step('Check if trigger shows the selected values', async () => {
+			const displayArea = within(container).getByRole('combobox', { name: label });
+			const chip1 = within(displayArea).getByRole('button', { name: items[0]!.label });
+			const chip2 = within(displayArea).getByRole('button', { name: items[1]!.label });
+			expect(chip1).toBeInTheDocument();
+			expect(chip2).toBeInTheDocument();
+		});
+
+		await step('Check if menu popup is still visible (multiple select behavior)', async () => {
+			expect(menuPopup).toBeVisible();
+		});
+
+		await step('Close menu popup', async () => {
+			const trigger = within(container).getByRole('combobox', { name: label });
+			await userEvent.click(trigger);
 			await waitFor(() => {
 				expect(menuPopup).not.toBeVisible();
 			});
@@ -174,51 +217,63 @@ export const SelectItemFlow: Story = {
 		await step('Check if onUpdate:open is called with false', async () => {
 			expect(mockedOnUpdateOpen).toHaveBeenCalledWith(false);
 		});
-
-		await step('Check if trigger show the selected value', async () => {
-			const trigger = within(container).getByRole('combobox', { name: label });
-			expect(trigger).toHaveTextContent(items[0]!.label);
-		});
 	}
 };
 
-export const WithDefaultValue: Story = {
+export const RemoveItemFlow: Story = {
 	args: {
-		label: 'Framework',
-		dataTestid: 'single-select-with-default-value',
-		defaultValue: items[0]!.value,
+		label: 'Frameworks',
+		dataTestid: 'multiple-select-remove-item-flow',
+		defaultValue: [items[0]!.value, items[1]!.value],
 		clearable: true
 	},
 	render: (args) => ({
-		components: { SingleSelect },
+		components: { MultipleSelect },
 		setup() {
 			return { args };
 		},
-		template: '<SingleSelect v-bind="args" />'
+		template: '<MultipleSelect v-bind="args" />'
 	}),
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
 
-		await step('Check if the trigger show the default value', async () => {
-			const trigger = within(container).getByRole('combobox', { name: label });
-			expect(trigger).toHaveTextContent(items[0]!.label);
+		const trigger = within(container).getByRole('combobox', { name: label });
+		const chip1 = within(trigger).getByRole('button', { name: items[0]!.label });
+		const chip2 = within(trigger).getByRole('button', { name: items[1]!.label });
+
+		await step('Remove first item', async () => {
+			chip1.focus();
+			await userEvent.keyboard('[Backspace]');
+		});
+
+		await step('Check if the first item is removed', async () => {
+			expect(chip1).not.toBeInTheDocument();
+		});
+
+		await step('Remove second item', async () => {
+			chip2.focus();
+			await userEvent.keyboard('[Backspace]');
+		});
+
+		await step('Check if the second item is removed', async () => {
+			expect(chip2).not.toBeInTheDocument();
 		});
 	}
 };
 
 export const Clearable: Story = {
 	args: {
-		label: 'Framework',
+		label: 'Frameworks',
 		clearable: true,
-		dataTestid: 'single-select-clearable'
+		dataTestid: 'multiple-select-clearable'
 	},
 	render: (args) => ({
-		components: { SingleSelect },
+		components: { MultipleSelect },
 		setup() {
 			return { args };
 		},
-		template: '<SingleSelect v-bind="args" />'
+		template: '<MultipleSelect v-bind="args" />'
 	}),
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
@@ -229,13 +284,19 @@ export const Clearable: Story = {
 			expect(clearButton).not.toBeVisible();
 		});
 
-		await step('Select first item', async () => {
+		await step('Select items', async () => {
 			const trigger = within(container).getByRole('combobox', { name: label });
 			await userEvent.click(trigger);
 			const menuPopup = screen.getByRole('listbox', { name: label });
 
 			const firstOption = within(menuPopup).getByRole('option', { name: items[0]!.label });
 			await userEvent.click(firstOption);
+			const secondOption = within(menuPopup).getByRole('option', { name: items[1]!.label });
+			await userEvent.click(secondOption);
+		});
+
+		await step('Check if close Icon is showed', async () => {
+			expect(clearButton).toBeVisible();
 		});
 
 		await step('Clear the selected value', async () => {
@@ -247,12 +308,7 @@ export const Clearable: Story = {
 			expect(trigger).toHaveTextContent('');
 		});
 
-		await step('Check if popup is hidden after clearing', async () => {
-			const menuPopup = screen.queryByRole('listbox', { name: label });
-			expect(menuPopup).not.toBeInTheDocument();
-		});
-
-		await step('Check if the clear icon is hidden', async () => {
+		await step('Check if the clear button is hidden', async () => {
 			expect(clearButton).not.toBeVisible();
 		});
 	}
@@ -260,17 +316,17 @@ export const Clearable: Story = {
 
 export const Controllable: Story = {
 	args: {
-		label: 'Framework',
+		label: 'Frameworks',
 		clearable: true,
-		value: items[0]!.value,
-		dataTestid: 'single-select-controllable'
+		modelValue: [items[0]!.value],
+		dataTestid: 'multiple-select-controllable'
 	},
 	render: (args) => ({
-		components: { SingleSelect },
+		components: { MultipleSelect },
 		setup() {
-			const value = ref(args.value);
+			const value = ref(args.modelValue);
 
-			const handleChange = (details: { value: string; item?: SelectItem }) => {
+			const handleChange = (details: { value: string[]; items: SelectItem[] }) => {
 				value.value = details.value;
 				mockedOnValueChange(details);
 				mockedOnUpdateModelValue(details.value);
@@ -278,9 +334,9 @@ export const Controllable: Story = {
 
 			return () => (
 				<div class="flex flex-col gap-2">
-					<SingleSelect {...args} modelValue={value.value} onValueChange={handleChange} />
+					<MultipleSelect {...args} modelValue={value.value} onValueChange={handleChange} />
 					<p class="mt-4" aria-label="selected-value">
-						Selected: {value.value}
+						Selected: {value.value?.join(', ')}
 					</p>
 				</div>
 			);
@@ -300,7 +356,7 @@ export const Controllable: Story = {
 			expect(trigger).toHaveTextContent(items[0]!.label);
 		});
 
-		await step('Select an item', async () => {
+		await step('Select another item', async () => {
 			await userEvent.click(trigger);
 			const menuPopup = screen.getByRole('listbox', { name: label });
 
@@ -310,16 +366,19 @@ export const Controllable: Story = {
 
 		await step('Check if onValueChange is called', async () => {
 			expect(mockedOnValueChange).toHaveBeenCalled();
-			expect(mockedOnValueChange).toHaveBeenCalledWith({ value: items[1]!.value, item: items[1] });
-			expect(mockedOnUpdateModelValue).toHaveBeenCalledWith(items[1]!.value);
+			expect(mockedOnValueChange).toHaveBeenCalledWith({
+				value: [items[0]!.value, items[1]!.value],
+				items: [items[0], items[1]]
+			});
+			expect(mockedOnUpdateModelValue).toHaveBeenCalledWith([items[0]!.value, items[1]!.value]);
 		});
 
 		await step('Check if external state is updated with new value', async () => {
 			const displayedValue = canvas.getByLabelText('selected-value');
-			expect(displayedValue).toHaveTextContent('Selected: ' + items[1]!.value);
+			expect(displayedValue).toHaveTextContent(`Selected: ${items[0]!.value}, ${items[1]!.value}`);
 		});
 
-		await step('Clear selected value', async () => {
+		await step('Clear all values', async () => {
 			const clearButton = within(container).getByLabelText(clearButtonLabel);
 			await userEvent.click(clearButton);
 		});
@@ -329,25 +388,26 @@ export const Controllable: Story = {
 			expect(displayedValue).toHaveTextContent('Selected:');
 		});
 
-		await step('Check if onValueChange received empty string argument', async () => {
-			expect(mockedOnValueChange).toHaveBeenLastCalledWith({ value: '', item: undefined });
+		await step('Check if onValueChange received empty array', async () => {
+			expect(mockedOnValueChange).toHaveBeenLastCalledWith({ value: [], items: [] });
+			expect(mockedOnUpdateModelValue).toHaveBeenLastCalledWith([]);
 		});
 	}
 };
 
 export const Disabled: Story = {
 	args: {
-		label: 'Framework',
+		label: 'Frameworks',
 		disabled: true,
-		placeholder: 'Select Framwork',
-		dataTestid: 'single-select-disabled'
+		placeholder: 'Select Frameworks',
+		dataTestid: 'multiple-select-disabled'
 	},
 	render: (args) => ({
-		components: { SingleSelect },
+		components: { MultipleSelect },
 		setup() {
 			return { args };
 		},
-		template: '<SingleSelect v-bind="args" />'
+		template: '<MultipleSelect v-bind="args" />'
 	}),
 	play: async ({ canvas, args, step }) => {
 		const { label = '', dataTestid = '' } = args;
@@ -362,16 +422,16 @@ export const Disabled: Story = {
 
 export const Required: Story = {
 	args: {
-		label: 'Framework',
+		label: 'Frameworks',
 		required: true,
-		dataTestid: 'single-select-required'
+		dataTestid: 'multiple-select-required'
 	},
 	render: (args) => ({
-		components: { SingleSelect },
+		components: { MultipleSelect },
 		setup() {
 			return { args };
 		},
-		template: '<SingleSelect v-bind="args" />'
+		template: '<MultipleSelect v-bind="args" />'
 	}),
 	play: async ({ canvas, args, step }) => {
 		const { label = '', dataTestid = '' } = args;
@@ -391,27 +451,27 @@ export const Required: Story = {
 
 export const Status: Story = {
 	render: (args) => ({
-		components: { SingleSelect },
+		components: { MultipleSelect },
 		setup() {
 			return () => (
 				<div class="flex flex-col gap-2">
-					<SingleSelect
+					<MultipleSelect
 						{...args}
 						status="error"
 						label="Error"
-						supportingText="Please select a item."
+						supportingText="Please select at least one framework."
 					/>
-					<SingleSelect
+					<MultipleSelect
 						{...args}
 						status="success"
 						label="Success"
-						supportingText="Please select a item."
+						supportingText="Please select at least one framework."
 					/>
-					<SingleSelect
+					<MultipleSelect
 						{...args}
 						status="warning"
 						label="Warning"
-						supportingText="Please select a item."
+						supportingText="Please select at least one framework."
 					/>
 				</div>
 			);
@@ -421,34 +481,38 @@ export const Status: Story = {
 
 export const Size: Story = {
 	render: (args) => ({
-		components: { SingleSelect },
+		components: { MultipleSelect },
 		setup() {
 			return () => (
 				<div class="flex flex-col gap-2">
-					<SingleSelect {...args} size="small" label="Small" />
-					<SingleSelect {...args} size="medium" label="Medium" />
+					<MultipleSelect {...args} size="small" label="Small" />
+					<MultipleSelect {...args} size="medium" label="Medium" />
 				</div>
 			);
 		}
 	})
 };
 
-export const CustomTriggerIcon: Story = {
+export const CustomIcon: Story = {
 	args: {
 		label: 'Frameworks',
-		dataTestid: 'single-select-custom-trigger-icon'
+		dataTestid: 'multiple-select-custom-trigger-icon',
+		clearable: true
 	},
 	render: (args) => ({
-		components: { SingleSelect, TrashIcon },
+		components: { MultipleSelect, TrashIcon, ArrowDownCircleIcon },
 		setup() {
 			return { args };
 		},
 		template: `
-        <SingleSelect v-bind="args">
+        <MultipleSelect v-bind="args">
             <template #triggerIcon>
+                <ArrowDownCircleIcon />
+            </template>
+            <template #clearIcon>
                 <TrashIcon />
             </template>
-        </SingleSelect>
+        </MultipleSelect>
         `
 	})
 };

@@ -119,8 +119,9 @@
 			background-color: var(--chip-hover-bg-color);
 		}
 
-		&:is(:focus-visible, :focus-within) {
-			background-color: var(--chip-focus-bg-color);
+		&:is(:focus-visible) {
+			outline: 1px solid var(--color-primary);
+			outline-offset: 2px;
 		}
 
 		&:active {

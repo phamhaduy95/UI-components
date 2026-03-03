@@ -1,36 +1,14 @@
-<script setup lang="ts">
-	import { computed, type SelectHTMLAttributes } from 'vue';
+<script lang="ts" setup>
 	import { BaseSelect, type BaseSelectEmits, type SelectBaseProps } from '@components/BaseSelect';
+
 	import type { CommonFieldProps, SelectItem } from '@components/type';
+	import { computed, type SelectHTMLAttributes } from 'vue';
 
 	defineOptions({ inheritAttrs: false });
 
 	export interface SingleSelectBaseProps
 		extends CommonFieldProps<string>,
-			Pick<
-				SelectBaseProps,
-				| 'loopFocus'
-				| 'open'
-				| 'defaultOpen'
-				| 'multiple'
-				| 'deselectable'
-				| 'lazyMount'
-				| 'unmountOnExit'
-				| 'name'
-				| 'items'
-				| 'class'
-				| 'clearable'
-				| 'deselectable'
-				| 'loopFocus'
-				| 'multiple'
-				| 'placeholder'
-				| 'supportingText'
-				| 'size'
-				| 'status'
-				| 'label'
-				| 'disabled'
-				| 'required'
-			> {
+			Omit<SelectBaseProps, 'modelValue' | 'defaultValue'> {
 		dataTestid?: string;
 		modelValue?: string;
 		defaultValue?: string;
@@ -55,7 +33,11 @@
 		clearable: false,
 		disabled: false,
 		required: false,
-		multiple: false
+		multiple: false,
+		modelValue: undefined,
+		defaultValue: undefined,
+		open: undefined,
+		defaultOpen: undefined
 	});
 
 	const emit = defineEmits<SingleSelectEmits>();
@@ -81,27 +63,23 @@
 
 <template>
 	<BaseSelect
-		v-bind="$attrs"
+		v-bind="props"
 		:model-value="mappedValue"
 		:default-value="mappedDefaultValue"
-		:items="items"
-		:size="size"
-		:status="status"
-		:label="label"
-		:disabled="disabled"
-		:clearable="clearable"
-		:required="required"
-		:loop-focus="loopFocus"
-		:placeholder="placeholder"
-		:supporting-text="supportingText"
-		:deselectable="deselectable"
 		:multiple="false"
-		:name="name"
-		:data-testid="dataTestid"
 		@value-change="handleValueChange"
 		@update:open="emit('update:open', $event)"
 		@focus-outside="emit('focusOutside', $event)"
 		@exit-complete="emit('exitComplete')"
 	>
+		<template
+			v-for="(_, slotName) in $slots"
+			#[slotName]="slotProps"
+		>
+			<slot
+				:name="slotName"
+				v-bind="slotProps"
+			/>
+		</template>
 	</BaseSelect>
 </template>

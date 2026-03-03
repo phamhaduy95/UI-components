@@ -1,12 +1,11 @@
 <script setup lang="ts">
-	import type { HTMLAttributes } from 'vue';
+	import { computed, type HTMLAttributes } from 'vue';
 	import { XMarkIcon } from '@heroicons/vue/20/solid';
 
 	import '@packages/styles/components/Chip.css';
 
 	export type ChipSize = 'small' | 'medium';
 	export type ChipColor = 'primary' | 'secondary' | 'error' | 'success' | 'warning';
-	export type ChipVariant = 'filled' | 'outlined';
 
 	export interface ChipProps extends /* @vue-ignore */ HTMLAttributes {
 		label?: string;
@@ -14,7 +13,6 @@
 		size?: ChipSize;
 		color?: ChipColor;
 		disabled?: boolean;
-		variant?: ChipVariant;
 		clickable?: boolean;
 		dataTestid?: string;
 	}
@@ -40,39 +38,41 @@
 
 	const handleKeyDown = (e: KeyboardEvent) => {
 		if (!props.removable) return;
-		e.stopPropagation();
 		const key = e.key;
-		if (key === 'Backspace' || key === 'Delete') {
+		if (['Backspace', 'Delete'].includes(key)) {
+			e.preventDefault();
 			handleRemove();
 		}
 	};
+
+	const isInteractive = computed(() => props.clickable || props.removable);
 </script>
 
 <template>
 	<div
 		class="Chip"
-		:data-removable="removable"
 		:data-size="size"
 		:data-color="color"
 		:aria-label="label"
 		:data-disabled="disabled"
-		:data-clickable="clickable"
-		:role="clickable ? 'button' : undefined"
-		:tabindex="clickable ? 0 : undefined"
+		:data-clickable="isInteractive"
+		:data-removable="removable"
+		:role="isInteractive ? 'button' : undefined"
+		:tabindex="isInteractive ? 0 : undefined"
 		:data-testid="dataTestid"
-		@click="clickable ? emit('click', $event) : undefined"
+		@click.stop="emit('click', $event)"
+		@keydown.stop="handleKeyDown"
 	>
 		<span class="Chip_Label">{{ label }}</span>
 		<span
 			v-if="removable"
 			class="Chip_RemoveButton"
-			aria-label="Remove Chip"
-			:role="!clickable ? 'button' : undefined"
-			:tabindex="!clickable ? 0 : undefined"
+			data-part="chip_remove-icon"
 			@click.stop="handleRemove"
-			@keydown.stop="handleKeyDown"
 		>
-			<XMarkIcon class="Chip_RemoveIcon" />
+			<slot name="removeIcon">
+				<XMarkIcon class="Chip_RemoveIcon" />
+			</slot>
 		</span>
 	</div>
 </template>
