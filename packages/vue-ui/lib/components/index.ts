@@ -7,6 +7,7 @@ export * from './Checkbox';
 export * from './Chip';
 export * from './FieldLabel';
 export * from './IconButton';
+export * from './MultipleCombobox';
 export * from './MultipleSelect';
 export * from './NumberInput';
 export * from './PasswordInput';

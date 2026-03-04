@@ -149,7 +149,10 @@
 				:data-status="status"
 				:aria-disabled="disabled"
 			>
-				<slot name="customValueText">
+				<slot
+					name="customValueText"
+					:supporting-text-id="supportingTextId"
+				>
 					<ArkCombobox.Input
 						:aria-describedby="supportingTextId"
 						v-bind="$attrs"
