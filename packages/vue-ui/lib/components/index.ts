@@ -1,4 +1,5 @@
 export * from './Accordion';
+export * from './BaseCombobox';
 export * from './BaseField';
 export * from './BaseSelect';
 export * from './Button';
@@ -9,6 +10,7 @@ export * from './IconButton';
 export * from './MultipleSelect';
 export * from './NumberInput';
 export * from './PasswordInput';
+export * from './SingleCombobox';
 export * from './SingleSelect';
 export * from './SupportingText';
 export * from './Switch';
