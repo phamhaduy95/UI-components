@@ -4,8 +4,10 @@
 		type BaseComboboxProps,
 		type BaseComboboxEmits
 	} from '@components/BaseCombobox';
-	import type { SelectItem } from '@components/type';
-	import { computed } from 'vue';
+
+	import { computed, type ComponentInstance } from 'vue';
+
+	type BaseComboboxRootProps = ComponentInstance<typeof BaseCombobox>['$props'];
 
 	export interface SingleComboboxProps
 		extends Omit<BaseComboboxProps, 'modelValue' | 'defaultValue' | 'multiple'> {
@@ -15,7 +17,7 @@
 
 	export interface SingleComboboxEmits {
 		'update:modelValue': [value: string];
-		valueChange: [details: { value: string; item?: SelectItem }];
+		valueChange: [details: { value: string }];
 		'update:open': BaseComboboxEmits['update:open'];
 		'update:inputValue': BaseComboboxEmits['update:inputValue'];
 		focusOutside: BaseComboboxEmits['focusOutside'];
@@ -42,10 +44,9 @@
 		return [props.defaultValue];
 	});
 
-	const handleValueChange = (data: { value: string[]; items: SelectItem[] }) => {
-		emit('update:modelValue', data.value[0] ?? '');
-
-		emit('valueChange', { value: data.value[0] ?? '', item: data.items[0] });
+	const handleValueChange: BaseComboboxRootProps['onValueChange'] = (details) => {
+		emit('update:modelValue', details.value[0] ?? '');
+		emit('valueChange', { value: details.value[0] ?? '' });
 	};
 </script>
 
