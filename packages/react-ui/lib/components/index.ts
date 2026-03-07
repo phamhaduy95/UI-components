@@ -5,7 +5,7 @@ export * from './Button';
 export { default as Button } from './Button';
 
 export * from './Calendar';
-export { default as Calendar } from './Calendar';
+export { Calendar } from './Calendar';
 
 export * from './Checkbox';
 export { default as Checkbox } from './Checkbox';
