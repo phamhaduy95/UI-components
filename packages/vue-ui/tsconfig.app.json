@@ -21,7 +21,8 @@
 		"baseUrl": ".",
 
 		"paths": {
-			"@components/*": ["lib/components/*"]
+			"@components/*": ["lib/components/*"],
+			"@stories/*": ["stories/*"]
 		}
 	}
 }

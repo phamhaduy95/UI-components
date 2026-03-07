@@ -6,6 +6,7 @@ export * from './BaseSelect';
 export * from './Button';
 export * from './Checkbox';
 export * from './Chip';
+export * from './DatePicker';
 export * from './FieldLabel';
 export * from './IconButton';
 export * from './MultipleCombobox';
