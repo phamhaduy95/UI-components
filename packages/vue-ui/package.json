@@ -51,6 +51,7 @@
 		"@ark-ui/vue": "^5.32.0",
 		"@heroicons/vue": "^2.2.0",
 		"@packages/styles": "workspace:*",
+		"dayjs": "^1.11.19",
 		"vue": "^3.5.28"
 	},
 	"devDependencies": {

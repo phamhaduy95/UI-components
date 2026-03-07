@@ -1,4 +1,5 @@
 export * from './Accordion';
+export * from './BaseCalendar';
 export * from './BaseCombobox';
 export * from './BaseField';
 export * from './BaseSelect';
