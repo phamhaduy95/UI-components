@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Checkbox from '@components/Checkbox';
-import Button from '@components/Button';
+import { Checkbox } from '@components/Checkbox';
+import { Button } from '@components/Button';
 import { useState } from 'react';
 import { expect, within, userEvent, fn } from 'storybook/test';
 

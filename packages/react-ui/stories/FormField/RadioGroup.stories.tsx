@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import RadioGroup from '@components/RadioGroup';
+import { RadioGroup } from '@components/RadioGroup';
 import { useState } from 'react';
 import { expect, within, userEvent, fn } from 'storybook/test';
 

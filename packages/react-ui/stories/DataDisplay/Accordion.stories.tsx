@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Accordion from '@components/Accordion';
+import { Accordion } from '@components/Accordion';
 import { useState } from 'react';
 import { expect, within, userEvent, fn, waitFor } from 'storybook/test';
 

@@ -4,9 +4,9 @@ import classNames from 'classnames';
 
 import '@packages/styles/components/TextInput.css';
 
-import BaseField from '@components/BaseField';
+import { BaseField } from '@components/BaseField';
 import { Cross2Icon } from '@radix-ui/react-icons';
-import IconButton from '@components/IconButton';
+import { IconButton } from '@components/IconButton';
 import { CommonFieldProps } from '@components/type';
 
 export interface TextInputProp extends HTMLAttributes<HTMLInputElement>, CommonFieldProps<string> {

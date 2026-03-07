@@ -1,7 +1,7 @@
 import { CommonFieldProps } from '@components/type';
 
 import { NumberInput as ArkNumberInput } from '@ark-ui/react/number-input';
-import BaseField from '@components/BaseField';
+import { BaseField } from '@components/BaseField';
 import { JSX, useId } from 'react';
 
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';

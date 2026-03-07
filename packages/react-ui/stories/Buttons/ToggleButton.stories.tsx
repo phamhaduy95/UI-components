@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import ToggleButton from '@components/ToggleButton';
+import { ToggleButton } from '@components/ToggleButton';
 import { useState } from 'react';
 import { expect, userEvent, fn } from 'storybook/test';
 import { StarIcon, StarFilledIcon } from '@radix-ui/react-icons';

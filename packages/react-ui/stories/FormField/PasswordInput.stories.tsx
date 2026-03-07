@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import PasswordInput from '@components/PasswordInput';
-import Button from '@components/Button';
+import { PasswordInput } from '@components/PasswordInput';
+import { Button } from '@components/Button';
 import { useState } from 'react';
 import { expect, within, userEvent, fn } from 'storybook/test';
 

@@ -1,2 +1,2 @@
-export * from './DropDownMenu';
-export { default } from './DropDownMenu';
+export type { DropdownMenuProps, NestedMenu } from './DropDownMenu';
+export { default as DropDownMenu } from './DropDownMenu';

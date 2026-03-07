@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import SingleCombobox, { SingleComboboxProps } from '@components/SingleCombobox';
+import { SingleCombobox, SingleComboboxProps } from '@components/SingleCombobox';
 import { useState } from 'react';
 import { expect, within, userEvent, screen, fn } from 'storybook/test';
 

@@ -1,2 +1,2 @@
-export * from './SingleSelect';
-export { default } from './SingleSelect';
+export type { SingleSelectProps } from './SingleSelect';
+export { default as SingleSelect } from './SingleSelect';

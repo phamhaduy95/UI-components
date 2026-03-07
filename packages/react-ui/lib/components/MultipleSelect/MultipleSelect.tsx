@@ -1,6 +1,6 @@
 import { useSelectContext, UseSelectContext } from '@ark-ui/react/select';
-import BaseSelect, { BaseSelectProps } from '@components/BaseSelect';
-import Chip from '@components/Chip';
+import { BaseSelect, BaseSelectProps } from '@components/BaseSelect';
+import { Chip } from '@components/Chip';
 import { SelectItem } from '@components/type';
 import { JSX } from 'react';
 

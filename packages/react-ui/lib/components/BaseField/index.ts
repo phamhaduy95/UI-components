@@ -1,2 +1,2 @@
-export { default } from './BaseField';
+export { default as BaseField } from './BaseField';
 export type { BaseFieldProps } from './BaseField';

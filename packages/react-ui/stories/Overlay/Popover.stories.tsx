@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Popover from '@components/Popover';
-import Button from '@components/Button';
+import { Popover } from '@components/Popover';
+import { Button } from '@components/Button';
 import { useRef, useState } from 'react';
 import { expect, within, userEvent, fn } from 'storybook/test';
 

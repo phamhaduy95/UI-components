@@ -1,2 +1,2 @@
-export * from './BaseComboBox';
-export { default } from './BaseComboBox';
+export type { BaseComboboxProps } from './BaseComboBox';
+export { default as BaseCombobox } from './BaseComboBox';
