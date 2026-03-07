@@ -7,6 +7,10 @@
 	}
 }
 
+.DatePicker_Control[data-placeholder-shown] {
+	color: var(--color-outline);
+}
+
 .DatePicker_InputField {
 	display: flex;
 	align-items: center;
