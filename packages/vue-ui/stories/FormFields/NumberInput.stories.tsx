@@ -29,6 +29,7 @@ const meta = {
 		step: { control: 'number' }
 	},
 	args: {
+		dataTestid: 'number-input-default',
 		onValueChange: mockedOnValueChange,
 		'onUpdate:modelValue': mockedOnUpdateModelValue
 	},
@@ -46,16 +47,9 @@ export const Default: Story = {
 	args: {
 		label: 'Quantity',
 		placeholder: 'Enter Number',
-		supportingText: 'Enter quantity.',
-		dataTestid: 'number-input-default'
+		supportingText: 'Enter quantity.'
 	},
-	render: (args) => ({
-		components: { NumberInput },
-		setup() {
-			return { args };
-		},
-		template: '<NumberInput v-bind="args" />'
-	}),
+
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { dataTestid: testId = '', label = '', placeholder = '', supportingText = '' } = args;
@@ -102,16 +96,9 @@ export const Default: Story = {
 export const WithDefaultValue: Story = {
 	args: {
 		label: 'Initial Value',
-		defaultValue: '10',
-		dataTestid: 'number-input-default-value'
+		defaultValue: '10'
 	},
-	render: (args) => ({
-		components: { NumberInput },
-		setup() {
-			return { args };
-		},
-		template: '<NumberInput v-bind="args" />'
-	}),
+
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { label = '', defaultValue = '' } = args;
@@ -134,16 +121,9 @@ export const MinMaxStep: Story = {
 		min: 0,
 		max: 20,
 		step: 5,
-		defaultValue: '5',
-		dataTestid: 'number-input-min-max'
+		defaultValue: '5'
 	},
-	render: (args) => ({
-		components: { NumberInput },
-		setup() {
-			return { args };
-		},
-		template: '<NumberInput v-bind="args" />'
-	}),
+
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { dataTestid: testId = '', label = '' } = args;
@@ -189,16 +169,9 @@ export const Formatting: Story = {
 	args: {
 		label: 'Currency (USD)',
 		formatOptions: { style: 'currency', currency: 'USD' },
-		defaultValue: '1000',
-		dataTestid: 'number-input-formatting'
+		defaultValue: '1000'
 	},
-	render: (args) => ({
-		components: { NumberInput },
-		setup() {
-			return { args };
-		},
-		template: '<NumberInput v-bind="args" />'
-	}),
+
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { label = '' } = args;
@@ -215,8 +188,7 @@ export const Formatting: Story = {
 export const Controllable: Story = {
 	args: {
 		label: 'Controllable',
-		modelValue: '10',
-		dataTestid: 'number-input-controllable'
+		modelValue: '10'
 	},
 	render: (args) => ({
 		components: { NumberInput },
@@ -252,6 +224,7 @@ export const Controllable: Story = {
 	}),
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
+
 		const { label = '', dataTestid: testId = '', modelValue = '' } = args;
 
 		const container = canvas.getByTestId(testId);
@@ -316,16 +289,9 @@ export const Disabled: Story = {
 	args: {
 		label: 'Disabled Input',
 		disabled: true,
-		defaultValue: '5',
-		dataTestid: 'number-input-disabled'
+		defaultValue: '5'
 	},
-	render: (args) => ({
-		components: { NumberInput },
-		setup() {
-			return { args };
-		},
-		template: '<NumberInput v-bind="args" />'
-	}),
+
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { label = '' } = args;
@@ -341,16 +307,9 @@ export const Required: Story = {
 	args: {
 		label: 'Required Field',
 		required: true,
-		placeholder: 'Enter amount',
-		dataTestid: 'number-input-required'
+		placeholder: 'Enter amount'
 	},
-	render: (args) => ({
-		components: { NumberInput },
-		setup() {
-			return { args };
-		},
-		template: '<NumberInput v-bind="args" />'
-	}),
+
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { label = '', dataTestid: testId = '' } = args;

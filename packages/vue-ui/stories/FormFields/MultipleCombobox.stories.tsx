@@ -43,6 +43,7 @@ const meta = {
 		supportingText: { control: 'text' }
 	},
 	args: {
+		dataTestid: 'multiple-combobox-default',
 		supportingText: 'Please select multiple items.',
 		items: items,
 		onValueChange: mockedOnValueChange,
@@ -50,6 +51,13 @@ const meta = {
 		'onUpdate:open': mockedOnUpdateOpen,
 		'onUpdate:inputValue': mockedOnUpdateInputValue
 	},
+	render: (args) => ({
+		components: { MultipleCombobox },
+		setup() {
+			return { args };
+		},
+		template: '<MultipleCombobox v-bind="args" />'
+	}),
 	beforeEach() {
 		mockedOnValueChange.mockClear();
 		mockedOnUpdateModelValue.mockClear();
@@ -66,16 +74,9 @@ export const Default: Story = {
 	args: {
 		label: 'Frameworks',
 		placeholder: 'Select frameworks',
-		supportingText: 'Please select frameworks.',
-		dataTestid: 'multiple-combobox-default'
+		supportingText: 'Please select frameworks.'
 	},
-	render: (args) => ({
-		components: { MultipleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '', supportingText = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -117,16 +118,9 @@ export const Default: Story = {
 
 export const SelectItemFlow: Story = {
 	args: {
-		label: 'Frameworks',
-		dataTestid: 'multiple-combobox-select-item-flow'
+		label: 'Frameworks'
 	},
-	render: (args) => ({
-		components: { MultipleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -186,13 +180,7 @@ export const SearchAndTypingFlow: Story = {
 		label: 'Frameworks',
 		dataTestid: 'multiple-combobox-search-flow'
 	},
-	render: (args) => ({
-		components: { MultipleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -241,17 +229,9 @@ export const SearchAndTypingFlow: Story = {
 export const WithDefaultValue: Story = {
 	args: {
 		label: 'Frameworks',
-		dataTestid: 'multiple-combobox-with-default-value',
 		defaultValue: [items[0]!.value, items[1]!.value],
 		clearable: true
 	},
-	render: (args) => ({
-		components: { MultipleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleCombobox v-bind="args" />'
-	}),
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -268,16 +248,9 @@ export const WithDefaultValue: Story = {
 export const Clearable: Story = {
 	args: {
 		label: 'Frameworks',
-		clearable: true,
-		dataTestid: 'multiple-combobox-clearable'
+		clearable: true
 	},
-	render: (args) => ({
-		components: { MultipleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -317,8 +290,7 @@ export const Controllable: Story = {
 	args: {
 		label: 'Frameworks',
 		clearable: true,
-		modelValue: [items[0]!.value],
-		dataTestid: 'multiple-combobox-controllable'
+		modelValue: [items[0]!.value]
 	},
 	render: (args) => ({
 		components: { MultipleCombobox },
@@ -395,16 +367,9 @@ export const Disabled: Story = {
 		label: 'Frameworks',
 		disabled: true,
 		placeholder: 'Select frameworks',
-		defaultValue: [items[0]!.value],
-		dataTestid: 'multiple-combobox-disabled'
+		defaultValue: [items[0]!.value]
 	},
-	render: (args) => ({
-		components: { MultipleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { label = '', dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -427,8 +392,7 @@ export const Disabled: Story = {
 export const Required: Story = {
 	args: {
 		label: 'Frameworks',
-		required: true,
-		dataTestid: 'multiple-combobox-required'
+		required: true
 	},
 	render: (args) => ({
 		components: { MultipleCombobox },
@@ -499,8 +463,7 @@ export const Size: Story = {
 
 export const CustomTriggerIcon: Story = {
 	args: {
-		label: 'Frameworks',
-		dataTestid: 'multiple-combobox-custom-trigger'
+		label: 'Frameworks'
 	},
 	render: (args) => ({
 		components: { MultipleCombobox, TrashIcon },

@@ -41,12 +41,20 @@ const meta = {
 		supportingText: { control: 'text' }
 	},
 	args: {
+		dataTestid: 'multiple-select-default',
 		supportingText: 'Please select at least one item.',
 		items: items,
 		onValueChange: mockedOnValueChange,
 		'onUpdate:modelValue': mockedOnUpdateModelValue,
 		'onUpdate:open': mockedOnUpdateOpen
 	},
+	render: (args) => ({
+		components: { MultipleSelect },
+		setup() {
+			return { args };
+		},
+		template: '<MultipleSelect v-bind="args" />'
+	}),
 	beforeEach() {
 		mockedOnValueChange.mockClear();
 		mockedOnUpdateModelValue.mockClear();
@@ -62,16 +70,9 @@ export const Default: Story = {
 	args: {
 		label: 'Frameworks',
 		placeholder: 'Select frameworks',
-		supportingText: 'Please select at least one framework.',
-		dataTestid: 'multiple-select-default'
+		supportingText: 'Please select at least one framework.'
 	},
-	render: (args) => ({
-		components: { MultipleSelect },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleSelect v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '', supportingText = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -119,17 +120,10 @@ export const Default: Story = {
 export const WithDefaultValue: Story = {
 	args: {
 		label: 'Frameworks',
-		dataTestid: 'multiple-select-with-default-value',
 		defaultValue: [items[0]!.value, items[1]!.value],
 		clearable: true
 	},
-	render: (args) => ({
-		components: { MultipleSelect },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleSelect v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -151,16 +145,9 @@ export const WithDefaultValue: Story = {
 
 export const SelectItemFlow: Story = {
 	args: {
-		label: 'Frameworks',
-		dataTestid: 'multiple-select-select-item-flow'
+		label: 'Frameworks'
 	},
-	render: (args) => ({
-		components: { MultipleSelect },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleSelect v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -223,17 +210,9 @@ export const SelectItemFlow: Story = {
 export const RemoveItemFlow: Story = {
 	args: {
 		label: 'Frameworks',
-		dataTestid: 'multiple-select-remove-item-flow',
 		defaultValue: [items[0]!.value, items[1]!.value],
 		clearable: true
 	},
-	render: (args) => ({
-		components: { MultipleSelect },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleSelect v-bind="args" />'
-	}),
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -265,16 +244,9 @@ export const RemoveItemFlow: Story = {
 export const Clearable: Story = {
 	args: {
 		label: 'Frameworks',
-		clearable: true,
-		dataTestid: 'multiple-select-clearable'
+		clearable: true
 	},
-	render: (args) => ({
-		components: { MultipleSelect },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleSelect v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -318,8 +290,7 @@ export const Controllable: Story = {
 	args: {
 		label: 'Frameworks',
 		clearable: true,
-		modelValue: [items[0]!.value],
-		dataTestid: 'multiple-select-controllable'
+		modelValue: [items[0]!.value]
 	},
 	render: (args) => ({
 		components: { MultipleSelect },
@@ -399,16 +370,9 @@ export const Disabled: Story = {
 	args: {
 		label: 'Frameworks',
 		disabled: true,
-		placeholder: 'Select Frameworks',
-		dataTestid: 'multiple-select-disabled'
+		placeholder: 'Select Frameworks'
 	},
-	render: (args) => ({
-		components: { MultipleSelect },
-		setup() {
-			return { args };
-		},
-		template: '<MultipleSelect v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { label = '', dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);

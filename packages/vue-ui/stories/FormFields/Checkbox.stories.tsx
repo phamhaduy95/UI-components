@@ -39,9 +39,17 @@ const meta = {
 		}
 	},
 	args: {
+		dataTestid: 'checkbox',
 		onCheckedChange: mockedOnCheckedChange,
 		'onUpdate:checked': mockedOnUpdateChecked
 	},
+	render: (args) => ({
+		components: { Checkbox },
+		setup() {
+			return { args };
+		},
+		template: '<Checkbox v-bind="args" />'
+	}),
 	beforeEach() {
 		mockedOnCheckedChange.mockClear();
 		mockedOnUpdateChecked.mockClear();
@@ -54,16 +62,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	args: {
-		label: 'Accept terms and conditions',
-		dataTestid: 'checkbox'
+		label: 'Accept terms and conditions'
 	},
-	render: (args) => ({
-		components: { Checkbox },
-		setup() {
-			return { args };
-		},
-		template: '<Checkbox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -93,16 +94,9 @@ export const Default: Story = {
 export const DefaultChecked: Story = {
 	args: {
 		label: 'Checked Checkbox',
-		defaultChecked: true,
-		dataTestid: 'checkbox-checked'
+		defaultChecked: true
 	},
-	render: (args) => ({
-		components: { Checkbox },
-		setup() {
-			return { args };
-		},
-		template: '<Checkbox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -165,7 +159,6 @@ export const Indeterminate: Story = {
 
 		await step('Check if parent checkbox is unchecked', async () => {
 			expect(parentCheckbox).not.toBeChecked();
-			// Since Ark UI adds the attributes to the root element, we verify it through the DOM
 			const parentRoot = canvas.getByTestId('parent-checkbox');
 
 			const checkboxInput = within(parentRoot).getByRole('checkbox');
@@ -175,8 +168,6 @@ export const Indeterminate: Story = {
 		await step('Click on option 1', async () => {
 			await userEvent.click(child1);
 			expect(parentCheckbox).not.toBeChecked();
-
-			// Ark UI Vue indeterminate doesn't set data-checked="indeterminate" on the input in all implementations. We check DOM state.
 		});
 
 		await step('Click on option 2', async () => {
@@ -190,8 +181,7 @@ export const Controllable: Story = {
 	args: {
 		label: 'Controlled Checkbox',
 		checked: true,
-		value: 'Hello',
-		dataTestid: 'checkbox-controlled'
+		value: 'Hello'
 	},
 	render: (args) => ({
 		components: { Checkbox, Button },
@@ -250,16 +240,9 @@ export const Disabled: Story = {
 	args: {
 		label: 'Disabled Checkbox',
 		disabled: true,
-		defaultChecked: true,
-		dataTestid: 'checkbox-disabled'
+		defaultChecked: true
 	},
-	render: (args) => ({
-		components: { Checkbox },
-		setup() {
-			return { args };
-		},
-		template: '<Checkbox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -274,8 +257,7 @@ export const Disabled: Story = {
 export const Required: Story = {
 	args: {
 		label: 'Required Checkbox',
-		required: true,
-		dataTestid: 'checkbox-required'
+		required: true
 	},
 	render: (args) => ({
 		components: { Checkbox },

@@ -30,16 +30,6 @@ const meta = {
 			control: 'boolean'
 		}
 	},
-	beforeEach() {
-		mockedOnCheckedChange.mockClear();
-	}
-} satisfies Meta<typeof Switch>;
-
-export default meta;
-
-type Story = StoryObj<typeof meta>;
-
-export const Default: Story = {
 	args: {
 		label: 'Toggle feature',
 		dataTestid: 'switch-default'
@@ -51,6 +41,16 @@ export const Default: Story = {
 		},
 		template: '<Switch v-bind="args" />'
 	}),
+	beforeEach() {
+		mockedOnCheckedChange.mockClear();
+	}
+} satisfies Meta<typeof Switch>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -74,17 +74,9 @@ export const Default: Story = {
 
 export const DefaultChecked: Story = {
 	args: {
-		label: 'Initial checked',
-		defaultChecked: true,
-		dataTestid: 'switch-checked'
+		defaultChecked: true
 	},
-	render: (args) => ({
-		components: { Switch },
-		setup() {
-			return { args };
-		},
-		template: '<Switch v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -99,8 +91,7 @@ export const DefaultChecked: Story = {
 export const Controllable: Story = {
 	args: {
 		label: 'Controllable Switch',
-		onCheckedChange: mockedOnCheckedChange,
-		dataTestid: 'switch-controlled'
+		onCheckedChange: mockedOnCheckedChange
 	},
 	render: (args) => ({
 		components: { Switch },
@@ -146,16 +137,9 @@ export const Controllable: Story = {
 export const Disabled: Story = {
 	args: {
 		label: 'Disabled Switch',
-		disabled: true,
-		dataTestid: 'switch-disabled'
+		disabled: true
 	},
-	render: (args) => ({
-		components: { Switch },
-		setup() {
-			return { args };
-		},
-		template: '<Switch v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -169,16 +153,9 @@ export const Disabled: Story = {
 
 export const NoLabel: Story = {
 	args: {
-		dataTestid: 'switch-no-label',
 		defaultChecked: true
 	},
-	render: (args) => ({
-		components: { Switch },
-		setup() {
-			return { args };
-		},
-		template: '<Switch v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args }) => {
 		const { dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);

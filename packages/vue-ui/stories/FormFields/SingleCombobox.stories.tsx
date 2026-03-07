@@ -46,6 +46,7 @@ const meta = {
 		supportingText: { control: 'text' }
 	},
 	args: {
+		dataTestid: 'single-combobox-default',
 		supportingText: 'Please select an item.',
 		items: items,
 		onValueChange: mockedOnValueChange,
@@ -73,16 +74,9 @@ export const Default: Story = {
 	args: {
 		label: 'Framework',
 		placeholder: 'Select a framework',
-		supportingText: 'Please select a framework.',
-		dataTestid: 'single-combobox-default'
+		supportingText: 'Please select a framework.'
 	},
-	render: (args) => ({
-		components: { SingleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<SingleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '', supportingText = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -124,16 +118,9 @@ export const Default: Story = {
 
 export const SelectItemFlow: Story = {
 	args: {
-		label: 'Framework',
-		dataTestid: 'single-combobox-select-item-flow'
+		label: 'Framework'
 	},
-	render: (args) => ({
-		components: { SingleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<SingleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -184,16 +171,9 @@ export const SelectItemFlow: Story = {
 
 export const SearchAndTypingFlow: Story = {
 	args: {
-		label: 'Framework',
-		dataTestid: 'single-combobox-search-flow'
+		label: 'Framework'
 	},
-	render: (args) => ({
-		components: { SingleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<SingleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -227,17 +207,10 @@ export const SearchAndTypingFlow: Story = {
 export const WithDefaultValue: Story = {
 	args: {
 		label: 'Framework',
-		dataTestid: 'single-combobox-with-default-value',
 		defaultValue: items[0]!.value,
 		clearable: true
 	},
-	render: (args) => ({
-		components: { SingleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<SingleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -257,16 +230,9 @@ export const WithDefaultValue: Story = {
 export const Clearable: Story = {
 	args: {
 		label: 'Framework',
-		clearable: true,
-		dataTestid: 'single-combobox-clearable'
+		clearable: true
 	},
-	render: (args) => ({
-		components: { SingleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<SingleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -318,8 +284,7 @@ export const Controllable: Story = {
 	args: {
 		label: 'Framework',
 		clearable: true,
-		modelValue: items[0]!.value,
-		dataTestid: 'single-combobox-controllable'
+		modelValue: items[0]!.value
 	},
 	render: (args) => ({
 		components: { SingleCombobox },
@@ -396,16 +361,9 @@ export const Disabled: Story = {
 	args: {
 		label: 'Framework',
 		disabled: true,
-		placeholder: 'Select a framework',
-		dataTestid: 'single-combobox-disabled'
+		placeholder: 'Select a framework'
 	},
-	render: (args) => ({
-		components: { SingleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<SingleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { label = '', dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -420,16 +378,9 @@ export const Disabled: Story = {
 export const Required: Story = {
 	args: {
 		label: 'Framework',
-		required: true,
-		dataTestid: 'single-combobox-required'
+		required: true
 	},
-	render: (args) => ({
-		components: { SingleCombobox },
-		setup() {
-			return { args };
-		},
-		template: '<SingleCombobox v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { label = '', dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);

@@ -43,7 +43,10 @@ const meta = {
 		supportingText: { control: 'text' }
 	},
 	args: {
-		supportingText: 'Please select a item.',
+		label: 'Framework',
+		placeholder: 'Select a framework',
+		supportingText: 'Please select a framework.',
+		dataTestid: 'single-select',
 		items: items,
 		onValueChange: mockedOnValueChange,
 		'onUpdate:modelValue': mockedOnUpdateModelValue,
@@ -51,6 +54,13 @@ const meta = {
 		onFocusOutside: mockedOnFocusOutside,
 		onExitComplete: mockedOnExitComplete
 	},
+	render: (args) => ({
+		components: { SingleSelect },
+		setup() {
+			return { args };
+		},
+		template: '<SingleSelect v-bind="args" />'
+	}),
 	beforeEach() {
 		mockedOnValueChange.mockClear();
 		mockedOnUpdateModelValue.mockClear();
@@ -65,19 +75,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	args: {
-		label: 'Framework',
-		placeholder: 'Select a framework',
-		supportingText: 'Please select a framework.',
-		dataTestid: 'single-select-default'
-	},
-	render: (args) => ({
-		components: { SingleSelect },
-		setup() {
-			return { args };
-		},
-		template: '<SingleSelect v-bind="args" />'
-	}),
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '', supportingText = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -123,17 +120,6 @@ export const Default: Story = {
 };
 
 export const SelectItemFlow: Story = {
-	args: {
-		label: 'Framework',
-		dataTestid: 'single-select-select-item-flow'
-	},
-	render: (args) => ({
-		components: { SingleSelect },
-		setup() {
-			return { args };
-		},
-		template: '<SingleSelect v-bind="args" />'
-	}),
 	play: async ({ canvas, args, step }) => {
 		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -184,8 +170,6 @@ export const SelectItemFlow: Story = {
 
 export const WithDefaultValue: Story = {
 	args: {
-		label: 'Framework',
-		dataTestid: 'single-select-with-default-value',
 		defaultValue: items[0]!.value,
 		clearable: true
 	},
@@ -209,19 +193,11 @@ export const WithDefaultValue: Story = {
 
 export const Clearable: Story = {
 	args: {
-		label: 'Framework',
-		clearable: true,
-		dataTestid: 'single-select-clearable'
+		clearable: true
 	},
-	render: (args) => ({
-		components: { SingleSelect },
-		setup() {
-			return { args };
-		},
-		template: '<SingleSelect v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
-		const { dataTestid = '', label = '' } = args;
+		const { dataTestid = '', label = '', placeholder = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
 		const clearButton = within(container).getByLabelText(clearButtonLabel);
 
@@ -244,7 +220,7 @@ export const Clearable: Story = {
 
 		await step('Check if value is clear', async () => {
 			const trigger = within(container).getByRole('combobox', { name: label });
-			expect(trigger).toHaveTextContent('');
+			expect(trigger).toHaveTextContent(placeholder);
 		});
 
 		await step('Check if popup is hidden after clearing', async () => {
@@ -260,10 +236,8 @@ export const Clearable: Story = {
 
 export const Controllable: Story = {
 	args: {
-		label: 'Framework',
 		clearable: true,
-		value: items[0]!.value,
-		dataTestid: 'single-select-controllable'
+		value: items[0]!.value
 	},
 	render: (args) => ({
 		components: { SingleSelect },
@@ -337,18 +311,9 @@ export const Controllable: Story = {
 
 export const Disabled: Story = {
 	args: {
-		label: 'Framework',
-		disabled: true,
-		placeholder: 'Select Framwork',
-		dataTestid: 'single-select-disabled'
+		disabled: true
 	},
-	render: (args) => ({
-		components: { SingleSelect },
-		setup() {
-			return { args };
-		},
-		template: '<SingleSelect v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { label = '', dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -363,16 +328,8 @@ export const Disabled: Story = {
 export const Required: Story = {
 	args: {
 		label: 'Framework',
-		required: true,
-		dataTestid: 'single-select-required'
+		required: true
 	},
-	render: (args) => ({
-		components: { SingleSelect },
-		setup() {
-			return { args };
-		},
-		template: '<SingleSelect v-bind="args" />'
-	}),
 	play: async ({ canvas, args, step }) => {
 		const { label = '', dataTestid = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
@@ -434,10 +391,6 @@ export const Size: Story = {
 };
 
 export const CustomTriggerIcon: Story = {
-	args: {
-		label: 'Frameworks',
-		dataTestid: 'single-select-custom-trigger-icon'
-	},
 	render: (args) => ({
 		components: { SingleSelect, TrashIcon },
 		setup() {
