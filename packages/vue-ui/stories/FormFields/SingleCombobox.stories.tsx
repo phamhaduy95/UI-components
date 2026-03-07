@@ -364,8 +364,10 @@ export const Controllable: Story = {
 		});
 
 		await step('Check if onValueChange is called', async () => {
-			expect(mockedOnValueChange).toHaveBeenCalledWith({ value: items[1]!.value, item: items[1] });
-			expect(mockedOnUpdateModelValue).toHaveBeenCalledWith(items[1]!.value);
+			expect(mockedOnValueChange).toHaveBeenLastCalledWith({
+				value: items[1]!.value
+			});
+			expect(mockedOnUpdateModelValue).toHaveBeenLastCalledWith(items[1]!.value);
 		});
 
 		await step('Check if external state is updated with new value', async () => {

@@ -1,0 +1,143 @@
+.CalendarView {
+	border: 1px solid var(--color-outline-variant);
+	width: max-content;
+	padding: 16px;
+	border-radius: 8px;
+	color: var(--color-on-surface);
+	box-shadow: var(--shadow);
+	background-color: var(--color-surface-container-lowest);
+	isolation: isolate;
+}
+
+.CalendarView_Control {
+	display: flex;
+	justify-content: space-between;
+	font-weight: 500;
+	font-size: large;
+	align-items: center;
+}
+
+.CalendarView_ViewTrigger {
+	flex-grow: 1;
+	:hover {
+		color: var(--color-primary);
+	}
+}
+
+.CalendarView_NavTrigger {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border: 1px solid transparent;
+	background-color: transparent;
+	cursor: pointer;
+
+	border: 1px solid var(--color-outline-variant);
+	box-shadow: var(--shadow-xs);
+	border-radius: 8px;
+
+	&:hover {
+		border-color: var(--color-outline-variant);
+	}
+}
+
+.CalendarView_HeadCol {
+	width: 42px;
+	height: 42px;
+	text-align: center;
+}
+
+.CalendarView_TableCell {
+	text-align: center;
+}
+
+.CalendarView_TableCellTrigger {
+	display: flex;
+	width: 42px;
+	height: 42px;
+	margin: 4px;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	font-weight: 500;
+	user-select: none;
+	position: relative;
+	outline: none;
+
+	&[data-view='month'] {
+		width: unset;
+		height: unset;
+		padding: 8px 12px;
+		margin: 8px;
+	}
+
+	&[data-view='year'] {
+		width: unset;
+		height: unset;
+		padding: 8px 12px;
+		margin: 10px 16px;
+	}
+
+	&::before {
+		content: '';
+		display: none;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: -8px;
+		right: -8px;
+	}
+
+	&[data-outside-range] {
+		color: var(--color-outline-variant);
+	}
+
+	&[data-disabled] {
+		color: var(--color-outline-variant);
+		pointer-events: none;
+	}
+
+	&[data-today] {
+		color: var(--color-primary);
+	}
+
+	&[data-focus] {
+		border-color: var(--color-primary);
+	}
+
+	&:hover:not([data-selected]) {
+		color: var(--color-primary);
+		background-color: var(--color-primary-container);
+	}
+
+	&:is([data-selected]) {
+		border-color: var(--color-primary);
+		background-color: var(--color-primary);
+		color: var(--color-on-primary);
+	}
+
+	&[data-in-range]:not([data-selected]) {
+		&::before {
+			display: block;
+			border-color: var(--color-primary-container);
+			background-color: var(--color-primary-container);
+			z-index: -1;
+		}
+	}
+
+	&[data-hover-range-end] {
+		&::before {
+			content: '';
+			display: none;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: -8px;
+			right: 0;
+		}
+	}
+}
