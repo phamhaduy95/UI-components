@@ -14,11 +14,11 @@
 		"@eslint/js": "^10.0.1",
 		"@eslint/json": "^1.0.1",
 		"@eslint/markdown": "^7.5.1",
-		"eslint": "^10.0.2",
+		"eslint": "^10.0.3",
 		"eslint-plugin-astro": "^1.6.0",
 		"eslint-plugin-import": "^2.32.0",
-		"globals": "^17.3.0",
+		"globals": "^17.4.0",
 		"typescript": "5.8.3",
-		"typescript-eslint": "^8.29.0"
+		"typescript-eslint": "^8.56.1"
 	}
 }
