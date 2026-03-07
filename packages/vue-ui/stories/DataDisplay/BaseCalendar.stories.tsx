@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { BaseCalendar } from '@components/BaseCalendar';
 import { expect, within, userEvent, fn } from 'storybook/test';
 import dayjs from 'dayjs';
+import { getDateCellAriaLabel } from '@stories/utils/date';
 
 const mockedOnValueChange = fn();
 const mockedOnUpdateModelValue = fn();
@@ -287,15 +288,12 @@ export const SingleSelectionFlow: Story = {
 		const { dataTestid = '' } = args;
 		const calendar = canvas.getByTestId(dataTestid);
 
+		const selectedDate = baseDate.add(4, 'day').toDate();
+
 		await step('Select a date', async () => {
-			const dates = within(calendar).getAllByRole('button');
-
-			const dayToSelect = dates.find((btn) => btn.textContent?.trim() === '17');
-			expect(dayToSelect).toBeTruthy();
-
-			if (dayToSelect) {
-				await userEvent.click(dayToSelect);
-			}
+			const label = getDateCellAriaLabel(selectedDate);
+			const dateButton = within(calendar).getByRole('button', { name: label });
+			await userEvent.click(dateButton);
 		});
 
 		await step('Check if value change events fired', async () => {
@@ -304,16 +302,16 @@ export const SingleSelectionFlow: Story = {
 		});
 
 		await step('Check if the day was correctly marked as selected attributes', async () => {
-			const selectedDays = calendar.querySelectorAll('[data-selected]');
-			expect(selectedDays.length).toBe(1);
-			expect(selectedDays[0]?.textContent?.trim()).toBe('17');
+			const label = getDateCellAriaLabel(selectedDate, true);
+			const dateButton = within(calendar).getByRole('button', { name: label });
+			expect(dateButton).toHaveAttribute('data-selected');
 		});
 
 		await step('Test navigation actions', async () => {
-			const prevBtn = within(calendar).getByRole('button', { name: /prev/i });
+			const prevBtn = within(calendar).getByRole('button', { name: prevMonthButtonLabel });
 			await userEvent.click(prevBtn);
 
-			const nextBtn = within(calendar).getByRole('button', { name: /next/i });
+			const nextBtn = within(calendar).getByRole('button', { name: nextMonthButtonLabel });
 			await userEvent.click(nextBtn);
 		});
 	}
