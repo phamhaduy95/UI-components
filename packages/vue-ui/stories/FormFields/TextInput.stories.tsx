@@ -24,8 +24,19 @@ const meta = {
 		}
 	},
 	args: {
+		label: 'Email',
+		placeholder: 'Enter your email',
+		supportingText: 'Please enter your email address.',
+		dataTestid: 'text-input',
 		'onUpdate:modelValue': mockedOnModelValueUpdate
 	},
+	render: (args) => ({
+		components: { TextInput },
+		setup() {
+			return { args };
+		},
+		template: '<TextInput v-bind="args" />'
+	}),
 	beforeEach() {
 		mockedOnModelValueUpdate.mockClear();
 	}
@@ -36,19 +47,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	args: {
-		label: 'Email',
-		placeholder: 'Enter your email',
-		supportingText: 'Please enter your email address.',
-		dataTestid: 'text-input'
-	},
-	render: (args) => ({
-		components: { TextInput },
-		setup() {
-			return { args };
-		},
-		template: '<TextInput v-bind="args" />'
-	}),
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { dataTestid = '', label = '' } = args;
@@ -88,13 +86,7 @@ export const WithDefaultValue: Story = {
 		defaultValue: 'john doe',
 		clearable: true
 	},
-	render: (args) => ({
-		components: { TextInput },
-		setup() {
-			return { args };
-		},
-		template: '<TextInput v-bind="args" />'
-	}),
+
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { label = '', defaultValue = '' } = args;
@@ -118,15 +110,10 @@ export const WithDefaultValue: Story = {
 
 export const BlankInput: Story = {
 	args: {
-		dataTestid: 'blank-input'
+		label: undefined,
+		placeholder: undefined,
+		supportingText: undefined
 	},
-	render: (args) => ({
-		components: { TextInput },
-		setup() {
-			return { args };
-		},
-		template: '<TextInput v-bind="args" />'
-	}),
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { dataTestid = '' } = args;
@@ -152,17 +139,9 @@ export const BlankInput: Story = {
 
 export const Clearable: Story = {
 	args: {
-		label: 'Search',
-		clearable: true,
-		dataTestid: 'clearable-text-input'
+		clearable: true
 	},
-	render: (args) => ({
-		components: { TextInput },
-		setup() {
-			return { args };
-		},
-		template: '<TextInput v-bind="args" />'
-	}),
+
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { label = '', dataTestid = '' } = args;
@@ -200,7 +179,6 @@ export const Clearable: Story = {
 
 export const Controllable: Story = {
 	args: {
-		label: 'Username',
 		modelValue: 'initial value',
 		clearable: true
 	},
@@ -270,13 +248,7 @@ export const Disabled: Story = {
 		disabled: true,
 		defaultValue: 'john doe'
 	},
-	render: (args) => ({
-		components: { TextInput },
-		setup() {
-			return { args };
-		},
-		template: '<TextInput v-bind="args" />'
-	}),
+
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { label = '' } = args;
@@ -291,17 +263,9 @@ export const Disabled: Story = {
 export const Required: Story = {
 	args: {
 		label: 'Required Field',
-		required: true,
-		placeholder: 'This field is required',
-		supportingText: 'This field is required'
+		required: true
 	},
-	render: (args) => ({
-		components: { TextInput },
-		setup() {
-			return { args };
-		},
-		template: '<TextInput v-bind="args" />'
-	}),
+
 	play: async ({ canvasElement, args, step }) => {
 		const canvas = within(canvasElement);
 		const { label = '' } = args;

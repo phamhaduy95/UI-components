@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { DatePicker } from '@components/DatePicker';
 import { computed, ref } from 'vue';
-import { expect, within, userEvent, screen, fn, waitFor } from 'storybook/test';
+import { expect, within, userEvent, screen, fn, waitFor, fireEvent } from 'storybook/test';
 
 import { TrashIcon } from '@heroicons/vue/24/outline';
 import dayjs from 'dayjs';
@@ -229,7 +229,7 @@ export const Controllable: Story = {
 		}
 	}),
 	play: async ({ canvas, args, step }) => {
-		const { dataTestid = '' } = args;
+		const { dataTestid = '', label = '' } = args;
 		const container = canvas.getByTestId(dataTestid);
 
 		await step('Check if pre-selected value is shown', async () => {
@@ -292,6 +292,27 @@ export const Controllable: Story = {
 
 		await step('Check if onValueChange is triggered', async () => {
 			expect(mockedOnValueChange).toHaveBeenCalledWith(null);
+		});
+
+		// This test verifies the shortcut for setting value is possible.
+		await step('Set modelValue via hidden input', async () => {
+			const inputEl = canvas.getByLabelText(label);
+			// ark DatePicker.Input only accepts MM/DD/YYYY format for date string input
+			const dateStr = formatDate(baseDate.toDate(), 'MM/DD/YYYY');
+
+			await fireEvent.change(inputEl, { target: { value: dateStr } });
+			await fireEvent.keyDown(inputEl, { key: 'Enter' });
+		});
+
+		await step('Check if state is updated', async () => {
+			const dateStr = formatDate(baseDate.toDate(), dateFormat);
+			const displayArea = within(container).getByText(dateStr);
+			expect(displayArea).toBeInTheDocument();
+
+			const displayedValue = canvas.getByLabelText('selected-value');
+			await expect(displayedValue).toHaveTextContent(
+				'Selected Date: ' + formatDate(baseDate.toDate(), dateFormat)
+			);
 		});
 	}
 };

@@ -144,7 +144,7 @@
 
 				<ArkDatePicker.Input
 					tabindex="-1"
-					style="display: none; user-select: none; pointer-events: none"
+					style="user-select: none; display: none"
 					hidden
 					:aria-describedby="supportingTextId"
 				/>

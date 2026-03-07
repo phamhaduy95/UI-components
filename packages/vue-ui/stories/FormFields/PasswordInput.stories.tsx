@@ -26,6 +26,19 @@ const meta = {
 			options: ['default', 'error', 'success', 'warning']
 		}
 	},
+	args: {
+		dataTestid: 'password-input-with-default-value',
+		label: 'Password',
+		placeholder: 'Enter your password',
+		supportingText: 'Please enter strong password.'
+	},
+	render: (args) => ({
+		components: { PasswordInput },
+		setup() {
+			return { args };
+		},
+		template: '<PasswordInput v-bind="args" />'
+	}),
 	beforeEach() {
 		mockedOnValueChange.mockClear();
 		mockedOnVisibilityChange.mockClear();
@@ -37,12 +50,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	args: {
-		label: 'Password',
-		placeholder: 'Enter your password',
-		supportingText: 'Please enter strong password.',
-		dataTestid: 'password-input'
-	},
 	render: (args) => ({
 		components: { PasswordInput },
 		setup() {
@@ -95,16 +102,9 @@ export const WithDefaultValue: Story = {
 	args: {
 		label: 'Default Password',
 		defaultValue: 'strong_password',
-		clearable: true,
-		dataTestid: 'password-input-with-default-value'
+		clearable: true
 	},
-	render: (args) => ({
-		components: { PasswordInput },
-		setup() {
-			return { args };
-		},
-		template: '<PasswordInput v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { label = '', defaultValue = '', dataTestid: testId = '' } = args;
 
@@ -136,8 +136,7 @@ export const Visiable: Story = {
 		label: 'Visiable Password',
 		defaultVisible: true,
 		defaultValue: 'password',
-		'onUpdate:modelVisable': mockedOnVisibilityChange,
-		dataTestid: 'password-input-visiable'
+		'onUpdate:modelVisable': mockedOnVisibilityChange
 	},
 	render: (args) => ({
 		components: { PasswordInput, Button },
@@ -252,13 +251,6 @@ export const Disabled: Story = {
 		disabled: true,
 		defaultValue: 'secret'
 	},
-	render: (args) => ({
-		components: { PasswordInput },
-		setup() {
-			return { args };
-		},
-		template: '<PasswordInput v-bind="args" />'
-	}),
 	play: async ({ canvas, args, step }) => {
 		const { label = '' } = args;
 
@@ -276,13 +268,7 @@ export const Required: Story = {
 		placeholder: 'This field is required',
 		supportingText: 'This field is required'
 	},
-	render: (args) => ({
-		components: { PasswordInput },
-		setup() {
-			return { args };
-		},
-		template: '<PasswordInput v-bind="args" />'
-	}),
+
 	play: async ({ canvas, args, step }) => {
 		const { label = '' } = args;
 
