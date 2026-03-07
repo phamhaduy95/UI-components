@@ -1,2 +1,2 @@
-export * from './MultipleCombobox';
-export { default } from './MultipleCombobox';
+export type { MultipleComboboxProps } from './MultipleCombobox';
+export { default as MultipleCombobox } from './MultipleCombobox';

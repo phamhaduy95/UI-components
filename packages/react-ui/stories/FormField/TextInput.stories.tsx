@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import TextInput from '@components/TextInput';
+import { TextInput } from '@components/TextInput';
 import { useState } from 'react';
 import { expect, within, userEvent, fn } from 'storybook/test';
 

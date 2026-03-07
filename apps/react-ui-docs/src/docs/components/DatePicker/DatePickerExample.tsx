@@ -10,16 +10,12 @@ export const BasicDatePicker = () => {
 };
 
 export const ControlledDatePicker = () => {
-	const [date, setDate] = useState<string>('2024-01-01');
+	const [date, setDate] = useState<Date | null>(new Date('2024-01-01'));
 
 	return (
 		<div className="flex flex-col gap-2">
-			<DatePicker
-				value={date}
-				onValueChange={(val) => setDate(val || '')}
-				label="Controlled Date"
-			/>
-			<p>Selected Date: {date}</p>
+			<DatePicker value={date} onValueChange={(val) => setDate(val)} label="Controlled Date" />
+			<p>Selected Date: {date?.toLocaleDateString() ?? 'None'}</p>
 		</div>
 	);
 };

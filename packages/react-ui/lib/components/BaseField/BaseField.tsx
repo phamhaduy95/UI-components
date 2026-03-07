@@ -1,5 +1,5 @@
-import FieldLabel, { FieldLabelProps } from '@components/FieldLabel';
-import SupportingText from '@components/SupportingText';
+import { FieldLabel, FieldLabelProps } from '@components/FieldLabel';
+import { SupportingText } from '@components/SupportingText';
 import { CommonFieldProps } from '@components/type';
 import classNames from 'classnames';
 

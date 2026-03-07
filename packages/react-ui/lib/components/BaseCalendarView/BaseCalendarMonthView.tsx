@@ -1,6 +1,6 @@
 import { DatePicker } from '@ark-ui/react/date-picker';
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
-import IconButton from '@components/IconButton';
+import { IconButton } from '@components/IconButton';
 import { JSX } from 'react';
 
 const BaseCalendarMonthView = (): JSX.Element => {

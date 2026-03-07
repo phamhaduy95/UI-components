@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import Button, { ButtonProps } from '@components/Button';
+import { Button, ButtonProps } from '@components/Button';
 import '@packages/styles/components/IconButton.css';
 import { JSX } from 'react';
 

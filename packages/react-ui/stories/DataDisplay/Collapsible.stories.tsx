@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Collapsible from '@components/Collapsible';
+import { Collapsible } from '@components/Collapsible';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 

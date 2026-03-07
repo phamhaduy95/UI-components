@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import SingleSelect, { SingleSelectProps } from '@components/SingleSelect';
+import { SingleSelect, SingleSelectProps } from '@components/SingleSelect';
 import { useState } from 'react';
 import { expect, within, userEvent, screen, fn } from 'storybook/test';
 

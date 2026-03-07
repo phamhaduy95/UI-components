@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import Button from '@components/Button';
+import { Button } from '@components/Button';
 import { PlusIcon, RocketIcon } from '@radix-ui/react-icons';
 
 const meta: Meta<typeof Button> = {

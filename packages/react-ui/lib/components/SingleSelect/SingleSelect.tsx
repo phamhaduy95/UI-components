@@ -1,4 +1,4 @@
-import BaseSelect, { BaseSelectProps } from '@components/BaseSelect';
+import { BaseSelect, BaseSelectProps } from '@components/BaseSelect';
 import { SelectItem } from '@components/type';
 import { JSX, useMemo } from 'react';
 

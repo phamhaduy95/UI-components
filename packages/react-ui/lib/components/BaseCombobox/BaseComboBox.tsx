@@ -7,8 +7,8 @@ import classNames from 'classnames';
 import { HTMLAttributes, JSX, Ref, useId, useMemo, useState } from 'react';
 
 import '@packages/styles/components/DropDownMenu.css';
-import BaseField from '@components/BaseField';
-import IconButton from '@components/IconButton';
+import { BaseField } from '@components/BaseField';
+import { IconButton } from '@components/IconButton';
 
 import '@packages/styles/components/BaseCombobox.css';
 

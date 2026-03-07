@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import IconButton from '@components/IconButton';
+import { IconButton } from '@components/IconButton';
 import { PlusIcon, TrashIcon, RocketIcon, ReloadIcon, BellIcon } from '@radix-ui/react-icons';
 
 const meta: Meta<typeof IconButton> = {

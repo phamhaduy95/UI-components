@@ -1,4 +1,4 @@
-import BaseCombobox, { BaseComboboxProps } from '@components/BaseCombobox';
+import { BaseCombobox, BaseComboboxProps } from '@components/BaseCombobox';
 import { SelectItem } from '@components/type';
 
 import { JSX, useMemo } from 'react';

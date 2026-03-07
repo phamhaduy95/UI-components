@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import MultipleCombobox, { MultipleComboboxProps } from '@components/MultipleCombobox';
+import { MultipleCombobox, MultipleComboboxProps } from '@components/MultipleCombobox';
 import { useState } from 'react';
 import { expect, within, userEvent, screen, fn, waitFor } from 'storybook/test';
 

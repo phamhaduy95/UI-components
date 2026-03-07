@@ -10,8 +10,8 @@ import '@packages/styles/components/DropDownMenu.css';
 
 import '@packages/styles/components/BaseSelect.css';
 
-import BaseField from '@components/BaseField';
-import IconButton from '@components/IconButton';
+import { BaseField } from '@components/BaseField';
+import { IconButton } from '@components/IconButton';
 
 export interface BaseSelectProps
 	extends Omit<ComponentPropsWithRef<'div'>, 'defaultValue'>,

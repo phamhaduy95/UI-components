@@ -1,8 +1,8 @@
 import { Combobox, useComboboxContext, UseComboboxContext } from '@ark-ui/react/combobox';
-import BaseCombobox, { BaseComboboxProps } from '@components/BaseCombobox';
+import { BaseComboboxProps, BaseCombobox } from '@components/BaseCombobox';
 import { JSX, Ref } from 'react';
 
-import Chip from '@components/Chip';
+import { Chip } from '@components/Chip';
 import { SelectItem } from '@components/type';
 import classNames from 'classnames';
 
