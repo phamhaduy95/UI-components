@@ -1,18 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import DatePicker from '@components/DatePicker';
+import { DatePicker } from '@components/DatePicker';
 import { useState } from 'react';
-import { getDateCellAriaLabel, formatDate } from '../utils/date';
-import { expect, within, userEvent, screen, fn } from 'storybook/test';
+import { expect, within, userEvent, screen, fn, waitFor } from 'storybook/test';
 import dayjs from 'dayjs';
+import { formatDate, getDateCellAriaLabel } from '@stories/utils/date';
 
 const mockedOnValueChange = fn();
+const mockedOnOpenChange = fn();
 
 const triggerButtonLabel = 'Open calendar';
 const clearButtonLabel = 'Clear value';
 
-const dateSelected = dayjs().date(17).format('YYYY-MM-DD');
+const baseDate = dayjs(new Date(2024, 11, 12)); // December 12, 2024
+const defaultDate = baseDate.add(-10, 'day');
+const dateFormat = 'DD-MM-YYYY';
 
-const meta: Meta<typeof DatePicker> = {
+const meta = {
 	title: 'Components/FormField/DatePicker',
 	component: DatePicker,
 	tags: ['autodocs'],
@@ -26,33 +29,45 @@ const meta: Meta<typeof DatePicker> = {
 			control: 'select',
 			options: ['default', 'error', 'success', 'warning']
 		},
+		format: { control: 'text' },
+		clearable: { control: 'boolean' },
 		disabled: { control: 'boolean' },
-		clearable: { control: 'boolean' }
+		required: { control: 'boolean' },
+		supportingText: { control: 'text' }
 	},
 	args: {
-		label: 'Select a date',
-		format: 'DD-MM-YYYY',
-		supportingText: 'Please select a date.'
+		'data-testid': 'date-picker-default',
+		supportingText: 'Please select a date.',
+		format: dateFormat,
+		onValueChange: mockedOnValueChange,
+		onOpenChange: mockedOnOpenChange,
+		defaultValue: defaultDate.toDate()
 	},
 	beforeEach() {
 		mockedOnValueChange.mockClear();
+		mockedOnOpenChange.mockClear();
 	}
-};
+} satisfies Meta<typeof DatePicker>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/**
- * The default date picker with a label.
- */
 export const Default: Story = {
 	args: {
-		'data-testid': 'datepicker-default'
+		label: 'Birth Date',
+		supportingText: 'Please choose your birth date.',
+		placeholder: 'Select Date',
+		defaultValue: undefined
 	},
 	play: async ({ canvas, args, step }) => {
-		const { 'data-testid': testId = '', label = '', supportingText = '', format = '' } = args;
-		const container = canvas.getByTestId(testId);
+		const {
+			'data-testid': dataTestid = '',
+			label = '',
+			supportingText = '',
+			placeholder = ''
+		} = args;
+		const container = canvas.getByTestId(dataTestid);
 
 		await step('Check if container exists', async () => {
 			expect(container).toBeInTheDocument();
@@ -63,16 +78,15 @@ export const Default: Story = {
 			expect(labelElement).toBeInTheDocument();
 		});
 
-		await step('Check if placeholder exists', async () => {
-			// DatePicker renders a p tag for display
-			const displayArea = container.querySelector('.DatePicker_DisplayArea');
+		await step('Check if placeholder is showed', async () => {
+			const displayArea = container.querySelector('.DatePicker_InputField');
 			expect(displayArea).toBeInTheDocument();
-			expect(displayArea).toHaveTextContent(format);
+			expect(displayArea).toHaveTextContent(placeholder);
 		});
 
-		await step('Check if supporting text exists', async () => {
-			const supportingTextEl = within(container).getByText(supportingText);
-			expect(supportingTextEl).toBeInTheDocument();
+		await step('Check if supporting text is rendered', async () => {
+			const supportingTextElement = within(container).getByText(supportingText);
+			expect(supportingTextElement).toBeInTheDocument();
 		});
 
 		await step('Check if trigger exists', async () => {
@@ -82,218 +96,218 @@ export const Default: Story = {
 	}
 };
 
-export const SelectDateViaCalendar: Story = {
+export const OpenCalendarFlow: Story = {
 	args: {
-		label: 'Select a date',
-		'data-testid': 'datepicker-flow'
+		label: 'Meeting Date'
 	},
 	play: async ({ canvas, args, step }) => {
-		const { 'data-testid': testId = '', format = '' } = args;
-		const container = canvas.getByTestId(testId);
+		const { 'data-testid': dataTestid = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
 
-		await step('Open calendar by clicking the calendar icon', async () => {
+		await step('Open calendar via trigger', async () => {
 			const trigger = within(container).getByRole('button', { name: triggerButtonLabel });
 			await userEvent.click(trigger);
 		});
 
-		await step('Check if calendar popover is visible', async () => {
-			const calendar = screen.getByRole('application', { name: 'calendar' });
-			expect(calendar).toBeInTheDocument();
-		});
-
-		await step('Select a date', async () => {
-			const calendar = screen.getByRole('application', { name: 'calendar' });
-			const dateCell = within(calendar).getAllByRole('button', {
-				name: getDateCellAriaLabel(dateSelected)
+		const calendarPopup = screen.getByRole('application', { name: 'calendar' });
+		await step('Check if calendar popup is displayed', async () => {
+			await waitFor(() => {
+				expect(calendarPopup).toBeVisible();
 			});
-			await userEvent.click(dateCell[0]);
 		});
 
-		await step('Check if calendar is closed after selection', async () => {
-			const calendar = screen.queryByRole('application', { name: 'calendar' });
-			expect(calendar).not.toBeInTheDocument();
+		await step('Check if onOpenChange is triggered', async () => {
+			expect(mockedOnOpenChange).toBeCalledWith(expect.objectContaining({ open: true }));
 		});
 
-		await step('Check if date is displayed in the input', async () => {
-			const dateAsText = formatDate(dateSelected as string, format);
-			const displayArea = within(container).getByText(dateAsText);
-			expect(displayArea).toBeInTheDocument();
+		await step('Select a specific date', async () => {
+			const label = getDateCellAriaLabel(baseDate.toDate());
+			const dateButton = within(calendarPopup).getByRole('button', { name: label });
+			await userEvent.click(dateButton);
+		});
+
+		await step('Check if calendar popup is closed', async () => {
+			const closedCalendar = screen.queryByRole('application', { name: 'calendar' });
+			expect(closedCalendar).not.toBeInTheDocument();
+		});
+
+		await step('Check if onOpenChange is triggered with false argument', async () => {
+			expect(mockedOnOpenChange).toBeCalledWith(expect.objectContaining({ open: false }));
 		});
 	}
 };
 
 export const WithDefaultValue: Story = {
 	args: {
-		label: 'Pre-selected date',
-		defaultValue: '2024-05-15',
-		format: 'DD-MM-YYYY',
-		'data-testid': 'datepicker-with-default-value',
+		label: 'Meeting Date',
+		defaultValue: baseDate.toDate(),
 		clearable: true
 	},
 	play: async ({ canvas, args, step }) => {
-		const { 'data-testid': testId = '', format = '', defaultValue = '' } = args;
-		const container = canvas.getByTestId(testId);
+		const { 'data-testid': dataTestid = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
 
-		await step('Check if display shows the default date', async () => {
-			const dateAsText = formatDate(defaultValue as string, format);
-			const selectedDate = within(container).getByText(dateAsText);
-			expect(selectedDate).toBeInTheDocument();
-		});
+		const dateStr = formatDate(baseDate.toDate(), dateFormat);
 
-		await step('Check if clear icon exists', async () => {
-			const clearButton = within(container).getByRole('button', { name: clearButtonLabel });
-			expect(clearButton).toBeInTheDocument();
+		await step('Check if the display area shows the formatted default value', async () => {
+			const displayArea = within(container).getByText(dateStr);
+			expect(displayArea).toBeInTheDocument();
 		});
 	}
 };
 
 export const Clearable: Story = {
 	args: {
-		label: 'Clearable date',
+		label: 'Meeting Date',
 		clearable: true,
-		'data-testid': 'datepicker-clearable'
+		defaultValue: baseDate.toDate(),
+		placeholder: 'Select Date'
 	},
 	play: async ({ canvas, args, step }) => {
-		const { 'data-testid': testId = '', format = '' } = args;
-		const container = canvas.getByTestId(testId);
+		const { 'data-testid': dataTestid = '', placeholder = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
 
-		await step('Check if clear button does not exist when no date selected', async () => {
-			const clearButton = within(container).queryByRole('button', { name: clearButtonLabel });
-			expect(clearButton).not.toBeInTheDocument();
+		const clearButton = within(container).getByRole('button', { name: clearButtonLabel });
+
+		await step('Check if clear icon is displayed when there is a value', async () => {
+			expect(clearButton).toBeVisible();
 		});
 
-		await step('Select Date', async () => {
-			const trigger = within(container).getByRole('button', { name: triggerButtonLabel });
-			await userEvent.click(trigger);
-
-			const calendar = screen.getByRole('application', { name: 'calendar' });
-			const dateCell = within(calendar).getAllByRole('button', {
-				name: getDateCellAriaLabel(dateSelected)
-			});
-			await userEvent.click(dateCell[0]);
-		});
-
-		await step('Check if clear button appear', async () => {
-			const clearButton = within(container).getByRole('button', { name: clearButtonLabel });
-			expect(clearButton).toBeInTheDocument();
-		});
-
-		await step('Click clear button', async () => {
-			const clearButton = within(container).getByRole('button', { name: clearButtonLabel });
+		await step('Clear the selected date', async () => {
 			await userEvent.click(clearButton);
 		});
 
-		await step('Check if value is cleared and  placeholder is displayed instead', async () => {
-			const displayArea = within(container).getByText(format);
-			expect(displayArea).toBeInTheDocument();
-			expect(displayArea).toHaveAttribute('data-greyout', 'true');
+		await step('Check if value is clear and placeholder is back', async () => {
+			const displayArea = container.querySelector('.DatePicker_InputField');
+			expect(displayArea).toHaveTextContent(placeholder as string);
 		});
 	}
 };
 
 export const Controllable: Story = {
 	args: {
-		label: 'Controlled date',
-		value: '2024-05-15',
-		onValueChange: mockedOnValueChange,
-		'data-testid': 'datepicker-controlled',
-		clearable: true
+		clearable: true,
+		value: baseDate.toDate()
 	},
 	render: (args) => {
 		const { value: initialValue, onValueChange } = args;
 		const [value, setValue] = useState(initialValue);
+
+		const handleValueChange = (date: Date | null) => {
+			if (onValueChange) {
+				onValueChange(date);
+			}
+			setValue(date);
+		};
+
+		const displayedDate = value ? formatDate(value, dateFormat) : '';
+
 		return (
 			<div className="flex flex-col gap-2">
-				<DatePicker
-					{...args}
-					value={value}
-					onValueChange={(value) => {
-						setValue(value);
-						if (onValueChange) {
-							onValueChange(value);
-						}
-					}}
-				/>
-				<p aria-label="selected-value">Selected: {value?.toString()}</p>
+				<DatePicker {...args} value={value} onValueChange={handleValueChange} />
+				<p className="mt-4" aria-label="selected-value">
+					Selected Date: {displayedDate}
+				</p>
 			</div>
 		);
 	},
 	play: async ({ canvas, args, step }) => {
-		const { 'data-testid': testId = '' } = args;
-		const container = canvas.getByTestId(testId);
+		const { 'data-testid': dataTestid = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
 
-		await step('Open calendar', async () => {
+		await step('Check if pre-selected value is shown', async () => {
+			const dateStr = formatDate(baseDate.toDate(), dateFormat);
+			const displayArea = within(container).getByText(dateStr);
+			expect(displayArea).toBeInTheDocument();
+		});
+
+		await step('Check if displayed selected date is correct', async () => {
+			const displayedValue = canvas.getByLabelText('selected-value');
+			expect(displayedValue).toHaveTextContent(
+				'Selected Date: ' + formatDate(baseDate.toDate(), dateFormat)
+			);
+		});
+
+		const newDate = baseDate.add(1, 'day').toDate();
+
+		await step('Choose new date via Calendar popup', async () => {
 			const trigger = within(container).getByRole('button', { name: triggerButtonLabel });
 			await userEvent.click(trigger);
-		});
 
-		const selectedDate = '2024-05-18';
-		await step('Select date', async () => {
-			const calendar = screen.getByRole('application', { name: 'calendar' });
+			const calendarPopup = screen.getByRole('application', { name: 'calendar' });
 
-			const dateCell = within(calendar).getByRole('button', {
-				name: getDateCellAriaLabel(selectedDate)
+			await waitFor(() => {
+				expect(calendarPopup).toBeVisible();
 			});
-			await userEvent.click(dateCell);
+
+			const newDateStr = getDateCellAriaLabel(newDate);
+			const dateButton = within(calendarPopup).getByRole('button', { name: newDateStr });
+			await userEvent.click(dateButton);
 		});
 
-		await step('Check if external state is updated', async () => {
-			const selectedValue = canvas.getByLabelText('selected-value');
-			expect(selectedValue).toHaveTextContent('Selected: ' + selectedDate);
+		await step('Check if external state is updated accordingly', async () => {
+			const displayedValue = canvas.getByLabelText('selected-value');
+			await expect(displayedValue).toHaveTextContent(
+				'Selected Date: ' + formatDate(newDate, dateFormat)
+			);
 		});
 
-		await step('Check if onValueChange was called', async () => {
-			expect(mockedOnValueChange).toHaveBeenLastCalledWith(selectedDate);
+		await step('Check if onValueChange is triggered', async () => {
+			expect(mockedOnValueChange).toHaveBeenLastCalledWith(newDate);
 		});
 
-		await step('Clear value', async () => {
+		await step('Clear all selected values via Clear button', async () => {
 			const clearButton = within(container).getByRole('button', { name: clearButtonLabel });
 			await userEvent.click(clearButton);
 		});
 
-		await step('Check if external state is cleared', async () => {
-			const selectedValue = canvas.getByLabelText('selected-value');
-			expect(selectedValue).toHaveTextContent('Selected:');
+		await step('Check if external state is updated accordingly', async () => {
+			const displayedValue = canvas.getByLabelText('selected-value');
+			expect(displayedValue).toHaveTextContent('Selected Date:');
 		});
 
-		await step('Check if onValueChange was called with empty string', async () => {
-			expect(mockedOnValueChange).toHaveBeenLastCalledWith('');
+		await step('Check if onValueChange is triggered with null', async () => {
+			expect(mockedOnValueChange).toHaveBeenCalledWith(null);
 		});
 	}
 };
 
 export const Disabled: Story = {
 	args: {
-		label: 'Disabled date picker',
+		label: 'Meeting Date',
 		disabled: true,
-		value: '2024-05-15',
-		'data-testid': 'datepicker-disabled'
+		'data-testid': 'date-picker-disabled'
 	}
 };
 
 export const Required: Story = {
 	args: {
-		label: 'Required date',
+		label: 'Meeting Date',
 		required: true,
-		'data-testid': 'datepicker-required'
+		'data-testid': 'date-picker-required'
 	}
 };
 
 export const Status: Story = {
 	render: (args) => (
-		<div className="flex flex-col gap-4">
-			<DatePicker {...args} status="error" label="Error status" supportingText="Invalid date" />
+		<div className="flex flex-col gap-2">
+			<DatePicker
+				{...args}
+				status="error"
+				label="Error"
+				supportingText="Please select a valid date."
+			/>
 			<DatePicker
 				{...args}
 				status="success"
-				label="Success status"
-				supportingText="Date is available"
+				label="Success"
+				supportingText="Valid date selected."
 			/>
 			<DatePicker
 				{...args}
 				status="warning"
-				label="Warning status"
-				supportingText="Date is almost fully booked"
+				label="Warning"
+				supportingText="Date represents a warning."
 			/>
 		</div>
 	)
@@ -301,9 +315,9 @@ export const Status: Story = {
 
 export const Size: Story = {
 	render: (args) => (
-		<div className="flex flex-col gap-4">
-			<DatePicker {...args} size="small" label="Small size" />
-			<DatePicker {...args} size="medium" label="Medium size" />
+		<div className="flex flex-col gap-2">
+			<DatePicker {...args} size="small" label="Small" />
+			<DatePicker {...args} size="medium" label="Medium" />
 		</div>
 	)
 };

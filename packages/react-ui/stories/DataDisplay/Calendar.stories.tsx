@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Calendar } from '@components/Calendar';
 import { expect, within, userEvent, fn } from 'storybook/test';
 import dayjs from 'dayjs';
-import { getDateCellAriaLabel } from '../utils/date';
+import { getDateCellAriaLabel } from '@stories/utils/date';
 
 const mockedOnValueChange = fn();
 const mockedOnViewChange = fn();

@@ -28,7 +28,8 @@
 		"noUncheckedSideEffectImports": true,
 		"baseUrl": ".",
 		"paths": {
-			"@components/*": ["lib/components/*"]
+			"@components/*": ["lib/components/*"],
+			"@stories/*": ["stories/*"]
 		}
 	},
 	"include": ["lib/**/*.ts", "lib/**/*.tsx", "stories/**/*.tsx", "stories/**/*.mdx"],
