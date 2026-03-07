@@ -14,7 +14,7 @@ export * from './Collapsible';
 export { default as Collapsible } from './Collapsible';
 
 export * from './DatePicker';
-export { default as DatePicker } from './DatePicker';
+export { DatePicker } from './DatePicker';
 
 export * from './DateRangePicker';
 export { default as DateRangePicker } from './DateRangePicker';
