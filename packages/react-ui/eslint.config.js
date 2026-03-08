@@ -1,11 +1,13 @@
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import libConfig from '@configs/eslint-config/ui-library';
+import importRule from '@configs/eslint-config/import-rule';
 
 import { defineConfig } from 'eslint/config';
 /** @type {import("eslint").Linter.Config[]} */
 export default defineConfig([
 	...libConfig,
+	...importRule,
 	{
 		files: ['**/*.{ts,tsx}'],
 		basePath: 'lib',

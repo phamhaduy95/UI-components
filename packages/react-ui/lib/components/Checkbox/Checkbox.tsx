@@ -1,10 +1,11 @@
 import { Checkbox as ArkCheckbox } from '@ark-ui/react/checkbox';
-import { CommonFieldProps } from '@components/type';
 import { CheckIcon, MinusIcon } from '@radix-ui/react-icons';
-import { JSX, HTMLAttributes, Ref } from 'react';
+import classNames from 'classnames';
+import { HTMLAttributes, JSX, Ref } from 'react';
+
+import { CommonFieldProps } from '@components/type';
 
 import '@packages/styles/components/Checkbox.css';
-import classNames from 'classnames';
 
 export type CheckboxSize = 'medium' | 'small';
 

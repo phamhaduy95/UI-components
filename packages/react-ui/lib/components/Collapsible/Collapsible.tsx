@@ -1,6 +1,7 @@
-import classNames from 'classnames';
 import { Collapsible as ArkCollapsible } from '@ark-ui/react/collapsible';
+import classNames from 'classnames';
 import { JSX, useState } from 'react';
+
 import '@packages/styles/components/Collapsible.css';
 
 export interface CollapsibleProps {

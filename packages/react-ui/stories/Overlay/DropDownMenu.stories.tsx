@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { DropDownMenu, DropdownMenuProps } from '@components/DropDownMenu';
 import { Button } from '@components/Button';
+import { DropDownMenu, DropdownMenuProps } from '@components/DropDownMenu';
+
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const items: DropdownMenuProps['items'] = [
 	{ label: 'New Tab', value: 'new-tab' },

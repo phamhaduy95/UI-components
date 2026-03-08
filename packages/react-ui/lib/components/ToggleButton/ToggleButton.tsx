@@ -1,7 +1,8 @@
 import { Toggle as ArkToggle, UseToggleContext } from '@ark-ui/react/toggle';
-import { Button, ButtonProps } from '@components/Button';
 import classNames from 'classnames';
 import { useState } from 'react';
+
+import { Button, ButtonProps } from '@components/Button';
 
 type ToggleButtonChildren = (
 	state: Pick<UseToggleContext, 'pressed' | 'setPressed' | 'disabled'>

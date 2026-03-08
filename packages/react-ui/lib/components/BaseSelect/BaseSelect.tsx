@@ -1,17 +1,15 @@
-import { ComponentPropsWithRef, JSX, Ref, useId } from 'react';
-
 import { Portal } from '@ark-ui/react/portal';
-import { Select as ArkSelect, createListCollection } from '@ark-ui/react/select';
-import { CommonFieldProps, SelectItem } from '@components/type';
+import { createListCollection, Select as ArkSelect } from '@ark-ui/react/select';
 import { CheckIcon, ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
-
-import '@packages/styles/components/DropDownMenu.css';
-
-import '@packages/styles/components/BaseSelect.css';
+import { ComponentPropsWithRef, JSX, Ref, useId } from 'react';
 
 import { BaseField } from '@components/BaseField';
 import { IconButton } from '@components/IconButton';
+import { CommonFieldProps, SelectItem } from '@components/type';
+
+import '@packages/styles/components/BaseSelect.css';
+import '@packages/styles/components/DropDownMenu.css';
 
 export interface BaseSelectProps
 	extends Omit<ComponentPropsWithRef<'div'>, 'defaultValue'>,

@@ -1,7 +1,9 @@
 import { Menu } from '@ark-ui/react/menu';
-import { NestedMenu } from '@components/DropDownMenu';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
 import { JSX } from 'react';
+
+import { NestedMenu } from '@components/DropDownMenu';
+
 import '@packages/styles/components/DropDownMenu.css';
 
 export type SubMenuProps = NestedMenu;

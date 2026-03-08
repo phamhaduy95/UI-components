@@ -1,13 +1,12 @@
+import { Cross2Icon } from '@radix-ui/react-icons';
+import classNames from 'classnames';
 import { ChangeEvent, HTMLAttributes, JSX, useId, useState } from 'react';
 
-import classNames from 'classnames';
-
-import '@packages/styles/components/TextInput.css';
-
 import { BaseField } from '@components/BaseField';
-import { Cross2Icon } from '@radix-ui/react-icons';
 import { IconButton } from '@components/IconButton';
 import { CommonFieldProps } from '@components/type';
+
+import '@packages/styles/components/TextInput.css';
 
 export interface TextInputProp extends HTMLAttributes<HTMLInputElement>, CommonFieldProps<string> {
 	onValueChange?: (value: string) => void;

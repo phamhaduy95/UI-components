@@ -1,8 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Popover } from '@components/Popover';
-import { Button } from '@components/Button';
 import { useRef, useState } from 'react';
-import { expect, within, userEvent, fn } from 'storybook/test';
+import { expect, fn, userEvent, within } from 'storybook/test';
+
+import { Button } from '@components/Button';
+import { Popover } from '@components/Popover';
+
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const mockedOnOpenChange = fn();
 

@@ -1,7 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { MultipleCombobox, MultipleComboboxProps } from '@components/MultipleCombobox';
 import { useState } from 'react';
-import { expect, within, userEvent, screen, fn, waitFor } from 'storybook/test';
+import { expect, fn, screen, userEvent, waitFor, within } from 'storybook/test';
+
+import { MultipleCombobox, type MultipleComboboxProps } from '@components/MultipleCombobox';
+
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const mockedOnValueChange = fn();
 

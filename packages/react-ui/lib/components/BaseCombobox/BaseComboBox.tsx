@@ -1,16 +1,15 @@
 import { Combobox, createListCollection } from '@ark-ui/react/combobox';
 import { Portal } from '@ark-ui/react/portal';
-
-import { CommonFieldProps, SelectItem } from '@components/type';
 import { CheckIcon, ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 import { HTMLAttributes, JSX, Ref, useId, useMemo, useState } from 'react';
 
-import '@packages/styles/components/DropDownMenu.css';
 import { BaseField } from '@components/BaseField';
 import { IconButton } from '@components/IconButton';
+import { CommonFieldProps, SelectItem } from '@components/type';
 
 import '@packages/styles/components/BaseCombobox.css';
+import '@packages/styles/components/DropDownMenu.css';
 
 export interface BaseComboboxProps
 	extends Omit<HTMLAttributes<HTMLInputElement>, 'defaultValue'>,
