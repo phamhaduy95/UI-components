@@ -1,10 +1,11 @@
-import react from '@vitejs/plugin-react-swc';
 import path, { extname, relative } from 'path';
+import { fileURLToPath } from 'url';
+
+import react from '@vitejs/plugin-react-swc';
 import { globbySync } from 'globby';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
-import { fileURLToPath } from 'url';
 
 const components: Array<[string, string]> = globbySync('lib/**/*.{ts,tsx}', {
 	ignore: ['lib/**/*.d.ts', 'lib/**/type.ts']

@@ -1,7 +1,8 @@
-import { ComponentPropsWithRef } from 'react';
 import { RadioGroup as ArkRadioGroup } from '@ark-ui/react/radio-group';
-import { CommonFieldProps } from '@components/type';
 import classNames from 'classnames';
+import { ComponentPropsWithRef } from 'react';
+
+import { CommonFieldProps } from '@components/type';
 
 import '@packages/styles/components/RadioGroup.css';
 

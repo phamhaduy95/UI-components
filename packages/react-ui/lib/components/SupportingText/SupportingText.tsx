@@ -1,5 +1,7 @@
-import { FieldStatus } from '@components/type';
 import classNames from 'classnames';
+
+import { FieldStatus } from '@components/type';
+
 import '@packages/styles/components/SupportingText.css';
 
 export interface SupportingTextProps extends React.HTMLAttributes<HTMLParagraphElement> {

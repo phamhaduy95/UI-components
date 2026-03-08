@@ -1,9 +1,11 @@
 import { Menu as ArkMenu } from '@ark-ui/react/menu';
-import { ItemObject } from '@components/type';
+import { Portal } from '@ark-ui/react/portal';
 import classNames from 'classnames';
 import { JSX } from 'react';
+
 import SubMenu from '@components/SubMenu/SubMenu';
-import { Portal } from '@ark-ui/react/portal';
+import { ItemObject } from '@components/type';
+
 import '@packages/styles/components/DropDownMenu.css';
 
 type StandardItem = ItemObject & {

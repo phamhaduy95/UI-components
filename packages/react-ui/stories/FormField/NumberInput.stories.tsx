@@ -1,7 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { NumberInput } from '@components/NumberInput';
 import { useState } from 'react';
-import { expect, within, userEvent, fn, waitFor } from 'storybook/test';
+import { expect, fn, userEvent, waitFor, within } from 'storybook/test';
+
+import { NumberInput } from '@components/NumberInput';
+
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const mockedOnValueChange = fn();
 

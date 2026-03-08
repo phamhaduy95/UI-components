@@ -1,6 +1,7 @@
 import { Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
 import { ComponentPropsWithRef, JSX } from 'react';
+
 import '@packages/styles/components/Chip.css';
 
 type ChipSize = 'small' | 'medium';

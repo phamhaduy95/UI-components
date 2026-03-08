@@ -1,7 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { MultipleSelect, MultipleSelectProps } from '@components/MultipleSelect';
 import { useState } from 'react';
-import { expect, within, userEvent, screen, fn, waitFor } from 'storybook/test';
+import { expect, fn, screen, userEvent, waitFor, within } from 'storybook/test';
+
+import { MultipleSelect, type MultipleSelectProps } from '@components/MultipleSelect';
+
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const mockedOnValueChange = fn();
 

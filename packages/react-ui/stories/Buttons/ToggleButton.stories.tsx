@@ -1,8 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { ToggleButton } from '@components/ToggleButton';
+import { StarFilledIcon, StarIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
-import { expect, userEvent, fn } from 'storybook/test';
-import { StarIcon, StarFilledIcon } from '@radix-ui/react-icons';
+import { expect, fn, userEvent } from 'storybook/test';
+
+import { ToggleButton } from '@components/ToggleButton';
+
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const mockedOnPressedChange = fn();
 

@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { JSX, ComponentPropsWithRef } from 'react';
+import { ComponentPropsWithRef, JSX } from 'react';
 
 import '@packages/styles/components/Button.css';
 

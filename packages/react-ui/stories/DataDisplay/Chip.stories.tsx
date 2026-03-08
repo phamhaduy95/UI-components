@@ -1,6 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Chip } from '@components/Chip';
 import { expect, fn, userEvent, within } from 'storybook/test';
+
+import { Chip } from '@components/Chip';
+
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const mockedOnRemove = fn();
 const mockedOnClick = fn();

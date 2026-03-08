@@ -1,6 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import { BellIcon, PlusIcon, ReloadIcon, RocketIcon, TrashIcon } from '@radix-ui/react-icons';
+
 import { IconButton } from '@components/IconButton';
-import { PlusIcon, TrashIcon, RocketIcon, ReloadIcon, BellIcon } from '@radix-ui/react-icons';
+
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta: Meta<typeof IconButton> = {
 	title: 'Components/Buttons/IconButton',

@@ -1,7 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Collapsible } from '@components/Collapsible';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
+
+import { Collapsible } from '@components/Collapsible';
+
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta: Meta<typeof Collapsible> = {
 	title: 'Components/DataDisplay/Collapsible',

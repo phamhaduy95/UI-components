@@ -1,7 +1,8 @@
 import { Switch as ArkSwitch } from '@ark-ui/react/switch';
-import { CommonFieldProps } from '@components/type';
 import classNames from 'classnames';
 import { ComponentPropsWithoutRef, Ref } from 'react';
+
+import { CommonFieldProps } from '@components/type';
 
 import '@packages/styles/components/Switch.css';
 
