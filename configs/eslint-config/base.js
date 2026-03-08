@@ -1,5 +1,5 @@
 import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
+import { configs as tsConfig } from 'typescript-eslint';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
@@ -13,7 +13,7 @@ export default defineConfig([
 		},
 		extends: [js.configs.recommended]
 	},
-	...tseslint.configs.recommended,
+	...tsConfig.recommended,
 	{
 		rules: {
 			'no-console': 'error',
