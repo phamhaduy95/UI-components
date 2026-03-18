@@ -1,4 +1,4 @@
-import { expect, fn, userEvent, within } from 'storybook/test';
+import { expect, fn, userEvent } from 'storybook/test';
 
 import { Chip } from '@components/Chip';
 
@@ -99,6 +99,14 @@ export const Clickable: Story = {
 		await step('Check if onclick is invoked', async () => {
 			expect(mockedOnClick).toHaveBeenCalled();
 		});
+
+		await step('Focus on Chip and press Backspace', async () => {
+			await userEvent.keyboard('{backspace}');
+		});
+
+		await step('Check if onRemove is not invoked', async () => {
+			expect(mockedOnRemove).not.toHaveBeenCalled();
+		});
 	}
 };
 
@@ -130,7 +138,7 @@ export const Removable: Story = {
 
 		const chip = canvas.getByTestId(dataTestId);
 
-		const removeButton = within(chip).getByRole('button');
+		const removeButton = chip.querySelector('[data-part="chip_remove-icon"]') as HTMLElement;
 
 		await step('Click on Remove icon', async () => {
 			await userEvent.click(removeButton);

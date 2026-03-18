@@ -6,7 +6,6 @@ import '@packages/styles/components/Chip.css';
 
 type ChipSize = 'small' | 'medium';
 type ChipColor = 'primary' | 'secondary' | 'error' | 'success' | 'warning';
-type ChipVariant = 'filled' | 'outlined';
 
 export interface ChipProps extends ComponentPropsWithRef<'div'> {
 	label?: string;
@@ -14,7 +13,6 @@ export interface ChipProps extends ComponentPropsWithRef<'div'> {
 	size?: ChipSize;
 	color?: ChipColor;
 	disabled?: boolean;
-	variant?: ChipVariant;
 	clickable?: boolean;
 	onRemove?: (e: React.SyntheticEvent) => void;
 	onClick?: (e: React.SyntheticEvent) => void;
@@ -24,55 +22,70 @@ export interface ChipProps extends ComponentPropsWithRef<'div'> {
 const Chip = (props: ChipProps): JSX.Element => {
 	const {
 		label,
-		removable,
+		removable = false,
 		className,
 		ref,
-		clickable,
+		clickable = false,
 		size = 'medium',
 		color = 'primary',
-		disabled,
+		disabled = false,
 		'data-testid': dataTestId,
 		onRemove,
 		onClick,
 		...rest
 	} = props;
 
-	const handleOnkeyDown = (e: React.KeyboardEvent) => {
-		if (!onRemove) return;
+	const isInteractive = clickable || removable;
+
+	const handleRemove = (e: React.SyntheticEvent) => {
+		if (!removable) return;
+		if (onRemove) {
+			onRemove(e);
+		}
+	};
+
+	const handleKeyDown = (e: React.KeyboardEvent) => {
 		e.stopPropagation();
 		const key = e.key;
-		switch (key) {
-			case 'Backspace':
-			case 'Delete':
-				onRemove(e);
+		if (['Backspace', 'Delete'].includes(key)) {
+			handleRemove(e);
 		}
+	};
+
+	const handleRemoveItemClicked = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		handleRemove(e);
 	};
 
 	return (
 		<div
 			className={classNames('Chip', className)}
-			data-removable={removable}
 			data-size={size}
 			data-color={color}
 			aria-label={label}
 			data-disabled={disabled}
-			data-clickable={clickable}
-			ref={ref}
-			onClick={clickable ? onClick : undefined}
-			role={clickable ? 'button' : undefined}
-			tabIndex={clickable ? 0 : undefined}
+			data-clickable={isInteractive}
+			data-removable={removable}
+			role={isInteractive ? 'button' : undefined}
+			tabIndex={isInteractive ? 0 : undefined}
 			data-testid={dataTestId}
+			ref={ref}
+			onClick={(e) => {
+				e.stopPropagation();
+
+				if (onClick) {
+					onClick(e);
+				}
+			}}
+			onKeyDown={handleKeyDown}
 			{...rest}
 		>
 			<span className="Chip_Label">{label}</span>
 			{removable ? (
 				<span
 					className="Chip_RemoveButton"
-					onClick={onRemove}
-					aria-label="Remove Chip"
-					onKeyDown={handleOnkeyDown}
-					role={removable && !clickable ? 'button' : undefined}
-					tabIndex={removable && !clickable ? 0 : undefined}
+					data-part="chip_remove-icon"
+					onClick={handleRemoveItemClicked}
 				>
 					<Cross2Icon />
 				</span>
