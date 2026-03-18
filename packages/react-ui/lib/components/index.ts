@@ -42,6 +42,8 @@ export * from './Chip';
 
 export * from './RadioGroup';
 
+export * from './TagsInput';
+
 export * from './TextInput';
 
 export * from './ToggleButton';
