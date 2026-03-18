@@ -192,7 +192,7 @@ export const SelectItemFlow: Story = {
 		await step('Click directly on tag to remove item', async () => {
 			const tag2 = within(container).getByLabelText(items[1].label);
 
-			const closeButton = within(tag2).getByRole('button', { name: 'Remove Chip' });
+			const closeButton = tag2.querySelector('[data-part="chip_remove-icon"]') as HTMLElement;
 			await userEvent.click(closeButton);
 		});
 
