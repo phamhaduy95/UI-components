@@ -9,6 +9,7 @@ export * from './Chip';
 export * from './DatePicker';
 export * from './DateRangePicker';
 export * from './FieldLabel';
+export * from './Hover';
 export * from './IconButton';
 export * from './MultipleCombobox';
 export * from './MultipleSelect';
