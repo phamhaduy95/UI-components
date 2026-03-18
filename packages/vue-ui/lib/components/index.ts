@@ -20,3 +20,4 @@ export * from './SupportingText';
 export * from './Switch';
 export * from './TextInput';
 export * from './ToggleButton';
+export * from './TagsInput';
