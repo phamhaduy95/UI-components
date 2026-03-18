@@ -40,7 +40,6 @@
 		if (!props.removable) return;
 		const key = e.key;
 		if (['Backspace', 'Delete'].includes(key)) {
-			e.preventDefault();
 			handleRemove();
 		}
 	};
