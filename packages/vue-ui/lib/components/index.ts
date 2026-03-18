@@ -14,6 +14,7 @@ export * from './MultipleCombobox';
 export * from './MultipleSelect';
 export * from './NumberInput';
 export * from './PasswordInput';
+export * from './Popover';
 export * from './SingleCombobox';
 export * from './SingleSelect';
 export * from './SupportingText';
