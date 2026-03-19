@@ -23,3 +23,4 @@ export * from './Switch';
 export * from './TextInput';
 export * from './ToggleButton';
 export * from './TagsInput';
+export * from './Tooltip';
