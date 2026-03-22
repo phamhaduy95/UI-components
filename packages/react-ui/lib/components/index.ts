@@ -51,3 +51,5 @@ export * from './TextInput';
 export * from './ToggleButton';
 
 export * from './Tooltip';
+
+export * from './VirtualList';
