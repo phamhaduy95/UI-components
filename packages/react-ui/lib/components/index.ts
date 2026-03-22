@@ -16,6 +16,8 @@ export * from './DropDownMenu';
 
 export * from './FieldLabel';
 
+export * from './Hover';
+
 export * from './IconButton';
 
 export * from './MultipleCombobox';
