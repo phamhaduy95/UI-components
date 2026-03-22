@@ -1,0 +1,23 @@
+import type { BaseSelectEmits, SelectBaseProps } from '@components/BaseSelect/BaseSelect.type';
+import type { CommonFieldProps, SelectItem } from '@components/type';
+import type { SelectHTMLAttributes } from 'vue';
+
+export interface SingleSelectBaseProps
+	extends CommonFieldProps<string>,
+		Omit<SelectBaseProps, 'modelValue' | 'defaultValue'> {
+	dataTestid?: string;
+	modelValue?: string;
+	defaultValue?: string;
+}
+
+export type SingleSelectProps = SingleSelectBaseProps &
+	// @vue-ignore
+	Omit<SelectHTMLAttributes, keyof SingleSelectBaseProps>;
+
+export interface SingleSelectEmits {
+	valueChange: [details: { value: string; item?: SelectItem }];
+	'update:modelValue': [value: string];
+	'update:open': BaseSelectEmits['update:open'];
+	focusOutside: BaseSelectEmits['focusOutside'];
+	exitComplete: BaseSelectEmits['exitComplete'];
+}

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { SingleSelect } from '@components/SingleSelect';
 import { ref } from 'vue';
-import { expect, within, userEvent, screen, fn, waitFor } from 'storybook/test';
+import { expect, within, userEvent, screen, fn, waitFor, fireEvent } from 'storybook/test';
 import type { SelectItem } from '@components/type';
 import { TrashIcon } from '@heroicons/vue/24/outline';
 
@@ -10,6 +10,8 @@ const mockedOnUpdateModelValue = fn();
 const mockedOnUpdateOpen = fn();
 const mockedOnFocusOutside = fn();
 const mockedOnExitComplete = fn();
+const mockedOnStartReached = fn();
+const mockedOnEndReached = fn();
 
 const items = [
 	{ label: 'React', value: 'react' },
@@ -67,6 +69,8 @@ const meta = {
 		mockedOnUpdateOpen.mockClear();
 		mockedOnFocusOutside.mockClear();
 		mockedOnExitComplete.mockClear();
+		mockedOnStartReached.mockClear();
+		mockedOnEndReached.mockClear();
 	}
 } satisfies Meta<typeof SingleSelect>;
 
@@ -237,7 +241,8 @@ export const Clearable: Story = {
 export const Controllable: Story = {
 	args: {
 		clearable: true,
-		value: items[0]!.value
+		value: items[0]!.value,
+		loopFocus: true
 	},
 	render: (args) => ({
 		components: { SingleSelect },
@@ -404,4 +409,88 @@ export const CustomTriggerIcon: Story = {
         </SingleSelect>
         `
 	})
+};
+
+const largeItems = Array.from({ length: 1000 }).map((_, i) => ({
+	label: `Option ${i}`,
+	value: `option-${i}`
+}));
+
+export const Virtualization: Story = {
+	args: {
+		virtualizationConfig: {
+			estimateSize: () => 40
+		},
+		items: largeItems,
+		label: 'Virtualization Select',
+		placeholder: 'Search among 1000 items'
+	},
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Open the select menu', async () => {
+			const trigger = within(container).getByRole('combobox', { name: label });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if menu popup is displayed', async () => {
+			expect(menuPopup).toBeVisible();
+		});
+
+		await step('Verify that only a few items are rendered in the DOM', async () => {
+			const renderedOptions = within(menuPopup).queryAllByRole('option');
+			expect(renderedOptions.length).toBeLessThan(30);
+		});
+	}
+};
+
+export const VirtualizationWithEvents: Story = {
+	args: {
+		items: largeItems,
+		label: 'Virtualization Events',
+		placeholder: 'Search among 1000 items',
+		virtualizationConfig: {
+			estimateSize: () => 40,
+			onStartReached: mockedOnStartReached,
+			onEndReached: mockedOnEndReached
+		}
+	},
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Open the select menu', async () => {
+			const trigger = within(container).getByRole('combobox', { name: label });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Verify onStartReached is called initially', async () => {
+			await waitFor(() => {
+				expect(mockedOnStartReached).toHaveBeenCalled();
+			});
+		});
+
+		await step('Scroll to end of list', async () => {
+			fireEvent.scroll(menuPopup, { target: { scrollTop: menuPopup.scrollHeight } });
+		});
+
+		await step('Verify onEndReached is called', async () => {
+			await waitFor(() => {
+				expect(mockedOnEndReached).toHaveBeenCalled();
+			});
+		});
+
+		await step('Scroll to start of list', async () => {
+			fireEvent.scroll(menuPopup, { target: { scrollTop: 0 } });
+		});
+
+		await step('Verify onStartReached is called again', async () => {
+			await waitFor(() => {
+				expect(mockedOnStartReached).toHaveBeenCalled();
+			});
+		});
+	}
 };

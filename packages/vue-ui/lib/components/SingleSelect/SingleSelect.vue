@@ -1,29 +1,12 @@
 <script lang="ts" setup>
-	import { BaseSelect, type BaseSelectEmits, type SelectBaseProps } from '@components/BaseSelect';
+	import { computed } from 'vue';
 
-	import type { CommonFieldProps, SelectItem } from '@components/type';
-	import { computed, type SelectHTMLAttributes } from 'vue';
+	import { BaseSelect } from '@components/BaseSelect';
+	import type { SelectItem } from '@components/type';
+
+	import type { SingleSelectEmits, SingleSelectProps } from './SingleSelect.type';
 
 	defineOptions({ inheritAttrs: false });
-
-	export interface SingleSelectBaseProps
-		extends CommonFieldProps<string>,
-			Omit<SelectBaseProps, 'modelValue' | 'defaultValue'> {
-		dataTestid?: string;
-		modelValue?: string;
-		defaultValue?: string;
-	}
-	export type SingleSelectProps = SingleSelectBaseProps &
-		// @vue-ignore
-		Omit<SelectHTMLAttributes, keyof SingleSelectBaseProps>;
-
-	export interface SingleSelectEmits {
-		valueChange: [details: { value: string; item?: SelectItem }];
-		'update:modelValue': [value: string];
-		'update:open': BaseSelectEmits['update:open'];
-		focusOutside: BaseSelectEmits['focusOutside'];
-		exitComplete: BaseSelectEmits['exitComplete'];
-	}
 
 	const props = withDefaults(defineProps<SingleSelectProps>(), {
 		size: 'medium',
