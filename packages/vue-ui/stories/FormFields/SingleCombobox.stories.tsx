@@ -11,6 +11,13 @@ const mockedOnUpdateOpen = fn();
 const mockedOnFocusOutside = fn();
 const mockedOnExitComplete = fn();
 const mockedOnUpdateInputValue = fn();
+const mockedOnStartReached = fn();
+const mockedOnEndReached = fn();
+
+const largeItems = Array.from({ length: 1000 }).map((_, i) => ({
+	label: `Option ${i}`,
+	value: `option-${i}`
+}));
 
 const items = [
 	{ label: 'React', value: 'react' },
@@ -63,6 +70,8 @@ const meta = {
 		mockedOnUpdateInputValue.mockClear();
 		mockedOnFocusOutside.mockClear();
 		mockedOnExitComplete.mockClear();
+		mockedOnStartReached.mockClear();
+		mockedOnEndReached.mockClear();
 	}
 } satisfies Meta<typeof SingleCombobox>;
 
@@ -200,6 +209,16 @@ export const SearchAndTypingFlow: Story = {
 
 		await step('Check if input gets the selected value text', async () => {
 			expect(input).toHaveValue('React');
+		});
+
+		await step('Type more for the input', async () => {
+			await userEvent.type(input, 'React');
+		});
+
+		await step('Check if empty message is displayed', async () => {
+			expect(menuPopup).toBeVisible();
+			const emptyMessage = within(menuPopup).getByText('No item found');
+			expect(emptyMessage).toBeInTheDocument();
 		});
 	}
 };
@@ -459,4 +478,194 @@ export const CustomTriggerIcon: Story = {
         </SingleCombobox>
         `
 	})
+};
+
+export const Virtualization: Story = {
+	args: {
+		virtualizationConfig: {
+			estimateSize: () => 40
+		},
+		items: largeItems,
+		label: 'Virtualization Combobox',
+		placeholder: 'Search among 1000 items',
+		loopFocus: true
+	},
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Open the combobox menu', async () => {
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if menu popup is displayed', async () => {
+			expect(menuPopup).toBeVisible();
+		});
+
+		await step('Verify that only a few items are rendered in the DOM', async () => {
+			const renderedOptions = within(menuPopup).queryAllByRole('option');
+			expect(renderedOptions.length).toBeLessThan(30);
+		});
+	}
+};
+
+export const VirtualizationWithEvents: Story = {
+	args: {
+		items: largeItems,
+		label: 'Virtualization Events',
+		placeholder: 'Scroll to see events',
+		virtualizationConfig: {
+			estimateSize: () => 40,
+			onStartReached: mockedOnStartReached,
+			onEndReached: mockedOnEndReached,
+			overscan: 10
+		}
+	}
+};
+
+export const CustomEmptyContent: Story = {
+	args: {
+		label: 'Frameworks',
+		items: items
+	},
+	render: (args) => ({
+		components: { SingleCombobox },
+		setup() {
+			return { args };
+		},
+		template: `
+        <SingleCombobox v-bind="args">
+            <template #emptyContent>
+                <div class="px-3 py-2 text-center text-sm text-red-500">
+                    No frameworks found! Try something else.
+                </div>
+            </template>
+        </SingleCombobox>
+        `
+	}),
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+		const input = within(container).getByRole('combobox', { name: label });
+
+		await step('Search for a non-existent item', async () => {
+			await userEvent.type(input, 'NonExistentFramework');
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if custom empty message is rendered', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const emptyMessage = within(menuPopup).getByText('No frameworks found! Try something else.');
+			expect(emptyMessage).toBeInTheDocument();
+		});
+	}
+};
+
+export const HeaderAndFooterContent: Story = {
+	args: {
+		label: 'Frameworks',
+		dataTestid: 'single-combobox-header-footer',
+		items: items
+	},
+	render: (args) => ({
+		components: { SingleCombobox },
+		setup() {
+			return { args };
+		},
+		template: `
+        <SingleCombobox v-bind="args">
+            <template #menuHeader>
+                <div class="px-3 py-2 font-semibold border-b border-gray-200">
+                    Available Frameworks
+                </div>
+            </template>
+            <template #menuFooter>
+                <div class="px-3 py-2 text-sm text-gray-500 border-t border-gray-200">
+                    End of list
+                </div>
+            </template>
+        </SingleCombobox>
+        `
+	}),
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Open the combobox menu', async () => {
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if custom header is rendered', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const header = within(menuPopup).getByText('Available Frameworks');
+			expect(header).toBeInTheDocument();
+		});
+
+		await step('Check if custom footer is rendered', async () => {
+			const footer = within(menuPopup).getByText('End of list');
+			expect(footer).toBeInTheDocument();
+		});
+	}
+};
+
+export const VirtualizationWithHeaderAndFooter: Story = {
+	args: {
+		label: 'Virtual Frameworks',
+		dataTestid: 'single-combobox-virtual-header-footer',
+		items: largeItems,
+		virtualizationConfig: {
+			estimateSize: () => 40
+		}
+	},
+	render: (args) => ({
+		components: { SingleCombobox },
+		setup() {
+			return { args };
+		},
+		template: `
+        <SingleCombobox v-bind="args">
+            <template #menuHeader>
+                <div class="px-3 py-2 font-semibold border-b border-gray-200">
+                    Virtual Frameworks Header
+                </div>
+            </template>
+            <template #menuFooter>
+                <div class="px-3 py-2 text-sm text-gray-500 border-t border-gray-200">
+                    Virtual Frameworks Footer
+                </div>
+            </template>
+        </SingleCombobox>
+        `
+	}),
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Open the combobox menu', async () => {
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if custom header is rendered', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const header = within(menuPopup).getByText('Virtual Frameworks Header');
+			expect(header).toBeInTheDocument();
+		});
+
+		await step('Check if custom footer is rendered', async () => {
+			const footer = within(menuPopup).getByText('Virtual Frameworks Footer');
+			expect(footer).toBeInTheDocument();
+		});
+	}
 };
