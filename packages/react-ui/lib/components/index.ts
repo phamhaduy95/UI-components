@@ -47,3 +47,5 @@ export * from './TagsInput';
 export * from './TextInput';
 
 export * from './ToggleButton';
+
+export * from './Tooltip';
