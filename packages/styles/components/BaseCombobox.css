@@ -48,7 +48,7 @@
 	max-height: 50dvh;
 	overflow: auto;
 
-	> .Menu_Item:not([data-disabled]) {
+	.Menu_Item:not([data-disabled]) {
 		.HighlightedText {
 			color: var(--color-on-primary-container);
 			font-weight: 600;

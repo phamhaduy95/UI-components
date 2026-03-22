@@ -1,46 +1,24 @@
 <script setup lang="ts">
-	import {
-		Combobox as ArkCombobox,
-		createListCollection,
-		type ComboboxRootEmits,
-		type ComboboxRootProps
-	} from '@ark-ui/vue/combobox';
+	import { computed, useId, ref } from 'vue';
+	import { ChevronDownIcon, XMarkIcon } from '@heroicons/vue/20/solid';
+	import { Combobox as ArkCombobox, createListCollection } from '@ark-ui/vue/combobox';
+
 	import { BaseField } from '@components/BaseField';
 	import { IconButton } from '@components/IconButton';
-	import type { CommonFieldProps, SelectItem } from '@components/type';
-	import { CheckIcon, ChevronDownIcon, XMarkIcon } from '@heroicons/vue/20/solid';
-	import { computed, useId, type HTMLAttributes, ref } from 'vue';
+
+	import BaseComboboxPopup from './BaseComboboxPopup.vue';
+
+	import type {
+		BaseComboboxEmits,
+		BaseComboboxProps,
+		VirtualizationConfig,
+		BaseComboboxSlots
+	} from './BaseCombobox.type';
 
 	import '@packages/styles/components/BaseCombobox.css';
 	import '@packages/styles/components/DropDownMenu.css';
 
 	defineOptions({ inheritAttrs: false });
-
-	type ArkComboboxProps = ComboboxRootProps<SelectItem>;
-
-	export interface ComboboxBaseProps
-		extends CommonFieldProps<string[]>,
-			Pick<
-				ArkComboboxProps,
-				'loopFocus' | 'open' | 'multiple' | 'modelValue' | 'defaultValue' | 'defaultOpen'
-			> {
-		class?: string;
-		items?: Array<SelectItem>;
-		dataTestid?: string;
-	}
-
-	export type BaseComboboxProps = ComboboxBaseProps &
-		/* @vue-ignore */
-		Omit<HTMLAttributes, 'value' | 'disabled' | 'required' | 'size' | 'multiple'>;
-
-	export interface BaseComboboxEmits {
-		focusOutside: ComboboxRootEmits<SelectItem>['focusOutside'];
-		exitComplete: ComboboxRootEmits<SelectItem>['exitComplete'];
-		valueChange: ComboboxRootEmits<SelectItem>['valueChange'];
-		'update:modelValue': ComboboxRootEmits<SelectItem>['update:modelValue'];
-		'update:open': ComboboxRootEmits<SelectItem>['update:open'];
-		'update:inputValue': ComboboxRootEmits<SelectItem>['update:inputValue'];
-	}
 
 	const props = withDefaults(defineProps<BaseComboboxProps>(), {
 		items: () => [],
@@ -53,10 +31,13 @@
 		modelValue: undefined,
 		defaultValue: undefined,
 		open: undefined,
-		defaultOpen: undefined
+		defaultOpen: undefined,
+		virtualizationConfig: undefined
 	});
 
 	const emit = defineEmits<BaseComboboxEmits>();
+
+	const slots = defineSlots<BaseComboboxSlots>();
 
 	const supportingTextId = useId();
 	const searchValue = ref('');
@@ -70,36 +51,21 @@
 
 	const collection = computed(() => createListCollection({ items: filteredItems.value }));
 
-	const findMatchedSegment = (itemLabel: string, searchValue: string) => {
-		if (!searchValue) return [{ type: 'normal', value: itemLabel }];
-		const Regex = RegExp(`${searchValue}`, 'gi');
-		const results: { type: string; value: string }[] = [];
-		let start = 0;
-		let match: RegExpExecArray | null;
-		while ((match = Regex.exec(itemLabel)) !== null) {
-			const noMatchedSegment = {
-				type: 'normal',
-				value: itemLabel.slice(start, match.index)
-			};
+	const virtualEnabled = computed(() => Boolean(props.virtualizationConfig));
 
-			start = match.index + match[0].length;
-
-			const matchedSegment = {
-				type: 'matched',
-				value: itemLabel.slice(match.index, start)
-			};
-
-			results.push(noMatchedSegment, matchedSegment);
-		}
-
-		const remaining = start < itemLabel.length ? itemLabel.slice(start) : undefined;
-
-		if (remaining) {
-			results.push({ type: 'normal', value: remaining });
-		}
-
-		return results;
+	const defaultVirtualizationConfig: Required<VirtualizationConfig> = {
+		estimateSize: () => 30,
+		overscan: 2,
+		viewHeight: 300,
+		getItemKey: (index: number) => index.toString(),
+		onStartReached: () => {},
+		onEndReached: () => {}
 	};
+
+	const virtualConfig = computed(() => ({
+		...defaultVirtualizationConfig,
+		...(props.virtualizationConfig || {})
+	}));
 </script>
 
 <template>
@@ -195,57 +161,42 @@
 					</IconButton>
 				</ArkCombobox.Trigger>
 			</ArkCombobox.Control>
-
-			<Teleport to="body">
-				<ArkCombobox.Positioner
-					class="Menu_Positioner"
-					style="z-index: var(--menu-popup-z-index)"
-				>
-					<ArkCombobox.Content class="Menu Combobox_Content">
-						<slot name="menuHeader"></slot>
-						<ArkCombobox.Item
-							v-for="(item, index) in collection.items"
-							:key="item.value"
-							class="Menu_Item"
-							:item="item"
-						>
-							<slot
-								name="itemContent"
-								:item="item"
-								:item-index="index"
-							>
-								<ArkCombobox.ItemText>
-									<span
-										v-for="(segment, segmentIndex) in findMatchedSegment(item.label, searchValue)"
-										:key="segmentIndex"
-										:class="{
-											HighlightedText: segment.type === 'matched'
-										}"
-									>
-										{{ segment.value }}
-									</span>
-								</ArkCombobox.ItemText>
-								<ArkCombobox.ItemIndicator class="MenuItem_TrailingIcon">
-									<CheckIcon />
-								</ArkCombobox.ItemIndicator>
-							</slot>
-						</ArkCombobox.Item>
-
-						<ArkCombobox.Item
-							v-if="filteredItems.length === 0"
-							class="Menu_Item"
-							:item="{}"
-						>
-							<slot name="emptyContent">
-								<ArkCombobox.ItemText as-child>
-									<p>No item found</p>
-								</ArkCombobox.ItemText>
-							</slot>
-						</ArkCombobox.Item>
-						<slot name="menuFooter"></slot>
-					</ArkCombobox.Content>
-				</ArkCombobox.Positioner>
-			</Teleport>
 		</BaseField>
+		<BaseComboboxPopup
+			:virtual-enabled="virtualEnabled"
+			:virtual-config="virtualConfig"
+			:items="collection.items"
+			:filtered-items-length="filteredItems.length"
+			:search-value="searchValue"
+		>
+			<template
+				v-if="slots.menuHeader"
+				#menuHeader
+			>
+				<slot name="menuHeader"></slot>
+			</template>
+			<template
+				v-if="slots.itemContent"
+				#itemContent="{ item, itemIndex }"
+			>
+				<slot
+					name="itemContent"
+					:item="item"
+					:item-index="itemIndex"
+				></slot>
+			</template>
+			<template
+				v-if="slots.emptyContent"
+				#emptyContent
+			>
+				<slot name="emptyContent"></slot>
+			</template>
+			<template
+				v-if="slots.menuFooter"
+				#menuFooter
+			>
+				<slot name="menuFooter"></slot>
+			</template>
+		</BaseComboboxPopup>
 	</ArkCombobox.Root>
 </template>
