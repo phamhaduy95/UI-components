@@ -205,13 +205,15 @@
 		<div
 			class="VirtualList_VirtualView"
 			:style="virtualViewStyle"
+			data-part="virtual-list_virtual-view"
+			role="presentation"
 		>
 			<div
 				v-if="slots.header"
 				ref="headerRef"
 				:style="headerStyle"
-				class="VirtualList_StickyHeader"
-				data-part="virtual-list_sticky-header"
+				class="VirtualList_Header"
+				data-part="virtual-list_header"
 			>
 				<slot name="header"></slot>
 			</div>

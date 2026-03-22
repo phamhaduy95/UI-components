@@ -1,56 +1,18 @@
 <script setup lang="ts">
-	import {
-		Select as ArkSelect,
-		createListCollection,
-		type SelectRootEmits,
-		type SelectRootProps
-	} from '@ark-ui/vue/select';
+	import { Select as ArkSelect, createListCollection } from '@ark-ui/vue/select';
+	import { CheckIcon, ChevronDownIcon, XMarkIcon } from '@heroicons/vue/20/solid';
+	import { computed, useId } from 'vue';
+
 	import { BaseField } from '@components/BaseField';
 	import { IconButton } from '@components/IconButton';
-	import type { CommonFieldProps, SelectItem } from '@components/type';
-	import { CheckIcon, ChevronDownIcon, XMarkIcon } from '@heroicons/vue/20/solid';
-	import { computed, useId, type SelectHTMLAttributes } from 'vue';
+	import { VirtualList } from '@components/VirtualList';
+
+	import type { BaseSelectEmits, BaseSelectProps, VirtualizationConfig } from './BaseSelect.type';
 
 	import '@packages/styles/components/BaseSelect.css';
 	import '@packages/styles/components/DropDownMenu.css';
 
 	defineOptions({ inheritAttrs: false });
-
-	type ArkSelectProps = SelectRootProps<SelectItem>;
-
-	export interface SelectBaseProps
-		extends CommonFieldProps<string[]>,
-			Pick<
-				ArkSelectProps,
-				| 'loopFocus'
-				| 'open'
-				| 'defaultOpen'
-				| 'multiple'
-				| 'deselectable'
-				| 'lazyMount'
-				| 'unmountOnExit'
-				| 'modelValue'
-				| 'defaultValue'
-				| 'name'
-			> {
-		class?: string;
-		items?: Array<SelectItem>;
-		dataTestid?: string;
-	}
-
-	export type BaseSelectProps = SelectBaseProps &
-		/* @vue-ignore */ Omit<
-			SelectHTMLAttributes,
-			'value' | 'disabled' | 'required' | 'size' | 'name' | 'multiple'
-		>;
-
-	export interface BaseSelectEmits {
-		'update:modelValue': SelectRootEmits<SelectItem>['update:modelValue'];
-		'update:open': SelectRootEmits<SelectItem>['update:open'];
-		focusOutside: SelectRootEmits<SelectItem>['focusOutside'];
-		exitComplete: SelectRootEmits<SelectItem>['exitComplete'];
-		valueChange: SelectRootEmits<SelectItem>['valueChange'];
-	}
 
 	const props = withDefaults(defineProps<BaseSelectProps>(), {
 		items: () => [],
@@ -61,6 +23,7 @@
 		clearable: false,
 		disabled: false,
 		required: false,
+		virtualizationConfig: undefined,
 		modelValue: undefined,
 		defaultValue: undefined,
 		open: undefined,
@@ -72,6 +35,22 @@
 	const supportingTextId = useId();
 
 	const collection = computed(() => createListCollection({ items: props.items }));
+
+	const virtualEnabled = computed(() => Boolean(props.virtualizationConfig));
+
+	const defaultVirtualizationConfig: Required<VirtualizationConfig> = {
+		estimateSize: () => 30,
+		overscan: 2,
+		viewHeight: 300,
+		getItemKey: (index: number) => index.toString(),
+		onStartReached: () => {},
+		onEndReached: () => {}
+	};
+
+	const virtualConfig = computed(() => ({
+		...defaultVirtualizationConfig,
+		...(props.virtualizationConfig || {})
+	}));
 </script>
 
 <template>
@@ -165,19 +144,51 @@
 					class="Positioner"
 					style="z-index: var(--menu-popup-z-index)"
 				>
-					<ArkSelect.Content class="Menu SelectContent">
-						<ArkSelect.Item
-							v-for="item in collection.items"
-							:key="item.value"
-							class="Menu_Item SelectItem"
-							:item="item"
+					<template v-if="virtualEnabled">
+						<ArkSelect.Content
+							class="Menu SelectContent"
+							as-child
 						>
-							<ArkSelect.ItemText>{{ item.label }}</ArkSelect.ItemText>
-							<ArkSelect.ItemIndicator class="MenuItem_TrailingIcon">
-								<CheckIcon />
-							</ArkSelect.ItemIndicator>
-						</ArkSelect.Item>
-					</ArkSelect.Content>
+							<VirtualList
+								:items="collection.items"
+								:estimate-size="virtualConfig.estimateSize"
+								:overscan="virtualConfig.overscan"
+								:get-item-key="virtualConfig.getItemKey"
+								:style="{ height: `${virtualConfig.viewHeight}px` }"
+								class="overflow-auto"
+								@start-reached="virtualConfig.onStartReached"
+								@end-reached="virtualConfig.onEndReached"
+							>
+								<template #itemContent="{ itemData }">
+									<ArkSelect.Item
+										:key="itemData.value"
+										class="Menu_Item SelectItem"
+										:item="itemData"
+									>
+										<ArkSelect.ItemText>{{ itemData.label }}</ArkSelect.ItemText>
+										<ArkSelect.ItemIndicator class="MenuItem_TrailingIcon">
+											<CheckIcon />
+										</ArkSelect.ItemIndicator>
+									</ArkSelect.Item>
+								</template>
+							</VirtualList>
+						</ArkSelect.Content>
+					</template>
+					<template v-else>
+						<ArkSelect.Content class="Menu SelectContent">
+							<ArkSelect.Item
+								v-for="item in collection.items"
+								:key="item.value"
+								class="Menu_Item SelectItem"
+								:item="item"
+							>
+								<ArkSelect.ItemText>{{ item.label }}</ArkSelect.ItemText>
+								<ArkSelect.ItemIndicator class="MenuItem_TrailingIcon">
+									<CheckIcon />
+								</ArkSelect.ItemIndicator>
+							</ArkSelect.Item>
+						</ArkSelect.Content>
+					</template>
 				</ArkSelect.Positioner>
 			</Teleport>
 		</BaseField>
