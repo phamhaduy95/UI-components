@@ -165,28 +165,25 @@ function VirtualList<TData>(
 				position: 'relative'
 			};
 
-	const computeItemStyle = useCallback(
-		(item: VirtualItem): CSSProperties => {
-			return horizontal
-				? {
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						height: '100%',
-						minWidth: `${item.size}px`,
-						transform: `translateX(${item.start}px)`
-					}
-				: {
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						minHeight: `${item.size}px`,
-						width: '100%',
-						transform: `translateY(${item.start}px)`
-					};
-		},
-		[horizontal]
-	);
+	const computeItemStyle = (item: VirtualItem): CSSProperties => {
+		return horizontal
+			? {
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					height: '100%',
+					minWidth: `${item.size}px`,
+					transform: `translateX(${item.start}px)`
+				}
+			: {
+					position: 'absolute',
+					top: 0,
+					left: 0,
+					minHeight: `${item.size}px`,
+					width: '100%',
+					transform: `translateY(${item.start}px)`
+				};
+	};
 
 	const scrollToBottom = useCallback(
 		(options?: ScrollToOptions) => {
@@ -195,16 +192,23 @@ function VirtualList<TData>(
 		[virtualizer, totalSize]
 	);
 
-	useImperativeHandle(
-		ref,
-		() => ({
-			scrollBy: (offset, options) => virtualizer.scrollBy(offset, options),
-			scrollToIndex: (index, options) => virtualizer.scrollToIndex(index, options),
-			scrollToOffset: (offset, options) => virtualizer.scrollToOffset(offset, options),
-			scrollToBottom
-		}),
-		[virtualizer, scrollToBottom]
-	);
+	// Since some Ark-ui components require access to underlined HtmlElement instance to be able to pass
+	// props via `asChild`, I need to secretly include the container instance to public ref.
+	// Developer can only see methods defined in VirtualListPublicInstance.
+	useImperativeHandle(ref, () => {
+		const { scrollBy, scrollToIndex, scrollToOffset } = virtualizer;
+
+		if (containerRef.current) {
+			Object.assign(containerRef.current, {
+				scrollBy,
+				scrollToIndex,
+				scrollToOffset,
+				scrollToBottom
+			});
+		}
+
+		return containerRef.current as unknown as VirtualListPublicInstance;
+	}, [scrollToBottom, virtualizer]);
 
 	return (
 		<div
@@ -243,7 +247,7 @@ function VirtualList<TData>(
 						data-index={item.index}
 						data-part="virtual-list_item"
 					>
-						{children({ index: item.index, itemData: items[item.index] as TData })}
+						{children({ index: item.index, itemData: items[item.index] })}
 					</div>
 				))}
 
