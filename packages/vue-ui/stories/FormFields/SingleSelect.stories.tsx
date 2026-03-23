@@ -314,6 +314,32 @@ export const Controllable: Story = {
 	}
 };
 
+export const EmptyList: Story = {
+	args: {
+		label: 'Empty List',
+		items: [],
+		placeholder: 'No items available'
+	},
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Open the select menu', async () => {
+			const trigger = within(container).getByRole('combobox', { name: label });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if default empty message "No item found" is rendered', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const emptyMsg = within(menuPopup).getByText('No item found');
+			expect(emptyMsg).toBeInTheDocument();
+		});
+	}
+};
+
 export const Disabled: Story = {
 	args: {
 		disabled: true
@@ -491,6 +517,236 @@ export const VirtualizationWithEvents: Story = {
 			await waitFor(() => {
 				expect(mockedOnStartReached).toHaveBeenCalled();
 			});
+		});
+	}
+};
+
+export const CustomMenuHeaderFooter: Story = {
+	args: {
+		label: 'Menu Slots',
+		dataTestid: 'single-select-header-footer',
+		items: items
+	},
+	render: (args) => ({
+		components: { SingleSelect },
+		setup() {
+			return { args };
+		},
+		template: `
+        <SingleSelect v-bind="args">
+            <template #menuHeader>
+                <div class="px-3 py-2 font-semibold border-b border-gray-200 bg-gray-50 text-gray-700">
+                    Select Framework
+                </div>
+            </template>
+            <template #menuFooter>
+                <div class="px-3 py-2 text-sm text-center text-gray-400 border-t border-gray-200">
+                    All frameworks loaded
+                </div>
+            </template>
+        </SingleSelect>
+        `
+	}),
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Open the select menu', async () => {
+			const trigger = within(container).getByRole('combobox', { name: label });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if custom header is rendered', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const header = within(menuPopup).getByText('Select Framework');
+			expect(header).toBeInTheDocument();
+		});
+
+		await step('Check if custom footer is rendered', async () => {
+			const footer = within(menuPopup).getByText('All frameworks loaded');
+			expect(footer).toBeInTheDocument();
+		});
+	}
+};
+
+export const CustomEmptyContent: Story = {
+	args: {
+		label: 'Empty Select',
+		items: [],
+		dataTestid: 'single-select-empty',
+		placeholder: 'No frameworks available'
+	},
+	render: (args) => ({
+		components: { SingleSelect },
+		setup() {
+			return { args };
+		},
+		template: `
+        <SingleSelect v-bind="args">
+            <template #emptyContent>
+                <div class="px-4 py-6 text-center text-red-500 font-medium">
+                    Oops! No items found.
+                </div>
+            </template>
+        </SingleSelect>
+        `
+	}),
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Open the select menu', async () => {
+			const trigger = within(container).getByRole('combobox', { name: label });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if custom empty content is rendered', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const emptyMsg = within(menuPopup).getByText('Oops! No items found.');
+			expect(emptyMsg).toBeInTheDocument();
+		});
+	}
+};
+
+export const CustomItemContent: Story = {
+	args: {
+		label: 'Custom Items',
+		items: items,
+		dataTestid: 'single-select-custom-items'
+	},
+	render: (args) => ({
+		components: { SingleSelect },
+		setup() {
+			return { args };
+		},
+		template: `
+        <SingleSelect v-bind="args">
+            <template #itemContent="{ item, isSelected, isHighlighted }">
+                <div 
+                    class="flex w-full items-center gap-2 p-1"
+                    :class="{ 'bg-blue-50': isHighlighted }"
+                >
+                   
+                    <span
+                        class="font-bold underline"
+                        :class="{ 'text-blue-600': isSelected, 'italic': isHighlighted }"
+                    >
+                        Custom item: {{ item.label }}
+                        
+                    </span>
+                    <span v-if="isSelected">(selected)</span>
+                    <span v-if="isHighlighted" class="text-xs ml-auto" data-testid="highlight-icon">highlighted</span>
+                </div>
+            </template>
+        </SingleSelect>
+        `
+	}),
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Open the select menu', async () => {
+			const trigger = within(container).getByRole('combobox', { name: label });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Verify custom item content formatting', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const firstOption = within(menuPopup).getByRole('option', { name: items[0]!.label });
+			expect(firstOption).toHaveTextContent('Custom item: ' + items[0]!.label);
+		});
+
+		await step('Verify isHighlighted prop works', async () => {
+			const secondOption = within(menuPopup).getByRole('option', { name: items[1]!.label });
+			await userEvent.hover(secondOption);
+
+			await waitFor(() => {
+				expect(secondOption).toHaveTextContent('highlighted');
+			});
+		});
+
+		await step('Verify isSelected prop works', async () => {
+			const firstOption = within(menuPopup).getByRole('option', { name: items[0]!.label });
+			await userEvent.click(firstOption);
+
+			// Re-open list
+			const trigger = within(container).getByRole('combobox', { name: label });
+			await userEvent.click(trigger);
+
+			const updatedMenuPopup = screen.getByRole('listbox', { name: label });
+			const firstOptionSelected = within(updatedMenuPopup).getByRole('option', {
+				name: items[0]!.label
+			});
+
+			expect(firstOptionSelected).toHaveTextContent('(selected)');
+		});
+	}
+};
+
+export const VirtualizationWithHeaderAndFooter: Story = {
+	args: {
+		label: 'Virtual Select Header/Footer',
+		dataTestid: 'single-select-virtual-header-footer',
+		items: largeItems,
+		virtualizationConfig: {
+			estimateSize: () => 40
+		}
+	},
+	render: (args) => ({
+		components: { SingleSelect },
+		setup() {
+			return { args };
+		},
+		template: `
+        <SingleSelect v-bind="args">
+            <template #menuHeader>
+                <div class="px-3 py-2 font-bold text-indigo-700 bg-indigo-50 border-b border-indigo-100">
+                    Virtualized Frameworks
+                </div>
+            </template>
+            <template #menuFooter>
+                <div class="px-3 py-2 text-xs text-center text-indigo-400 border-t border-indigo-100">
+                    Scroll to see virtualization in action
+                </div>
+            </template>
+        </SingleSelect>
+        `
+	}),
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Open the select menu', async () => {
+			const trigger = within(container).getByRole('combobox', { name: label });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if custom header is rendered', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const header = within(menuPopup).getByText('Virtualized Frameworks');
+			expect(header).toBeInTheDocument();
+		});
+
+		await step('Check if custom footer is rendered', async () => {
+			const footer = within(menuPopup).getByText('Scroll to see virtualization in action');
+			expect(footer).toBeInTheDocument();
+		});
+
+		await step('Verify virtualization is active', async () => {
+			const renderedOptions = within(menuPopup).queryAllByRole('option');
+			expect(renderedOptions.length).toBeLessThan(30);
 		});
 	}
 };

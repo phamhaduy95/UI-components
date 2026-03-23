@@ -1,17 +1,18 @@
 <script setup lang="ts">
 	import { Select as ArkSelect, createListCollection } from '@ark-ui/vue/select';
-	import { CheckIcon, ChevronDownIcon, XMarkIcon } from '@heroicons/vue/20/solid';
+	import { ChevronDownIcon, XMarkIcon } from '@heroicons/vue/20/solid';
 	import { computed, useId } from 'vue';
 
 	import { BaseField } from '@components/BaseField';
 	import { IconButton } from '@components/IconButton';
-	import { VirtualList } from '@components/VirtualList';
 
-	import type { BaseSelectEmits, BaseSelectProps } from './BaseSelect.type';
+	import BaseSelectPopup from './BaseSelectPopup.vue';
+
+	import type { BaseSelectEmits, BaseSelectProps, BaseSelectSlots } from './BaseSelect.type';
+	import type { VirtualizationConfig } from '@components/type';
 
 	import '@packages/styles/components/BaseSelect.css';
 	import '@packages/styles/components/DropDownMenu.css';
-	import type { VirtualizationConfig } from '@components/type';
 
 	defineOptions({ inheritAttrs: false });
 
@@ -33,6 +34,8 @@
 	});
 
 	const emit = defineEmits<BaseSelectEmits>();
+
+	const slots = defineSlots<BaseSelectSlots>();
 
 	const supportingTextId = useId();
 
@@ -88,24 +91,27 @@
 			:supporting-text-id="supportingTextId"
 			:label-element="ArkSelect.Label"
 		>
-			<ArkSelect.Control
-				class="Select_Control BaseField_Field"
-				:data-status="status"
-			>
-				<ArkSelect.Trigger
-					class="Select_Trigger"
-					:aria-describedby="supportingTextId"
+			<ArkSelect.Context v-slot="{ setOpen }">
+				<ArkSelect.Control
+					class="Select_Control BaseField_Field"
+					:data-status="status"
 				>
-					<slot name="customValueText">
-						<ArkSelect.ValueText
-							class="Select_Value"
-							:placeholder="placeholder"
-						/>
-					</slot>
-				</ArkSelect.Trigger>
+					<ArkSelect.Trigger
+						class="Select_Trigger"
+						:aria-describedby="supportingTextId"
+					>
+						<slot
+							name="customValueText"
+							:supporting-text-id="supportingTextId"
+						>
+							<ArkSelect.ValueText
+								class="Select_Value"
+								:placeholder="placeholder"
+							/>
+						</slot>
+					</ArkSelect.Trigger>
 
-				<div class="Select_Trailing">
-					<ArkSelect.Context v-slot="{ setOpen }">
+					<div class="Select_Trailing">
 						<ArkSelect.ClearTrigger
 							v-if="clearable"
 							class="Select_ClearButton"
@@ -122,79 +128,59 @@
 								</slot>
 							</IconButton>
 						</ArkSelect.ClearTrigger>
-					</ArkSelect.Context>
-					<ArkSelect.Indicator
-						class="Select_Indicator"
-						aria-label="select indicator"
-					>
-						<slot name="triggerIcon">
-							<ChevronDownIcon />
-						</slot>
-					</ArkSelect.Indicator>
-				</div>
 
-				<ArkSelect.HiddenSelect
-					:name="name"
-					:aria-describedby="supportingTextId"
-					:tabindex="-1"
-					v-bind="$attrs"
-				/>
-			</ArkSelect.Control>
-			<Teleport to="body">
-				<ArkSelect.Positioner
-					class="Positioner"
-					style="z-index: var(--menu-popup-z-index)"
-				>
-					<template v-if="virtualEnabled">
-						<ArkSelect.Content
-							class="Menu Select_Content"
-							as-child
+						<ArkSelect.Indicator
+							class="Select_Indicator"
+							aria-label="select indicator"
 						>
-							<VirtualList
-								:items="collection.items"
-								:estimate-size="virtualConfig.estimateSize"
-								:overscan="virtualConfig.overscan"
-								:get-item-key="virtualConfig.getItemKey"
-								:style="{ maxHeight: `${popupMaxHeight}px` }"
-								class="overflow-auto"
-								@start-reached="virtualConfig.onStartReached"
-								@end-reached="virtualConfig.onEndReached"
-							>
-								<template #itemContent="{ itemData }">
-									<ArkSelect.Item
-										:key="itemData.value"
-										class="Menu_Item Select_Item"
-										:item="itemData"
-									>
-										<ArkSelect.ItemText>{{ itemData.label }}</ArkSelect.ItemText>
-										<ArkSelect.ItemIndicator class="MenuItem_TrailingIcon">
-											<CheckIcon />
-										</ArkSelect.ItemIndicator>
-									</ArkSelect.Item>
-								</template>
-							</VirtualList>
-						</ArkSelect.Content>
-					</template>
-					<template v-else>
-						<ArkSelect.Content
-							class="Menu Select_Content"
-							:style="{ maxHeight: `${popupMaxHeight}px` }"
-						>
-							<ArkSelect.Item
-								v-for="item in collection.items"
-								:key="item.value"
-								class="Menu_Item Select_Item"
-								:item="item"
-							>
-								<ArkSelect.ItemText>{{ item.label }}</ArkSelect.ItemText>
-								<ArkSelect.ItemIndicator class="MenuItem_TrailingIcon">
-									<CheckIcon />
-								</ArkSelect.ItemIndicator>
-							</ArkSelect.Item>
-						</ArkSelect.Content>
-					</template>
-				</ArkSelect.Positioner>
-			</Teleport>
+							<slot name="triggerIcon">
+								<ChevronDownIcon />
+							</slot>
+						</ArkSelect.Indicator>
+					</div>
+
+					<ArkSelect.HiddenSelect
+						:name="name"
+						:aria-describedby="supportingTextId"
+						:tabindex="-1"
+						v-bind="$attrs"
+					/>
+				</ArkSelect.Control>
+			</ArkSelect.Context>
 		</BaseField>
+		<BaseSelectPopup
+			:virtual-enabled="virtualEnabled"
+			:virtual-config="virtualConfig"
+			:items="collection.items"
+			:popup-max-height="popupMaxHeight"
+		>
+			<template
+				v-if="slots.menuHeader"
+				#menuHeader
+			>
+				<slot name="menuHeader"></slot>
+			</template>
+			<template
+				v-if="slots.itemContent"
+				#itemContent="itemProps"
+			>
+				<slot
+					name="itemContent"
+					v-bind="itemProps"
+				></slot>
+			</template>
+			<template
+				v-if="slots.emptyContent"
+				#emptyContent
+			>
+				<slot name="emptyContent"></slot>
+			</template>
+			<template
+				v-if="slots.menuFooter"
+				#menuFooter
+			>
+				<slot name="menuFooter"></slot>
+			</template>
+		</BaseSelectPopup>
 	</ArkSelect.Root>
 </template>
