@@ -105,9 +105,9 @@ const BaseSelect = ({
 						className="Positioner"
 						style={{ zIndex: 'var(--menu-popup-z-index)' }}
 					>
-						<ArkSelect.Content className="Menu SelectContent">
+						<ArkSelect.Content className="Menu Select_Content">
 							{collection.items.map((item) => (
-								<ArkSelect.Item className="Menu_Item SelectItem" key={item.value} item={item}>
+								<ArkSelect.Item className="Menu_Item Select_Item" key={item.value} item={item}>
 									<ArkSelect.ItemText>{item.label}</ArkSelect.ItemText>
 									<ArkSelect.ItemIndicator className="MenuItem_TrailingIcon">
 										<CheckIcon height={16} width={16} />

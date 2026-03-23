@@ -2,8 +2,7 @@
 	import { Combobox as ArkCombobox } from '@ark-ui/vue/combobox';
 	import { CheckIcon } from '@heroicons/vue/20/solid';
 	import { VirtualList } from '@components/VirtualList';
-	import type { SelectItem } from '@components/type';
-	import type { VirtualizationConfig } from './BaseCombobox.type';
+	import type { SelectItem, VirtualizationConfig } from '@components/type';
 
 	export interface BaseComboboxPopupProps {
 		virtualEnabled: boolean;
@@ -11,6 +10,7 @@
 		items: SelectItem[];
 		filteredItemsLength: number;
 		searchValue: string;
+		popupMaxHeight: number;
 	}
 
 	defineProps<BaseComboboxPopupProps>();
@@ -63,7 +63,7 @@
 						:estimate-size="virtualConfig.estimateSize"
 						:overscan="virtualConfig.overscan"
 						:get-item-key="(index) => items[index]!.value"
-						:style="{ maxHeight: `${virtualConfig.viewHeight}px` }"
+						:style="{ maxHeight: `${popupMaxHeight}px` }"
 						class="overflow-auto"
 						@start-reached="virtualConfig.onStartReached"
 						@end-reached="virtualConfig.onEndReached"
@@ -117,7 +117,10 @@
 				</ArkCombobox.Content>
 			</template>
 			<template v-else>
-				<ArkCombobox.Content class="Menu Combobox_Content">
+				<ArkCombobox.Content
+					class="Menu Combobox_Content"
+					:style="{ maxHeight: `${popupMaxHeight}px` }"
+				>
 					<slot name="menuHeader"></slot>
 					<ArkCombobox.Item
 						v-for="(item, index) in items"

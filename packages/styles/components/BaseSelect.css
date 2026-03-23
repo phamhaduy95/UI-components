@@ -45,7 +45,7 @@
 	}
 }
 
-.Menu.SelectContent {
+.Menu.Select_Content {
 	min-width: var(--reference-width);
 	max-height: 50dvh;
 	overflow: auto;

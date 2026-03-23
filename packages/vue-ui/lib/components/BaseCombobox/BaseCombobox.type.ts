@@ -1,16 +1,8 @@
 import { type ComboboxRootEmits, type ComboboxRootProps } from '@ark-ui/vue/combobox';
-import type { CommonFieldProps, SelectItem } from '@components/type';
-import type { VirtualListProps } from '@components/VirtualList';
+import type { CommonFieldProps, SelectItem, VirtualizationConfig } from '@components/type';
 import type { HTMLAttributes } from 'vue';
 
 type ArkComboboxProps = ComboboxRootProps<SelectItem>;
-
-export interface VirtualizationConfig
-	extends Pick<VirtualListProps<SelectItem>, 'estimateSize' | 'overscan' | 'getItemKey'> {
-	viewHeight?: number;
-	onStartReached?: () => void;
-	onEndReached?: () => void;
-}
 
 export interface ComboboxBaseProps
 	extends CommonFieldProps<string[]>,
@@ -31,6 +23,11 @@ export interface ComboboxBaseProps
 	 * enabling high-performance scrolling for large datasets.
 	 */
 	virtualizationConfig?: VirtualizationConfig;
+
+	/**
+	 * The maximum height of the popup menu.
+	 */
+	popupMaxHeight?: number;
 }
 
 export type BaseComboboxProps = ComboboxBaseProps &
