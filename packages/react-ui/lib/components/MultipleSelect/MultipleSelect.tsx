@@ -25,7 +25,7 @@ const MultipleSelect = (props: MultipleSelectProps): JSX.Element => {
 			onValueChange={(selectedValue) => {
 				if (onValueChange) onValueChange(selectedValue.value, selectedValue.items);
 			}}
-			CustomValueText={<DisplayedSelectValue placeholder={placeholder} />}
+			CustomValueText={() => <DisplayedSelectValue placeholder={placeholder} />}
 			{...rest}
 		/>
 	);
