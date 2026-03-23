@@ -52,3 +52,54 @@ export interface BaseSelectEmits {
 	exitComplete: SelectRootEmits<SelectItem>['exitComplete'];
 	valueChange: SelectRootEmits<SelectItem>['valueChange'];
 }
+
+/**
+ * Interface defining the slots available for the BaseSelect component.
+ */
+export interface BaseSelectSlots {
+	/**
+	 * Customizes the display of the selected value in the trigger.
+	 * @param props Slot properties.
+	 * @param props.supportingTextId Theoretical current field supporting text ID.
+	 */
+	customValueText(props: { supportingTextId: string }): void;
+
+	/**
+	 * Customizes the clear icon displayed when `clearable` is enabled.
+	 */
+	clearIcon(): void;
+
+	/**
+	 * Customizes the dropdown trigger icon.
+	 */
+	triggerIcon(): void;
+
+	/**
+	 * Content to be displayed at the top of the dropdown menu popup.
+	 */
+	menuHeader(): void;
+
+	/**
+	 * Content to be displayed at the bottom of the dropdown menu popup.
+	 */
+	menuFooter(): void;
+
+	/**
+	 * Content to be displayed when there are no items to show.
+	 */
+	emptyContent(): void;
+
+	/**
+	 * Customizes the rendering of each item within the list.
+	 * @param props Slot properties.
+	 * @param props.item The data object representing the current item.
+	 * @param props.itemIndex The index of the item within the list.
+	 */
+	itemContent(props: {
+		item: SelectItem;
+		itemIndex: number;
+		isSelected: boolean;
+		isDisabled: boolean;
+		isHighlighted: boolean;
+	}): void;
+}
