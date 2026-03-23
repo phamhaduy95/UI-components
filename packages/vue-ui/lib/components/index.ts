@@ -8,6 +8,7 @@ export * from './Checkbox';
 export * from './Chip';
 export * from './DatePicker';
 export * from './DateRangePicker';
+export * from './DropdownMenu';
 export * from './FieldLabel';
 export * from './Hover';
 export * from './IconButton';
