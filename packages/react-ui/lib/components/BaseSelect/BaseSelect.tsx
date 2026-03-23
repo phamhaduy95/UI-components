@@ -1,30 +1,18 @@
 import { Portal } from '@ark-ui/react/portal';
 import { createListCollection, Select as ArkSelect } from '@ark-ui/react/select';
-import { CheckIcon, ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
+import { ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
 import classNames from 'classnames';
-import { ComponentPropsWithRef, JSX, Ref, useId } from 'react';
+import { JSX, useId, useMemo } from 'react';
 
 import { BaseField } from '@components/BaseField';
 import { IconButton } from '@components/IconButton';
-import { CommonFieldProps, SelectItem } from '@components/type';
+
+import type { BaseSelectProps } from './BaseSelect.type';
+
+import { BaseSelectPopup } from './BaseSelectPopup';
 
 import '@packages/styles/components/BaseSelect.css';
 import '@packages/styles/components/DropDownMenu.css';
-
-export interface BaseSelectProps
-	extends Omit<ComponentPropsWithRef<'div'>, 'defaultValue'>,
-		CommonFieldProps<string[]> {
-	items?: Array<SelectItem>;
-	placeholder?: string;
-	ref?: Ref<HTMLDivElement>;
-	deselectable?: boolean;
-	loopFocus?: boolean;
-	name?: string;
-	multiple?: boolean;
-	CustomValueText?: React.ReactNode;
-	onValueChange?: ArkSelect.RootProps<SelectItem>['onValueChange'];
-	'data-testId'?: string;
-}
 
 const BaseSelect = ({
 	items = [],
@@ -46,9 +34,19 @@ const BaseSelect = ({
 	CustomValueText,
 	name,
 	'data-testId': dataTestId,
-	defaultValue
+	defaultValue,
+	virtualizationConfig,
+	popupMaxHeight,
+	menuHeader,
+	menuFooter,
+	emptyContent,
+	itemContent,
+	triggerIcon,
+	clearIcon,
+	onFocusOutside,
+	onExitComplete
 }: BaseSelectProps): JSX.Element => {
-	const collection = createListCollection({ items });
+	const collection = useMemo(() => createListCollection({ items }), [items]);
 	const supportingTextId = useId();
 
 	return (
@@ -62,6 +60,8 @@ const BaseSelect = ({
 			value={value}
 			multiple={multiple}
 			onValueChange={onValueChange}
+			onFocusOutside={onFocusOutside}
+			onExitComplete={onExitComplete}
 			name={name}
 			ref={ref}
 			defaultValue={defaultValue}
@@ -80,7 +80,9 @@ const BaseSelect = ({
 			>
 				<ArkSelect.Control className="Select_Control BaseField_Field" data-status={status}>
 					<ArkSelect.Trigger className="Select_Trigger" aria-describedby={supportingTextId}>
-						{CustomValueText ?? (
+						{typeof CustomValueText === 'function' ? (
+							CustomValueText({ supportingTextId })
+						) : (
 							<ArkSelect.ValueText className="Select_Value" placeholder={placeholder} />
 						)}
 					</ArkSelect.Trigger>
@@ -89,12 +91,12 @@ const BaseSelect = ({
 						{clearable && (
 							<ArkSelect.ClearTrigger className="Select_ClearButton" asChild>
 								<IconButton variant="text" color="secondary" size="medium">
-									<Cross2Icon />
+									{clearIcon ?? <Cross2Icon />}
 								</IconButton>
 							</ArkSelect.ClearTrigger>
 						)}
 						<ArkSelect.Indicator className="Select_Indicator" aria-label="select indicator">
-							<ChevronDownIcon width={20} height={20} />
+							{triggerIcon ?? <ChevronDownIcon width={20} height={20} />}
 						</ArkSelect.Indicator>
 					</div>
 
@@ -105,16 +107,15 @@ const BaseSelect = ({
 						className="Positioner"
 						style={{ zIndex: 'var(--menu-popup-z-index)' }}
 					>
-						<ArkSelect.Content className="Menu Select_Content">
-							{collection.items.map((item) => (
-								<ArkSelect.Item className="Menu_Item Select_Item" key={item.value} item={item}>
-									<ArkSelect.ItemText>{item.label}</ArkSelect.ItemText>
-									<ArkSelect.ItemIndicator className="MenuItem_TrailingIcon">
-										<CheckIcon height={16} width={16} />
-									</ArkSelect.ItemIndicator>
-								</ArkSelect.Item>
-							))}
-						</ArkSelect.Content>
+						<BaseSelectPopup
+							virtualizationConfig={virtualizationConfig}
+							items={collection.items}
+							popupMaxHeight={popupMaxHeight}
+							menuHeader={menuHeader}
+							menuFooter={menuFooter}
+							emptyContent={emptyContent}
+							itemContent={itemContent}
+						/>
 					</ArkSelect.Positioner>
 				</Portal>
 			</BaseField>
