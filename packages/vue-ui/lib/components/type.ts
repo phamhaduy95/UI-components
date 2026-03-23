@@ -3,8 +3,6 @@ import type { VirtualListProps } from './VirtualList';
 export type FieldStatus = 'success' | 'warning' | 'error';
 export type FieldSize = 'small' | 'medium' | 'large';
 
-export type ItemObject = { value: string; label: string; disabled?: boolean };
-
 export type SelectItem = { value: string; label: string; disabled?: boolean };
 
 export interface CommonFieldProps<TValue> {
