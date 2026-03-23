@@ -1,11 +1,18 @@
+import classNames from 'classnames';
 import { useState } from 'react';
-import { expect, fn, screen, userEvent, within } from 'storybook/test';
+import { expect, fireEvent, fn, screen, userEvent, waitFor, within } from 'storybook/test';
 
 import { SingleCombobox, SingleComboboxProps } from '@components/SingleCombobox';
+import { SelectItem } from '@components/type';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const mockedOnValueChange = fn();
+const mockedOnUpdateOpen = fn();
+const mockedOnFocusOutside = fn();
+const mockedOnExitComplete = fn();
+const mockedOnStartReached = fn();
+const mockedOnEndReached = fn();
 
 const items = [
 	{ label: 'React', value: 'react' },
@@ -20,7 +27,12 @@ const items = [
 	{ label: 'Preact', value: 'preact' }
 ];
 
-const triggerButtonLabel = 'Trigger popup';
+const largeItems = Array.from({ length: 1000 }).map((_, i) => ({
+	label: `Option ${i}`,
+	value: `option-${i}`
+}));
+
+const triggerLabel = 'Trigger popup';
 
 const meta: Meta<typeof SingleCombobox> = {
 	title: 'Components/FormField/Combobox',
@@ -31,6 +43,8 @@ const meta: Meta<typeof SingleCombobox> = {
 	},
 	argTypes: {
 		onValueChange: { action: 'onValueChange' },
+		onFocusOutside: { action: 'focusOutside' },
+		onExitComplete: { action: 'exitComplete' },
 		status: {
 			control: 'select',
 			options: ['default', 'error', 'success', 'warning']
@@ -40,10 +54,19 @@ const meta: Meta<typeof SingleCombobox> = {
 	},
 	args: {
 		supportingText: 'Please select a item.',
-		items: items
+		items: items,
+		onValueChange: mockedOnValueChange,
+		onFocusOutside: mockedOnFocusOutside,
+		onExitComplete: mockedOnExitComplete,
+		'data-testid': 'single-combobox-default'
 	},
 	beforeEach() {
 		mockedOnValueChange.mockClear();
+		mockedOnUpdateOpen.mockClear();
+		mockedOnFocusOutside.mockClear();
+		mockedOnExitComplete.mockClear();
+		mockedOnStartReached.mockClear();
+		mockedOnEndReached.mockClear();
 	}
 };
 
@@ -58,11 +81,14 @@ export const Default: Story = {
 	args: {
 		label: 'Framework',
 		placeholder: 'Search for a framework',
-		supportingText: 'Please select a framework.',
-		'data-testid': 'combobox-default'
+		supportingText: 'Please select a framework.'
 	},
 	play: async ({ canvas, args, step }) => {
-		const { 'data-testid': testId = '', label = '', supportingText = '' } = args;
+		const {
+			'data-testid': testId = 'single-combobox-default',
+			label = '',
+			supportingText = ''
+		} = args;
 		const container = canvas.getByTestId(testId);
 
 		await step('Check if container exists', async () => {
@@ -90,7 +116,7 @@ export const Default: Story = {
 		});
 
 		await step('Check if trigger is displayed', async () => {
-			const trigger = within(container).getByRole('button', { name: triggerButtonLabel });
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
 			expect(trigger).toBeInTheDocument();
 		});
 	}
@@ -98,15 +124,14 @@ export const Default: Story = {
 
 export const SelectItemFlow: Story = {
 	args: {
-		label: 'Framework',
-		'data-testid': 'combobox-select-item-flow'
+		label: 'Framework'
 	},
 	play: async ({ canvas, args, step }) => {
-		const { 'data-testid': testId = '', label = '' } = args;
+		const { 'data-testid': testId = 'single-combobox-default', label = '' } = args;
 		const container = canvas.getByTestId(testId);
 
 		await step('Open menu by clicking trigger', async () => {
-			const trigger = within(container).getByRole('button', { name: triggerButtonLabel });
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
 			await userEvent.click(trigger);
 		});
 
@@ -137,7 +162,7 @@ export const SelectItemFlow: Story = {
 		});
 
 		await step('Reopen Popup', async () => {
-			const trigger = within(container).getByRole('button', { name: triggerButtonLabel });
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
 			await userEvent.click(trigger);
 		});
 
@@ -150,11 +175,10 @@ export const SelectItemFlow: Story = {
 
 export const ItemInputFiltering: Story = {
 	args: {
-		label: 'Framework',
-		'data-testid': 'combobox-test-item-filtering'
+		label: 'Framework'
 	},
 	play: async ({ canvas, args, step }) => {
-		const { 'data-testid': testId = '', label = '' } = args;
+		const { 'data-testid': testId = 'single-combobox-default', label = '' } = args;
 		const container = canvas.getByTestId(testId);
 
 		await step('Type "r" into the input', async () => {
@@ -200,7 +224,6 @@ export const ItemInputFiltering: Story = {
 export const WithDefaultValue: Story = {
 	args: {
 		label: 'Framework',
-		'data-testid': 'combobox-with-default-value',
 		defaultValue: items[0].value
 	},
 	play: async ({ canvas, args, step }) => {
@@ -217,7 +240,6 @@ export const WithDefaultValue: Story = {
 export const Clearable: Story = {
 	args: {
 		label: 'Framework',
-		'data-testid': 'combobox-clearable',
 		defaultValue: items[0].value,
 		clearable: true
 	},
@@ -249,7 +271,6 @@ export const Controllable: Story = {
 		label: 'Framework',
 		value: items[0].value,
 		onValueChange: mockedOnValueChange,
-		'data-testid': 'combobox-controllable',
 		clearable: true
 	},
 	render: (args) => {
@@ -319,8 +340,7 @@ export const Disabled: Story = {
 	args: {
 		label: 'Framework',
 		disabled: true,
-		placeholder: 'Select Framework',
-		'data-testid': 'combobox-disabled'
+		placeholder: 'Select Framework'
 	},
 	play: async ({ canvas, args, step }) => {
 		const { 'data-testid': testId = '' } = args;
@@ -336,8 +356,7 @@ export const Disabled: Story = {
 export const Required: Story = {
 	args: {
 		label: 'Framework',
-		required: true,
-		'data-testid': 'combobox-required'
+		required: true
 	},
 	play: async ({ canvas, args, step }) => {
 		const { 'data-testid': testId = '' } = args;
@@ -391,5 +410,281 @@ export const Size: Story = {
 				<SingleCombobox {...args} size="medium" label="Medium" />
 			</div>
 		);
+	}
+};
+
+export const Virtualization: Story = {
+	args: {
+		virtualizationConfig: {
+			estimateSize: () => 40
+		},
+		items: largeItems,
+		label: 'Virtualization Combobox',
+		placeholder: 'Search among 1000 items',
+		loopFocus: true
+	},
+	play: async ({ canvas, args, step }) => {
+		const { 'data-testid': testId = '', label = '' } = args;
+		const container = canvas.getByTestId(testId);
+
+		await step('Open the combobox menu', async () => {
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if menu popup is displayed', async () => {
+			expect(menuPopup).toBeVisible();
+		});
+
+		await step('Verify that only a few items are rendered in the DOM', async () => {
+			const renderedOptions = within(menuPopup).queryAllByRole('option');
+			expect(renderedOptions.length).toBeLessThan(30);
+		});
+	}
+};
+
+export const VirtualizationWithEvents: Story = {
+	args: {
+		items: largeItems,
+		label: 'Virtualization Events',
+		placeholder: 'Scroll to see events',
+		virtualizationConfig: {
+			estimateSize: () => 40,
+			onStartReached: mockedOnStartReached,
+			onEndReached: mockedOnEndReached,
+			overscan: 10
+		}
+	},
+	play: async ({ canvas, args, step }) => {
+		const { 'data-testid': testId = '', label = '' } = args;
+		const container = canvas.getByTestId(testId);
+
+		await step('Open the combobox menu', async () => {
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Verify onStartReached is called initially', async () => {
+			await waitFor(() => {
+				expect(mockedOnStartReached).toHaveBeenCalled();
+			});
+		});
+
+		await step('Scroll to end of list', async () => {
+			fireEvent.scroll(menuPopup, { target: { scrollTop: menuPopup.scrollHeight } });
+		});
+
+		await step('Verify onEndReached is called', async () => {
+			await waitFor(() => {
+				expect(mockedOnEndReached).toHaveBeenCalled();
+			});
+		});
+
+		await step('Scroll to start of list', async () => {
+			fireEvent.scroll(menuPopup, { target: { scrollTop: 0 } });
+		});
+
+		await step('Verify onStartReached is called again', async () => {
+			await waitFor(() => {
+				expect(mockedOnStartReached).toHaveBeenCalled();
+			});
+		});
+	}
+};
+
+export const CustomMenuHeaderFooter: Story = {
+	args: {
+		label: 'Frameworks',
+		items: items,
+		menuHeader: (
+			<div className="border-b border-gray-200 px-3 py-2 font-semibold">Available Frameworks</div>
+		),
+		menuFooter: (
+			<div className="border-t border-gray-200 px-3 py-2 text-sm text-gray-500">End of list</div>
+		)
+	},
+	play: async ({ canvas, args, step }) => {
+		const { 'data-testid': testId = '', label = '' } = args;
+		const container = canvas.getByTestId(testId);
+
+		await step('Open the combobox menu', async () => {
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if custom header is rendered', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const header = within(menuPopup).getByText('Available Frameworks');
+			expect(header).toBeInTheDocument();
+		});
+
+		await step('Check if custom footer is rendered', async () => {
+			const footer = within(menuPopup).getByText('End of list');
+			expect(footer).toBeInTheDocument();
+		});
+	}
+};
+
+export const CustomEmptyContent: Story = {
+	args: {
+		label: 'Frameworks',
+		items: items,
+		emptyContent: (
+			<div className="px-3 py-2 text-center text-sm text-red-500">
+				No frameworks found! Try something else.
+			</div>
+		)
+	},
+	play: async ({ canvas, args, step }) => {
+		const { 'data-testid': testId = '', label = '' } = args;
+		const container = canvas.getByTestId(testId);
+		const input = within(container).getByRole('combobox', { name: label });
+
+		await step('Search for a non-existent item', async () => {
+			await userEvent.type(input, 'NonExistentFramework');
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if custom empty message is rendered', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const emptyMessage = within(menuPopup).getByText('No frameworks found! Try something else.');
+			expect(emptyMessage).toBeInTheDocument();
+		});
+	}
+};
+
+export const CustomItemContent: Story = {
+	args: {
+		label: 'Custom Items',
+		items: items,
+		itemContent: ({
+			item,
+			isSelected,
+			isHighlighted
+		}: {
+			item: SelectItem;
+			isSelected: boolean;
+			isHighlighted: boolean;
+		}) => (
+			<div
+				className={classNames('flex w-full items-center gap-2 p-1', {
+					'bg-blue-50': isHighlighted
+				})}
+			>
+				<span
+					className={classNames('font-bold underline', {
+						'text-blue-600': isSelected,
+						italic: isHighlighted
+					})}
+				>
+					Custom item: {item.label}
+				</span>
+				{isSelected && <span>(selected)</span>}
+				{isHighlighted && (
+					<span className="ml-auto text-xs" data-testid="highlight-icon">
+						highlighted
+					</span>
+				)}
+			</div>
+		)
+	},
+	play: async ({ canvas, args, step }) => {
+		const { 'data-testid': dataTestid = '', label = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Open the combobox menu via trigger', async () => {
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Verify custom item content formatting', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const firstOption = within(menuPopup).getByRole('option', {
+				name: items[0].label
+			});
+			expect(firstOption).toHaveTextContent('Custom item: ' + items[0].label);
+		});
+
+		await step('Verify isHighlighted prop works', async () => {
+			const secondOption = within(menuPopup).getByRole('option', {
+				name: items[1].label
+			});
+			await userEvent.hover(secondOption);
+
+			await waitFor(() => {
+				expect(secondOption).toHaveTextContent('highlighted');
+			});
+		});
+
+		await step('Verify isSelected prop works', async () => {
+			const firstOption = within(menuPopup).getByRole('option', {
+				name: items[0].label
+			});
+			await userEvent.click(firstOption);
+
+			// Re-open list
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
+			await userEvent.click(trigger);
+
+			const updatedMenuPopup = screen.getByRole('listbox', { name: label });
+			const firstOptionSelected = within(updatedMenuPopup).getByRole('option', {
+				name: items[0].label
+			});
+
+			expect(firstOptionSelected).toHaveTextContent('(selected)');
+		});
+	}
+};
+
+export const VirtualizationWithHeaderAndFooter: Story = {
+	args: {
+		label: 'Virtual Frameworks',
+		items: largeItems,
+		virtualizationConfig: {
+			estimateSize: () => 40
+		},
+		menuHeader: (
+			<div className="border-b border-gray-200 px-3 py-2 font-semibold">
+				Virtual Frameworks Header
+			</div>
+		),
+		menuFooter: (
+			<div className="border-t border-gray-200 px-3 py-2 text-sm text-gray-500">
+				Virtual Frameworks Footer
+			</div>
+		)
+	},
+	play: async ({ canvas, args, step }) => {
+		const { 'data-testid': testId = '', label = '' } = args;
+		const container = canvas.getByTestId(testId);
+
+		await step('Open the combobox menu', async () => {
+			const trigger = within(container).getByRole('button', { name: triggerLabel });
+			await userEvent.click(trigger);
+		});
+
+		const menuPopup = screen.getByRole('listbox', { name: label });
+		await step('Check if custom header is rendered', async () => {
+			await waitFor(() => {
+				expect(menuPopup).toBeVisible();
+			});
+			const header = within(menuPopup).getByText('Virtual Frameworks Header');
+			expect(header).toBeInTheDocument();
+		});
+
+		await step('Check if custom footer is rendered', async () => {
+			const footer = within(menuPopup).getByText('Virtual Frameworks Footer');
+			expect(footer).toBeInTheDocument();
+		});
 	}
 };
