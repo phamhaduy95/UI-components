@@ -7,9 +7,11 @@
 		ScrollDirection,
 		VirtualListPublicInstance
 	} from './VirtualList.type';
-	import { computed, ref, watchEffect, type CSSProperties } from 'vue';
+	import { computed, ref, type CSSProperties } from 'vue';
 
 	import { useElementSize } from '@vueuse/core';
+
+	type VirtualOptions = VirtualizerOptions<HTMLDivElement, Element>;
 
 	const props = withDefaults(defineProps<VirtualListProps<TData>>(), {
 		horizontal: false,
@@ -30,6 +32,16 @@
 	const headerRef = ref<HTMLDivElement | null>(null);
 
 	const { height: headerHeight, width: headerWidth } = useElementSize(headerRef);
+
+	const firstIndexRef = ref<number | undefined>(undefined);
+	const lastIndexRef = ref<number | undefined>(undefined);
+
+	const checkIfValueChanged = (newValue: number | undefined, oldValue: number | undefined) => {
+		if (oldValue === undefined) {
+			return true;
+		}
+		return newValue !== oldValue;
+	};
 
 	const paddingStart = computed(() => {
 		if ('header' in slots) {
@@ -94,6 +106,40 @@
 	});
 	/** End Configure Footer */
 
+	const handleVirtualizerChange: VirtualOptions['onChange'] = (instance) => {
+		const virtualIndexes = instance.getVirtualIndexes();
+
+		const firstIndex = virtualIndexes[0];
+		const lastIndex = virtualIndexes[virtualIndexes.length - 1];
+
+		if (checkIfValueChanged(firstIndex, firstIndexRef.value)) {
+			firstIndexRef.value = firstIndex;
+			if (firstIndex === 0) {
+				emit('startReached');
+			}
+		}
+
+		if (checkIfValueChanged(lastIndex, lastIndexRef.value)) {
+			lastIndexRef.value = lastIndex;
+			if (lastIndex === count.value - 1) {
+				emit('endReached');
+			}
+		}
+
+		if (firstIndex !== undefined && lastIndex !== undefined) {
+			emit('rangeChanged', {
+				startIndex: firstIndex,
+				endIndex: lastIndex
+			});
+		}
+
+		if (instance.isScrolling) {
+			const direction = instance.scrollDirection as ScrollDirection;
+			const offset = instance.scrollOffset ?? 0;
+			emit('scrolling', { direction, offsetInPixel: offset });
+		}
+	};
+
 	const virtualizerOptions = computed(
 		() =>
 			({
@@ -105,7 +151,8 @@
 				initialOffset: props.initialOffset,
 				paddingStart: paddingStart.value,
 				scrollPaddingStart: scrollPaddingStart.value,
-				paddingEnd: paddingEnd.value
+				paddingEnd: paddingEnd.value,
+				onChange: handleVirtualizerChange
 			}) satisfies Partial<VirtualizerOptions<HTMLDivElement, Element>>
 	);
 
@@ -114,33 +161,6 @@
 	const virtualItems = computed(() => virtualizer.value.getVirtualItems());
 
 	const totalSize = computed(() => virtualizer.value.getTotalSize());
-
-	const virtualIndexes = computed(() => virtualizer.value.getVirtualIndexes());
-
-	const firstIndex = computed(() => virtualIndexes.value[0]);
-
-	watchEffect(() => {
-		if (firstIndex.value === 0) {
-			emit('startReached');
-		}
-	});
-
-	const lastIndex = computed(() => virtualIndexes.value[virtualIndexes.value.length - 1]);
-
-	watchEffect(() => {
-		if (lastIndex.value === count.value - 1) {
-			emit('endReached');
-		}
-	});
-
-	watchEffect(() => {
-		if (firstIndex.value !== undefined && lastIndex.value !== undefined) {
-			emit('rangeChanged', {
-				startIndex: firstIndex.value,
-				endIndex: lastIndex.value
-			});
-		}
-	});
 
 	const virtualViewStyle = computed<CSSProperties>(() => {
 		return props.horizontal
@@ -175,14 +195,6 @@
 					transform: `translateY(${item.start}px)`
 				};
 	};
-
-	watchEffect(() => {
-		if (virtualizer.value.isScrolling) {
-			const direction = virtualizer.value.scrollDirection as ScrollDirection;
-			const offset = virtualizer.value.scrollOffset ?? 0;
-			emit('scrolling', { direction, offsetInPixel: offset });
-		}
-	});
 
 	const scrollToBottom = (options?: ScrollToOptions) => {
 		virtualizer.value.scrollToOffset(totalSize.value, options);

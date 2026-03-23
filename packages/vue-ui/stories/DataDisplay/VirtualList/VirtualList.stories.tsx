@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { expect, waitFor, fn } from 'storybook/test';
+import { expect, waitFor, fn, userEvent, fireEvent } from 'storybook/test';
 import { computed, ref } from 'vue';
 import type { ItemType } from './ConcreteVirtualList.vue';
 import ConcreteVirtualList from './ConcreteVirtualList.vue';
@@ -278,7 +278,7 @@ export const ScrollingEvent: Story = {
 		const container = canvas.getByTestId('virtual-list-default');
 
 		await step('Scroll down and check if scrolling event was called', async () => {
-			container.scrollTop = 500;
+			await fireEvent.scroll(container, { target: { scrollTop: 500 } });
 			await waitFor(() => {
 				expect(mockedOnScrolling).toHaveBeenCalled();
 			});
@@ -311,7 +311,7 @@ export const EndReachedEvent: Story = {
 		const container = canvas.getByTestId('virtual-list-default');
 
 		await step('Scroll to bottom and check if endReached was called', async () => {
-			container.scrollTop = container.scrollHeight;
+			await fireEvent.scroll(container, { target: { scrollTop: container.scrollHeight } });
 			await waitFor(() => {
 				expect(mockedOnEndReached).toHaveBeenCalled();
 			});
@@ -339,7 +339,7 @@ export const RangeChangedEvent: Story = {
 		});
 
 		await step('rangeChanged updates when scrolled', async () => {
-			container.scrollTop = 1000;
+			await fireEvent.scroll(container, { target: { scrollTop: 1000 } });
 			await waitFor(() => {
 				const calls = mockedOnRangeChanged.mock.calls;
 				const lastCall = calls[calls.length - 1]?.[0] as { startIndex: number; endIndex: number };
@@ -363,11 +363,11 @@ export const ScrollingMethods: Story = {
 		template: `
 			<div>
 				<div class="flex gap-2 mb-4">
-					<Button @click="listRef.scrollBy(100)" data-testid="scroll-by">Scroll By 100px</Button>
-					<Button @click="listRef.scrollToOffset(1500)" data-testid="scroll-to-offset">Scroll To Offset 1500px</Button>
-					<Button @click="listRef.scrollToIndex(500)" data-testid="scroll-to-index">Scroll To Index 500</Button>
-                    <Button @click="listRef.scrollToOffset(0)" data-testid="scroll-to-index">Scroll to Top</Button>
-                    <Button @click="listRef.scrollToBottom()" data-testid="scroll-to-index">Scroll to Bottom</Button>
+					<Button @click="listRef.scrollBy(100)" >Scroll By 100px</Button>
+					<Button @click="listRef.scrollToOffset(1500)" >Scroll To Offset 1500px</Button>
+					<Button @click="listRef.scrollToIndex(500)" >Scroll To Index 500</Button>
+                    <Button @click="listRef.scrollToOffset(0)" >Scroll to Top</Button>
+                    <Button @click="listRef.scrollToBottom()" >Scroll to Bottom</Button>
 				</div>
 				<ConcreteVirtualList ref="listRef" v-bind="args">
 					<template #header>
@@ -388,7 +388,49 @@ export const ScrollingMethods: Story = {
 				</ConcreteVirtualList>
 			</div>
 		`
-	})
+	}),
+	play: async ({ canvas, step, args }) => {
+		const { dataTestid = 'virtual-list-default' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Scroll by 100px', async () => {
+			await userEvent.click(canvas.getByRole('button', { name: 'Scroll By 100px' }));
+			await waitFor(() => {
+				expect(container.scrollTop).toBeGreaterThan(0);
+			});
+		});
+
+		await step('Scroll to offset 1500px', async () => {
+			await userEvent.click(canvas.getByRole('button', { name: 'Scroll To Offset 1500px' }));
+			await waitFor(() => {
+				expect(container.scrollTop).toBe(1500);
+			});
+		});
+
+		await step('Scroll to index 500', async () => {
+			await userEvent.click(canvas.getByRole('button', { name: 'Scroll To Index 500' }));
+			await waitFor(() => {
+				const item = canvas.getByText('Row 500');
+				expect(item).toBeVisible();
+			});
+		});
+
+		await step('Scroll to Bottom', async () => {
+			await userEvent.click(canvas.getByRole('button', { name: 'Scroll to Bottom' }));
+			await waitFor(() => {
+				const footer = canvas.getByText('Footer');
+				expect(footer).toBeVisible();
+			});
+		});
+
+		await step('Scroll to Top', async () => {
+			await userEvent.click(canvas.getByRole('button', { name: 'Scroll to Top' }));
+			await waitFor(() => {
+				const header = canvas.getByText('Header');
+				expect(header).toBeVisible();
+			});
+		});
+	}
 };
 
 export const LoadMoreOnEndReached: Story = {
@@ -400,14 +442,15 @@ export const LoadMoreOnEndReached: Story = {
 		components: { ConcreteVirtualList },
 		setup() {
 			const PAGE_SIZE = 30;
-			const LOADING_DELAY = 500;
+			const LOADING_DELAY = 200;
+			const MAX_COUNT = 2;
 			const items = ref(generateItems(PAGE_SIZE));
 
 			const loadCount = ref(0);
 			const isLoading = ref(false);
 
 			const loadMore = async () => {
-				if (loadCount.value > 3) return;
+				if (loadCount.value > MAX_COUNT) return;
 				if (isLoading.value) return;
 				try {
 					isLoading.value = true;
@@ -426,7 +469,7 @@ export const LoadMoreOnEndReached: Story = {
 			};
 
 			const shouldShowFooter = computed(() => {
-				return isLoading.value || loadCount.value <= 3;
+				return isLoading.value && loadCount.value <= MAX_COUNT;
 			});
 
 			return { args, items, isLoading, loadMore, shouldShowFooter };
@@ -461,7 +504,47 @@ export const LoadMoreOnEndReached: Story = {
 				</template>
 			</ConcreteVirtualList>
 		`
-	})
+	}),
+	play: async ({ canvas, step, args }) => {
+		const { dataTestid = 'virtual-list-default' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Scroll down to load first batch (Row 30 to 59)', async () => {
+			await fireEvent.scroll(container, { target: { scrollTop: container.scrollHeight } });
+
+			await waitFor(() => {
+				const loadMore = canvas.queryByTestId('loading-indicator');
+				expect(loadMore).toBeVisible();
+			});
+		});
+
+		await step('Check if next batch is loaded', async () => {
+			await waitFor(
+				() => {
+					const loadMore = canvas.queryByTestId('loading-indicator');
+					expect(loadMore).not.toBeInTheDocument();
+				},
+				{ timeout: 400 }
+			);
+			expect(canvas.queryByText('Row 30')).toBeInTheDocument();
+		});
+
+		await step('Scroll down again to load second batch (Row 60 to 89)', async () => {
+			await fireEvent.scroll(container, { target: { scrollTop: container.scrollHeight } });
+
+			await waitFor(
+				() => {
+					const loadMore = canvas.queryByTestId('loading-indicator');
+					expect(loadMore).not.toBeInTheDocument();
+				},
+				{ timeout: 400 }
+			);
+			await fireEvent.scroll(container, { target: { scrollTop: container.scrollTop + 200 } });
+			await waitFor(() => {
+				expect(canvas.queryByText('Row 60')).toBeInTheDocument();
+			});
+		});
+	}
 };
 
 export const StickyHeader: Story = {
@@ -493,7 +576,23 @@ export const StickyHeader: Story = {
 				</ConcreteVirtualList>
 			);
 		}
-	})
+	}),
+	play: async ({ canvas, step, args }) => {
+		const { dataTestid = 'virtual-list-default' } = args;
+		const container = canvas.getByTestId(dataTestid as string);
+		const header = canvas.getByTestId('header');
+
+		await step('Header is visible initially', async () => {
+			expect(header).toBeVisible();
+		});
+
+		await step('Scroll down and verify header remains visible', async () => {
+			await fireEvent.scroll(container, { target: { scrollTop: 1000 } });
+			await waitFor(() => {
+				expect(header).toBeVisible();
+			});
+		});
+	}
 };
 
 export const StaticHeader: Story = {
@@ -556,7 +655,19 @@ export const StaticFooter: Story = {
 				</ConcreteVirtualList>
 			);
 		}
-	})
+	}),
+	play: async ({ canvas, step, args }) => {
+		const { dataTestid = 'virtual-list-default' } = args;
+		const container = canvas.getByTestId(dataTestid as string);
+		const footer = canvas.getByTestId('footer');
+
+		await step('Scroll down to check if footer becomes visible', async () => {
+			await fireEvent.scroll(container, { target: { scrollTop: container.scrollHeight } });
+			await waitFor(() => {
+				expect(footer).toBeVisible();
+			});
+		});
+	}
 };
 
 export const HorizontalWithHeader: Story = {
