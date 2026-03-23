@@ -1,3 +1,5 @@
+import type { VirtualListProps } from './VirtualList';
+
 export type FieldStatus = 'success' | 'warning' | 'error';
 export type FieldSize = 'small' | 'medium' | 'large';
 
@@ -20,4 +22,10 @@ export interface CommonFieldProps<TValue> {
 	defaultValue?: TValue;
 	name?: string;
 	readOnly?: boolean;
+}
+
+export interface VirtualizationConfig
+	extends Pick<VirtualListProps<SelectItem>, 'estimateSize' | 'overscan' | 'getItemKey'> {
+	onStartReached?: () => void;
+	onEndReached?: () => void;
 }

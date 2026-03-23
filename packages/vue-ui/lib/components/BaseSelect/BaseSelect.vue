@@ -7,10 +7,11 @@
 	import { IconButton } from '@components/IconButton';
 	import { VirtualList } from '@components/VirtualList';
 
-	import type { BaseSelectEmits, BaseSelectProps, VirtualizationConfig } from './BaseSelect.type';
+	import type { BaseSelectEmits, BaseSelectProps } from './BaseSelect.type';
 
 	import '@packages/styles/components/BaseSelect.css';
 	import '@packages/styles/components/DropDownMenu.css';
+	import type { VirtualizationConfig } from '@components/type';
 
 	defineOptions({ inheritAttrs: false });
 
@@ -23,6 +24,7 @@
 		clearable: false,
 		disabled: false,
 		required: false,
+		popupMaxHeight: 300,
 		virtualizationConfig: undefined,
 		modelValue: undefined,
 		defaultValue: undefined,
@@ -41,7 +43,6 @@
 	const defaultVirtualizationConfig: Required<VirtualizationConfig> = {
 		estimateSize: () => 30,
 		overscan: 2,
-		viewHeight: 300,
 		getItemKey: (index: number) => index.toString(),
 		onStartReached: () => {},
 		onEndReached: () => {}
@@ -146,7 +147,7 @@
 				>
 					<template v-if="virtualEnabled">
 						<ArkSelect.Content
-							class="Menu SelectContent"
+							class="Menu Select_Content"
 							as-child
 						>
 							<VirtualList
@@ -154,7 +155,7 @@
 								:estimate-size="virtualConfig.estimateSize"
 								:overscan="virtualConfig.overscan"
 								:get-item-key="virtualConfig.getItemKey"
-								:style="{ height: `${virtualConfig.viewHeight}px` }"
+								:style="{ maxHeight: `${popupMaxHeight}px` }"
 								class="overflow-auto"
 								@start-reached="virtualConfig.onStartReached"
 								@end-reached="virtualConfig.onEndReached"
@@ -162,7 +163,7 @@
 								<template #itemContent="{ itemData }">
 									<ArkSelect.Item
 										:key="itemData.value"
-										class="Menu_Item SelectItem"
+										class="Menu_Item Select_Item"
 										:item="itemData"
 									>
 										<ArkSelect.ItemText>{{ itemData.label }}</ArkSelect.ItemText>
@@ -175,11 +176,14 @@
 						</ArkSelect.Content>
 					</template>
 					<template v-else>
-						<ArkSelect.Content class="Menu SelectContent">
+						<ArkSelect.Content
+							class="Menu Select_Content"
+							:style="{ maxHeight: `${popupMaxHeight}px` }"
+						>
 							<ArkSelect.Item
 								v-for="item in collection.items"
 								:key="item.value"
-								class="Menu_Item SelectItem"
+								class="Menu_Item Select_Item"
 								:item="item"
 							>
 								<ArkSelect.ItemText>{{ item.label }}</ArkSelect.ItemText>

@@ -11,12 +11,12 @@
 	import type {
 		BaseComboboxEmits,
 		BaseComboboxProps,
-		VirtualizationConfig,
 		BaseComboboxSlots
 	} from './BaseCombobox.type';
 
 	import '@packages/styles/components/BaseCombobox.css';
 	import '@packages/styles/components/DropDownMenu.css';
+	import type { VirtualizationConfig } from '@components/type';
 
 	defineOptions({ inheritAttrs: false });
 
@@ -28,6 +28,7 @@
 		clearable: false,
 		disabled: false,
 		required: false,
+		popupMaxHeight: 300,
 		modelValue: undefined,
 		defaultValue: undefined,
 		open: undefined,
@@ -56,7 +57,6 @@
 	const defaultVirtualizationConfig: Required<VirtualizationConfig> = {
 		estimateSize: () => 30,
 		overscan: 2,
-		viewHeight: 300,
 		getItemKey: (index: number) => index.toString(),
 		onStartReached: () => {},
 		onEndReached: () => {}
@@ -168,6 +168,7 @@
 			:items="collection.items"
 			:filtered-items-length="filteredItems.length"
 			:search-value="searchValue"
+			:popup-max-height="popupMaxHeight"
 		>
 			<template
 				v-if="slots.menuHeader"

@@ -1,16 +1,9 @@
 import { type SelectRootEmits, type SelectRootProps } from '@ark-ui/vue/select';
-import type { CommonFieldProps, SelectItem } from '@components/type';
-import type { VirtualListProps } from '@components/VirtualList';
+import type { CommonFieldProps, SelectItem, VirtualizationConfig } from '@components/type';
+
 import type { SelectHTMLAttributes } from 'vue';
 
 type ArkSelectProps = SelectRootProps<SelectItem>;
-
-export interface VirtualizationConfig
-	extends Pick<VirtualListProps<SelectItem>, 'estimateSize' | 'overscan' | 'getItemKey'> {
-	viewHeight?: number;
-	onStartReached?: () => void;
-	onEndReached?: () => void;
-}
 
 export interface SelectBaseProps
 	extends CommonFieldProps<string[]>,
@@ -41,6 +34,9 @@ export interface SelectBaseProps
 	 * enabling high-performance scrolling for large datasets.
 	 */
 	virtualizationConfig?: VirtualizationConfig;
+
+	/** The maximum height of the popup menu. */
+	popupMaxHeight?: number;
 }
 
 export type BaseSelectProps = SelectBaseProps &
