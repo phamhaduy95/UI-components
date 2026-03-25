@@ -51,6 +51,7 @@
 		"@ark-ui/vue": "^5.34.1",
 		"@heroicons/vue": "^2.2.0",
 		"@packages/styles": "workspace:*",
+		"@tanstack/vue-table": "^8.21.3",
 		"@tanstack/vue-virtual": "^3.13.23",
 		"@vueuse/core": "^14.2.1",
 		"dayjs": "^1.11.19",
