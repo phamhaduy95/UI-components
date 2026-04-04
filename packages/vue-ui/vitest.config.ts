@@ -19,7 +19,7 @@ export default mergeConfig(
 				clean: true,
 				reporter: ['html', 'text', 'lcov'],
 				include: ['lib/**/*.{ts,vue}'],
-				exclude: ['**/index.ts', '**/type.ts'],
+				exclude: ['**/index.ts', '**/*.type.ts', '**/type.ts'],
 				thresholds: {
 					global: {
 						lines: 80,

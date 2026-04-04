@@ -51,6 +51,7 @@
 		"@ark-ui/vue": "^5.34.1",
 		"@heroicons/vue": "^2.2.0",
 		"@packages/styles": "workspace:*",
+		"@tanstack/vue-table": "^8.21.3",
 		"@tanstack/vue-virtual": "^3.13.23",
 		"@vueuse/core": "^14.2.1",
 		"dayjs": "^1.11.19",
@@ -59,6 +60,7 @@
 	"devDependencies": {
 		"@chromatic-com/storybook": "^5.0.1",
 		"@configs/eslint-config": "workspace:*",
+		"@faker-js/faker": "^10.4.0",
 		"@storybook/addon-a11y": "^10.2.16",
 		"@storybook/addon-docs": "^10.2.16",
 		"@storybook/addon-vitest": "^10.2.16",

@@ -1,0 +1,123 @@
+.DataTable {
+	width: 100%;
+	color: var(--color-on-surface);
+	font-size: var(--text-sm);
+}
+
+.DataTable_Container {
+	width: 100%;
+	overflow-x: auto;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--color-outline-variant);
+	background-color: var(--color-surface-container-lowest);
+}
+
+.DataTable_Table {
+	width: 100%;
+	border-collapse: collapse;
+	table-layout: auto;
+}
+
+.DataTable_Head {
+	background-color: var(--color-surface-container-low);
+}
+
+.DataTable_HeadRow--sticky {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	box-shadow: 0 1px 0 var(--color-outline-variant);
+}
+
+.DataTable_HeadCell {
+	padding: 14px 16px;
+	text-align: start;
+	font-size: var(--text-xs);
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--color-on-surface-variant);
+	white-space: nowrap;
+	border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.DataTable_HeadCell--selection {
+	width: 52px;
+	min-width: 52px;
+	padding-inline: 16px;
+	text-align: center;
+}
+
+.DataTable_Row {
+	transition: background-color 150ms ease;
+
+	&:not(:last-child) {
+		border-bottom: 1px solid var(--color-outline-variant);
+	}
+
+	&:hover {
+		background-color: var(--color-surface-hovered);
+	}
+
+	&.DataTable_Row--selected {
+		background-color: var(--color-primary-container);
+
+		&:hover {
+			background-color: var(--color-primary-container-hover);
+		}
+	}
+}
+
+.DataTable_Cell {
+	padding: 12px 16px;
+	vertical-align: middle;
+	color: var(--color-on-surface);
+	font-size: var(--text-sm);
+	line-height: 1.5;
+}
+
+.DataTable_Cell--selection {
+	width: 52px;
+	min-width: 52px;
+	padding-inline: 16px;
+	text-align: center;
+}
+
+.DataTable_PaginationPanel {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 10px 16px;
+	border-top: 1px solid var(--color-outline-variant);
+	background-color: var(--color-surface-container-lowest);
+	border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+
+	> .DataTable_DisplayRange {
+		flex: 1;
+		font-size: var(--text-sm);
+		color: var(--color-on-surface-variant);
+		white-space: nowrap;
+	}
+
+	> .DataTable_Pagination {
+		flex: 1;
+		display: flex;
+		justify-content: center;
+	}
+
+	> .DataTable_PageSize {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 8px;
+		font-size: var(--text-sm);
+		color: var(--color-on-surface-variant);
+		white-space: nowrap;
+	}
+
+	> .DataTable_PageSizeSelect {
+		min-width: 80px;
+	}
+}
