@@ -34,14 +34,14 @@ export type BaseComboboxProps = ComboboxBaseProps &
 	/* @vue-ignore */
 	Omit<HTMLAttributes, 'value' | 'disabled' | 'required' | 'size' | 'multiple'>;
 
-export interface BaseComboboxEmits {
+export type BaseComboboxEmits = {
 	focusOutside: ComboboxRootEmits<SelectItem>['focusOutside'];
 	exitComplete: ComboboxRootEmits<SelectItem>['exitComplete'];
 	valueChange: ComboboxRootEmits<SelectItem>['valueChange'];
 	'update:modelValue': ComboboxRootEmits<SelectItem>['update:modelValue'];
 	'update:open': ComboboxRootEmits<SelectItem>['update:open'];
 	'update:inputValue': ComboboxRootEmits<SelectItem>['update:inputValue'];
-}
+};
 
 export type BaseComboboxSlots = {
 	/**
