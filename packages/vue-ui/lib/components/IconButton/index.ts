@@ -1,1 +1,2 @@
-export { default as IconButton, type IconButtonProps } from './IconButton.vue';
+export { default as IconButton } from './IconButton.vue';
+export type { IconButtonProps, IconButtonSlots } from './IconButton.type';
