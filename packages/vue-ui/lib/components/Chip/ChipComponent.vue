@@ -1,26 +1,10 @@
 <script setup lang="ts">
-	import { computed, type HTMLAttributes } from 'vue';
+	import { computed } from 'vue';
 	import { XMarkIcon } from '@heroicons/vue/20/solid';
 
+	import type { ChipProps, ChipEmit, ChipSlots } from './Chip.type';
+
 	import '@packages/styles/components/Chip.css';
-
-	export type ChipSize = 'small' | 'medium';
-	export type ChipColor = 'primary' | 'secondary' | 'error' | 'success' | 'warning';
-
-	export interface ChipProps extends /* @vue-ignore */ HTMLAttributes {
-		label?: string;
-		removable?: boolean;
-		size?: ChipSize;
-		color?: ChipColor;
-		disabled?: boolean;
-		clickable?: boolean;
-		dataTestid?: string;
-	}
-
-	export interface ChipEmits {
-		click: [event: MouseEvent];
-		remove: [];
-	}
 
 	const props = withDefaults(defineProps<ChipProps>(), {
 		size: 'medium',
@@ -30,7 +14,9 @@
 		clickable: false
 	});
 
-	const emit = defineEmits<ChipEmits>();
+	const emit = defineEmits<ChipEmit>();
+
+	defineSlots<ChipSlots>();
 
 	const handleRemove = () => {
 		emit('remove');
