@@ -1,29 +1,15 @@
 <script setup lang="ts">
-	import { ref, computed, useId, type HTMLAttributes } from 'vue';
+	import { ref, computed, useId } from 'vue';
 	import { PasswordInput as ArkPasswordInput } from '@ark-ui/vue/password-input';
 	import { EyeIcon, EyeSlashIcon, XMarkIcon } from '@heroicons/vue/24/solid';
-	import type { CommonFieldProps } from '@components/type';
 	import { BaseField } from '@components/BaseField';
 	import { IconButton } from '@components/IconButton';
+
+	import type { PasswordInputEmits, PasswordInputProps } from './PasswordInput.type';
+
 	import '@packages/styles/components/PasswordInput.css';
 
 	defineOptions({ inheritAttrs: false });
-
-	export interface PasswordInputProps
-		extends CommonFieldProps<string>,
-			/* @vue-ignore */ HTMLAttributes {
-		modelValue?: string;
-		autoComplete?: string;
-		modelVisable?: boolean;
-		defaultVisible?: boolean;
-		dataTestid?: string;
-	}
-
-	export type PasswordInputEmits = {
-		valueChange: [e: InputEvent];
-		'update:modelValue': [value: string];
-		'update:modelVisable': [visible: boolean];
-	};
 
 	const props = withDefaults(defineProps<PasswordInputProps>(), {
 		size: 'medium',
