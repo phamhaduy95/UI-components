@@ -15,6 +15,7 @@ export * from './IconButton';
 export * from './MultipleCombobox';
 export * from './MultipleSelect';
 export * from './NumberInput';
+export * from './Pagination';
 export * from './PasswordInput';
 export * from './Popover';
 export * from './SingleCombobox';
