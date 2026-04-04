@@ -30,6 +30,7 @@
 		v-bind="props"
 		@update:selected-value="emit('update:selectedValue', $event)"
 		@update:visible-headers="emit('update:visibleHeaders', $event)"
+		@update:pagination="emit('update:pagination', $event)"
 	>
 		<template
 			v-for="(_, slotName) in $slots"

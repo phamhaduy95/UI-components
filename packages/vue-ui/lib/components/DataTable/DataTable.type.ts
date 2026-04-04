@@ -39,6 +39,11 @@ type BaseColumnDef<TData extends RowData> = {
 	enableHiding?: boolean;
 };
 
+export type PaginationState = {
+	pageIndex: number;
+	pageSize: number;
+};
+
 /**
  * Column definition for displaying data fields.
  */
@@ -110,12 +115,26 @@ export type DataTableProps<TData extends RowData, Tkey extends keyof TData = key
 	 */
 	dataKey?: Tkey;
 
+	/**
+	 * Array of visible headers.
+	 */
 	visibleHeaders?: Array<string>;
+
+	/**
+	 * Enable pagination.
+	 */
+	enablePagination?: boolean;
+
+	/**
+	 * Pagination state.
+	 */
+	pagination?: PaginationState;
 };
 
 export type DataTableEmit<TData extends RowData, Tkey extends keyof TData = keyof TData> = {
 	'update:selectedValue': [Array<TData[Tkey]>];
 	'update:visibleHeaders': [Array<string>];
+	'update:pagination': [PaginationState];
 };
 
 /**

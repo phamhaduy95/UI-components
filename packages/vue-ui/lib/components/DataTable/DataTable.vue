@@ -7,9 +7,11 @@
 		type RowData,
 		type Header,
 		type Cell,
-		type RowSelectionState
+		type RowSelectionState,
+		type PaginationState,
+		getPaginationRowModel
 	} from '@tanstack/vue-table';
-	import { computed, shallowRef, type CSSProperties } from 'vue';
+	import { computed, ref, shallowRef, type CSSProperties } from 'vue';
 
 	import type {
 		DataTableColumn,
@@ -17,6 +19,8 @@
 		DataTableProps,
 		DataTableSlots
 	} from './DataTable.type';
+
+	import DataTablePagination from './DataTablePagination.vue';
 
 	import { Checkbox } from '@components/Checkbox';
 
@@ -27,6 +31,7 @@
 	const props = withDefaults(defineProps<DataTableProps<TData>>(), {
 		selectionMode: undefined,
 		selectedValue: undefined,
+		pagination: undefined,
 		dataKey: undefined
 	});
 
@@ -129,6 +134,15 @@
 		return visibility;
 	});
 
+	const innerPagination = ref<PaginationState>({
+		pageIndex: 0,
+		pageSize: 10
+	});
+
+	const paginationState = computed(() => {
+		return props.pagination ?? innerPagination.value;
+	});
+
 	const table = useVueTable({
 		get data() {
 			return props.data;
@@ -142,9 +156,18 @@
 			},
 			get columnVisibility() {
 				return columnVisibilityState.value;
+			},
+			get pagination() {
+				if (!props.enablePagination) return undefined;
+				return paginationState.value;
 			}
 		},
+
 		getCoreRowModel: getCoreRowModel(),
+		get getPaginationRowModel() {
+			if (!props.enablePagination) return undefined;
+			return getPaginationRowModel();
+		},
 		getRowId: (row) => {
 			return String(row[props.dataKey as keyof TData]);
 		},
@@ -172,6 +195,16 @@
 
 			const visibleKeys = Object.keys(newValue);
 			emit('update:visibleHeaders', visibleKeys);
+		},
+		onPaginationChange: (updateOrValue) => {
+			if (!props.enablePagination) return;
+			const newValue =
+				typeof updateOrValue === 'function'
+					? updateOrValue(paginationState.value ?? { pageIndex: 0, pageSize: 10 })
+					: updateOrValue;
+
+			innerPagination.value = newValue;
+			emit('update:pagination', newValue);
 		},
 		get enableMultiRowSelection() {
 			return props.selectionMode === 'multiple';
@@ -206,6 +239,11 @@
 			style.textAlign = alignment;
 		}
 		return style;
+	};
+
+	const handlePageUpdated = (page: number) => {
+		// must minus 1 since the pagination component is 1-based and the table is 0-based
+		table.setPageIndex(page - 1);
 	};
 </script>
 
@@ -308,6 +346,15 @@
 					</tr>
 				</tbody>
 			</table>
+
+			<DataTablePagination
+				v-if="enablePagination"
+				:total="table.getRowCount()"
+				:page="paginationState.pageIndex"
+				:page-size="paginationState.pageSize"
+				@update:page="handlePageUpdated"
+				@update:page-size="table.setPageSize"
+			/>
 		</div>
 	</div>
 </template>
