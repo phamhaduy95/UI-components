@@ -1,24 +1,6 @@
 <script setup lang="ts">
-	import { Popover as ArkPopover, type PopoverRootProps } from '@ark-ui/vue/popover';
-
-	export interface PopoverProps
-		extends Pick<
-			PopoverRootProps,
-			| 'autoFocus'
-			| 'open'
-			| 'defaultOpen'
-			| 'closeOnInteractOutside'
-			| 'unmountOnExit'
-			| 'closeOnEscape'
-			| 'lazyMount'
-		> {
-		positioning?: PopoverRootProps['positioning'];
-	}
-
-	export interface PopoverEmits {
-		'update:open': [open: boolean];
-		exitComplete: [];
-	}
+	import { Popover as ArkPopover } from '@ark-ui/vue/popover';
+	import type { PopoverEmits, PopoverProps, PopoverSlots } from './Popover.type';
 
 	withDefaults(defineProps<PopoverProps>(), {
 		autoFocus: undefined,
@@ -32,6 +14,8 @@
 	});
 
 	const emit = defineEmits<PopoverEmits>();
+
+	defineSlots<PopoverSlots>();
 
 	const handleUpdateOpen = (open: boolean) => {
 		emit('update:open', open);
