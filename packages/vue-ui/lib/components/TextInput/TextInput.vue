@@ -1,25 +1,14 @@
 <script setup lang="ts">
 	import { ref, computed, useId } from 'vue';
-	import type { HTMLAttributes } from 'vue';
 	import { XMarkIcon } from '@heroicons/vue/20/solid';
-	import type { CommonFieldProps } from '@components/type';
 	import { BaseField } from '@components/BaseField';
 	import { IconButton } from '@components/IconButton';
+
+	import type { TextInputEmits, TextInputProps } from './TextInput.type';
 
 	import '@packages/styles/components/TextInput.css';
 
 	defineOptions({ inheritAttrs: false });
-
-	export interface TextInputProps
-		extends CommonFieldProps<string>,
-			/* @vue-ignore */ HTMLAttributes {
-		dataTestid?: string;
-	}
-
-	export interface TextInputEmits {
-		'update:modelValue': [value: string];
-		valueChange: [e: InputEvent];
-	}
 
 	const props = withDefaults(defineProps<TextInputProps>(), {
 		size: 'medium',
