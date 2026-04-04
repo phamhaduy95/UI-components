@@ -1,19 +1,17 @@
 <script setup lang="ts">
 	import { ref, computed, type ComponentInstance } from 'vue';
-	import { Toggle as ArkToggle, type ToggleRootEmits } from '@ark-ui/vue/toggle';
-	import { Button, type ButtonProps } from '@components/Button';
+	import { Toggle as ArkToggle } from '@ark-ui/vue/toggle';
+	import { Button } from '@components/Button';
+
+	import type {
+		ToggleButtonEmits,
+		ToggleButtonProps,
+		ToggleButtonSlots
+	} from './ToggleButton.type';
 
 	defineOptions({ inheritAttrs: false });
 
-	export interface ToggleButtonProps extends Omit<ButtonProps, 'variant'> {
-		pressed?: boolean;
-		defaultPressed?: boolean;
-		disabled?: boolean;
-	}
-
 	type ArkToggleRootProps = ComponentInstance<typeof ArkToggle.Root>;
-
-	export type ToogleButtonEmits = ToggleRootEmits;
 
 	const props = withDefaults(defineProps<ToggleButtonProps>(), {
 		size: 'medium',
@@ -21,7 +19,9 @@
 		pressed: undefined
 	});
 
-	const emit = defineEmits<ToogleButtonEmits>();
+	const emit = defineEmits<ToggleButtonEmits>();
+
+	defineSlots<ToggleButtonSlots>();
 
 	const internalPressed = ref(props.defaultPressed);
 
