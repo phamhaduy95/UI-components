@@ -1,23 +1,6 @@
 <script setup lang="ts">
-	import { HoverCard as ArkHoverCard, type HoverCardRootProps } from '@ark-ui/vue/hover-card';
-
-	export interface HoverProps
-		extends Pick<
-			HoverCardRootProps,
-			| 'defaultOpen'
-			| 'open'
-			| 'openDelay'
-			| 'closeDelay'
-			| 'disabled'
-			| 'unmountOnExit'
-			| 'lazyMount'
-		> {
-		positioning?: HoverCardRootProps['positioning'];
-	}
-
-	export interface HoverEmits {
-		'update:open': [open: boolean];
-	}
+	import { HoverCard as ArkHoverCard } from '@ark-ui/vue/hover-card';
+	import type { HoverProps, HoverEmits, HoverSlots } from './Hover.type';
 
 	withDefaults(defineProps<HoverProps>(), {
 		open: undefined,
@@ -28,6 +11,8 @@
 	});
 
 	const emit = defineEmits<HoverEmits>();
+
+	defineSlots<HoverSlots>();
 
 	const handleUpdateOpen = (open: boolean) => {
 		emit('update:open', open);
