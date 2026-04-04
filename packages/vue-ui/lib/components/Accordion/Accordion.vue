@@ -1,39 +1,13 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 	import { Accordion as ArkAccordion } from '@ark-ui/vue/accordion';
-	import type { HTMLAttributes } from 'vue';
 	import { ChevronDownIcon } from '@heroicons/vue/20/solid';
+
+	import type { AccordionEmits, AccordionProps, AccordionSlots } from './Accordion.type';
 
 	import '@packages/styles/components/Accordion.css';
 
-	export interface AccordionItemObject extends /* @vue-ignore */ HTMLAttributes {
-		// must be unique value
-		value: string;
-		title?: string;
-		disabled?: boolean;
-		content?: string;
-		'aria-label'?: string;
-	}
-
 	type AccordionRootType = InstanceType<typeof ArkAccordion.Root>;
-
-	export interface AccordionProps extends /* @vue-ignore */ HTMLAttributes {
-		items: AccordionItemObject[];
-		// Whether multiple accordion items can be expanded at the same time.
-		multiple?: boolean;
-		// Whether the accordion items can be collapsed.
-		collapsible?: boolean;
-		disabled?: boolean;
-		modelValue?: string[];
-
-		defaultValue?: string[];
-		dataTestid?: string;
-	}
-
-	export interface AccordionEmits {
-		'update:modelValue': [value: string[]];
-		valueChange: [value: string[]];
-	}
 
 	withDefaults(defineProps<AccordionProps>(), {
 		multiple: false,
@@ -42,6 +16,8 @@
 	});
 
 	const emit = defineEmits<AccordionEmits>();
+
+	defineSlots<AccordionSlots>();
 
 	const handleValueChange: AccordionRootType['onValueChange'] = (details) => {
 		emit('update:modelValue', details.value);
