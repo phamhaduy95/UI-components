@@ -1,1 +1,2 @@
-export { default as PasswordInput, type PasswordInputProps } from './PasswordInput.vue';
+export { default as PasswordInput } from './PasswordInput.vue';
+export type { PasswordInputProps, PasswordInputEmits } from './PasswordInput.type';
