@@ -3,5 +3,5 @@ export type {
 	DataTableProps,
 	DataTableSlots,
 	DataTableColumn,
-	DataTableEmit
+	DataTableEmits
 } from './DataTable.type';

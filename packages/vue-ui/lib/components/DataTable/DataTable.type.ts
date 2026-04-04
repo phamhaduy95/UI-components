@@ -131,7 +131,7 @@ export type DataTableProps<TData extends RowData, Tkey extends keyof TData = key
 	pagination?: PaginationState;
 };
 
-export type DataTableEmit<TData extends RowData, Tkey extends keyof TData = keyof TData> = {
+export type DataTableEmits<TData extends RowData, Tkey extends keyof TData = keyof TData> = {
 	'update:selectedValue': [Array<TData[Tkey]>];
 	'update:visibleHeaders': [Array<string>];
 	'update:pagination': [PaginationState];
