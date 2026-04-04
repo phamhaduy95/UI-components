@@ -2,6 +2,6 @@ export { default as DatePicker } from './DatePicker.vue';
 export type {
 	BaseDatePickerProps,
 	DatePickerProps,
-	DatePickerEmit,
+	DatePickerEmits,
 	DatePickerSlots
 } from './DatePicker.type';

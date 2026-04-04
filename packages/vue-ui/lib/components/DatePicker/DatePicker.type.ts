@@ -16,7 +16,7 @@ export interface BaseDatePickerProps
 
 export interface DatePickerProps extends BaseDatePickerProps, /*@vue-ignore */ HTMLAttributes {}
 
-export type DatePickerEmit = {
+export type DatePickerEmits = {
 	'update:modelValue': [date: Date | null];
 	'update:open': [open: boolean];
 	valueChange: [date: Date | null];

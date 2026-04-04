@@ -3,7 +3,7 @@
 	import { Checkbox as ArkCheckbox } from '@ark-ui/vue/checkbox';
 	import { CheckIcon, MinusIcon } from '@heroicons/vue/20/solid';
 
-	import type { CheckboxProps, CheckboxEmit, CheckboxSlots } from './Checkbox.type';
+	import type { CheckboxProps, CheckboxEmits, CheckboxSlots } from './Checkbox.type';
 
 	import '@packages/styles/components/Checkbox.css';
 
@@ -16,7 +16,7 @@
 		indeterminate: false
 	});
 
-	const emit = defineEmits<CheckboxEmit>();
+	const emit = defineEmits<CheckboxEmits>();
 
 	defineSlots<CheckboxSlots>();
 
