@@ -1,16 +1,17 @@
 <script setup lang="ts">
-	import { computed, useId, type ComponentInstance, type HTMLAttributes } from 'vue';
-	import {
-		DatePicker as ArkDatePicker,
-		parseDate,
-		type DatePickerRootProps
-	} from '@ark-ui/vue/date-picker';
+	import { computed, useId, type ComponentInstance } from 'vue';
+	import { DatePicker as ArkDatePicker, parseDate } from '@ark-ui/vue/date-picker';
 
 	import { BaseCalendarView } from '@components/BaseCalendar';
 	import { BaseField } from '@components/BaseField';
 	import { IconButton } from '@components/IconButton';
-	import type { CommonFieldProps } from '@components/type';
 	import { CalendarIcon, XMarkIcon } from '@heroicons/vue/20/solid';
+
+	import type {
+		DateRangePickerProps,
+		DateRangePickerEmits,
+		DateRangePickerSlots
+	} from './DateRangePicker.type';
 
 	import '@packages/styles/components/DateRangePicker.css';
 	import dayjs from 'dayjs';
@@ -18,28 +19,6 @@
 	type ArkDatePickerProps = ComponentInstance<typeof ArkDatePicker.Root>['$props'];
 
 	defineOptions({ inheritAttrs: false });
-
-	export interface BaseDateRangePickerProps
-		extends Pick<DatePickerRootProps, 'open' | 'min' | 'max' | 'placeholder' | 'readOnly'>,
-			CommonFieldProps<Date[]> {
-		modelValue?: Date[];
-		defaultValue?: Date[];
-		locale?: string;
-		format?: string;
-		id?: string;
-		inputId?: string;
-		dataTestid?: string;
-	}
-
-	export interface DateRangePickerProps
-		extends BaseDateRangePickerProps,
-			/*@vue-ignore */ HTMLAttributes {}
-
-	export interface DateRangePickerEmits {
-		'update:modelValue': [value: Date[]];
-		'update:open': [open: boolean];
-		valueChange: [value: Date[]];
-	}
 
 	const props = withDefaults(defineProps<DateRangePickerProps>(), {
 		format: 'DD-MM-YYYY',
@@ -51,6 +30,8 @@
 	});
 
 	const emit = defineEmits<DateRangePickerEmits>();
+
+	defineSlots<DateRangePickerSlots>();
 
 	const supportingTextId = useId();
 
