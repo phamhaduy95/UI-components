@@ -1,13 +1,16 @@
 <script setup lang="ts">
 	import { Menu } from '@ark-ui/vue/menu';
 	import SubMenu from './SubMenu.vue';
-	import type { DropdownMenuProps } from './DropdownMenu.type';
+
+	import type { DropdownMenuProps, DropdownMenuSlots } from './DropdownMenu.type';
 
 	import '@packages/styles/components/DropDownMenu.css';
 
 	withDefaults(defineProps<DropdownMenuProps>(), {
 		items: () => []
 	});
+
+	defineSlots<DropdownMenuSlots>();
 </script>
 
 <template>

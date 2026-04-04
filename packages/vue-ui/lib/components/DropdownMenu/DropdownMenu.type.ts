@@ -20,3 +20,8 @@ export interface DropdownMenuProps {
 	className?: string;
 	items?: MenuItem[];
 }
+
+export type DropdownMenuSlots = {
+	default?: () => void;
+	item?: (props: { item: MenuItem }) => void;
+};
