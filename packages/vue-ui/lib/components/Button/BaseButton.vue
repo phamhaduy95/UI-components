@@ -1,18 +1,6 @@
 <script setup lang="ts">
-	import type { ButtonHTMLAttributes } from 'vue';
 	import '@packages/styles/components/Button.css';
-
-	type ButtonVariant = 'contained' | 'outlined' | 'text';
-	type ButtonSize = 'small' | 'medium' | 'large';
-	type ButtonColor = 'primary' | 'secondary' | 'success' | 'warning' | 'error';
-
-	export interface ButtonProps extends /* @vue-ignore */ ButtonHTMLAttributes {
-		variant?: ButtonVariant;
-		size?: ButtonSize;
-		color?: ButtonColor;
-		loading?: boolean;
-		type?: 'button' | 'submit' | 'reset';
-	}
+	import type { ButtonProps, ButtonSlots } from './Button.type';
 
 	withDefaults(defineProps<ButtonProps>(), {
 		variant: 'contained',
@@ -21,6 +9,8 @@
 		loading: false,
 		type: 'button'
 	});
+
+	defineSlots<ButtonSlots>();
 </script>
 
 <template>
