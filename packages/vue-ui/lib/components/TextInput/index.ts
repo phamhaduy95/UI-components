@@ -1,1 +1,2 @@
-export { default as TextInput, type TextInputProps } from './TextInput.vue';
+export { default as TextInput } from './TextInput.vue';
+export type { TextInputProps, TextInputEmits } from './TextInput.type';
