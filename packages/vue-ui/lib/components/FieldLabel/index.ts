@@ -1,1 +1,2 @@
-export { default as FieldLabel, type FieldLabelProps } from './FieldLabel.vue';
+export { default as FieldLabel } from './FieldLabel.vue';
+export type { FieldLabelProps, FieldLabelSlots } from './FieldLabel.type';

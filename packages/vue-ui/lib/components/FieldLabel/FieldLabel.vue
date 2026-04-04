@@ -1,22 +1,16 @@
 <script setup lang="ts">
-	import type { LabelHTMLAttributes, Component } from 'vue';
-	import type { FieldStatus } from '@components/type';
+	import type { FieldLabelProps, FieldLabelSlots } from './FieldLabel.type';
 	import '@packages/styles/components/FieldLabel.css';
 
 	defineOptions({ inheritAttrs: false });
-
-	export interface FieldLabelProps extends /* @vue-ignore */ LabelHTMLAttributes {
-		type?: string | Component;
-		status?: FieldStatus;
-		required?: boolean;
-		showLabel?: boolean;
-	}
 
 	withDefaults(defineProps<FieldLabelProps>(), {
 		type: 'label',
 		required: false,
 		showLabel: false
 	});
+
+	defineSlots<FieldLabelSlots>();
 </script>
 
 <template>
