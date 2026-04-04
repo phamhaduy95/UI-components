@@ -1,16 +1,13 @@
 <script setup lang="ts">
-	import { computed, useId, type ComponentInstance, type HTMLAttributes } from 'vue';
-	import {
-		DatePicker as ArkDatePicker,
-		parseDate,
-		type DatePickerRootProps
-	} from '@ark-ui/vue/date-picker';
+	import { computed, useId, type ComponentInstance } from 'vue';
+	import { DatePicker as ArkDatePicker, parseDate } from '@ark-ui/vue/date-picker';
 
 	import { BaseCalendarView } from '@components/BaseCalendar';
 	import { BaseField } from '@components/BaseField';
 	import { IconButton } from '@components/IconButton';
-	import type { CommonFieldProps } from '@components/type';
 	import { CalendarIcon, XMarkIcon } from '@heroicons/vue/20/solid';
+
+	import type { DatePickerProps, DatePickerEmit, DatePickerSlots } from './DatePicker.type';
 
 	import '@packages/styles/components/DatePicker.css';
 	import dayjs from 'dayjs';
@@ -18,26 +15,6 @@
 	type ArkDatePickerProps = ComponentInstance<typeof ArkDatePicker.Root>['$props'];
 
 	defineOptions({ inheritAttrs: false });
-
-	export interface BaseDatePickerProps
-		extends Pick<DatePickerRootProps, 'open' | 'min' | 'max' | 'placeholder' | 'readOnly'>,
-			CommonFieldProps<Date | null> {
-		modelValue?: Date | null;
-		defaultValue?: Date;
-		locale?: string;
-		format?: string;
-		id?: string;
-		inputId?: string;
-		dataTestid?: string;
-	}
-
-	export interface DatePickerProps extends BaseDatePickerProps, /*@vue-ignore */ HTMLAttributes {}
-
-	export interface DatePickerEmits {
-		'update:modelValue': [date: Date | null];
-		'update:open': [open: boolean];
-		valueChange: [date: Date | null];
-	}
 
 	const props = withDefaults(defineProps<DatePickerProps>(), {
 		format: 'DD-MM-YYYY',
@@ -48,7 +25,9 @@
 		modelValue: undefined
 	});
 
-	const emit = defineEmits<DatePickerEmits>();
+	const emit = defineEmits<DatePickerEmit>();
+
+	defineSlots<DatePickerSlots>();
 
 	const supportingTextId = useId();
 
