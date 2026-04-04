@@ -1,1 +1,2 @@
-export { default as SupportingText, type SupportingTextProps } from './SupportingText.vue';
+export { default as SupportingText } from './SupportingText.vue';
+export type { SupportingTextProps, SupportingTextSlots } from './SupportingText.type';

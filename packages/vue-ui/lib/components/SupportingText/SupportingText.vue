@@ -1,16 +1,12 @@
 <script setup lang="ts">
-	import type { HTMLAttributes } from 'vue';
-	import type { FieldStatus } from '@components/type';
+	import type { SupportingTextProps, SupportingTextSlots } from './SupportingText.type';
 	import '@packages/styles/components/SupportingText.css';
-
-	export interface SupportingTextProps extends /* @vue-ignore */ HTMLAttributes {
-		status?: FieldStatus;
-		show?: boolean;
-	}
 
 	withDefaults(defineProps<SupportingTextProps>(), {
 		show: true
 	});
+
+	defineSlots<SupportingTextSlots>();
 </script>
 
 <template>
