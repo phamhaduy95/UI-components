@@ -1,25 +1,18 @@
 <script setup lang="ts">
 	import { Combobox as ArkCombobox } from '@ark-ui/vue/combobox';
-	import {
-		BaseCombobox,
-		type BaseComboboxProps,
-		type BaseComboboxEmits
-	} from '@components/BaseCombobox';
+	import { BaseCombobox } from '@components/BaseCombobox';
 	import { Chip } from '@components/Chip';
 	import type { SelectItem } from '@components/type';
+
+	import type {
+		MultipleComboboxEmits,
+		MultipleComboboxProps,
+		MultipleComboboxSlots
+	} from './MultipleCombobox.type';
 
 	import '@packages/styles/components/MultipleCombobox.css';
 
 	defineOptions({ inheritAttrs: false });
-
-	export interface MultipleComboboxProps
-		extends Omit<BaseComboboxProps, 'modelValue' | 'defaultValue' | 'multiple'> {
-		modelValue?: string[];
-		defaultValue?: string[];
-		placeholder?: string;
-	}
-
-	export type MultipleComboboxEmits = BaseComboboxEmits;
 
 	const props = withDefaults(defineProps<MultipleComboboxProps>(), {
 		modelValue: undefined,
@@ -29,6 +22,8 @@
 	});
 
 	const emit = defineEmits<MultipleComboboxEmits>();
+
+	defineSlots<MultipleComboboxSlots>();
 
 	const handleKeydown = (
 		e: KeyboardEvent,
