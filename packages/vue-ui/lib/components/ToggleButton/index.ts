@@ -1,1 +1,2 @@
-export { default as ToggleButton, type ToggleButtonProps } from './ToggleButton.vue';
+export { default as ToggleButton } from './ToggleButton.vue';
+export type { ToggleButtonProps, ToggleButtonEmits, ToggleButtonSlots } from './ToggleButton.type';
