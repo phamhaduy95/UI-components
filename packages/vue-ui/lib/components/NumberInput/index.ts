@@ -1,1 +1,2 @@
-export { default as NumberInput, type NumberInputProps } from './NumberInput.vue';
+export { default as NumberInput } from './NumberInput.vue';
+export type { NumberInputProps, NumberInputEmits } from './NumberInput.type';
