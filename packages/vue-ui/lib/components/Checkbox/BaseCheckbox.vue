@@ -1,32 +1,13 @@
 <script setup lang="ts">
 	import { computed } from 'vue';
-	import type { HTMLAttributes } from 'vue';
 	import { Checkbox as ArkCheckbox } from '@ark-ui/vue/checkbox';
-	import type { CommonFieldProps } from '@components/type';
 	import { CheckIcon, MinusIcon } from '@heroicons/vue/20/solid';
+
+	import type { CheckboxProps, CheckboxEmit, CheckboxSlots } from './Checkbox.type';
 
 	import '@packages/styles/components/Checkbox.css';
 
 	defineOptions({ inheritAttrs: false });
-
-	export interface CheckboxProps
-		extends Pick<CommonFieldProps<boolean>, 'status' | 'label' | 'supportingText'>,
-			/* @vue-ignore */ HTMLAttributes {
-		checked?: boolean;
-		value?: string;
-		disabled?: boolean;
-		defaultChecked?: boolean;
-		readonly?: boolean;
-		indeterminate?: boolean;
-		required?: boolean;
-		size?: 'small' | 'medium';
-		dataTestid?: string;
-	}
-
-	export interface CheckboxEmits {
-		'update:checked': [value: boolean];
-		checkedChange: [checked: boolean, value?: string];
-	}
 
 	const props = withDefaults(defineProps<CheckboxProps>(), {
 		size: 'medium',
@@ -35,7 +16,9 @@
 		indeterminate: false
 	});
 
-	const emit = defineEmits<CheckboxEmits>();
+	const emit = defineEmits<CheckboxEmit>();
+
+	defineSlots<CheckboxSlots>();
 
 	const checkedState = computed(() => {
 		if (props.indeterminate) return 'indeterminate';
