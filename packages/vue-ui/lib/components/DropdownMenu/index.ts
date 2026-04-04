@@ -1,2 +1,9 @@
 export { default as DropdownMenu } from './DropdownMenu.vue';
-export type { DropdownMenuProps } from './DropdownMenu.type';
+export type {
+	DropdownMenuProps,
+	MenuItem,
+	StandardItem,
+	NestedMenu,
+	GroupItem,
+	DropdownMenuSlots
+} from './DropdownMenu.type';
