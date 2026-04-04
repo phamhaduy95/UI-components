@@ -1,28 +1,16 @@
 <script setup lang="ts">
-	import {
-		BaseCombobox,
-		type BaseComboboxProps,
-		type BaseComboboxEmits
-	} from '@components/BaseCombobox';
-
+	import { BaseCombobox } from '@components/BaseCombobox';
 	import { computed, type ComponentInstance } from 'vue';
+
+	import type {
+		SingleComboboxEmits,
+		SingleComboboxProps,
+		SingleComboboxSlots
+	} from './SingleCombobox.type';
 
 	type BaseComboboxRootProps = ComponentInstance<typeof BaseCombobox>['$props'];
 
-	export interface SingleComboboxProps
-		extends Omit<BaseComboboxProps, 'modelValue' | 'defaultValue' | 'multiple'> {
-		modelValue?: string;
-		defaultValue?: string;
-	}
-
-	export interface SingleComboboxEmits {
-		'update:modelValue': [value: string];
-		valueChange: [details: { value: string }];
-		'update:open': BaseComboboxEmits['update:open'];
-		'update:inputValue': BaseComboboxEmits['update:inputValue'];
-		focusOutside: BaseComboboxEmits['focusOutside'];
-		exitComplete: BaseComboboxEmits['exitComplete'];
-	}
+	defineOptions({ inheritAttrs: false });
 
 	const props = withDefaults(defineProps<SingleComboboxProps>(), {
 		modelValue: undefined,
@@ -31,6 +19,8 @@
 		defaultOpen: undefined
 	});
 	const emit = defineEmits<SingleComboboxEmits>();
+
+	defineSlots<SingleComboboxSlots>();
 
 	const internalModelValue = computed(() => {
 		if (props.modelValue === undefined) return undefined;
