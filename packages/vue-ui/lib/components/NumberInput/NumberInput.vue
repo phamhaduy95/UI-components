@@ -1,28 +1,14 @@
 <script setup lang="ts">
 	import { computed, useId } from 'vue';
 	import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/vue/20/solid';
-	import type { CommonFieldProps } from '@components/type';
 	import { BaseField } from '@components/BaseField';
-	import {
-		NumberInput as ArkNumberInput,
-		type NumberInputRootEmits
-	} from '@ark-ui/vue/number-input';
+	import { NumberInput as ArkNumberInput } from '@ark-ui/vue/number-input';
+
+	import type { NumberInputEmits, NumberInputProps } from './NumberInput.type';
+
 	import '@packages/styles/components/NumberInput.css';
 
 	defineOptions({ inheritAttrs: false });
-
-	export interface NumberInputProps extends CommonFieldProps<string> {
-		modelValue?: string;
-		max?: number;
-		min?: number;
-		formatOptions?: Intl.NumberFormatOptions;
-		step?: number;
-		inputMode?: 'decimal' | 'numeric';
-		locale?: string;
-		dataTestid?: string;
-	}
-
-	export type NumberInputEmits = NumberInputRootEmits;
 
 	const props = withDefaults(defineProps<NumberInputProps>(), {
 		locale: 'en-US'
