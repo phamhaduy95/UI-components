@@ -13,7 +13,7 @@ export interface ChipProps extends /* @vue-ignore */ HTMLAttributes {
 	dataTestid?: string;
 }
 
-export type ChipEmit = {
+export type ChipEmits = {
 	click: [event: MouseEvent];
 	remove: [];
 };

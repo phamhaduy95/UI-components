@@ -2,7 +2,7 @@
 	import { computed } from 'vue';
 	import { XMarkIcon } from '@heroicons/vue/20/solid';
 
-	import type { ChipProps, ChipEmit, ChipSlots } from './Chip.type';
+	import type { ChipProps, ChipEmits, ChipSlots } from './Chip.type';
 
 	import '@packages/styles/components/Chip.css';
 
@@ -14,7 +14,7 @@
 		clickable: false
 	});
 
-	const emit = defineEmits<ChipEmit>();
+	const emit = defineEmits<ChipEmits>();
 
 	defineSlots<ChipSlots>();
 

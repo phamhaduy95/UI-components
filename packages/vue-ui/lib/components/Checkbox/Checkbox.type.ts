@@ -15,7 +15,7 @@ export interface CheckboxProps
 	dataTestid?: string;
 }
 
-export type CheckboxEmit = {
+export type CheckboxEmits = {
 	'update:checked': [value: boolean];
 	checkedChange: [checked: boolean, value?: string];
 };

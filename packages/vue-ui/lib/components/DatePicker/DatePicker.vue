@@ -7,7 +7,7 @@
 	import { IconButton } from '@components/IconButton';
 	import { CalendarIcon, XMarkIcon } from '@heroicons/vue/20/solid';
 
-	import type { DatePickerProps, DatePickerEmit, DatePickerSlots } from './DatePicker.type';
+	import type { DatePickerProps, DatePickerEmits, DatePickerSlots } from './DatePicker.type';
 
 	import '@packages/styles/components/DatePicker.css';
 	import dayjs from 'dayjs';
@@ -25,7 +25,7 @@
 		modelValue: undefined
 	});
 
-	const emit = defineEmits<DatePickerEmit>();
+	const emit = defineEmits<DatePickerEmits>();
 
 	defineSlots<DatePickerSlots>();
 
