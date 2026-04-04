@@ -1,29 +1,7 @@
 <script setup lang="ts">
-	import { Tooltip as ArkTooltip, type TooltipRootProps } from '@ark-ui/vue/tooltip';
+	import { Tooltip as ArkTooltip } from '@ark-ui/vue/tooltip';
+	import type { TooltipEmits, TooltipProps, TooltipSlots } from './Tooltip.type';
 	import '@packages/styles/components/Tooltip.css';
-
-	export interface TooltipProps
-		extends Pick<
-			TooltipRootProps,
-			| 'defaultOpen'
-			| 'open'
-			| 'openDelay'
-			| 'closeDelay'
-			| 'disabled'
-			| 'unmountOnExit'
-			| 'lazyMount'
-			| 'closeOnPointerDown'
-			| 'closeOnScroll'
-			| 'interactive'
-		> {
-		positioning?: TooltipRootProps['positioning'];
-		arrow?: boolean;
-		dataTestId?: string;
-	}
-
-	export interface TooltipEmits {
-		'update:open': [open: boolean];
-	}
 
 	withDefaults(defineProps<TooltipProps>(), {
 		defaultOpen: undefined,
@@ -41,6 +19,8 @@
 	});
 
 	const emit = defineEmits<TooltipEmits>();
+
+	const slots = defineSlots<TooltipSlots>();
 
 	const handleUpdateOpen = (open: boolean) => {
 		emit('update:open', open);
@@ -65,7 +45,7 @@
 	>
 		<ArkTooltip.Context v-slot="context">
 			<ArkTooltip.Trigger
-				v-if="$slots.trigger"
+				v-if="slots.trigger"
 				as-child
 			>
 				<slot
