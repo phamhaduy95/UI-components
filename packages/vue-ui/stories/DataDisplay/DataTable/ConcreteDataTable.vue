@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { DataTable } from '@components/DataTable';
-	import type { DataTableEmit, DataTableProps, DataTableSlots } from '@components/DataTable';
+	import type { DataTableEmits, DataTableProps, DataTableSlots } from '@components/DataTable';
 
 	export type Person = {
 		id: string;
@@ -16,7 +16,7 @@
 
 	const props = defineProps<Props>();
 
-	type Emit = DataTableEmit<Person>;
+	type Emit = DataTableEmits<Person>;
 
 	const emit = defineEmits<Emit>();
 

@@ -15,7 +15,7 @@
 
 	import type {
 		DataTableColumn,
-		DataTableEmit,
+		DataTableEmits,
 		DataTableProps,
 		DataTableSlots
 	} from './DataTable.type';
@@ -35,7 +35,7 @@
 		dataKey: undefined
 	});
 
-	const emit = defineEmits<DataTableEmit<TData>>();
+	const emit = defineEmits<DataTableEmits<TData>>();
 
 	defineSlots<DataTableSlots<TData>>();
 
