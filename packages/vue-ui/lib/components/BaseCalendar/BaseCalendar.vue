@@ -1,43 +1,12 @@
 <script setup lang="ts">
-	import {
-		parseDate,
-		DatePicker as ArkDatePicker,
-		type DatePickerRootEmits,
-		type DatePickerRootProps
-	} from '@ark-ui/vue/date-picker';
+	import { computed, type ComponentInstance } from 'vue';
+	import { DatePicker as ArkDatePicker, parseDate } from '@ark-ui/vue/date-picker';
 
 	import BaseCalendarView from './BaseCalendarView.vue';
 
-	import '@packages/styles/components/Calendar.css';
-
-	import { computed, type ComponentInstance } from 'vue';
+	import type { BaseCalendarEmits, BaseCalendarProps } from './BaseCalendar.type';
 
 	type ArkDatePickerProps = ComponentInstance<typeof ArkDatePicker.Root>['$props'];
-
-	export interface BaseCalendarProps
-		extends Pick<
-			DatePickerRootProps,
-			| 'view'
-			| 'startOfWeek'
-			| 'selectionMode'
-			| 'timeZone'
-			| 'view'
-			| 'minView'
-			| 'maxView'
-			| 'defaultView'
-		> {
-		modelValue?: Date[];
-		defaultValue?: Date[];
-		min?: Date;
-		max?: Date;
-		dataTestid?: string;
-	}
-
-	export interface BaseCalendarEmits {
-		valueChange: [value: Date[]];
-		'update:modelValue': [value: Date[]];
-		'update:view': DatePickerRootEmits['update:view'];
-	}
 
 	const props = withDefaults(defineProps<BaseCalendarProps>(), {
 		view: undefined,
