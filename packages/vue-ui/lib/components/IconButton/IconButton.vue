@@ -1,10 +1,10 @@
 <script setup lang="ts">
-	import BaseButton, { type ButtonProps } from '@components/Button/BaseButton.vue';
+	import { Button as BaseButton } from '@components/Button';
+	import type { IconButtonProps, IconButtonSlots } from './IconButton.type';
+
 	import '@packages/styles/components/IconButton.css';
 
 	defineOptions({ inheritAttrs: false });
-
-	export type IconButtonProps = ButtonProps;
 
 	withDefaults(defineProps<IconButtonProps>(), {
 		variant: 'contained',
@@ -13,6 +13,8 @@
 		loading: false,
 		type: 'button'
 	});
+
+	defineSlots<IconButtonSlots>();
 </script>
 
 <template>
