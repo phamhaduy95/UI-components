@@ -1,12 +1,14 @@
 <script setup lang="ts">
-	import { BaseSelect, type BaseSelectEmits, type BaseSelectProps } from '@components/BaseSelect';
+	import { BaseSelect } from '@components/BaseSelect';
 	import DisplayedSelectValue from './DisplayedSelectValue.vue';
 
-	import '@packages/styles/components/MultipleSelect.css';
+	import type {
+		MultipleSelectEmits,
+		MultipleSelectProps,
+		MultipleSelectSlots
+	} from './MultipleSelect.type';
 
-	export type MultipleSelectProps = Omit<BaseSelectProps, 'multiple'> & {
-		placeholder?: string;
-	};
+	import '@packages/styles/components/MultipleSelect.css';
 
 	withDefaults(defineProps<MultipleSelectProps>(), {
 		items: () => [],
@@ -22,7 +24,9 @@
 		defaultValue: undefined
 	});
 
-	const emit = defineEmits<BaseSelectEmits>();
+	const emit = defineEmits<MultipleSelectEmits>();
+
+	defineSlots<MultipleSelectSlots>();
 </script>
 
 <template>
