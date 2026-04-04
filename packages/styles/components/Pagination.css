@@ -1,0 +1,99 @@
+.Pagination {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.Pagination_Item {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 36px;
+	height: 36px;
+	padding-inline: 4px;
+	border-radius: var(--radius-xs);
+	font-size: var(--font-size-sm);
+	font-weight: 500;
+	color: var(--color-on-surface-variant);
+	background-color: transparent;
+	border: 1px solid transparent;
+	cursor: pointer;
+	transition:
+		background-color 120ms ease-in-out,
+		color 120ms ease-in-out,
+		border-color 120ms ease-in-out;
+	user-select: none;
+
+	&:hover {
+		background-color: var(--color-surface-container);
+		color: var(--color-on-surface);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 1px;
+	}
+
+	&[data-selected] {
+		background-color: var(--color-primary);
+		color: var(--color-on-primary);
+		border-color: var(--color-primary);
+
+		&:hover {
+			background-color: var(--color-primary-hover);
+		}
+
+		&:active {
+			background-color: var(--color-primary-pressed);
+		}
+	}
+}
+
+.Pagination_Trigger {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 36px;
+	height: 36px;
+	border-radius: var(--radius-xs);
+	color: var(--color-on-surface-variant);
+	background-color: transparent;
+	border: 1px solid transparent;
+	cursor: pointer;
+	transition:
+		background-color 120ms ease-in-out,
+		color 120ms ease-in-out;
+
+	svg {
+		width: var(--icon-size-sm);
+		height: var(--icon-size-sm);
+	}
+
+	&:hover {
+		background-color: var(--color-surface-container);
+		color: var(--color-on-surface);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: 1px;
+	}
+
+	&[data-disabled] {
+		opacity: 0.38;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+}
+
+.Pagination_Ellipsis {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 36px;
+	height: 36px;
+	padding-inline: 4px;
+	font-size: var(--font-size-sm);
+	color: var(--color-on-surface-variant);
+	user-select: none;
+}
