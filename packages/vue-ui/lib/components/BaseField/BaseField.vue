@@ -1,17 +1,10 @@
 <script setup lang="ts">
-	import { type HTMLAttributes, type Component } from 'vue';
-	import type { CommonFieldProps } from '@components/type';
 	import { FieldLabel } from '@components/FieldLabel';
 	import { SupportingText } from '@components/SupportingText';
-	import '@packages/styles/components/BaseField.css';
 
-	export interface BaseFieldProps
-		extends /* @vue-ignore */ HTMLAttributes,
-			CommonFieldProps<string> {
-		labelElement?: string | Component;
-		dataTestid?: string;
-		inputId?: string;
-	}
+	import type { BaseFieldProps, BaseFieldSlots } from './BaseField.type';
+
+	import '@packages/styles/components/BaseField.css';
 
 	withDefaults(defineProps<BaseFieldProps>(), {
 		size: 'medium',
@@ -21,6 +14,8 @@
 		labelElement: 'label',
 		status: undefined
 	});
+
+	defineSlots<BaseFieldSlots>();
 </script>
 
 <template>
