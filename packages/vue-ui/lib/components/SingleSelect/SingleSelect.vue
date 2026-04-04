@@ -4,7 +4,11 @@
 	import { BaseSelect } from '@components/BaseSelect';
 	import type { SelectItem } from '@components/type';
 
-	import type { SingleSelectEmits, SingleSelectProps } from './SingleSelect.type';
+	import type {
+		SingleSelectEmits,
+		SingleSelectProps,
+		SingleSelectSlots
+	} from './SingleSelect.type';
 
 	defineOptions({ inheritAttrs: false });
 
@@ -24,6 +28,8 @@
 	});
 
 	const emit = defineEmits<SingleSelectEmits>();
+
+	defineSlots<SingleSelectSlots>();
 
 	const mappedValue = computed(() => {
 		const val = props.modelValue;

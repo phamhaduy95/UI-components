@@ -1,4 +1,8 @@
-import type { BaseSelectEmits, SelectBaseProps } from '@components/BaseSelect/BaseSelect.type';
+import type {
+	BaseSelectEmits,
+	BaseSelectSlots,
+	SelectBaseProps
+} from '@components/BaseSelect/BaseSelect.type';
 import type { CommonFieldProps, SelectItem } from '@components/type';
 import type { SelectHTMLAttributes } from 'vue';
 
@@ -21,3 +25,7 @@ export interface SingleSelectEmits {
 	focusOutside: BaseSelectEmits['focusOutside'];
 	exitComplete: BaseSelectEmits['exitComplete'];
 }
+
+export type SingleSelectSlots = BaseSelectSlots & {
+	[key: string]: unknown;
+};
