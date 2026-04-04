@@ -1,29 +1,10 @@
 <script setup lang="ts">
-	import type { HTMLAttributes } from 'vue';
 	import { Switch as ArkSwitch } from '@ark-ui/vue/switch';
-	import type { CommonFieldProps } from '@components/type';
+	import type { SwitchEmits, SwitchProps } from './Switch.type';
 
 	import '@packages/styles/components/Switch.css';
 
 	defineOptions({ inheritAttrs: false });
-
-	export interface SwitchProps
-		extends Pick<
-				CommonFieldProps<boolean>,
-				'size' | 'supportingText' | 'disabled' | 'name' | 'label'
-			>,
-			/* @vue-ignore */ HTMLAttributes {
-		value?: string;
-		color?: 'primary' | 'success' | 'error' | 'warning' | 'secondary';
-		checked?: boolean;
-		defaultChecked?: boolean;
-		dataTestid?: string;
-	}
-
-	export interface SwitchEmits {
-		'update:checked': [value: boolean];
-		checkedChange: [payload: { checked: boolean; value?: string }];
-	}
 
 	const props = withDefaults(defineProps<SwitchProps>(), {
 		color: 'primary',
