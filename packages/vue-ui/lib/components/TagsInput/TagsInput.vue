@@ -1,24 +1,18 @@
 <script setup lang="ts">
 	import { computed, useId, type ComponentInstance } from 'vue';
 	import { XMarkIcon } from '@heroicons/vue/20/solid';
-	import type { CommonFieldProps } from '@components/type';
 	import { BaseField } from '@components/BaseField';
 	import { IconButton } from '@components/IconButton';
 	import { Chip } from '@components/Chip';
-	import { TagsInput as ArkTagsInput, type TagsInputRootProps } from '@ark-ui/vue/tags-input';
+	import { TagsInput as ArkTagsInput } from '@ark-ui/vue/tags-input';
+
+	import type { TagInputEmits, TagInputProps, TagInputSlots } from './TagInput.type';
 
 	import '@packages/styles/components/TagInput.css';
 
 	type ArkTagInputRootProps = ComponentInstance<typeof ArkTagsInput.Root>['$props'];
 
 	defineOptions({ inheritAttrs: false });
-
-	export interface TagInputProps
-		extends CommonFieldProps<string[]>,
-			Pick<TagsInputRootProps, 'maxLength' | 'allowOverflow' | 'max' | 'validate' | 'delimiter'> {
-		dataTestid?: string;
-		hideInput?: boolean;
-	}
 
 	const props = withDefaults(defineProps<TagInputProps>(), {
 		size: 'medium',
@@ -33,12 +27,9 @@
 		modelValue: undefined
 	});
 
-	export type TagInputEmits = {
-		'update:modelValue': [value: string[]];
-		valueChange: [value: string[]];
-	};
-
 	const emit = defineEmits<TagInputEmits>();
+
+	defineSlots<TagInputSlots>();
 
 	const internalSupportingTextId = useId();
 
