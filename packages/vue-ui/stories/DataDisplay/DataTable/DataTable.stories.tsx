@@ -10,6 +10,7 @@ import type { DataTableColumn } from '@components/DataTable';
 const mockedUpdateSelectedValue = fn();
 const mockedUpdateVisibleHeaders = fn();
 const mockedUpdatePagination = fn();
+const mockedUpdateSorting = fn();
 
 const paginationPanelTestid = 'data-table-pagination';
 // Deterministic seed so interaction UI tests are stable
@@ -54,7 +55,8 @@ const baseColumns: DataTableColumn<Person>[] = [
 		field: 'status' as const,
 		header: 'Status',
 		type: 'data' as const,
-		cell: (_, data: Person) => data.status
+		cell: (_, data: Person) => data.status,
+		sortingFnc: 'textCaseSensitive'
 	},
 	{
 		id: 'action-zone',
@@ -111,6 +113,10 @@ const meta = {
 		'onUpdate:pagination': {
 			description: 'Fired when page or page size changes',
 			action: 'update:pagination'
+		},
+		'onUpdate:sorting': {
+			description: 'Fired when the sort state changes',
+			action: 'update:sorting'
 		}
 	},
 	args: {
@@ -119,12 +125,14 @@ const meta = {
 		dataKey: 'id',
 		'onUpdate:selectedValue': mockedUpdateSelectedValue,
 		'onUpdate:visibleHeaders': mockedUpdateVisibleHeaders,
-		'onUpdate:pagination': mockedUpdatePagination
+		'onUpdate:pagination': mockedUpdatePagination,
+		'onUpdate:sorting': mockedUpdateSorting
 	},
 	beforeEach: () => {
 		mockedUpdateSelectedValue.mockClear();
 		mockedUpdateVisibleHeaders.mockClear();
 		mockedUpdatePagination.mockClear();
+		mockedUpdateSorting.mockClear();
 	}
 } satisfies Meta<typeof ConcreteDataTable>;
 
@@ -217,7 +225,8 @@ export const CustomHeaderAndCellSlots: Story = {
 export const SingleSelection: Story = {
 	args: {
 		selectionMode: 'single',
-		dataKey: 'id'
+		dataKey: 'id',
+		enableRowSelection: true
 	},
 	render: (args) => ({
 		components: { ConcreteDataTable, Button },
@@ -228,14 +237,14 @@ export const SingleSelection: Story = {
 
 			const toggleMode = () => {
 				isControlled.value = !isControlled.value;
-				selected.value = []; // reset state on switch
+				selected.value = [];
 			};
 
 			const handleSelectionUpdate = (val: (string | number)[]) => {
 				if (isControlled.value) {
 					selected.value = val;
 				}
-				// Always emit so actions tab is updated
+
 				onUpdateSelectedValue?.(val);
 			};
 
@@ -244,11 +253,7 @@ export const SingleSelection: Story = {
 		template: `
 			<div class="flex flex-col gap-4">
 				<div class="flex items-center gap-4">
-					<Button @click="toggleMode" size="small">
-						Switch to {{ isControlled ? 'Uncontrolled' : 'Controlled' }}
-					</Button>
 					<div
-						v-if="isControlled"
 						role="status"
 						aria-label="selected-output"
 						class="text-sm font-semibold text-slate-700"
@@ -261,7 +266,7 @@ export const SingleSelection: Story = {
 				</div>
 				<ConcreteDataTable
 					v-bind="args"
-					:selectedValue="isControlled ? selected : undefined"
+					:selectedValue="selected"
 					@update:selectedValue="handleSelectionUpdate"
 				/>
 			</div>
@@ -270,59 +275,37 @@ export const SingleSelection: Story = {
 	play: async ({ canvas, step, args }) => {
 		const { data } = args;
 
-		await step('Controlled: Clicking first row checkbox', async () => {
+		const output = canvas.getByRole('status', { name: 'selected-output' });
+
+		await step('Clicking first row checkbox', async () => {
 			const checkboxes = canvas.getAllByRole('checkbox');
 			const firstRowCheckbox = checkboxes[0];
 
 			await userEvent.click(firstRowCheckbox!);
 			const value = data[0]!.id;
 
-			const output = canvas.getByRole('status', { name: 'selected-output' });
 			expect(output).toHaveTextContent(`Selected DataKey (id): ${value}`);
 			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith([value]);
 		});
 
-		await step(
-			'Controlled: Selecting a different row replaces the previous selection',
-			async () => {
-				const checkboxes = canvas.getAllByRole('checkbox');
-				const thirdRowCheckbox = checkboxes[2]; // index 2 is the 3rd row
-
-				await userEvent.click(thirdRowCheckbox!);
-				const value = data[2]!.id;
-
-				const output = canvas.getByRole('status', { name: 'selected-output' });
-				expect(output).toHaveTextContent(`Selected DataKey (id): ${value}`);
-				expect(mockedUpdateSelectedValue).toHaveBeenCalledWith([value]);
-			}
-		);
-
-		await step('Switching to Uncontrolled Mode', async () => {
-			const toggleBtn = canvas.getByRole('button', { name: /Switch to Uncontrolled/i });
-			await userEvent.click(toggleBtn);
-
-			// The status text should disappear in uncontrolled mode
-			expect(canvas.queryByRole('status', { name: 'selected-output' })).not.toBeInTheDocument();
-		});
-
-		await step('Uncontrolled: Clicking first row checkbox', async () => {
+		await step('Selecting a different row replaces the previous selection', async () => {
 			const checkboxes = canvas.getAllByRole('checkbox');
-			const firstRowCheckbox = checkboxes[0];
+			const thirdRowCheckbox = checkboxes[2];
 
-			await userEvent.click(firstRowCheckbox!);
+			await userEvent.click(thirdRowCheckbox!);
+			const value = data[2]!.id;
 
-			expect(firstRowCheckbox).toBeChecked();
-			const value = data[0]!.id;
+			expect(output).toHaveTextContent(`Selected DataKey (id): ${value}`);
 			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith([value]);
 		});
 
-		await step('Uncontrolled: Clicking first row checkbox again unchecks it', async () => {
+		await step('Click on selected row to unselect it', async () => {
 			const checkboxes = canvas.getAllByRole('checkbox');
-			const firstRowCheckbox = checkboxes[0];
+			const thirdRowCheckbox = checkboxes[2];
 
-			await userEvent.click(firstRowCheckbox!);
+			await userEvent.click(thirdRowCheckbox!);
 
-			expect(firstRowCheckbox).not.toBeChecked();
+			expect(output).toHaveTextContent(`Selected DataKey (id): None`);
 			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith([]);
 		});
 	}
@@ -331,7 +314,8 @@ export const SingleSelection: Story = {
 export const MultiSelection: Story = {
 	args: {
 		selectionMode: 'multiple',
-		dataKey: 'id'
+		dataKey: 'id',
+		enableRowSelection: true
 	},
 	render: (args) => ({
 		components: { ConcreteDataTable },
@@ -363,7 +347,11 @@ export const MultiSelection: Story = {
 			);
 		}
 	}),
-	play: async ({ canvas, step }) => {
+	play: async ({ canvas, step, args }) => {
+		const { data } = args;
+
+		const diplayedOutput = canvas.getByRole('status', { name: 'selected-output' });
+
 		await step('Selecting a row adds it to the selection model', async () => {
 			const checkboxes = canvas.getAllByRole('checkbox');
 
@@ -372,36 +360,37 @@ export const MultiSelection: Story = {
 			expect(firstRowCheckbox).toBeDefined();
 			await userEvent.click(firstRowCheckbox!);
 
-			const output = canvas.getByRole('status', { name: 'selected-output' });
-			expect(output).toHaveTextContent('1');
-			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith(expect.arrayContaining(['1']));
+			const value = data[0]!.id;
+
+			expect(diplayedOutput).toHaveTextContent(value);
+			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith(expect.arrayContaining([value]));
 		});
 
 		await step('Selecting a different row adds to the existing selection', async () => {
 			const checkboxes = canvas.getAllByRole('checkbox');
 
-			// checkboxes[2] is the second row (id: 2)
 			const secondRowCheckbox = checkboxes[2];
 			expect(secondRowCheckbox).toBeDefined();
 			await userEvent.click(secondRowCheckbox!);
 
-			const output = canvas.getByRole('status', { name: 'selected-output' });
-			expect(output).toHaveTextContent('1, 2');
-			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith(expect.arrayContaining(['1', '2']));
+			const value = data.slice(0, 2).map((row) => row.id);
+
+			expect(diplayedOutput).toHaveTextContent(value.join(', '));
+			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith(expect.arrayContaining(value));
 		});
 
 		await step('Clicking select-all header checkbox modifies all rows', async () => {
 			const checkboxes = canvas.getAllByRole('checkbox');
+
 			const selectAllCheckbox = checkboxes[0];
 			expect(selectAllCheckbox).toBeDefined();
 
 			await userEvent.click(selectAllCheckbox!);
 
-			const output = canvas.getByRole('status', { name: 'selected-output' });
-			expect(output).toHaveTextContent('1, 2, 3');
-			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith(
-				expect.arrayContaining(['1', '2', '3'])
-			);
+			const value = data.map((row) => row.id);
+
+			expect(diplayedOutput).toHaveTextContent(value.join(', '));
+			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith(expect.arrayContaining(value));
 		});
 	}
 };
@@ -409,7 +398,8 @@ export const MultiSelection: Story = {
 export const CustomSelectionSlot: Story = {
 	args: {
 		selectionMode: 'single',
-		selectedValue: []
+		selectedValue: [],
+		enableRowSelection: true
 	},
 	render: (args) => ({
 		components: { ConcreteDataTable },
@@ -470,9 +460,11 @@ export const CustomSelectionSlot: Story = {
 			expect(firstRowRadio).toBeDefined();
 			await userEvent.click(firstRowRadio!);
 
+			const value = data[0]!.id;
+
 			const output = canvas.getByRole('status', { name: 'selected-output' });
-			expect(output).toHaveTextContent('1');
-			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith(expect.arrayContaining(['1']));
+			expect(output).toHaveTextContent(value.toString());
+			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith([value]);
 		});
 
 		await step('Selecting another radio clears the previous and selects the new one', async () => {
@@ -481,9 +473,11 @@ export const CustomSelectionSlot: Story = {
 			expect(secondRowRadio).toBeDefined();
 			await userEvent.click(secondRowRadio!);
 
+			const value = data[1]!.id;
+
 			const output = canvas.getByRole('status', { name: 'selected-output' });
-			expect(output).toHaveTextContent('2');
-			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith(expect.arrayContaining(['2']));
+			expect(output).toHaveTextContent(value.toString());
+			expect(mockedUpdateSelectedValue).toHaveBeenCalledWith([value]);
 		});
 	}
 };
@@ -676,6 +670,92 @@ export const WithPagination: Story = {
 			await userEvent.click(prevBtn);
 
 			expect(canvas.getByRole('cell', { name: data[0]!.firstName })).toBeInTheDocument();
+		});
+	}
+};
+
+const sortableColumns: DataTableColumn<Person>[] = [
+	{
+		id: 'firstName',
+		field: 'firstName' as const,
+		header: 'First Name',
+		type: 'data' as const,
+		cell: (val: unknown) => String(val),
+		enableSorting: true
+	},
+	{
+		id: 'lastName',
+		field: 'lastName' as const,
+		header: 'Last Name',
+		type: 'data' as const,
+		cell: (val: unknown) => String(val),
+		enableSorting: true
+	},
+	{
+		id: 'age',
+		field: 'age' as const,
+		header: 'Age',
+		type: 'data' as const,
+		cell: (val) => String(val),
+		enableSorting: true
+	},
+	{
+		id: 'status',
+		field: 'status' as const,
+		header: 'Status',
+		type: 'data' as const,
+		cell: (_, data: Person) => data.status,
+		enableSorting: true,
+		sortingFnc: 'textCaseSensitive'
+	},
+	{
+		id: 'action-zone',
+		header: 'Actions',
+		type: 'action' as const,
+		cell: () => 'Edit'
+	}
+];
+
+/**
+ * Single-column sort. Clicking a sortable column header cycles through
+ * asc → desc → none. Non-sortable columns (Actions) show no sort button.
+ */
+export const SingleSort: Story = {
+	args: {
+		data: generateData(8),
+		columns: sortableColumns,
+		dataKey: 'id',
+		enableSort: true
+	},
+	play: async ({ canvas, step }) => {
+		const firstNameHeader = canvas.getByRole('columnheader', { name: 'First Name' });
+
+		await step('Sortable header has appropriate attributes', async () => {
+			expect(firstNameHeader).toHaveAttribute('data-sortable', 'true');
+			expect(firstNameHeader).toHaveAttribute('aria-sort', 'none');
+		});
+
+		await step('Non-sortable header (Actions) is not sortable', async () => {
+			const actionsHeader = canvas.getByRole('columnheader', { name: 'Actions' });
+			expect(actionsHeader).toHaveAttribute('data-sortable', 'false');
+		});
+
+		await step('Clicking header once sorts ascending', async () => {
+			await userEvent.click(firstNameHeader);
+			expect(firstNameHeader).toHaveAttribute('aria-sort', 'ascending');
+			expect(mockedUpdateSorting).toHaveBeenLastCalledWith([{ id: 'firstName', desc: false }]);
+		});
+
+		await step('Clicking header again sorts descending', async () => {
+			await userEvent.click(firstNameHeader);
+			expect(firstNameHeader).toHaveAttribute('aria-sort', 'descending');
+			expect(mockedUpdateSorting).toHaveBeenLastCalledWith([{ id: 'firstName', desc: true }]);
+		});
+
+		await step('Clicking header a third time clears the sort', async () => {
+			await userEvent.click(firstNameHeader);
+			expect(firstNameHeader).toHaveAttribute('aria-sort', 'none');
+			expect(mockedUpdateSorting).toHaveBeenLastCalledWith([]);
 		});
 	}
 };

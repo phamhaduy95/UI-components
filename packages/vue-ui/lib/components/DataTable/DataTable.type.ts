@@ -1,7 +1,20 @@
-import type { DeepKeys, RowData } from '@tanstack/vue-table';
+import type {
+	DeepKeys,
+	RowData,
+	SortingState,
+	SortingFn,
+	BuiltInSortingFn
+} from '@tanstack/vue-table';
 import type { CSSProperties } from 'vue';
 
 export type CellAlignment = 'end' | 'start' | 'center';
+
+export type DataTableSortingState = SortingState;
+
+export type PaginationState = {
+	pageIndex: number;
+	pageSize: number;
+};
 
 type BaseColumnDef<TData extends RowData> = {
 	/**
@@ -37,11 +50,12 @@ type BaseColumnDef<TData extends RowData> = {
 	 * Enable column hiding.
 	 */
 	enableHiding?: boolean;
-};
+	/**
+	 * Enable column sorting.
+	 */
+	enableSorting?: boolean;
 
-export type PaginationState = {
-	pageIndex: number;
-	pageSize: number;
+	sortingFnc?: SortingFn<TData> | BuiltInSortingFn;
 };
 
 /**
@@ -80,8 +94,19 @@ export type DataTableProps<TData extends RowData, Tkey extends keyof TData = key
 	columns: DataTableColumn<TData>[];
 	/**
 	 * The array of data items to populate the table rows.
+	 * Since underlined tansack-table would wrap data with shallowRef,you need to pass a new array instance to update data value.
+	 * Read this guide https://tanstack.com/table/latest/docs/framework/vue/guide/table-state#using-reactive-data to learn more
 	 */
 	data: TData[];
+
+	/**
+	 * Key to identify the row. Required when selectionMode is not enabled.
+	 * Object data associated with key must be number, string
+	 * For example:
+	 * data = [{id: 1, name: 'John'}, {id: 2, name: 'Jane'}]
+	 * dataKey = 'id'
+	 */
+	dataKey?: Tkey;
 
 	/**
 	 * Optional function to dynamically apply CSS style to a row based on its data.
@@ -97,9 +122,9 @@ export type DataTableProps<TData extends RowData, Tkey extends keyof TData = key
 	fixHeader?: boolean;
 
 	/**
-	 * Optional array of currently selected row keys.
+	 * Enable row selection.
 	 */
-	selectedValue?: Array<TData[Tkey]>;
+	enableRowSelection?: boolean;
 
 	/**
 	 * Determine row selection mode: single or multiple items.
@@ -107,13 +132,9 @@ export type DataTableProps<TData extends RowData, Tkey extends keyof TData = key
 	selectionMode?: 'single' | 'multiple';
 
 	/**
-	 * Key to identify the row. Required when selectionMode is not enabled.
-	 * Object data associated with key must be number, string
-	 * For example:
-	 * data = [{id: 1, name: 'John'}, {id: 2, name: 'Jane'}]
-	 * dataKey = 'id'
+	 * Optional array of currently selected row keys.
 	 */
-	dataKey?: Tkey;
+	selectedValue?: Array<TData[Tkey]>;
 
 	/**
 	 * Array of visible headers.
@@ -129,37 +150,72 @@ export type DataTableProps<TData extends RowData, Tkey extends keyof TData = key
 	 * Pagination state.
 	 */
 	pagination?: PaginationState;
+
+	/**
+	 * Enable sorting.
+	 */
+	enableSort?: boolean;
+	/**
+	 * Sorting state.
+	 */
+	sorting?: DataTableSortingState;
+
+	/**
+	 * Default sorting state.
+	 */
+	defaultSorting?: DataTableSortingState;
 };
 
 export type DataTableEmits<TData extends RowData, Tkey extends keyof TData = keyof TData> = {
 	'update:selectedValue': [Array<TData[Tkey]>];
 	'update:visibleHeaders': [Array<string>];
 	'update:pagination': [PaginationState];
+	'update:sorting': [DataTableSortingState];
 };
+
+export interface HeaderSlotProps {
+	id: string;
+	colSpan: number;
+	headerText: string;
+	isSortable?: boolean;
+	sorted?: 'asc' | 'desc' | false;
+	toggleSorting?: () => void;
+	clearSorting?: () => void;
+}
+
+export interface HeaderSelectionSlotProps {
+	id: string;
+	colSpan: number;
+	headerText: string;
+	checked: boolean;
+	indeterminate: boolean;
+	toggleSelected: () => void;
+}
+
+export interface CellSelectionSlotProps<TData extends RowData> {
+	value: unknown;
+	data: TData;
+	checked: boolean;
+	toggleSelected: () => void;
+}
+
+export interface CellSlotProps<TData extends RowData> {
+	value: unknown;
+	data: TData;
+}
 
 /**
  * Slot definitions structure for customized rendering in DataTable.
  */
 export type DataTableSlots<TData extends RowData> = {
 	// 1. Strongly-typed slots for data keys
-	[K in DeepKeys<TData> as `header:${K & string}`]?: (props: { colSpan: number }) => void;
+	[K in DeepKeys<TData> as `header:${K & string}`]?: (props: HeaderSlotProps) => void;
 } & {
-	[K in DeepKeys<TData> as `cell:${K & string}`]?: (props: { value: unknown; data: TData }) => void;
+	[K in DeepKeys<TData> as `cell:${K & string}`]?: (props: CellSlotProps<TData>) => void;
 } & {
 	// 2. Specific hardcoded slots
-	['header:selection']?: (props: {
-		colSpan: number;
-		header: string;
-		checked: boolean;
-		indeterminate: boolean;
-		toggleSelected: () => void;
-	}) => void;
-	['cell:selection']?: (props: {
-		value: unknown;
-		data: TData;
-		checked: boolean;
-		toggleSelected: () => void;
-	}) => void;
+	['header:selection']?: (props: HeaderSelectionSlotProps) => void;
+	['cell:selection']?: (props: CellSelectionSlotProps<TData>) => void;
 } & {
 	// 3. Fallback for any other dynamic column names
 	[key: `header:${string}`]: () => void;
