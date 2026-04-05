@@ -1,10 +1,4 @@
-.DataTable {
-	width: 100%;
-	color: var(--color-on-surface);
-	font-size: var(--text-sm);
-}
-
-.DataTable_Container {
+.DataTable_Root {
 	width: 100%;
 	overflow-x: auto;
 	border-radius: var(--radius-sm);
@@ -22,30 +16,59 @@
 	background-color: var(--color-surface-container-low);
 }
 
-.DataTable_HeadRow--sticky {
-	position: sticky;
-	top: 0;
-	z-index: 1;
-	box-shadow: 0 1px 0 var(--color-outline-variant);
-}
-
-.DataTable_HeadCell {
+.DataTable_Header {
 	padding: 14px 16px;
 	text-align: start;
 	font-size: var(--text-xs);
-	font-weight: 600;
-	letter-spacing: 0.05em;
-	text-transform: uppercase;
 	color: var(--color-on-surface-variant);
 	white-space: nowrap;
 	border-bottom: 1px solid var(--color-outline-variant);
+
+	&[data-sortable='true'] {
+		cursor: pointer;
+
+		&:focus-visible {
+			outline: 2px solid var(--color-primary);
+		}
+
+		&:hover .DataTableHeader_SortIcon {
+			color: var(--color-on-surface);
+		}
+	}
+
+	&[data-selection='true'] {
+		width: 52px;
+		min-width: 52px;
+		padding-inline: 16px;
+		text-align: center;
+	}
 }
 
-.DataTable_HeadCell--selection {
-	width: 52px;
-	min-width: 52px;
-	padding-inline: 16px;
-	text-align: center;
+.DataTable_Header_Content {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	white-space: nowrap;
+}
+
+.DataTable_Header_SortIndicator {
+	display: inline-flex;
+	align-items: center;
+
+	> .DataTable_Header_SortIcon {
+		width: 16px;
+		height: 16px;
+		color: var(--color-on-surface-variant);
+
+		transition:
+			opacity 150ms ease,
+			color 150ms ease;
+	}
+
+	&[data-active='true'] > .DataTable_Header_SortIcon {
+		opacity: 1;
+		color: var(--color-primary);
+	}
 }
 
 .DataTable_Row {
@@ -59,7 +82,7 @@
 		background-color: var(--color-surface-hovered);
 	}
 
-	&.DataTable_Row--selected {
+	&[data-selected='true'] {
 		background-color: var(--color-primary-container);
 
 		&:hover {
@@ -74,13 +97,13 @@
 	color: var(--color-on-surface);
 	font-size: var(--text-sm);
 	line-height: 1.5;
-}
 
-.DataTable_Cell--selection {
-	width: 52px;
-	min-width: 52px;
-	padding-inline: 16px;
-	text-align: center;
+	&[data-selection='true'] {
+		width: 52px;
+		min-width: 52px;
+		padding-inline: 16px;
+		text-align: center;
+	}
 }
 
 .DataTable_PaginationPanel {

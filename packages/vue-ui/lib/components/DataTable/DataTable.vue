@@ -9,9 +9,13 @@
 		type Cell,
 		type RowSelectionState,
 		type PaginationState,
-		getPaginationRowModel
+		getPaginationRowModel,
+		getSortedRowModel,
+		type SortingState
 	} from '@tanstack/vue-table';
 	import { computed, ref, shallowRef, type CSSProperties } from 'vue';
+
+	import { Checkbox } from '@components/Checkbox';
 
 	import type {
 		DataTableColumn,
@@ -21,8 +25,7 @@
 	} from './DataTable.type';
 
 	import DataTablePagination from './DataTablePagination.vue';
-
-	import { Checkbox } from '@components/Checkbox';
+	import DataTableHeader from './DataTableHeader.vue';
 
 	import '@packages/styles/components/DataTable.css';
 
@@ -32,7 +35,9 @@
 		selectionMode: undefined,
 		selectedValue: undefined,
 		pagination: undefined,
-		dataKey: undefined
+		dataKey: undefined,
+		sorting: undefined,
+		defaultSorting: undefined
 	});
 
 	const emit = defineEmits<DataTableEmits<TData>>();
@@ -47,17 +52,6 @@
 	});
 
 	const columnHelper = createColumnHelper<TData>();
-
-	const innerSelection = shallowRef<RowSelectionState>({});
-
-	const rowSelectionState = computed<RowSelectionState>(() => {
-		if (!props.selectedValue) return innerSelection.value;
-
-		return props.selectedValue.reduce<RowSelectionState>((acc, key) => {
-			acc[key as ObjectKey] = true;
-			return acc;
-		}, {});
-	});
 
 	const columns = computed(() => {
 		const columns = [];
@@ -90,7 +84,9 @@
 							maxSize: column.maxWidth,
 							minSize: column.minWidth,
 							size: column.width,
-							enableHiding: column.enableHiding
+							enableHiding: column.enableHiding,
+							enableSorting: column.enableSorting ?? true,
+							sortingFn: column.sortingFnc ?? 'basic'
 						})
 					);
 
@@ -119,6 +115,16 @@
 		return columns;
 	});
 
+	const innerSelection = shallowRef<RowSelectionState>({});
+
+	const rowSelectionState = computed<RowSelectionState>(() => {
+		if (!props.selectedValue) return innerSelection.value;
+
+		return props.selectedValue.reduce<RowSelectionState>((acc, key) => {
+			acc[key as ObjectKey] = true;
+			return acc;
+		}, {});
+	});
 	const innerVisibility = shallowRef<Record<string, boolean>>({});
 
 	const columnVisibilityState = computed(() => {
@@ -143,10 +149,15 @@
 		return props.pagination ?? innerPagination.value;
 	});
 
+	const innerSortingState = ref<SortingState>(props.defaultSorting ?? []);
+
+	const sortingState = computed(() => {
+		return props.sorting ?? innerSortingState.value;
+	});
+
 	const table = useVueTable({
-		get data() {
-			return props.data;
-		},
+		data: props.data,
+
 		get columns() {
 			return columns.value;
 		},
@@ -158,22 +169,34 @@
 				return columnVisibilityState.value;
 			},
 			get pagination() {
-				if (!props.enablePagination) return undefined;
 				return paginationState.value;
+			},
+			get sorting() {
+				return sortingState.value;
 			}
 		},
 
 		getCoreRowModel: getCoreRowModel(),
+
 		get getPaginationRowModel() {
-			if (!props.enablePagination) return undefined;
-			return getPaginationRowModel();
+			return props.enablePagination ? getPaginationRowModel() : undefined;
+		},
+		get getSortedRowModel() {
+			return props.enableSort ? getSortedRowModel() : undefined;
 		},
 		getRowId: (row) => {
 			return String(row[props.dataKey as keyof TData]);
 		},
 		get enableRowSelection() {
-			return Boolean(props.selectionMode);
+			return props.enableRowSelection;
 		},
+		get enableMultiRowSelection() {
+			return props.enableRowSelection && props.selectionMode === 'multiple';
+		},
+		get enableSorting() {
+			return props.enableSort;
+		},
+
 		onRowSelectionChange: (updateOrValue) => {
 			const newValue =
 				typeof updateOrValue === 'function'
@@ -185,17 +208,7 @@
 			const selectedKeys = Object.keys(newValue);
 			emit('update:selectedValue', selectedKeys as Array<TData[keyof TData]>);
 		},
-		onColumnVisibilityChange: (updateOrValue) => {
-			const newValue =
-				typeof updateOrValue === 'function'
-					? updateOrValue(columnVisibilityState.value)
-					: updateOrValue;
 
-			innerVisibility.value = newValue;
-
-			const visibleKeys = Object.keys(newValue);
-			emit('update:visibleHeaders', visibleKeys);
-		},
 		onPaginationChange: (updateOrValue) => {
 			if (!props.enablePagination) return;
 			const newValue =
@@ -206,8 +219,13 @@
 			innerPagination.value = newValue;
 			emit('update:pagination', newValue);
 		},
-		get enableMultiRowSelection() {
-			return props.selectionMode === 'multiple';
+
+		onSortingChange: (updaterOrValue) => {
+			const newValue =
+				typeof updaterOrValue === 'function' ? updaterOrValue(sortingState.value) : updaterOrValue;
+
+			innerSortingState.value = newValue;
+			emit('update:sorting', newValue);
 		}
 	});
 
@@ -225,6 +243,7 @@
 		if (alignment) {
 			style.textAlign = alignment;
 		}
+
 		return style;
 	};
 
@@ -248,113 +267,104 @@
 </script>
 
 <template>
-	<div class="DataTable">
-		<div class="DataTable_Container">
-			<table class="DataTable_Table">
-				<thead class="DataTable_Head">
-					<tr
-						v-for="headerGroup in table.getHeaderGroups()"
-						:key="headerGroup.id"
-						class="DataTable_HeadRow"
-						:class="{ 'DataTable_HeadRow--sticky': fixHeader }"
+	<div
+		class="DataTable_Root"
+		data-part="data-table_root"
+	>
+		<table
+			class="DataTable_Table"
+			:data-selection="enableRowSelection"
+			:data-sortable="enableSort"
+			:data-pagination="enablePagination"
+		>
+			<thead class="DataTable_Head">
+				<tr
+					v-for="headerGroup in table.getHeaderGroups()"
+					:key="headerGroup.id"
+					class="DataTable_HeadRow"
+					data-part="data-table_head-row"
+				>
+					<DataTableHeader
+						v-for="header in headerGroup.headers"
+						:key="header.id"
+						:header="header"
+						:table="table"
+						:header-style="computeHeaderlStyle(header)"
+						:selection-mode="selectionMode"
 					>
-						<th
-							v-for="header in headerGroup.headers"
-							:key="header.id"
-							:colSpan="header.colSpan"
-							:style="computeHeaderlStyle(header)"
-							class="DataTable_HeadCell"
-							:class="{
-								'DataTable_HeadCell--selection': header.column.columnDef.id === 'selection'
-							}"
-						>
-							<template v-if="header.column.columnDef.id === 'selection'">
-								<slot
-									:name="`header:selection`"
-									:col-span="header.colSpan"
-									:header="header.column.columnDef.header"
-									:checked="table.getIsAllPageRowsSelected()"
-									:indeterminate="table.getIsSomePageRowsSelected()"
-								>
-									<Checkbox
-										v-if="selectionMode === 'multiple'"
-										:checked="table.getIsAllPageRowsSelected()"
-										:indeterminate="table.getIsSomePageRowsSelected()"
-										@update:checked="table.toggleAllPageRowsSelected()"
-									/>
-								</slot>
-							</template>
-							<template v-else>
-								<slot
-									:name="`header:${header.column.columnDef.id}`"
-									:col-span="header.colSpan"
-									:header="header.column.columnDef.header"
-								>
-									<FlexRender
-										v-if="!header.isPlaceholder"
-										:render="header.column.columnDef.header"
-										:props="header.getContext()"
-									/>
-								</slot>
-							</template>
-						</th>
-					</tr>
-				</thead>
-				<tbody class="DataTable_Body">
-					<tr
-						v-for="row in table.getRowModel().rows"
-						:key="row.id"
-						class="DataTable_Row"
-						:class="{ 'DataTable_Row--selected': row.getIsSelected() }"
-						:style="rowStyle ? rowStyle(row.original) : undefined"
-						:data-selected="row.getIsSelected()"
+						<template #selection="slotProps">
+							<slot
+								name="header:selection"
+								v-bind="slotProps"
+							/>
+						</template>
+						<template #regularHeader="slotProps">
+							<slot
+								:name="`header:${header.column.columnDef.id}`"
+								v-bind="slotProps"
+							/>
+						</template>
+					</DataTableHeader>
+				</tr>
+			</thead>
+			<tbody
+				class="DataTable_Body"
+				data-part="data-table_body"
+			>
+				<tr
+					v-for="row in table.getRowModel().rows"
+					:key="row.id"
+					class="DataTable_Row"
+					:style="rowStyle ? rowStyle(row.original) : undefined"
+					:data-selected="row.getIsSelected()"
+					data-part="data-table_row"
+				>
+					<td
+						v-for="cell in row.getVisibleCells()"
+						:key="cell.id"
+						:style="computeCellStyle(cell)"
+						class="DataTable_Cell"
+						:data-selection="cell.column.columnDef.id === 'selection'"
+						data-part="data-table_cell"
 					>
-						<td
-							v-for="cell in row.getVisibleCells()"
-							:key="cell.id"
-							:style="computeCellStyle(cell)"
-							class="DataTable_Cell"
-							:class="{ 'DataTable_Cell--selection': cell.column.columnDef.id === 'selection' }"
-						>
-							<template v-if="cell.column.columnDef.id === 'selection'">
-								<slot
-									:name="`cell:selection`"
-									:value="cell.getValue()"
-									:data="cell.row.original"
+						<template v-if="cell.column.columnDef.id === 'selection'">
+							<slot
+								:name="`cell:selection`"
+								:value="cell.getValue()"
+								:data="cell.row.original"
+								:checked="cell.row.getIsSelected()"
+								:toggle-selected="cell.row.toggleSelected"
+							>
+								<Checkbox
 									:checked="cell.row.getIsSelected()"
-									:toggle-selected="cell.row.toggleSelected"
-								>
-									<Checkbox
-										:checked="cell.row.getIsSelected()"
-										@update:checked="cell.row.toggleSelected()"
-									/>
-								</slot>
-							</template>
-							<template v-else>
-								<slot
-									:name="`cell:${cell.column.columnDef.id}`"
-									:value="cell.getValue()"
-									:data="cell.row.original"
-								>
-									<FlexRender
-										:render="cell.column.columnDef.cell"
-										:props="cell.getContext()"
-									/>
-								</slot>
-							</template>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+									@update:checked="cell.row.toggleSelected()"
+								/>
+							</slot>
+						</template>
+						<template v-else>
+							<slot
+								:name="`cell:${cell.column.columnDef.id}`"
+								:value="cell.getValue()"
+								:data="cell.row.original"
+							>
+								<FlexRender
+									:render="cell.column.columnDef.cell"
+									:props="cell.getContext()"
+								/>
+							</slot>
+						</template>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 
-			<DataTablePagination
-				v-if="enablePagination"
-				:total="table.getRowCount()"
-				:page="paginationState.pageIndex"
-				:page-size="paginationState.pageSize"
-				@update:page="handlePageUpdated"
-				@update:page-size="table.setPageSize"
-			/>
-		</div>
+		<DataTablePagination
+			v-if="enablePagination"
+			:total="table.getRowCount()"
+			:page="paginationState.pageIndex"
+			:page-size="paginationState.pageSize"
+			@update:page="handlePageUpdated"
+			@update:page-size="table.setPageSize"
+		/>
 	</div>
 </template>
