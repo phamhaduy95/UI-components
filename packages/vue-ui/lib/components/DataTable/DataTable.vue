@@ -276,8 +276,12 @@
 			:data-selection="enableRowSelection"
 			:data-sortable="enableSort"
 			:data-pagination="enablePagination"
+			:data-fixed-header="fixHeader"
 		>
-			<thead class="DataTable_Head">
+			<thead
+				class="DataTable_Head"
+				:data-fixed-header="fixHeader"
+			>
 				<tr
 					v-for="headerGroup in table.getHeaderGroups()"
 					:key="headerGroup.id"
