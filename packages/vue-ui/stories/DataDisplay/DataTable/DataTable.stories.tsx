@@ -759,3 +759,38 @@ export const SingleSort: Story = {
 		});
 	}
 };
+
+/**
+ * Fixed header table. The `fixHeader` prop makes the `<thead>` sticky,
+ * allowing the user to scroll through a large dataset while keeping the headers visible.
+ * Note: The external container or the table root itself must have a constrained height and `overflow-y: auto` for this to work.
+ */
+export const FixedHeader: Story = {
+	args: {
+		data: generateData(50),
+		columns: baseColumns,
+		dataKey: 'id',
+		fixHeader: true
+	},
+	render: (args) => ({
+		components: { ConcreteDataTable },
+		setup() {
+			return { args };
+		},
+		template: `
+			<ConcreteDataTable
+				v-bind="args"
+				style="max-height: 400px; overflow-y: auto;"
+			/>
+		`
+	}),
+	play: async ({ canvas, step }) => {
+		await step('Check if header has data-fixed-header attribute', async () => {
+			const table = canvas.getByRole('table');
+			// get the thead element directly since role maps aren't easily nested
+			const thead = table.querySelector('thead');
+			expect(thead).toBeInTheDocument();
+			expect(thead).toHaveAttribute('data-fixed-header', 'true');
+		});
+	}
+};
