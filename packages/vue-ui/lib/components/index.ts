@@ -27,3 +27,4 @@ export * from './ToggleButton';
 export * from './TagsInput';
 export * from './Tooltip';
 export * from './VirtualList';
+export * from './TreeView';
