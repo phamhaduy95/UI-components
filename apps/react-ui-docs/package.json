@@ -21,12 +21,12 @@
 		"classnames": "^2.5.1",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4",
-		"typescript": "^5.9.3"
+		"typescript": "catalog:"
 	},
 	"devDependencies": {
 		"@astrojs/react": "^4.4.2",
 		"@configs/eslint-config": "workspace:*",
-		"@tailwindcss/vite": "^4.2.1",
+		"@tailwindcss/vite": "catalog:",
 		"@types/react": "^19.2.14",
 		"@types/react-dom": "^19.2.3",
 		"prettier": "3.5.3",
