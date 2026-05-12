@@ -1,0 +1,183 @@
+.TreeView {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	color: var(--color-on-surface);
+	--tree-indent: 8px;
+	--tree-animation-duration: 100ms;
+	--tree-chevron-width: calc(var(--icon-size-sm) + 4px);
+}
+
+.TreeView_Tree {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	list-style: none;
+}
+
+.TreeView_Label {
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--color-on-surface-variant);
+	padding: 8px 12px;
+}
+
+.TreeView_Branch {
+	display: flex;
+	flex-direction: column;
+}
+
+.TreeView_BranchContent {
+	position: relative;
+
+	&[data-state='open'] {
+		animation:
+			expand-height var(--tree-animation-duration) ease-out,
+			fade-in var(--tree-animation-duration) ease-out;
+	}
+
+	&[data-state='closed'] {
+		animation:
+			collapse-height var(--tree-animation-duration) ease-out,
+			fade-out var(--tree-animation-duration) ease-out;
+	}
+
+	[data-animate='false'] &[data-state] {
+		animation: none;
+	}
+}
+
+.TreeView_BranchControl,
+.TreeView_Item {
+	display: flex;
+	align-items: center;
+	padding: 6px 12px 6px 0;
+	cursor: pointer;
+	border-radius: var(--radius-xs);
+	user-select: none;
+	background: transparent;
+	border: none;
+	color: var(--color-on-surface);
+	font-size: 0.875rem;
+	transition: background-color var(--tree-animation-duration) ease-in-out;
+
+	&[data-selected] {
+		background-color: var(--color-primary-container);
+		color: var(--color-on-primary-container);
+	}
+
+	&[data-selected]:hover {
+		background-color: var(--color-primary-container-hover);
+	}
+
+	&:hover {
+		background-color: var(--color-hover-layer);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--color-primary);
+		outline-offset: -2px;
+	}
+}
+
+.TreeView_BranchControl {
+	> .TreeView_BranchIndicator {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: var(--tree-chevron-width);
+		height: var(--icon-size-sm);
+		transition: transform var(--tree-animation-duration) ease-in-out;
+	}
+
+	& > .TreeView_BranchIndicator > .TreeView_ChevronIcon {
+		width: 100%;
+		height: 100%;
+	}
+
+	&[data-state='open'] > .TreeView_BranchIndicator {
+		transform: rotate(90deg);
+	}
+}
+
+.TreeView_Item {
+	padding-left: calc(var(--tree-chevron-width) * var(--depth, 1));
+}
+
+.TreeView_Branch:not([data-depth='1']) > .TreeView_BranchControl {
+	--tree-branch-depth: calc(var(--depth, 1) - 1);
+	padding-left: calc(var(--tree-chevron-width) * var(--tree-branch-depth));
+}
+
+.TreeView_ChevronIcon {
+	width: 100%;
+	height: 100%;
+}
+
+/* Text and inner icons */
+.TreeView_BranchText,
+.TreeView_ItemText {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	flex: 1;
+}
+
+.TreeView_FolderIcon,
+.TreeView_DocumentIcon {
+	width: var(--icon-size-sm);
+	height: var(--icon-size-sm);
+	color: var(--color-on-surface-variant);
+	flex-shrink: 0;
+}
+
+.TreeView_Item[data-selected] .TreeView_DocumentIcon {
+	color: var(--color-on-secondary-container);
+}
+
+@keyframes expand-height {
+	from {
+		height: 0;
+	}
+	to {
+		height: var(--height);
+	}
+}
+
+@keyframes collapse-height {
+	from {
+		height: var(--height);
+	}
+	to {
+		height: 0;
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}

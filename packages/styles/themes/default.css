@@ -342,10 +342,9 @@
 	--color-scrim: rgb(0 0 0);
 	--color-shadow: rgb(0 0 0);
 
-	/* State Layers */
-	--color-hover-layer: color-mix(in srgb, var(--color-on-primary) 12%, transparent);
+	--color-hover-layer: color-mix(in srgb, var(--color-on-surface) 8%, transparent);
 
-	--color-outline-hover: rgba(142, 144, 153, 0.7);
+	--color-outline-hover: color-mix(in srgb, var(--color-surface), var(--color-on-surface) 8%);
 	--color-outline-pressed: rgba(142, 144, 153, 1);
 	--color-text-hover: rgba(21, 101, 192, 0.08);
 	--color-text-pressed: rgba(21, 101, 192, 0.12);
