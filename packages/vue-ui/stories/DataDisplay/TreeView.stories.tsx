@@ -89,12 +89,18 @@ export const Default: Story = {
 		});
 
 		await step('Check if root items are rendered', async () => {
-			expect(within(container).getByText(defaultItems[0].label)).toBeInTheDocument();
-			expect(within(container).getByText(defaultItems[1].label)).toBeInTheDocument();
-			expect(within(container).getByText(defaultItems[3].label)).toBeInTheDocument();
+			expect(
+				within(container).getByRole('button', { name: defaultItems[0].label })
+			).toBeInTheDocument();
+			expect(
+				within(container).getByRole('button', { name: defaultItems[1].label })
+			).toBeInTheDocument();
+			expect(
+				within(container).getByRole('treeitem', { name: defaultItems[3].label })
+			).toBeInTheDocument();
 		});
 
-		const firstTrigger = within(container).getByText(defaultItems[0].label);
+		const firstTrigger = within(container).getByRole('button', { name: defaultItems[0].label });
 
 		await step('Click first branch to expand', async () => {
 			await userEvent.click(firstTrigger);
@@ -102,7 +108,9 @@ export const Default: Story = {
 
 		await step('Check if children are now visible', async () => {
 			await waitFor(() => {
-				expect(within(container).getByText(defaultItems[0].children[0].label)).toBeVisible();
+				expect(
+					within(container).getByRole('button', { name: defaultItems[0].children[0].label })
+				).toBeVisible();
 			});
 		});
 	}
@@ -121,13 +129,15 @@ export const DefaultState: Story = {
 
 		await step('Check if expanded children are visible by default', async () => {
 			const item = await waitFor(() =>
-				within(container).getByText(defaultItems[0].children[0].label)
+				within(container).getByRole('button', { name: defaultItems[0].children[0].label })
 			);
 			expect(item).toBeVisible();
 		});
 
 		await step('Check if selected value is correct', async () => {
-			const item = await waitFor(() => within(container).getByText(defaultItems[3].label));
+			const item = await waitFor(() =>
+				within(container).getByRole('treeitem', { name: defaultItems[3].label })
+			);
 			expect(item).toBeVisible();
 		});
 	}
@@ -172,7 +182,7 @@ export const ControllableSelection: Story = {
 			expect(displayedValue).toHaveTextContent(`Selected: ${defaultItems[3].value}`);
 		});
 
-		const nextItem = within(container).getByText(defaultItems[4].label);
+		const nextItem = within(container).getByRole('treeitem', { name: defaultItems[4].label });
 
 		await step('Click different item to select it', async () => {
 			await userEvent.click(nextItem);
@@ -244,8 +254,12 @@ export const ControllableExpanded: Story = {
 				`Expanded: ${defaultItems[0].value}, ${defaultItems[1].value}`
 			);
 			await waitFor(() => {
-				expect(within(container).getByText(defaultItems[1].children[0].label)).toBeVisible();
-				expect(within(container).getByText(defaultItems[0].children[0].label)).toBeVisible();
+				expect(
+					within(container).getByRole('treeitem', { name: defaultItems[1].children[0].label })
+				).toBeVisible();
+				expect(
+					within(container).getByRole('button', { name: defaultItems[0].children[0].label })
+				).toBeVisible();
 			});
 		});
 	}
@@ -373,6 +387,45 @@ export const OverrideIconNodeLabel: Story = {
 				expect(branchIcons[0]).toHaveTextContent('📂');
 				expect(within(container).getByText(`${nestedItemLabel} (Custom)`)).toBeVisible();
 			});
+		});
+	}
+};
+
+export const DisabledNodes: Story = {
+	args: {
+		items: [
+			{
+				value: 'enabled-branch',
+				label: 'Enabled Branch',
+				children: [{ value: 'enabled-child', label: 'Enabled Child' }]
+			},
+			{
+				value: 'disabled-branch',
+				label: 'Disabled Branch',
+				disabled: true,
+				children: [{ value: 'hidden-child', label: 'Hidden Child' }]
+			},
+			{ value: 'disabled-item', label: 'Disabled Item', disabled: true }
+		],
+		dataTestid: 'treeview-disabled'
+	},
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '' } = args;
+		const container = canvas.getByTestId(dataTestid);
+
+		await step('Check if container exists', async () => {
+			expect(container).toBeInTheDocument();
+		});
+
+		const disabledBranch = within(container).getByRole('button', { name: 'Disabled Branch' });
+
+		await step('Check if disabled branch has correct disabled attributes', async () => {
+			expect(disabledBranch).toHaveAttribute('aria-disabled', 'true');
+		});
+
+		await step('Check if item is disabled', () => {
+			const disabledItem = within(container).getByRole('treeitem', { name: 'Disabled Item' });
+			expect(disabledItem).toHaveAttribute('aria-disabled', 'true');
 		});
 	}
 };
