@@ -20,6 +20,8 @@ export interface AccordionProps extends /* @vue-ignore */ HTMLAttributes {
 
 	defaultValue?: string[];
 	dataTestid?: string;
+	lazyMount?: boolean;
+	unmountOnExit?: boolean;
 }
 
 export type AccordionEmits = {
