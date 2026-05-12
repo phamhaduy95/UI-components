@@ -35,8 +35,15 @@
 	>
 		<TreeView.NodeContext v-slot="nodeState">
 			<template v-if="nodeState.isBranch">
-				<TreeView.Branch class="TreeView_Branch">
-					<TreeView.BranchControl class="TreeView_BranchControl">
+				<TreeView.Branch
+					class="TreeView_Branch"
+					:aria-label="node.label"
+				>
+					<TreeView.BranchControl
+						class="TreeView_BranchControl"
+						:disabled="node.disabled"
+						:aria-disabled="node.disabled"
+					>
 						<TreeView.BranchIndicator class="TreeView_BranchIndicator">
 							<ChevronRightIcon class="TreeView_ChevronIcon" />
 						</TreeView.BranchIndicator>
@@ -94,22 +101,52 @@
 				</TreeView.Branch>
 			</template>
 			<template v-else>
-				<TreeView.Item class="TreeView_Item">
-					<TreeView.ItemText class="TreeView_ItemText">
-						<slot
-							name="itemIcon"
-							v-bind="generateSlotProps(nodeState, node)"
-						>
-							<DocumentIcon class="TreeView_DocumentIcon" />
-						</slot>
-						<slot
-							name="treeNodeLabel"
-							v-bind="generateSlotProps(nodeState, node)"
-						>
-							{{ node.label }}
-						</slot>
-					</TreeView.ItemText>
-				</TreeView.Item>
+				<template v-if="node.href">
+					<TreeView.Item
+						class="TreeView_Item"
+						:disabled="node.disabled"
+						:aria-disabled="node.disabled"
+					>
+						<a :href="node.href">
+							<TreeView.ItemText class="TreeView_ItemText">
+								<slot
+									name="itemIcon"
+									v-bind="generateSlotProps(nodeState, node)"
+								>
+									<DocumentIcon class="TreeView_DocumentIcon" />
+								</slot>
+								<slot
+									name="treeNodeLabel"
+									v-bind="generateSlotProps(nodeState, node)"
+								>
+									{{ node.label }}
+								</slot>
+							</TreeView.ItemText>
+						</a>
+					</TreeView.Item>
+				</template>
+				<template v-else>
+					<TreeView.Item
+						class="TreeView_Item"
+						:disabled="node.disabled"
+						:aria-disabled="node.disabled"
+					>
+						<TreeView.ItemText class="TreeView_ItemText">
+							<slot
+								name="itemIcon"
+								v-bind="generateSlotProps(nodeState, node)"
+							>
+								<DocumentIcon class="TreeView_DocumentIcon" />
+							</slot>
+							<slot
+								name="treeNodeLabel"
+								v-bind="generateSlotProps(nodeState, node)"
+							>
+								{{ node.label }}
+							</slot>
+						</TreeView.ItemText>
+					</TreeView.Item>
+				</template>
 			</template>
 		</TreeView.NodeContext>
 	</TreeView.NodeProvider>

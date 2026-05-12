@@ -1,9 +1,11 @@
 import type { HTMLAttributes } from 'vue';
-
+import type { TreeViewRootProps } from '@ark-ui/vue/tree-view';
 export interface TreeNodeObject {
 	value: string;
 	label: string;
 	children?: TreeNodeObject[];
+	href?: string;
+	disabled?: boolean;
 }
 
 export interface TreeViewProps extends /* @vue-ignore */ HTMLAttributes {
@@ -15,6 +17,7 @@ export interface TreeViewProps extends /* @vue-ignore */ HTMLAttributes {
 	dataTestid?: string;
 	lazyMount?: boolean;
 	unmountOnExit?: boolean;
+	selectionMode?: TreeViewRootProps<TreeNodeObject>['selectionMode'];
 }
 
 export type TreeViewEmits = {
