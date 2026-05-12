@@ -23,7 +23,6 @@
 
 	&:last-child {
 		&[data-state='closed'] > .Accordion_Trigger {
-			transition: border-radius 0ms ease-in-out var(--accordion-animation-duration);
 			border-radius: 0 0 var(--radius-sm) var(--radius-sm);
 		}
 	}
@@ -75,34 +74,90 @@
 	overflow: hidden;
 
 	&[data-state='open'] {
-		animation: slideDown var(--accordion-animation-duration) ease-in-out;
-		will-change: height, opacity;
+		&[data-orientation='vertical'] {
+			animation:
+				expand-height var(--accordion-animation-duration) ease-out,
+				fade-in var(--accordion-animation-duration) ease-out;
+			will-change: height;
+		}
+		&[data-orientation='horizontal'] {
+			animation:
+				expand-width var(--accordion-animation-duration) ease-out,
+				fade-in var(--accordion-animation-duration) ease-out;
+			will-change: width;
+		}
 	}
 
 	&[data-state='closed'] {
-		animation: slideUp var(--accordion-animation-duration) ease-in-out;
-		will-change: height;
+		&[data-orientation='vertical'] {
+			animation:
+				collapse-height var(--accordion-animation-duration) ease-in-out,
+				fade-out var(--accordion-animation-duration) ease-in-out;
+			will-change: height;
+		}
+
+		&[data-orientation='horizontal'] {
+			animation:
+				collapse-width var(--accordion-animation-duration) ease-in-out,
+				fade-out var(--accordion-animation-duration) ease-in-out;
+			will-change: width;
+		}
+	}
+
+	&[data-animate='false'] {
+		animation: none;
 	}
 }
 
-@keyframes slideDown {
+@keyframes expand-height {
 	from {
-		opacity: 0;
 		height: 0;
 	}
 	to {
-		opacity: 1;
 		height: var(--height);
 	}
 }
 
-@keyframes slideUp {
+@keyframes expand-width {
 	from {
-		opacity: 1;
+		width: 0;
+	}
+	to {
+		width: var(--width);
+	}
+}
+
+@keyframes collapse-width {
+	from {
+		width: var(--width);
+	}
+	to {
+		width: 0;
+	}
+}
+@keyframes collapse-height {
+	from {
 		height: var(--height);
 	}
 	to {
-		opacity: 0;
 		height: 0;
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
 	}
 }

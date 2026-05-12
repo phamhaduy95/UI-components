@@ -34,6 +34,8 @@
 		:model-value="modelValue"
 		:default-value="defaultValue"
 		:data-testid="dataTestid"
+		:unmount-on-exit="unmountOnExit"
+		:lazy-mount="lazyMount"
 		@value-change="handleValueChange"
 	>
 		<ArkAccordion.Item
