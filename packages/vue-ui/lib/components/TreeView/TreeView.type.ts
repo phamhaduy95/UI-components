@@ -18,6 +18,7 @@ export interface TreeViewProps extends /* @vue-ignore */ HTMLAttributes {
 	lazyMount?: boolean;
 	unmountOnExit?: boolean;
 	selectionMode?: TreeViewRootProps<TreeNodeObject>['selectionMode'];
+	filterFunc?: (node: TreeNodeObject) => boolean;
 }
 
 export type TreeViewEmits = {
