@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { TreeView, type TreeNodeObject, type TreeViewPublicInstance } from '@components/TreeView';
 import { Button } from '@components/Button';
+import { TextInput } from '@components/TextInput';
 import { ref } from 'vue';
 import { expect, within, userEvent, fn, waitFor } from 'storybook/test';
 
@@ -426,6 +427,113 @@ export const DisabledNodes: Story = {
 		await step('Check if item is disabled', () => {
 			const disabledItem = within(container).getByRole('treeitem', { name: 'Disabled Item' });
 			expect(disabledItem).toHaveAttribute('aria-disabled', 'true');
+		});
+	}
+};
+
+export const Filtering: Story = {
+	args: {
+		items: defaultItems,
+		dataTestid: 'treeview-filtering'
+	},
+	render: (args) => ({
+		components: { TreeView, TextInput },
+		setup() {
+			const filterText = ref('');
+
+			const filterFunc = (node: TreeNodeObject): boolean => {
+				if (!filterText.value) return true;
+
+				const query = filterText.value.toLowerCase();
+
+				const matches = (n: TreeNodeObject): boolean => {
+					if (n.label.toLowerCase().includes(query)) {
+						return true;
+					}
+					if (n.children) {
+						return n.children.some(matches);
+					}
+					return false;
+				};
+
+				return matches(node);
+			};
+
+			return () => (
+				<div class="flex flex-col gap-2 w-[400px]">
+					<TextInput
+						label="Search File Explorer"
+						data-testid="treeview-search-input"
+						placeholder="Filter files and directories..."
+						modelValue={filterText.value}
+						onUpdate:modelValue={(val: string) => {
+							filterText.value = val;
+						}}
+						clearable
+						class="w-full"
+					/>
+					<TreeView
+						{...args}
+						filterFunc={filterFunc}
+						defaultExpandedValue={['node_modules', 'node_modules/@types', 'src']}
+					/>
+				</div>
+			);
+		}
+	}),
+	play: async ({ canvas, args, step }) => {
+		const { dataTestid = '' } = args;
+		const treeView = canvas.getByTestId(dataTestid);
+		const searchInput = canvas.getByRole('textbox', { name: 'Search File Explorer' });
+
+		await step('Check if tree view and search input exist', async () => {
+			expect(treeView).toBeInTheDocument();
+			expect(searchInput).toBeInTheDocument();
+		});
+
+		await step('Initial state: all top-level items are present', async () => {
+			expect(within(treeView).getByRole('button', { name: 'node_modules' })).toBeVisible();
+			expect(within(treeView).getByRole('button', { name: 'src' })).toBeVisible();
+			expect(within(treeView).getByRole('treeitem', { name: 'package.json' })).toBeVisible();
+		});
+
+		await step('Type "react" into search input', async () => {
+			await userEvent.type(searchInput, 'react');
+			await waitFor(() => {
+				expect(searchInput).toHaveValue('react');
+			});
+		});
+
+		await step(
+			'Verify filtered state: "react" and its ancestors are shown, non-matching are hidden',
+			async () => {
+				await waitFor(() => {
+					expect(within(treeView).getByRole('treeitem', { name: 'react' })).toBeVisible();
+					expect(within(treeView).getByRole('treeitem', { name: 'react-dom' })).toBeVisible();
+					expect(within(treeView).getByRole('button', { name: 'node_modules' })).toBeVisible();
+					expect(within(treeView).getByRole('button', { name: '@types' })).toBeVisible();
+
+					expect(within(treeView).queryByRole('button', { name: 'src' })).not.toBeInTheDocument();
+					expect(
+						within(treeView).queryByRole('treeitem', { name: 'package.json' })
+					).not.toBeInTheDocument();
+				});
+			}
+		);
+
+		await step('Clear the search input', async () => {
+			await userEvent.clear(searchInput);
+			await waitFor(() => {
+				expect(searchInput).toHaveValue('');
+			});
+		});
+
+		await step('Verify all original items are restored', async () => {
+			await waitFor(() => {
+				expect(within(treeView).getByRole('button', { name: 'node_modules' })).toBeVisible();
+				expect(within(treeView).getByRole('button', { name: 'src' })).toBeVisible();
+				expect(within(treeView).getByRole('treeitem', { name: 'package.json' })).toBeVisible();
+			});
 		});
 	}
 };
