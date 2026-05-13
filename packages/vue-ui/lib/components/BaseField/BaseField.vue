@@ -28,17 +28,32 @@
 		:data-clearable="clearable"
 		:data-testid="dataTestid"
 	>
-		<FieldLabel
-			:id="labelId"
-			class="BaseField_Label"
+		<slot
+			name="label"
+			:label="label"
+			:is-required="required"
 			:status="status"
-			:required="required"
-			:type="labelElement"
-			:for="inputId"
-			:show-label="!!label"
+			:label-id="labelId"
 		>
-			{{ label }}
-		</FieldLabel>
+			<FieldLabel
+				:id="labelId"
+				class="BaseField_Label"
+				:status="status"
+				:required="required"
+				:type="labelElement"
+				:for="inputId"
+				:show-label="!!label"
+			>
+				<slot
+					name="labelText"
+					:label="label"
+					:is-required="required"
+					:status="status"
+				>
+					{{ label }}
+				</slot>
+			</FieldLabel>
+		</slot>
 		<slot />
 		<SupportingText
 			:id="supportingTextId"
