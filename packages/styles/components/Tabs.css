@@ -1,0 +1,116 @@
+.Tabs {
+	--tab-transition-duration: 100ms;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	&[data-orientation='vertical'] {
+		flex-direction: row;
+	}
+}
+
+.Tabs_List {
+	display: inline-flex;
+	position: relative;
+	isolation: isolate;
+	border-bottom: 1px solid var(--color-outline);
+
+	&[data-orientation='vertical'] {
+		flex-direction: column;
+		border-bottom: none;
+		border-right: 1px solid var(--color-outline);
+	}
+}
+
+.Tabs_Trigger {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.5rem;
+	font-size: var(--text-sm);
+	font-weight: 500;
+	color: var(--color-on-surface-variant);
+	border-radius: var(--radius-sm);
+	cursor: pointer;
+	white-space: nowrap;
+	user-select: none;
+
+	transition:
+		background-color var(--tab-transition-duration),
+		color var(--tab-transition-duration);
+
+	&:hover:not([data-disabled]) {
+		color: var(--color-primary-hover);
+	}
+
+	&[data-selected] {
+		color: var(--color-primary);
+	}
+
+	&[data-disabled] {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--color-primary-focus);
+		outline-offset: -8px;
+	}
+}
+.Tabs_TriggerContent {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.Tabs_CloseButton {
+	margin-left: 8px;
+	opacity: 0.7;
+	transition: opacity 0.2s;
+
+	&:hover {
+		opacity: 1;
+	}
+
+	> svg {
+		width: 12px;
+		height: 12px;
+	}
+}
+
+.Tabs_Indicator {
+	position: absolute;
+	background-color: var(--color-primary);
+
+	&[data-orientation='horizontal'] {
+		bottom: -1px;
+		height: 2px;
+		width: var(--width);
+		left: var(--left);
+	}
+
+	&[data-orientation='vertical'] & {
+		right: -1px;
+		width: 2px;
+		height: var(--height);
+		top: var(--top);
+	}
+}
+
+.Tabs_Content {
+	padding: 12px;
+	outline: none;
+	/* 
+	 * Fix the white-space issue by restoring the flex layout 
+	 * only for the content wrapper 
+	 */
+	&[data-orientation='horizontal'] {
+		display: flex;
+	}
+
+	&[data-orientation='vertical'] {
+		padding: 12px;
+		flex: 1;
+	}
+}
