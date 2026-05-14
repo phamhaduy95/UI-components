@@ -28,3 +28,4 @@ export * from './TagsInput';
 export * from './Tooltip';
 export * from './VirtualList';
 export * from './TreeView';
+export * from './BaseSlider';
