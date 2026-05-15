@@ -20,7 +20,8 @@
 		"test:ci": "vitest run --coverage",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
-		"coverage-report": "http-server ./coverage -p 9000"
+		"coverage-report": "http-server ./coverage -p 9000",
+		"preview-storybook": "http-server ./storybook-static -p 9001"
 	},
 	"exports": {
 		".": {
