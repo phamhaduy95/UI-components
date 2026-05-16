@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { Slider as ArkSlider } from '@ark-ui/vue/slider';
-	import { computed, useId } from 'vue';
 	import { BaseField } from '@components/BaseField';
+	import { computed, useId } from 'vue';
 	import type { BaseSliderEmits, BaseSliderProps, BaseSliderSlots } from './BaseSlider.type';
 
 	import '@packages/styles/components/BaseSlider.css';
@@ -18,7 +18,9 @@
 		thumbAlignment: 'contain',
 		thumbCollisionBehavior: 'none',
 		modelValue: undefined,
-		defaultValue: undefined
+		defaultValue: undefined,
+		showValue: true,
+		hasHiddenInput: true
 	});
 
 	const emit = defineEmits<BaseSliderEmits>();
@@ -72,71 +74,92 @@
 		@value-change="handleValueChange"
 		@value-change-end="handleValueChangeEnd"
 	>
-		<BaseField
-			:label="label"
-			:supporting-text="supportingText"
-			:size="size"
-			:disabled="disabled"
-			:required="required"
-			:supporting-text-id="supportingTextId"
-		>
-			<template #label="labelProps">
-				<div class="Slider_LabelGroup">
-					<ArkSlider.Label
-						v-if="label"
-						class="FieldLabel Slider_Label"
-					>
-						{{ label }}
-						<span
-							v-if="labelProps.isRequired"
-							class="FieldLabel_Required"
-							role="presentation"
-						>
-							*
-						</span>
-					</ArkSlider.Label>
-
-					<ArkSlider.Context v-slot="slider">
-						<slot
-							name="valueText"
-							:value="slider.value"
-						>
-							<ArkSlider.ValueText
-								class="Slider_ValueText"
-								data-testid="slider-value-text"
-							/>
-						</slot>
-					</ArkSlider.Context>
-				</div>
-			</template>
-
-			<ArkSlider.Control class="Slider_Control">
-				<ArkSlider.Track class="Slider_Track">
-					<ArkSlider.Range class="Slider_Range" />
-				</ArkSlider.Track>
-				<ArkSlider.Thumb
-					v-for="(_, index) in thumbs"
-					:key="index"
-					:index="index"
-					class="Slider_Thumb"
-					:aria-describedby="supportingText ? supportingTextId : undefined"
-				>
-				</ArkSlider.Thumb>
-			</ArkSlider.Control>
-			<ArkSlider.MarkerGroup
-				v-if="computedMarks.length > 0"
-				class="Slider_MarkerGroup"
-				data-testid="slider-marker-group"
+		<ArkSlider.Context v-slot="slider">
+			<BaseField
+				:label="label"
+				:supporting-text="supportingText"
+				:size="size"
+				:disabled="disabled"
+				:required="required"
+				:supporting-text-id="supportingTextId"
 			>
-				<ArkSlider.Marker
-					v-for="mark in computedMarks"
-					:key="mark.value"
-					:value="mark.value"
-					class="Slider_Marker"
+				<template #label>
+					<slot
+						name="label"
+						:label="label"
+						:required="required"
+						:value="slider.value"
+					>
+						<div class="Slider_LabelGroup">
+							<ArkSlider.Label
+								v-if="label"
+								class="FieldLabel Slider_Label"
+							>
+								{{ label }}
+								<span
+									v-if="required"
+									class="FieldLabel_Required"
+									role="presentation"
+								>
+									*
+								</span>
+							</ArkSlider.Label>
+
+							<slot
+								name="valueText"
+								:value="slider.value"
+							>
+								<ArkSlider.ValueText
+									v-if="showValue"
+									class="Slider_ValueText"
+									data-testid="slider-value-text"
+								/>
+							</slot>
+						</div>
+					</slot>
+				</template>
+
+				<div class="Slider_ControlWrapper">
+					<ArkSlider.Control class="Slider_Control">
+						<ArkSlider.Track class="Slider_Track">
+							<ArkSlider.Range class="Slider_Range" />
+						</ArkSlider.Track>
+						<ArkSlider.Thumb
+							v-for="(_, index) in thumbs"
+							:key="index"
+							:index="index"
+							class="Slider_Thumb"
+							:aria-describedby="supportingText ? supportingTextId : undefined"
+						>
+							<ArkSlider.HiddenInput
+								v-if="hasHiddenInput"
+								v-bind="$attrs"
+								:aria-describedby="supportingText ? supportingTextId : undefined"
+							/>
+						</ArkSlider.Thumb>
+					</ArkSlider.Control>
+					<slot
+						name="trailing"
+						:label="label"
+						:value="slider.value"
+						:set-value="slider.setValue"
+					/>
+				</div>
+				<ArkSlider.MarkerGroup
+					v-if="computedMarks.length > 0"
+					class="Slider_MarkerGroup"
+					data-testid="slider-marker-group"
 				>
-					{{ mark.label }}
-				</ArkSlider.Marker>
-			</ArkSlider.MarkerGroup>
-		</BaseField>
+					<ArkSlider.Marker
+						v-for="mark in computedMarks"
+						:key="mark.value"
+						:value="mark.value"
+						class="Slider_Marker"
+					>
+						{{ mark.label }}
+					</ArkSlider.Marker>
+				</ArkSlider.MarkerGroup>
+			</BaseField>
+		</ArkSlider.Context>
 	</ArkSlider.Root>
 </template>

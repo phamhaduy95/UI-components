@@ -21,18 +21,13 @@
 	&[data-disabled] {
 		opacity: 0.5;
 		pointer-events: none;
+		user-select: none;
 	}
 
 	&[data-size='small'] {
 		--slider-track-height: 0.125rem;
 		--slider-thumb-size: 1rem;
 		--slider-label-font-size: var(--text-xs);
-	}
-
-	&[data-size='large'] {
-		--slider-track-height: 0.5rem;
-		--slider-thumb-size: 1.5rem;
-		--slider-label-font-size: var(--text-base);
 	}
 
 	&[data-color='primary'] {
@@ -88,6 +83,13 @@
 .Slider_ValueText {
 	font-size: var(--slider-label-font-size);
 	color: var(--slider-value-color);
+}
+
+.Slider_ControlWrapper {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	width: 100%;
 }
 
 .Slider_Control {
