@@ -1,7 +1,7 @@
 import type { VirtualListProps } from './VirtualList';
 
 export type FieldStatus = 'success' | 'warning' | 'error';
-export type FieldSize = 'small' | 'medium' | 'large';
+export type FieldSize = 'small' | 'medium';
 
 export type SelectItem = { value: string; label: string; disabled?: boolean };
 

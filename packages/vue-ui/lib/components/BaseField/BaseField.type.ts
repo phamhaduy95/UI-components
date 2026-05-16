@@ -15,13 +15,19 @@ interface LabelTextSlotProps {
 
 interface LabelSlotProps {
 	label?: string;
-	isRequired: boolean;
+	isRequired?: boolean;
 	status?: FieldStatus;
-	labelId?: string;
+}
+
+interface SupportingTextSlotProps {
+	supportingText?: string;
+	status?: FieldStatus;
+	isRequired?: boolean;
 }
 
 export type BaseFieldSlots = {
 	default?: () => void;
 	label?: (props: LabelSlotProps) => void;
 	labelText?: (props: LabelTextSlotProps) => void;
+	supportingText?: (props: SupportingTextSlotProps) => void;
 };

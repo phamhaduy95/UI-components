@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { Slider } from '@components/BaseSlider';
+import { BaseSlider } from '@components/BaseSlider';
 import { ref } from 'vue';
 import { expect, within, userEvent, fn } from 'storybook/test';
 
@@ -11,8 +11,8 @@ const SLIDER_TEXT_LABEL_TEST_ID = 'slider-value-text';
 const SLIDER_MARKER_GROUP_TEST_ID = 'slider-marker-group';
 
 const meta = {
-	title: 'Components/FormField/Slider',
-	component: Slider,
+	title: 'Components/FormField/Slider/BaseSlider',
+	component: BaseSlider,
 	tags: ['autodocs'],
 	parameters: {
 		layout: 'padded'
@@ -43,18 +43,18 @@ const meta = {
 		onValueChangeEnd: mockedOnValueChangeEnd
 	},
 	render: (args) => ({
-		components: { Slider },
+		components: { Slider: BaseSlider },
 		setup() {
 			return { args };
 		},
-		template: '<div style="width: 300px;"><Slider v-bind="args" /></div>'
+		template: '<div class="w-[300px]"><Slider v-bind="args" /></div>'
 	}),
 	beforeEach() {
 		mockedOnModelValueUpdate.mockClear();
 		mockedOnValueChange.mockClear();
 		mockedOnValueChangeEnd.mockClear();
 	}
-} satisfies Meta<typeof Slider>;
+} satisfies Meta<typeof BaseSlider>;
 
 export default meta;
 
@@ -123,7 +123,7 @@ export const Controllable: Story = {
 		modelValue: [25]
 	},
 	render: (args) => ({
-		components: { Slider },
+		components: { Slider: BaseSlider },
 		setup() {
 			const { 'onUpdate:modelValue': onModelValueUpdate, modelValue } = args;
 
@@ -134,9 +134,9 @@ export const Controllable: Story = {
 				value.value = val;
 			};
 			return () => (
-				<div style="width: 300px;">
-					<Slider {...args} modelValue={value.value} onUpdate:modelValue={handleValueChange} />
-					<p style="margin-top: 12px;" aria-label="Displayed value">
+				<div class="w-[300px]">
+					<BaseSlider {...args} modelValue={value.value} onUpdate:modelValue={handleValueChange} />
+					<p class="mt-3" aria-label="Displayed value">
 						Value: {value.value?.join(', ')}
 					</p>
 				</div>
@@ -193,12 +193,12 @@ export const RangeWithCustomValueText: Story = {
 		dataTestid: 'slider-range-custom-value'
 	},
 	render: (args) => ({
-		components: { Slider },
+		components: { Slider: BaseSlider },
 		setup() {
 			return { args };
 		},
 		template: `
-			<div style="width: 300px;">
+			<div class="w-[300px]">
 				<Slider v-bind="args">
 					<template #valueText="{ value }">
 						<span data-testid="custom-value-text">
@@ -334,13 +334,12 @@ export const Required: Story = {
 
 export const Sizes: Story = {
 	render: () => ({
-		components: { Slider },
+		components: { Slider: BaseSlider },
 		setup() {
 			return () => (
-				<div style="display: flex; flex-direction: column; gap: 32px; width: 300px;">
-					<Slider label="Small" size="small" defaultValue={[20]} />
-					<Slider label="Medium" size="medium" defaultValue={[50]} />
-					<Slider label="Large" size="large" defaultValue={[80]} />
+				<div class="flex flex-col gap-8 w-[300px]">
+					<BaseSlider label="Small" size="small" defaultValue={[20]} />
+					<BaseSlider label="Medium" size="medium" defaultValue={[50]} />
 				</div>
 			);
 		}
@@ -349,15 +348,15 @@ export const Sizes: Story = {
 
 export const Color: Story = {
 	render: () => ({
-		components: { Slider },
+		components: { Slider: BaseSlider },
 		setup() {
 			return () => (
-				<div style="display: flex; flex-direction: column; gap: 32px; width: 300px;">
-					<Slider label="Primary Status" color="primary" defaultValue={[50]} />
-					<Slider label="Secondary Status" color="secondary" defaultValue={[60]} />
-					<Slider label="Success Status" color="success" defaultValue={[70]} />
-					<Slider label="Warning Status" color="warning" defaultValue={[80]} />
-					<Slider label="Error Status" color="error" defaultValue={[90]} />
+				<div class="flex flex-col gap-8 w-[300px]">
+					<BaseSlider label="Primary Status" color="primary" defaultValue={[50]} />
+					<BaseSlider label="Secondary Status" color="secondary" defaultValue={[60]} />
+					<BaseSlider label="Success Status" color="success" defaultValue={[70]} />
+					<BaseSlider label="Warning Status" color="warning" defaultValue={[80]} />
+					<BaseSlider label="Error Status" color="error" defaultValue={[90]} />
 				</div>
 			);
 		}

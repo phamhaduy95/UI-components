@@ -33,7 +33,6 @@
 			:label="label"
 			:is-required="required"
 			:status="status"
-			:label-id="labelId"
 		>
 			<FieldLabel
 				:id="labelId"
@@ -55,13 +54,20 @@
 			</FieldLabel>
 		</slot>
 		<slot />
-		<SupportingText
-			:id="supportingTextId"
-			class="BaseField_SupportingText"
+		<slot
+			name="supportingText"
+			:supporting-text="supportingText"
 			:status="status"
-			:show="!!supportingText"
+			:is-required="required"
 		>
-			{{ supportingText }}
-		</SupportingText>
+			<SupportingText
+				:id="supportingTextId"
+				class="BaseField_SupportingText"
+				:status="status"
+				:show="!!supportingText"
+			>
+				{{ supportingText }}
+			</SupportingText>
+		</slot>
 	</div>
 </template>

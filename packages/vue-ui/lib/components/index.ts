@@ -30,3 +30,4 @@ export * from './Tooltip';
 export * from './VirtualList';
 export * from './TreeView';
 export * from './Tabs';
+export * from './SingleSlider';

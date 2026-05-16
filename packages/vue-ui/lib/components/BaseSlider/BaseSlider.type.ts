@@ -1,6 +1,6 @@
+import type { SliderRootProps as ArkSliderRootProps } from '@ark-ui/vue/slider';
 import type { CommonFieldProps } from '@components/type';
 import type { HTMLAttributes } from 'vue';
-import type { SliderRootProps as ArkSliderRootProps } from '@ark-ui/vue/slider';
 
 export interface BaseSliderProps
 	extends Pick<
@@ -29,6 +29,8 @@ export interface BaseSliderProps
 	marks?: number[] | { value: number; label?: string }[];
 	color?: 'primary' | 'success' | 'error' | 'warning' | 'secondary';
 	dataTestid?: string;
+	showValue?: boolean;
+	hasHiddenInput?: boolean;
 }
 
 export type BaseSliderEmits = {
@@ -37,6 +39,30 @@ export type BaseSliderEmits = {
 	valueChangeEnd: [payload: { value: number[] }];
 };
 
+interface TrailingSlotProps {
+	value: number[];
+	setValue: (value: number[]) => void;
+	label?: string;
+	labelId?: string;
+}
+
+interface ValueTextSlotProps {
+	value: number[];
+}
+
+interface LabelSlotProps {
+	label?: string;
+	required?: boolean;
+	value: number[];
+}
+
+interface SupportingTextSlotProps {
+	supportingText: string;
+}
+
 export type BaseSliderSlots = {
-	valueText: (props: { value: number[] }) => void;
+	label: (props: LabelSlotProps) => void;
+	supportingText: (props: SupportingTextSlotProps) => void;
+	valueText: (props: ValueTextSlotProps) => void;
+	trailing: (props: TrailingSlotProps) => void;
 };
