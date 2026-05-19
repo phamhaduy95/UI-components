@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { DesignerAssetItem } from '@/modules/designer/components';
 import { nodeConfigMap } from '@/modules/designer/configs/nodeConfig';
 </script>
 
@@ -14,9 +13,10 @@ import { nodeConfigMap } from '@/modules/designer/configs/nodeConfig';
 			<!-- Basic Shapes -->
 			<div class="space-y-2">
 				<h3 class="text-xs font-medium uppercase text-gray-500">Basic Shapes</h3>
-				<div class="grid grid-cols-4">
-					<DesignerAssetItem
+				<div class="grid grid-cols-4 gap-2">
+					<component
 						v-for="(config, key) in nodeConfigMap"
+						:is="config.paletteComponent"
 						:id="config.id"
 						:key="config.id"
 						:type="key"

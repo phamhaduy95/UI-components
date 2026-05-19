@@ -1,14 +1,31 @@
 <script setup lang="ts">
+import { computed, shallowRef } from 'vue';
 import { VueFlow, useVueFlow, type Edge } from '@vue-flow/core';
+import { Background } from '@vue-flow/background';
 import { DesignerToolbar, DesignerLeftPanel, DesignerRightPanel } from './layouts';
-import { DesignerShapeNode } from './components';
+import { nodeConfigMap } from '@/modules/designer/configs/nodeConfig';
 import type { DesignerNode } from './types/Designer.type';
+
+const DEFAULT_NODE_SIZE = { width: 64, height: 64 };
 
 // We let vue-flow manage state of nodes and edges internally to reduce memory usage
 const initialNodes: Array<DesignerNode> = [];
 const initialEdges: Array<Edge> = [];
 
 const { screenToFlowCoordinate, addNodes } = useVueFlow();
+
+const inititalNodeType = () => {
+	const types: Record<string, any> = {};
+	for (const key in nodeConfigMap) {
+		const nodeComponent = nodeConfigMap[key]?.nodeComponent;
+		if (nodeComponent) {
+			types[key] = nodeComponent;
+		}
+	}
+	return types;
+};
+
+const nodeTypes = inititalNodeType();
 
 const handleAssetDrop = (event: DragEvent) => {
 	event.preventDefault();
@@ -30,7 +47,7 @@ const handleAssetDrop = (event: DragEvent) => {
 
 	const newNode: DesignerNode = {
 		id: nodeId,
-		type: 'shape',
+		type,
 		position,
 		data: { subType: type }
 	};
@@ -57,14 +74,12 @@ const handleAssetDrop = (event: DragEvent) => {
 				<VueFlow
 					:nodes="initialNodes"
 					:edges="initialEdges"
-					class="vue-flow-wrapper bg-gray-50"
+					:node-types="nodeTypes"
 					:default-zoom="1"
 					:min-zoom="0.2"
 					:max-zoom="4"
 				>
-					<template #node-shape="props">
-						<DesignerShapeNode v-bind="props" />
-					</template>
+					<Background :variant="'dots'" :gap="24" :size="2" pattern-color="#d1d5db" />
 				</VueFlow>
 			</main>
 
@@ -73,10 +88,3 @@ const handleAssetDrop = (event: DragEvent) => {
 		</div>
 	</div>
 </template>
-
-<style scoped>
-/* Optional custom CSS if Tailwind is not enough */
-.tooltip-trigger {
-	position: relative;
-}
-</style>

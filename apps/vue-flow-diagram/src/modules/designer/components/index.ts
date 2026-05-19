@@ -1,2 +1,6 @@
-export { default as DesignerShapeNode } from './DesignerShapeNode.vue';
-export { default as DesignerAssetItem } from './DesignerAssetItem.vue';
+export * from './GenericNode';
+export * from './RectangleNode';
+export * from './CircleNode';
+export * from './TriangleNode';
+export * from './HexagonNode';
+export * from './StarNode';
