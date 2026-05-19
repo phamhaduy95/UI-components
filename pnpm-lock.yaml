@@ -492,7 +492,7 @@ importers:
         specifier: ^10.4.0
         version: 10.4.0(eslint@10.0.3(jiti@2.6.1))
       vue-tsc:
-        specifier: ^3.2.5
+        specifier: ^3.2.6
         version: 3.2.9(typescript@5.9.3)
 
 packages:
