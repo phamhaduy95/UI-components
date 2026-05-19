@@ -1,1 +1,1 @@
-export { default as DesignerMainPage } from './DesignerMainPage.vue';
+export { default as DesignerPage } from './DesignerPage.vue';

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { HomePage } from '@modules/home';
-import { DesignerMainPage } from '@modules/designer';
+import { DesignerPage } from '@modules/designer';
 import { SettingsPage } from '@modules/settings';
 
 const router = createRouter({
@@ -14,7 +14,7 @@ const router = createRouter({
 		{
 			path: '/designer',
 			name: 'designer',
-			component: DesignerMainPage
+			component: DesignerPage
 		},
 		{
 			path: '/settings',

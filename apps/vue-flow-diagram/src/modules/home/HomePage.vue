@@ -16,7 +16,7 @@ const navigateToDesigner = () => {
 	<div class="flex h-full w-full flex-col overflow-y-auto bg-white">
 		<!-- Hero Section -->
 		<section
-			class="flex flex-1 flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-white px-6 py-20 text-center"
+			class="bg-linear-to-b flex flex-1 flex-col items-center justify-center from-blue-50 to-white px-6 py-20 text-center"
 		>
 			<h1 class="mb-6 text-5xl font-extrabold tracking-tight text-gray-900">
 				Design SCADA HMI Interfaces <br />
