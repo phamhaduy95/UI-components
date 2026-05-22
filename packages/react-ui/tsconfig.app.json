@@ -26,12 +26,12 @@
 		"erasableSyntaxOnly": true,
 		"noFallthroughCasesInSwitch": true,
 		"noUncheckedSideEffectImports": true,
-		"baseUrl": ".",
+
 		"paths": {
-			"@components/*": ["lib/components/*"],
-			"@stories/*": ["stories/*"]
+			"@components/*": ["./lib/components/*"],
+			"@stories/*": ["./stories/*"]
 		}
 	},
-	"include": ["lib/**/*.ts", "lib/**/*.tsx", "stories/**/*.tsx", "stories/**/*.mdx"],
-	"exclude": ["dist", "node_modules"]
+	"include": ["./lib/**/*.ts", "./lib/**/*.tsx", "./stories/**/*.tsx", "./stories/**/*.mdx"],
+	"exclude": ["./dist", "./node_modules"]
 }
