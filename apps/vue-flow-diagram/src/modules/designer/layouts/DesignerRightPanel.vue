@@ -7,7 +7,7 @@ import { useDebounceFn } from '@vueuse/core';
 import { computed, toRaw, type ComponentInstance } from 'vue';
 
 import type { NodePositionEntry, NodeSizeEntry } from '@modules/designer/types/Command.type';
-import type { NumberInput, SingleSlider } from '@packages/vue-components';
+import { SingleSlider, NumberInput } from '@packages/vue-components';
 
 type NumberInputProps = ComponentInstance<typeof NumberInput>['$props'];
 type SingleSliderProps = ComponentInstance<typeof SingleSlider>['$props'];
