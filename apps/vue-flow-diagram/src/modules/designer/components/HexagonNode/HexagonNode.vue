@@ -1,52 +1,35 @@
 <script setup lang="ts">
-import { type NodeProps } from '@vue-flow/core';
-import { NodeResizer } from '@vue-flow/node-resizer';
-import type { NodeCustomData } from '@/modules/designer/types/Designer.type';
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
+import {
+	GenericCanvasNode,
+	type GenericCanvasNodeProps
+} from '@/modules/designer/components/GenericNode';
+import type { BasicShapeNodeData } from '@/modules/designer/types/Designer.type';
 
-export type HexagonNodeProps = NodeProps<NodeCustomData>;
+export type HexagonNodeProps = GenericCanvasNodeProps;
 
-const { selected, dimensions } = defineProps<HexagonNodeProps>();
+const props = defineProps<HexagonNodeProps>();
 
-const shapeWidth = ref(64);
-const shapeHeight = ref(64);
-
-const handleOnResize = () => {
-	shapeWidth.value = dimensions.width;
-	shapeHeight.value = dimensions.height;
-};
-
-const hexagonPoints = computed(() => {
-	const w = shapeWidth.value;
-	const h = shapeHeight.value;
-	return `${w * 0.25} 0 ${w * 0.75} 0 ${w} ${h * 0.5} ${w * 0.75} ${h} ${w * 0.25} ${h} 0 ${h * 0.5}`;
-});
+const nodeConfig = computed(() => props.data as BasicShapeNodeData);
 </script>
 
 <template>
-	<div
-		class="relative flex items-center justify-center overflow-visible rounded-none border border-dashed border-transparent bg-transparent"
-		:style="{ width: `${shapeWidth}px`, height: `${shapeHeight}px` }"
-	>
-		<NodeResizer
-			:is-visible="selected"
-			:line-style="{ borderStyle: 'dashed' }"
-			:min-width="24"
-			:min-height="24"
-			@resize="handleOnResize"
-		/>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="100%"
-			height="100%"
-			:viewBox="`0 0 ${shapeWidth} ${shapeHeight}`"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="1"
-			stroke-linejoin="miter"
-			overflow="visible"
-		>
-			<polygon :points="hexagonPoints" style="vector-effect: non-scaling-stroke"></polygon>
-		</svg>
-	</div>
+	<GenericCanvasNode v-bind="props">
+		<template #default="{ shapeHeight, shapeWidth }">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				:viewBox="`0 0 ${shapeWidth} ${shapeHeight}`"
+				:stroke="nodeConfig.stroke"
+				:stroke-width="nodeConfig.strokeWidth"
+				:fill="nodeConfig.fill"
+				stroke-linejoin="miter"
+				overflow="visible"
+			>
+				<polygon
+					:points="`${shapeWidth * 0.25} 0 ${shapeWidth * 0.75} 0 ${shapeWidth} ${shapeHeight * 0.5} ${shapeWidth * 0.75} ${shapeHeight} ${shapeWidth * 0.25} ${shapeHeight} 0 ${shapeHeight * 0.5}`"
+					style="vector-effect: non-scaling-stroke"
+				></polygon>
+			</svg>
+		</template>
+	</GenericCanvasNode>
 </template>
