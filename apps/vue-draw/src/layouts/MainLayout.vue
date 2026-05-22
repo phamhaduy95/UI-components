@@ -83,9 +83,7 @@ const navItems = [
 					>
 						<IconLogo class="h-full w-full" />
 					</RouterLink>
-					<h1 class="hidden text-lg font-semibold text-gray-800 sm:block">
-						NextGen SCADA HMI Designer
-					</h1>
+					<h1 class="hidden text-lg font-semibold text-gray-800 sm:block">Drawing App</h1>
 				</div>
 
 				<div class="flex items-center space-x-4">

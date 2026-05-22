@@ -1,6 +1,6 @@
 {
-	"name": "vue-flow-diagram",
-	"version": "0.0.0",
+	"name": "vue-draw",
+	"version": "0.0.3",
 	"private": true,
 	"type": "module",
 	"scripts": {

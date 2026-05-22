@@ -19,12 +19,12 @@ const navigateToDesigner = () => {
 			class="bg-linear-to-b flex flex-1 flex-col items-center justify-center from-blue-50 to-white px-6 py-20 text-center"
 		>
 			<h1 class="mb-6 text-5xl font-extrabold tracking-tight text-gray-900">
-				Design SCADA HMI Interfaces <br />
+				Design Vector Drawings <br />
 				<span class="text-blue-600">With Drag & Drop Ease</span>
 			</h1>
 			<p class="mx-auto mb-10 max-w-2xl text-xl leading-relaxed text-gray-600">
-				NextGen SCADA HMI Designer is a modern, web-based design environment. Build industrial
-				interfaces faster with powerful tools, intuitive layouts, and Vue Flow integration.
+				VueDraw is a modern, web-based design environment. Build diagrams faster with powerful
+				tools, intuitive layouts, and Vue Flow integration.
 			</p>
 			<div class="flex gap-4">
 				<Button color="primary" variant="contained" size="large" @click="navigateToDesigner">
@@ -101,9 +101,7 @@ const navigateToDesigner = () => {
 				<a href="#" class="text-gray-500 transition-colors hover:text-gray-900">Support</a>
 				<a href="#" class="text-gray-500 transition-colors hover:text-gray-900">Terms</a>
 			</div>
-			<p class="text-sm text-gray-400">
-				&copy; 2026 NextGen SCADA HMI Designer. All rights reserved.
-			</p>
+			<p class="text-sm text-gray-400">&copy; 2026 VueDraw. All rights reserved.</p>
 		</footer>
 	</div>
 </template>
