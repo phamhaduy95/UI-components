@@ -31,3 +31,4 @@ export * from './VirtualList';
 export * from './TreeView';
 export * from './Tabs';
 export * from './SingleSlider';
+export * from './ColorPicker';
