@@ -3,6 +3,7 @@ import {
 	GenericNodePalette,
 	type GenericNodePaletteProps
 } from '@/modules/designer/components/GenericNode';
+import { NodeCategory } from '@/modules/designer/types/Designer.type';
 
 import IconTriangle from '@/assets/icons/triangle.svg';
 
@@ -10,11 +11,9 @@ const props = defineProps<GenericNodePaletteProps>();
 </script>
 
 <template>
-	<GenericNodePalette :id="props.id" :type="props.type" :label="props.label">
+	<GenericNodePalette v-bind="props" :category="NodeCategory.BasicShape" type="triangle">
 		<template #icon>
 			<IconTriangle />
 		</template>
 	</GenericNodePalette>
 </template>
-
-<style scoped></style>

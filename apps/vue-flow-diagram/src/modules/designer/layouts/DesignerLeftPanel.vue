@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nodeConfigMap } from '@/modules/designer/configs/nodeConfig';
+import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
 </script>
 
 <template>
@@ -21,6 +21,7 @@ import { nodeConfigMap } from '@/modules/designer/configs/nodeConfig';
 						:key="config.id"
 						:type="key"
 						:label="config.label"
+						:category="config.category"
 					/>
 				</div>
 			</div>

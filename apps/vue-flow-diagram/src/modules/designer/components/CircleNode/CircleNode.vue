@@ -1,48 +1,50 @@
 <script setup lang="ts">
-import { type NodeProps } from '@vue-flow/core';
 import { NodeResizer } from '@vue-flow/node-resizer';
-import { ref } from 'vue';
 
-export type CircleNodeProps = NodeProps;
+import {
+	GenericCanvasNode,
+	type GenericCanvasNodeProps
+} from '@/modules/designer/components/GenericNode';
 
-const { selected, dimensions } = defineProps<CircleNodeProps>();
+import { resizerHandleStyle, resizerLineStyle } from '@/modules/designer/constant/default';
+import type { BasicShapeNodeData } from '../../types/Designer.type';
+import { computed } from 'vue';
 
-const shapeWidth = ref(64);
-const shapeHeight = ref(64);
+export type CircleNodeProps = GenericCanvasNodeProps;
 
-const handleOnResize = () => {
-	shapeWidth.value = dimensions.width;
-	shapeHeight.value = dimensions.height;
-};
+const props = defineProps<CircleNodeProps>();
+
+const nodeData = computed(() => props.data as BasicShapeNodeData);
 </script>
 
 <template>
-	<div
-		class="relative flex items-center justify-center overflow-visible rounded-none border border-dashed border-transparent bg-transparent"
-		:style="{ width: `${shapeWidth}px`, height: `${shapeHeight}px` }"
-	>
-		<NodeResizer
-			:is-visible="selected"
-			:min-width="24"
-			:min-height="24"
-			:line-style="{ borderStyle: 'dashed' }"
-			:keep-aspect-ratio="true"
-			@resize="handleOnResize"
-		/>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			:viewBox="`0 0 ${shapeWidth} ${shapeHeight}`"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="1"
-			overflow="visible"
-		>
-			<circle
-				:cx="shapeWidth / 2"
-				:cy="shapeHeight / 2"
-				:r="Math.min(shapeWidth, shapeHeight) / 2"
-				style="vector-effect: non-scaling-stroke"
-			></circle>
-		</svg>
-	</div>
+	<GenericCanvasNode v-bind="props">
+		<template #resizer="{ selected }">
+			<NodeResizer
+				:is-visible="selected"
+				:min-width="24"
+				:min-height="24"
+				:line-style="resizerLineStyle"
+				:handle-style="resizerHandleStyle"
+				:keep-aspect-ratio="true"
+			/>
+		</template>
+		<template #default="{ shapeHeight, shapeWidth }">
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				:viewBox="`0 0 ${shapeWidth} ${shapeHeight}`"
+				:fill="nodeData.fill"
+				:stroke="nodeData.stroke"
+				:stroke-width="nodeData.strokeWidth"
+				overflow="visible"
+			>
+				<circle
+					:cx="shapeWidth / 2"
+					:cy="shapeHeight / 2"
+					:r="Math.min(shapeWidth, shapeHeight) / 2"
+					style="vector-effect: non-scaling-stroke"
+				></circle>
+			</svg>
+		</template>
+	</GenericCanvasNode>
 </template>

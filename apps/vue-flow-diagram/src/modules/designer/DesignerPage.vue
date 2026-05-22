@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue';
-import { VueFlow, useVueFlow, type Edge } from '@vue-flow/core';
+import { useDnD } from '@/modules/designer/composables/useDnD';
+import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
 import { Background } from '@vue-flow/background';
-import { DesignerToolbar, DesignerLeftPanel, DesignerRightPanel } from './layouts';
-import { nodeConfigMap } from '@/modules/designer/configs/nodeConfig';
+import { useVueFlow, VueFlow, type Edge, type NodeChange } from '@vue-flow/core';
+import { DesignerLeftPanel, DesignerRightPanel, DesignerToolbar } from './layouts';
 import type { DesignerNode } from './types/Designer.type';
-
-const DEFAULT_NODE_SIZE = { width: 64, height: 64 };
+import { useHistory } from './composables/useHistory';
+import { useNodeCommandFactory } from './composables/useCommandFactory';
+import type { NodePositionEntry } from './types/Command.type';
 
 // We let vue-flow manage state of nodes and edges internally to reduce memory usage
 const initialNodes: Array<DesignerNode> = [];
 const initialEdges: Array<Edge> = [];
 
-const { screenToFlowCoordinate, addNodes } = useVueFlow();
+const { findNode } = useVueFlow();
 
-const inititalNodeType = () => {
+const { onPaletteDrop, onPaletteDragOver } = useDnD();
+
+const initiateNodeTypes = () => {
 	const types: Record<string, any> = {};
 	for (const key in nodeConfigMap) {
 		const nodeComponent = nodeConfigMap[key]?.nodeComponent;
@@ -25,35 +28,63 @@ const inititalNodeType = () => {
 	return types;
 };
 
-const nodeTypes = inititalNodeType();
+const { commit } = useHistory();
+const { createDeleteNodesCommand, createRepositionNodesCommand } = useNodeCommandFactory();
 
-const handleAssetDrop = (event: DragEvent) => {
-	event.preventDefault();
-	if (!event.dataTransfer) return;
+const beforePositions = new Map<string, { x: number; y: number }>();
+let isDragging = false;
 
-	const transeredMessage = event.dataTransfer.getData('application/vueflow');
-	const object = JSON.parse(transeredMessage);
+const onNodesChange = (changes: NodeChange[]) => {
+	const positionChanges = changes.filter((c) => c.type === 'position');
+	if (positionChanges.length > 0) {
+		const firstChange = positionChanges[0] as { type: 'position'; id: string; dragging?: boolean };
 
-	const { type } = object;
+		if (firstChange.dragging && !isDragging) {
+			isDragging = true;
+			const { getSelectedNodes } = useVueFlow();
+			const selected = getSelectedNodes.value;
+			const targets =
+				selected.length > 0
+					? selected
+					: (positionChanges.map((c) => findNode((c as any).id)).filter(Boolean) as DesignerNode[]);
+			targets.forEach((n) => {
+				if (!beforePositions.has(n.id)) {
+					beforePositions.set(n.id, { x: n.position.x, y: n.position.y });
+				}
+			});
+		}
 
-	if (!type) return;
+		if (!firstChange.dragging && isDragging) {
+			isDragging = false;
 
-	const position = screenToFlowCoordinate({
-		x: event.clientX,
-		y: event.clientY
+			const entries: NodePositionEntry[] = [];
+			beforePositions.forEach((before, nodeId) => {
+				const node = findNode(nodeId);
+				if (!node) return;
+				const after = { x: node.position.x, y: node.position.y };
+				if (before.x !== after.x || before.y !== after.y) {
+					entries.push({ nodeId, before, after });
+				}
+			});
+
+			if (entries.length > 0) {
+				commit(createRepositionNodesCommand(entries));
+			}
+			beforePositions.clear();
+		}
+	}
+
+	changes.forEach((change) => {
+		if (change.type === 'remove') {
+			const node = findNode(change.id);
+			if (!node) return;
+			const command = createDeleteNodesCommand([node]);
+			commit(command);
+		}
 	});
-
-	const nodeId = `dndnode_${crypto.randomUUID()}`;
-
-	const newNode: DesignerNode = {
-		id: nodeId,
-		type,
-		position,
-		data: { subType: type }
-	};
-
-	addNodes(newNode);
 };
+
+const nodeTypes = initiateNodeTypes();
 </script>
 
 <template>
@@ -64,25 +95,26 @@ const handleAssetDrop = (event: DragEvent) => {
 		>
 			<DesignerToolbar />
 		</div>
-
 		<div class="flex flex-1 overflow-hidden">
 			<!-- Left Panel: Asset Library -->
 			<DesignerLeftPanel />
 
 			<!-- Center Canvas -->
-			<main class="relative flex-1" @drop="handleAssetDrop" @dragover.prevent>
+			<main class="relative flex-1" @drop="onPaletteDrop" @dragover="onPaletteDragOver">
 				<VueFlow
 					:nodes="initialNodes"
 					:edges="initialEdges"
 					:node-types="nodeTypes"
 					:default-zoom="1"
-					:min-zoom="0.2"
-					:max-zoom="4"
+					:min-zoom="0.7"
+					:max-zoom="5"
+					:elevate-nodes-on-select="false"
+					:zoom-on-double-click="false"
+					@nodes-change="onNodesChange"
 				>
 					<Background :variant="'dots'" :gap="24" :size="2" pattern-color="#d1d5db" />
 				</VueFlow>
 			</main>
-
 			<!-- Right Panel: Properties -->
 			<DesignerRightPanel />
 		</div>
