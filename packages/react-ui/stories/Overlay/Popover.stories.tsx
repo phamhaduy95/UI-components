@@ -82,7 +82,7 @@ export const Controlled: Story = {
 		children: ({ setOpen }) => (
 			<div className="rounded-md border border-gray-200 bg-white p-4 shadow-lg">
 				<p className="mb-4">Click button below to close</p>
-				<Button size="small" onClick={() => setOpen(false)}>
+				<Button size="sm" onClick={() => setOpen(false)}>
 					Close Popover
 				</Button>
 			</div>

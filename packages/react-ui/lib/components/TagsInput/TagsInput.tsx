@@ -124,7 +124,7 @@ const TagsInput = (props: TagsInputProps): JSX.Element => {
 								<div className="BaseField_Trailing TagInput_Trailing">
 									{clearable && context.value.length > 0 && (
 										<ArkTagsInput.ClearTrigger asChild>
-											<IconButton aria-label="Clear" size="medium" variant="text" color="secondary">
+											<IconButton aria-label="Clear" size="md" variant="text" color="secondary">
 												<Cross2Icon />
 											</IconButton>
 										</ArkTagsInput.ClearTrigger>

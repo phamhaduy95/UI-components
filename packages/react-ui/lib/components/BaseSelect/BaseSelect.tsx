@@ -90,7 +90,7 @@ const BaseSelect = ({
 					<div className="Select_Trailing">
 						{clearable && (
 							<ArkSelect.ClearTrigger className="Select_ClearButton" asChild>
-								<IconButton variant="text" color="secondary" size="medium">
+								<IconButton variant="text" color="secondary" size="md">
 									{clearIcon ?? <Cross2Icon />}
 								</IconButton>
 							</ArkSelect.ClearTrigger>

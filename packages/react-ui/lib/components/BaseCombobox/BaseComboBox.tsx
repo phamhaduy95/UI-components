@@ -125,13 +125,13 @@ const BaseCombobox = (props: BaseComboboxProps): JSX.Element => {
 					)}
 					{clearable && (
 						<ArkCombobox.ClearTrigger className="Combobox_ClearTrigger" asChild tabIndex={0}>
-							<IconButton size="medium" variant="text" color="secondary">
+							<IconButton size="md" variant="text" color="secondary">
 								{clearIcon ?? <Cross2Icon />}
 							</IconButton>
 						</ArkCombobox.ClearTrigger>
 					)}
 					<ArkCombobox.Trigger className="Combobox_Trigger" aria-label="Trigger popup" asChild>
-						<IconButton size="medium" variant="text" color="secondary">
+						<IconButton size="md" variant="text" color="secondary">
 							{triggerIcon ?? <ChevronDownIcon className="Combobox_TriggerIcon" />}
 						</IconButton>
 					</ArkCombobox.Trigger>

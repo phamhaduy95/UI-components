@@ -12,7 +12,7 @@ const BaseCalendarDayView = (): JSX.Element => {
 					<>
 						<DatePicker.ViewControl className="CalendarView_Control">
 							<DatePicker.PrevTrigger className="CalendarView_NavTrigger" asChild>
-								<IconButton size="large" variant="text" color="secondary">
+								<IconButton size="lg" variant="text" color="secondary">
 									<ChevronLeftIcon />
 								</IconButton>
 							</DatePicker.PrevTrigger>
@@ -24,7 +24,7 @@ const BaseCalendarDayView = (): JSX.Element => {
 							</DatePicker.ViewTrigger>
 
 							<DatePicker.NextTrigger className="CalendarView_NavTrigger" asChild>
-								<IconButton size="large" variant="text" color="secondary">
+								<IconButton size="lg" variant="text" color="secondary">
 									<ChevronRightIcon />
 								</IconButton>
 							</DatePicker.NextTrigger>
