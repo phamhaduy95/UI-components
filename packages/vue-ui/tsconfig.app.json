@@ -18,11 +18,10 @@
 		"noEmit": true,
 		"jsx": "preserve",
 		"jsxImportSource": "vue",
-		"baseUrl": ".",
 
 		"paths": {
-			"@components/*": ["lib/components/*"],
-			"@stories/*": ["stories/*"]
+			"@components/*": ["./lib/components/*"],
+			"@stories/*": ["./stories/*"]
 		}
 	}
 }
