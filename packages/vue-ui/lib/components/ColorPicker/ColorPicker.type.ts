@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'vue';
-import type { CommonFieldProps } from '@components/type';
+import type { CommonFieldProps } from '@components/BaseField';
 import type {
 	ColorPickerRootEmits,
 	ColorPickerColorFormat as ArkColorFormat,

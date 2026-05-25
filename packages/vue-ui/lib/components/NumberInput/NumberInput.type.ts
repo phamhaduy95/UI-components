@@ -1,5 +1,5 @@
 import type { NumberInputRootEmits } from '@ark-ui/vue/number-input';
-import type { CommonFieldProps } from '@components/type';
+import type { CommonFieldProps } from '@components/BaseField';
 
 export interface NumberInputProps extends CommonFieldProps<string> {
 	modelValue?: string;

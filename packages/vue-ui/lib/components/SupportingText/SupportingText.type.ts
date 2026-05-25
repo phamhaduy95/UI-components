@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'vue';
-import type { FieldStatus } from '@components/type';
+import type { FieldStatus } from '@components/BaseField';
 
 export interface SupportingTextProps extends /* @vue-ignore */ HTMLAttributes {
 	status?: FieldStatus;

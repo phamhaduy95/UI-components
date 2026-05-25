@@ -1,5 +1,5 @@
 import type { DatePickerRootProps } from '@ark-ui/vue/date-picker';
-import type { CommonFieldProps } from '@components/type';
+import type { CommonFieldProps } from '@components/BaseField';
 import type { HTMLAttributes } from 'vue';
 
 export interface BaseDateRangePickerProps

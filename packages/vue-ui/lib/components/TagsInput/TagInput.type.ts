@@ -1,5 +1,5 @@
 import type { TagsInputRootProps } from '@ark-ui/vue/tags-input';
-import type { CommonFieldProps } from '@components/type';
+import type { CommonFieldProps } from '@components/BaseField';
 
 export interface TagInputProps
 	extends CommonFieldProps<string[]>,

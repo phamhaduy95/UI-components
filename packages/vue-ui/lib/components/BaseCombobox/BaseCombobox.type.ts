@@ -1,5 +1,6 @@
 import { type ComboboxRootEmits, type ComboboxRootProps } from '@ark-ui/vue/combobox';
-import type { CommonFieldProps, SelectItem, VirtualizationConfig } from '@components/type';
+import type { SelectItem, VirtualizationConfig } from '@components/type';
+import type { CommonFieldProps } from '@components/BaseField';
 import type { HTMLAttributes } from 'vue';
 
 type ArkComboboxProps = ComboboxRootProps<SelectItem>;

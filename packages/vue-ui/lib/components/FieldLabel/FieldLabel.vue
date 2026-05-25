@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import type { FieldLabelProps, FieldLabelSlots } from './FieldLabel.type';
+
 	import '@packages/styles/components/FieldLabel.css';
 
 	defineOptions({ inheritAttrs: false });
