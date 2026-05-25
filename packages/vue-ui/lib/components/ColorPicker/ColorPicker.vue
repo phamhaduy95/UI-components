@@ -1,50 +1,85 @@
 <script setup lang="ts">
-	import { computed, useId } from 'vue';
-	import { BaseField } from '../BaseField';
-	import { ColorPicker as ArkColorPicker } from '@ark-ui/vue/color-picker';
+	import { computed, useId, type ComponentInstance } from 'vue';
+	import { BaseField } from '@components/BaseField';
+	import { ColorPicker as ArkColorPicker, parseColor } from '@ark-ui/vue/color-picker';
+	import ColorPickerTextValue from './ColorPickerTextValue.vue';
 
-	import type { ColorPickerEmits, ColorPickerProps } from './ColorPicker.type';
+	import type { ColorPickerEmits, BaseColorPickerProps, ColorValue } from './ColorPicker.type';
+
+	import ColorPickerContent from './ColorPickerContent.vue';
+	import { generateColorStringValue } from './ColorPicker.util';
 
 	import './ColorPicker.css';
 
+	export type ComponentProps = ComponentInstance<typeof ArkColorPicker.Root>['$props'];
+
 	defineOptions({ inheritAttrs: false });
 
-	const props = defineProps<ColorPickerProps>();
+	const props = withDefaults(defineProps<BaseColorPickerProps>(), {
+		defaultValue: undefined,
+		modelValue: undefined,
+		open: undefined,
+		defaultOpen: undefined,
+		format: 'hex',
+		positioning: () => ({
+			placement: 'bottom-start',
+			strategy: 'fixed'
+		})
+	});
 
-	const emit = defineEmits<ColorPickerEmits>();
+	const innerFormat = computed(() => {
+		return props.format === 'hex' ? undefined : props.format;
+	});
+
+	const innerModelValue = computed(() => {
+		return props.modelValue ? parseColor(props.modelValue) : undefined;
+	});
+
+	const innerDefaultValue = computed(() => {
+		return props.defaultValue ? parseColor(props.defaultValue) : undefined;
+	});
 
 	const internalSupportingTextId = useId();
 
 	const supportingTextIdToUse = computed(() => props.supportingTextId ?? internalSupportingTextId);
+
+	const emit = defineEmits<ColorPickerEmits>();
+
+	const handleValueChange: ComponentProps['onValueChange'] = (detail) => {
+		const colorValue: ColorValue = {
+			toString: detail.value.toString,
+			isEqual: detail.value.isEqual
+		};
+
+		emit('value-change', detail.valueAsString, colorValue);
+	};
+
+	const handleUpdateModelValue: ComponentProps['onUpdate:modelValue'] = (detail) => {
+		const strValue = generateColorStringValue(detail, props.format);
+		emit('update:modelValue', strValue);
+	};
 </script>
 
 <template>
 	<ArkColorPicker.Root
 		class="ColorPicker"
-		:default-value="defaultValue"
-		:model-value="modelValue"
+		:default-value="innerDefaultValue"
+		:model-value="innerModelValue"
 		:disabled="disabled"
 		:required="required"
+		:format="innerFormat"
 		:read-only="readOnly"
-		:format="format"
-		:default-format="defaultFormat"
 		:close-on-select="closeOnSelect"
 		:open="open"
 		:default-open="defaultOpen"
 		:open-auto-focus="openAutoFocus"
 		:data-testid="dataTestid"
+		:positioning="positioning"
 		as-child
-		@value-change="emit('valueChange', $event)"
-		@value-change-end="emit('valueChangeEnd', $event)"
-		@update:model-value="emit('update:modelValue', $event)"
-		@format-change="emit('formatChange', $event)"
-		@update:format="emit('update:format', $event)"
-		@open-change="emit('openChange', $event)"
+		@update:model-value="handleUpdateModelValue"
 		@update:open="emit('update:open', $event)"
-		@focus-outside="emit('focusOutside', $event)"
-		@interact-outside="emit('interactOutside', $event)"
-		@pointer-down-outside="emit('pointerDownOutside', $event)"
-		@exit-complete="emit('exitComplete')"
+		@value-change="handleValueChange"
+		@value-change-end="handleValueChange"
 	>
 		<BaseField
 			:disabled="disabled"
@@ -56,40 +91,23 @@
 			:supporting-text-id="supportingTextIdToUse"
 			:label-element="ArkColorPicker.Label"
 		>
-			<ArkColorPicker.Control class="ColorPicker_Control BaseField_Field">
-				<ArkColorPicker.Trigger class="ColorPicker_Trigger">
-					<ArkColorPicker.ValueSwatch class="ColorPicker_ValueSwatch" />
-					<ArkColorPicker.ValueText class="ColorPicker_ValueText" />
+			<ArkColorPicker.Control class="ColorPicker_Control">
+				<ArkColorPicker.Trigger class="ColorPicker_Trigger BaseField_Field">
+					<div class="ColorPicker_Swatch">
+						<ArkColorPicker.TransparencyGrid class="ColorPicker_TransparencyGrid" />
+						<ArkColorPicker.ValueSwatch
+							respect-alpha
+							class="ColorPicker_ValueSwatch"
+						/>
+					</div>
+					<ColorPickerTextValue :format="format" />
 				</ArkColorPicker.Trigger>
 			</ArkColorPicker.Control>
-
+			<ArkColorPicker.Context v-slot="{ value: innerValue }">
+				<ArkColorPicker.HiddenInput :value="generateColorStringValue(innerValue, format)" />
+			</ArkColorPicker.Context>
 			<ArkColorPicker.Positioner>
-				<ArkColorPicker.Content class="ColorPicker_Content">
-					<ArkColorPicker.Area class="ColorPicker_Area">
-						<ArkColorPicker.AreaBackground class="ColorPicker_AreaBackground" />
-						<ArkColorPicker.AreaThumb class="ColorPicker_AreaThumb" />
-					</ArkColorPicker.Area>
-
-					<ArkColorPicker.ChannelSlider
-						channel="hue"
-						class="ColorPicker_ChannelSlider"
-					>
-						<ArkColorPicker.ChannelSliderTrack class="ColorPicker_ChannelSliderTrack" />
-						<ArkColorPicker.ChannelSliderThumb class="ColorPicker_ChannelSliderThumb" />
-					</ArkColorPicker.ChannelSlider>
-
-					<ArkColorPicker.ChannelSlider
-						channel="alpha"
-						class="ColorPicker_ChannelSlider"
-					>
-						<ArkColorPicker.TransparencyGrid
-							size="8px"
-							class="ColorPicker_TransparencyGrid"
-						/>
-						<ArkColorPicker.ChannelSliderTrack class="ColorPicker_ChannelSliderTrack" />
-						<ArkColorPicker.ChannelSliderThumb class="ColorPicker_ChannelSliderThumb" />
-					</ArkColorPicker.ChannelSlider>
-				</ArkColorPicker.Content>
+				<ColorPickerContent />
 			</ArkColorPicker.Positioner>
 		</BaseField>
 	</ArkColorPicker.Root>

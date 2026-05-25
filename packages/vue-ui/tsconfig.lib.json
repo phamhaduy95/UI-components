@@ -16,11 +16,10 @@
 		"jsxImportSource": "vue",
 		"strict": true,
 		"skipLibCheck": true,
-		"baseUrl": "./",
 		"paths": {
-			"@components/*": ["lib/components/*"]
+			"@components/*": ["./lib/components/*"]
 		}
 	},
-	"include": ["lib/**/*.ts", "lib/**/*.tsx", "lib/**/*.vue"],
-	"exclude": ["dist", "node_modules"]
+	"include": ["./lib/**/*.ts", "./lib/**/*.tsx", "./lib/**/*.vue"],
+	"exclude": ["./dist", "./node_modules"]
 }

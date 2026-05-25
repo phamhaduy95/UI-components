@@ -1,2 +1,7 @@
 export { default as ColorPicker } from './ColorPicker.vue';
-export type * from './ColorPicker.type';
+export type {
+	ColorPickerProps,
+	ColorPickerEmits,
+	BaseColorPickerProps,
+	ColorPickerColorFormat
+} from './ColorPicker.type';

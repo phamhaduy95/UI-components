@@ -1,19 +1,41 @@
-import type { ColorPickerRootEmits, ColorPickerColorFormat, Color } from '@ark-ui/vue/color-picker';
-import type { CommonFieldProps } from '../type';
+import type { HTMLAttributes } from 'vue';
+import type { CommonFieldProps } from '@components/type';
+import type {
+	ColorPickerRootEmits,
+	ColorPickerColorFormat as ArkColorFormat,
+	ColorPickerRootBaseProps,
+	Color
+} from '@ark-ui/vue/color-picker';
 
-export interface ColorPickerProps extends CommonFieldProps<Color> {
-	modelValue?: Color;
-	defaultValue?: Color;
+export type ColorValue = Pick<Color, 'toString' | 'isEqual'>;
+
+export type ColorPickerColorFormat = ArkColorFormat | 'hex';
+
+export interface BaseColorPickerProps
+	extends CommonFieldProps<string>,
+		Pick<
+			ColorPickerRootBaseProps,
+			| 'closeOnSelect'
+			| 'lazyMount'
+			| 'positioning'
+			| 'unmountOnExit'
+			| 'openAutoFocus'
+			| 'open'
+			| 'defaultOpen'
+		> {
+	modelValue?: string;
+	defaultValue?: string;
 	defaultFormat?: ColorPickerColorFormat;
 	format?: ColorPickerColorFormat;
-	disabled?: boolean;
-	required?: boolean;
-	readOnly?: boolean;
-	closeOnSelect?: boolean;
-	open?: boolean;
-	defaultOpen?: boolean;
-	openAutoFocus?: boolean;
 	dataTestid?: string;
 }
 
-export type ColorPickerEmits = ColorPickerRootEmits;
+export type ColorPickerProps = BaseColorPickerProps & /*@vue-ignore */ HTMLAttributes;
+
+export type ColorPickerEmits = {
+	'update:modelValue': [value: string];
+	'update:open': ColorPickerRootEmits['update:open'];
+	'update:format': [format: ColorPickerColorFormat];
+	'value-change-end': [value: string, colorValue: ColorValue];
+	'value-change': [value: string, colorValue: ColorValue];
+};
