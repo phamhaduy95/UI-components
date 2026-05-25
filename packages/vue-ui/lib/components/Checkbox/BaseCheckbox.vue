@@ -10,7 +10,6 @@
 	defineOptions({ inheritAttrs: false });
 
 	const props = withDefaults(defineProps<CheckboxProps>(), {
-		size: 'medium',
 		defaultChecked: false,
 		checked: undefined,
 		indeterminate: false

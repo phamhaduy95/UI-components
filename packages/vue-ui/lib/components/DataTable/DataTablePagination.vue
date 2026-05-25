@@ -63,7 +63,7 @@
 			<SingleSelect
 				class="DataTable_PageSizeSelect"
 				:items="pageSizeOption"
-				:size="'small'"
+				:size="'sm'"
 				aria-label="Rows per page"
 				:model-value="pageSize.toString()"
 				@update:model-value="(value) => $emit('update:pageSize', Number(value))"

@@ -12,7 +12,7 @@
 
 	withDefaults(defineProps<MultipleSelectProps>(), {
 		items: () => [],
-		size: 'medium',
+		size: 'md',
 		loopFocus: false,
 		deselectable: false,
 		clearable: false,

@@ -7,7 +7,7 @@
 	import '@packages/styles/components/BaseField.css';
 
 	withDefaults(defineProps<BaseFieldProps>(), {
-		size: 'medium',
+		size: 'md',
 		required: false,
 		disabled: false,
 		clearable: false,

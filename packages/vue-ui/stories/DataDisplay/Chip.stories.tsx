@@ -138,12 +138,12 @@ export const Size: Story = {
 		template: `
 			<div style="display: flex; flex-direction: column; gap: 16px;">
 				<div style="display: flex; align-items: center; gap: 8px;">
-					<Chip label="Default size" size="medium" />
-					<Chip label="Default size" size="medium" color="secondary" />
+					<Chip label="Default size" size="md" />
+					<Chip label="Default size" size="md" color="secondary" />
 				</div>
 				<div style="display: flex; align-items: center; gap: 8px;">
-					<Chip label="Small size" size="small" />
-					<Chip label="Small size" size="small" color="secondary" />
+					<Chip label="Small size" size="sm" />
+					<Chip label="Small size" size="sm" color="secondary" />
 				</div>
 			</div>
 		`

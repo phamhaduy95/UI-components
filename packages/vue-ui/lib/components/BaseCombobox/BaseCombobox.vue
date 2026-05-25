@@ -8,6 +8,8 @@
 
 	import BaseComboboxPopup from './BaseComboboxPopup.vue';
 
+	import type { VirtualizationConfig } from '@components/type';
+
 	import type {
 		BaseComboboxEmits,
 		BaseComboboxProps,
@@ -16,13 +18,12 @@
 
 	import '@packages/styles/components/BaseCombobox.css';
 	import '@packages/styles/components/DropDownMenu.css';
-	import type { VirtualizationConfig } from '@components/type';
 
 	defineOptions({ inheritAttrs: false });
 
 	const props = withDefaults(defineProps<BaseComboboxProps>(), {
 		items: () => [],
-		size: 'medium',
+		size: 'md',
 		multiple: false,
 		loopFocus: false,
 		clearable: false,

@@ -13,7 +13,7 @@
 
 	const props = withDefaults(defineProps<SingleSliderProps>(), {
 		color: 'primary',
-		size: 'medium',
+		size: 'md',
 		min: 0,
 		max: 100,
 		step: 1,

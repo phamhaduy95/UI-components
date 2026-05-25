@@ -338,8 +338,8 @@ export const Sizes: Story = {
 		setup() {
 			return () => (
 				<div class="flex flex-col gap-8 w-[300px]">
-					<BaseSlider label="Small" size="small" defaultValue={[20]} />
-					<BaseSlider label="Medium" size="medium" defaultValue={[50]} />
+					<BaseSlider label="Small" size="sm" defaultValue={[20]} />
+					<BaseSlider label="Medium" size="md" defaultValue={[50]} />
 				</div>
 			);
 		}

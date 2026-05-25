@@ -1,19 +1,23 @@
 .BaseField {
+	--field-height: 3rem;
+	--field-min-height: 3rem;
+	--field-padding-block: 0.5rem;
+	--field-padding-inline: 1rem;
+	--field-border-radius: var(--radius-xs);
+	--field-font-size: var(--text-base);
+	--field-font-line-height: var(--text-base--line-height);
+	--field-label-size: var(--text-sm);
+	--field-label-line-height: var(--text-sm--line-height);
+}
+
+.BaseField {
 	--color-focused: var(--color-primary);
 
-	&[aria-disabled='true'] {
-		.BaseField_Field {
-			background-color: var(--color-surface-container-high);
-			pointer-events: none;
-			opacity: 0.7;
-			filter: grayscale(100%);
-		}
-	}
-
 	&[data-status='error'] {
-		.BaseField_Field {
+		> .BaseField_Field {
 			border-color: var(--color-error);
 			--color-focused: var(--color-error);
+			border-radius: var(--radius-sm);
 		}
 	}
 	&[data-status='warning'] {
@@ -28,23 +32,69 @@
 			--color-focused: var(--color-success);
 		}
 	}
-	&[data-size='small'] {
-		--field-height: 40px;
+
+	&[data-size='xs'] {
+		--field-height: 1.75rem;
+		--field-padding-block: 0.25rem;
+		--field-padding-inline: 0.5rem;
+		--field-font-size: var(--text-xs);
+		--field-font-line-height: var(--text-xs--line-height);
+		--field-label-size: var(--text-xs);
+		--field-label-line-height: var(--text-xs--line-height);
 	}
-	&[data-size='medium'] {
-		--field-height: 48px;
+
+	&[data-size='sm'] {
+		--field-height: 2rem;
+		--field-padding-block: 0.25rem;
+		--field-padding-inline: 0.5rem;
+		--field-font-size: var(--text-sm);
+		--field-font-line-height: var(--text-sm--line-height);
+		--field-label-size: var(--text-xs);
+		--field-label-line-height: var(--text-xs--line-height);
+	}
+
+	&[data-size='md'] {
+		--field-height: 2.5rem;
+		--field-padding-block: 0.5rem;
+		--field-padding-inline: 1rem;
+		--field-font-size: var(--text-base);
+		--field-font-line-height: var(--text-base--line-height);
+		--field-label-size: var(--text-sm);
+		--field-label-line-height: var(--text-sm--line-height);
+	}
+
+	&[data-size='lg'] {
+		--field-height: 3rem;
+		--field-padding-block: 0.6125rem;
+		--field-padding-inline: 1.25rem;
+		--field-font-size: var(--text-lg);
+		--field-font-line-height: var(--text-lg--line-height);
+		--field-label-size: var(--text-base);
+		--field-label-line-height: var(--text-base--line-height);
+	}
+
+	&[aria-disabled='true'] {
+		background-color: var(--color-surface-container-high);
+		pointer-events: none;
+		opacity: 0.7;
+		filter: grayscale(100%);
 	}
 }
-.BaseField > .SupportingText {
-	padding: 0;
-	margin-top: 4px;
+
+.BaseField .FieldLabel {
+	font-size: var(--field-label-size);
+	line-height: var(--field-label-line-height);
 }
+
 .BaseField_Field {
 	display: flex;
-	width: 100%;
 	align-items: center;
 	position: relative;
+	width: 100%;
+
 	height: var(--field-height);
+	font-size: var(--field-font-size);
+	line-height: var(--field-font-line-height);
 	border: 1px solid var(--color-outline);
 	border-radius: var(--field-border-radius);
 	color: var(--color-on-surface);
@@ -59,4 +109,9 @@
 		align-items: center;
 		margin-left: auto;
 	}
+}
+
+.BaseField > .SupportingText {
+	padding: 0;
+	margin-top: 4px;
 }

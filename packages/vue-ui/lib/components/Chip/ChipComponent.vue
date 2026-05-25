@@ -7,7 +7,6 @@
 	import '@packages/styles/components/Chip.css';
 
 	const props = withDefaults(defineProps<ChipProps>(), {
-		size: 'medium',
 		color: 'primary',
 		removable: false,
 		disabled: false,

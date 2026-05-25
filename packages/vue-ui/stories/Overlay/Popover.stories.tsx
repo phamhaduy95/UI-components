@@ -103,7 +103,7 @@ export const Controlled: Story = {
 					<template #default="{ setOpen }">
 						<div class="rounded-md border border-gray-200 bg-white p-4 shadow-lg">
 							<p class="mb-4">Click button below to close</p>
-							<Button size="small" @click="setOpen(false)">
+							<Button size="sm" @click="setOpen(false)">
 								Close Popover
 							</Button>
 						</div>

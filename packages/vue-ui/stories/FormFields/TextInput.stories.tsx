@@ -283,8 +283,8 @@ export const Sizes: Story = {
 		setup() {
 			return () => (
 				<div style="display: flex; flex-direction: column; gap: 16px;">
-					<TextInput label="Small" size="small" placeholder="Enter your email" />
-					<TextInput label="Medium" size="medium" placeholder="Enter your email" />
+					<TextInput label="Small" size="sm" placeholder="Enter your email" />
+					<TextInput label="Medium" size="md" placeholder="Enter your email" />
 				</div>
 			);
 		}
