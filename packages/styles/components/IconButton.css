@@ -1,3 +1,9 @@
+.IconButton {
+	--icon-button-size-sm: 28px;
+	--icon-button-size-md: 36px;
+	--icon-button-size-lg: 44px;
+}
+
 .IconButton.Button {
 	padding: 0;
 	border-radius: var(--radius-full);
@@ -6,8 +12,27 @@
 	justify-content: center;
 	aspect-ratio: 1;
 
+	&[data-shape='square'] {
+		border-radius: var(--radius-sm);
+	}
+
+	&[data-shape='circle'] {
+		border-radius: var(--radius-full);
+	}
+
 	/* Size map */
-	&[data-size='small'] {
+
+	&[data-size='xs'] {
+		width: var(--icon-button-size-xs);
+		height: var(--icon-button-size-xs);
+
+		& svg {
+			width: var(--icon-size-xs);
+			height: var(--icon-size-xs);
+		}
+	}
+
+	&[data-size='sm'] {
 		width: var(--icon-button-size-sm);
 		height: var(--icon-button-size-sm);
 
@@ -17,7 +42,7 @@
 		}
 	}
 
-	&[data-size='medium'] {
+	&[data-size='md'] {
 		width: var(--icon-button-size-md);
 		height: var(--icon-button-size-md);
 
@@ -27,7 +52,7 @@
 		}
 	}
 
-	&[data-size='large'] {
+	&[data-size='lg'] {
 		width: var(--icon-button-size-lg);
 		height: var(--icon-button-size-lg);
 

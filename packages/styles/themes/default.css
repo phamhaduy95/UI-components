@@ -1,29 +1,8 @@
 :root {
-	/* Shared Tokens */
-	--button-small-padding-block: 4px;
-	--button-small-padding-inline: 8px;
-	--button-medium-padding-block: 6px;
-	--button-medium-padding-inline: 10px;
-	--button-large-padding-block: 8px;
-	--button-large-padding-inline: 12px;
-
-	--icon-button-size-sm: 28px;
-	--icon-button-size-md: 36px;
-	--icon-button-size-lg: 44px;
-
-	--icon-size-sm: 16px;
-	--icon-size-md: 20px;
-	--icon-size-lg: 24px;
-
-	--font-size-sm: 0.875rem;
-	--font-size-md: 1rem;
-	--font-size-lg: 1.125rem;
-
-	--radius-xs: 4px;
-	--radius-sm: 8px;
-	--radius-md: 12px;
-	--radius-lg: 16px;
-	--radius-xl: 28px;
+	--radius-xs: 2px;
+	--radius-sm: 4px;
+	--radius-md: 6px;
+	--radius-lg: 8px;
 	--radius-full: 9999px;
 
 	--text-xs: 0.75rem;
@@ -36,29 +15,15 @@
 	----text-lg--line-height: calc(2 / 1.25);
 	--text-xl: 1.5rem;
 	----text-xl--line-height: calc(2.25 / 1.5);
-	--text-2xl: 1.875rem;
-	----text-2xl--line-height: calc(2.75 / 1.875);
-	--text-3xl: 2.25rem;
-	----text-3xl--line-height: calc(3.5 / 2.25);
-	--text-4xl: 3rem;
-	----text-4xl--line-height: calc(4.5 / 3);
-	--text-5xl: 3.75rem;
-	----text-5xl--line-height: calc(6 / 3.75);
-	--text-6xl: 4.5rem;
-	----text-6xl--line-height: calc(7.5 / 4.5);
-	--text-7xl: 6rem;
-	----text-7xl--line-height: calc(10 / 6);
-	--text-8xl: 8rem;
-	----text-8xl--line-height: calc(12 / 8);
-	--text-9xl: 9rem;
-	----text-9xl--line-height: calc(15 / 9);
 
-	--field-border-radius: var(--radius-xs);
-	--field-font-size: 16px;
-	--field-height: 48px;
-	--field-min-height: 48px;
-	--field-padding-block: 8px;
-	--field-padding-inline: 16px;
+	--icon-size-xs: 0.75rem;
+	--icon-size-sm: 1rem;
+	--icon-size-md: 1.25rem;
+	--icon-size-lg: 1.5rem;
+
+	--font-size-sm: 0.875rem;
+	--font-size-md: 1rem;
+	--font-size-lg: 1.125rem;
 
 	--menu-border-radius: var(--radius-xs);
 	--menu-item-block-padding: 12px;
@@ -77,7 +42,7 @@
 	/* Light Theme Colors (Seed: #1565c0) */
 	--color-primary: rgb(21 101 192);
 	--color-on-primary: rgb(255 255 255);
-	--color-on-primary-container: rgb(0 27 61);
+	--color-on-primary-container: rgb(0, 27, 61);
 	--color-primary-container: rgb(214 227 255);
 	--color-primary-pressed: color-mix(in srgb, var(--color-primary), var(--color-on-primary) 12%);
 	--color-primary-hover: color-mix(in srgb, var(--color-primary), var(--color-on-primary) 8%);
@@ -85,33 +50,17 @@
 	--color-primary-container-pressed: color-mix(
 		in srgb,
 		var(--color-primary-container),
-		var(--color-primary) 12%
+		var(--color-on-primary-container) 12%
 	);
 	--color-primary-container-hover: color-mix(
 		in srgb,
 		var(--color-primary-container),
-		var(--color-primary) 8%
+		var(--color-on-primary-container) 8%
 	);
 	--color-primary-container-focus: color-mix(
 		in srgb,
 		var(--color-primary-container),
-		var(--color-primary) 12%
-	);
-
-	--color-primary-outlined-pressed: color-mix(
-		in srgb,
-		var(--color-primary-container),
-		var(--color-primary) 12%
-	);
-	--color-primary-outlined-hover: color-mix(
-		in srgb,
-		var(--color-primary-container),
-		var(--color-primary) 8%
-	);
-	--color-primary-outlined-focus: color-mix(
-		in srgb,
-		var(--color-primary-container),
-		var(--color-primary) 12%
+		var(--color-on-primary-container) 12%
 	);
 
 	--color-secondary: rgb(86 94 113);
@@ -327,6 +276,9 @@
 	--color-surface-variant: rgb(224 226 236);
 	--color-on-surface-variant: rgb(67 71 78);
 
+	--color-default-hover: color-mix(in srgb, var(--color-surface) 8%, var(--color-on-surface));
+	--color-default-pressed: color-mix(in srgb, var(--color-surface) 12%, var(--color-on-surface));
+
 	--color-surface-container-lowest: rgb(255 255 255);
 	--color-surface-container-low: rgb(242 243 250);
 	--color-surface-container: rgb(236 238 244);
@@ -336,22 +288,15 @@
 	--color-surface-dim: rgb(216 218 224);
 
 	--color-outline: rgba(142, 144, 153, 0.8);
+
+	--color-outline-hover: color-mix(in srgb, var(--color-surface), var(--color-on-surface) 8%);
+	--color-outline-pressed: rgba(142, 144, 153, 1);
+
 	--color-outline-variant: rgb(196 198 208);
 	--color-inverse-surface: rgb(46 49 54);
 
 	--color-scrim: rgb(0 0 0);
 	--color-shadow: rgb(0 0 0);
-
-	--color-hover-layer: color-mix(in srgb, var(--color-on-surface) 8%, transparent);
-
-	--color-outline-hover: color-mix(in srgb, var(--color-surface), var(--color-on-surface) 8%);
-	--color-outline-pressed: rgba(142, 144, 153, 1);
-	--color-text-hover: rgba(21, 101, 192, 0.08);
-	--color-text-pressed: rgba(21, 101, 192, 0.12);
-	--color-surface-hovered: rgba(25, 28, 32, 0.04);
-	--color-primary-disabled: rgba(25, 28, 32, 0.12);
-	--color-text-disabled: rgba(25, 28, 32, 0.38);
-	--color-outline-disabled: rgba(25, 28, 32, 0.2);
 
 	--scrollbar-bg-color: var(--color-surface-container-low);
 	--scrollbar-thumb-color: var(--color-outline);
