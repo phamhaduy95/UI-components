@@ -16,11 +16,10 @@
 		"isolatedModules": true,
 		"strict": true,
 		"skipLibCheck": true,
-		"baseUrl": "./",
 		"paths": {
-			"@components/*": ["lib/components/*"]
+			"@components/*": ["./lib/components/*"]
 		}
 	},
-	"include": ["lib/**/*.ts", "lib/**/*.tsx"],
-	"exclude": ["dist", "node_modules", "src"]
+	"include": ["./lib/**/*.ts", "./lib/**/*.tsx"],
+	"exclude": ["./dist", "./node_modules", "./src"]
 }

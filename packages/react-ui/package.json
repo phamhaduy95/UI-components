@@ -79,6 +79,7 @@
 		"classnames": "^2.5.1",
 		"clean-package": "^2.2.0",
 		"eslint": "^10.0.3",
+		"typescript": "catalog:",
 		"eslint-plugin-react-hooks": "^7.0.1",
 		"eslint-plugin-react-refresh": "^0.5.2",
 		"globby": "^16.1.1",
