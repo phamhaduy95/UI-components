@@ -18,10 +18,20 @@ const meta: Meta<typeof Button> = {
 		},
 		size: {
 			control: 'select',
-			options: ['small', 'medium', 'large']
+			options: ['xs', 'sm', 'md', 'lg']
+		},
+		color: {
+			control: 'select',
+			options: ['default', 'primary', 'secondary', 'success', 'warning', 'error']
 		},
 		onClick: { action: 'clicked' },
 		disabled: { control: 'boolean' }
+	},
+	args: {
+		variant: 'contained',
+		size: 'md',
+		color: 'primary',
+		disabled: false
 	}
 };
 
@@ -46,29 +56,36 @@ export const Size: Story = {
 		return (
 			<div className="flex flex-col gap-5">
 				<div className="flex items-center gap-2">
-					<Button size="small">Small</Button>
-					<Button size="medium">Medium</Button>
-					<Button size="large">Large</Button>
+					<Button size="xs">Extra Small</Button>
+					<Button size="sm">Small</Button>
+					<Button size="md">Medium</Button>
+					<Button size="lg">Large</Button>
 				</div>
 				<div className="flex items-center gap-2">
-					<Button size="small" variant="outlined">
+					<Button size="xs" variant="outlined">
+						Extra Small
+					</Button>
+					<Button size="sm" variant="outlined">
 						Small
 					</Button>
-					<Button size="medium" variant="outlined">
+					<Button size="md" variant="outlined">
 						Medium
 					</Button>
-					<Button size="large" variant="outlined">
+					<Button size="lg" variant="outlined">
 						Large
 					</Button>
 				</div>
 				<div className="flex items-center gap-2">
-					<Button size="small" variant="text">
+					<Button size="xs" variant="text">
+						Extra Small
+					</Button>
+					<Button size="sm" variant="text">
 						Small
 					</Button>
-					<Button size="medium" variant="text">
+					<Button size="md" variant="text">
 						Medium
 					</Button>
-					<Button size="large" variant="text">
+					<Button size="lg" variant="text">
 						Large
 					</Button>
 				</div>
@@ -135,6 +152,7 @@ export const Color: Story = {
 		return (
 			<div className="flex flex-col gap-5">
 				<div className="flex items-center gap-2">
+					<Button color="default">Default</Button>
 					<Button color="primary">Primary</Button>
 					<Button color="secondary">Secondary</Button>
 					<Button color="success">Success</Button>
@@ -142,6 +160,9 @@ export const Color: Story = {
 					<Button color="error">Error</Button>
 				</div>
 				<div className="flex items-center gap-2">
+					<Button color="default" variant="outlined">
+						Default
+					</Button>
 					<Button color="primary" variant="outlined">
 						Primary
 					</Button>
@@ -159,6 +180,9 @@ export const Color: Story = {
 					</Button>
 				</div>
 				<div className="flex items-center gap-2">
+					<Button color="default" variant="text">
+						Default
+					</Button>
 					<Button color="primary" variant="text">
 						Primary
 					</Button>

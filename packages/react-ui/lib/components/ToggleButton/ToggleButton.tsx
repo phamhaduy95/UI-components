@@ -21,7 +21,7 @@ const ToggleButton = ({
 	defaultPressed,
 	children,
 	className,
-	size = 'medium',
+	size = 'md',
 	color,
 	...rest
 }: ToggleButtonProps) => {

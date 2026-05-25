@@ -18,16 +18,25 @@ const meta: Meta<typeof IconButton> = {
 		},
 		size: {
 			control: 'select',
-			options: ['small', 'medium', 'large']
+			options: ['xs', 'sm', 'md', 'lg']
 		},
 		color: {
 			control: 'select',
-			options: ['primary', 'secondary', 'success', 'warning', 'error']
+			options: ['default', 'primary', 'secondary', 'success', 'warning', 'error']
+		},
+		shape: {
+			control: 'select',
+			options: ['circle', 'square']
 		},
 		disabled: { control: 'boolean' }
 	},
 	args: {
-		'aria-label': 'Icon Button'
+		'aria-label': 'Icon Button',
+		variant: 'contained',
+		size: 'md',
+		color: 'primary',
+		shape: 'circle',
+		disabled: false
 	}
 };
 
@@ -66,38 +75,62 @@ export const Size: Story = {
 		return (
 			<div className="flex flex-col gap-5">
 				<div className="flex items-center gap-2">
-					<IconButton size="small" aria-label="small">
+					<IconButton size="xs" aria-label="extra small">
 						<PlusIcon />
 					</IconButton>
-					<IconButton size="medium" aria-label="medium">
+					<IconButton size="sm" aria-label="small">
 						<PlusIcon />
 					</IconButton>
-					<IconButton size="large" aria-label="large">
+					<IconButton size="md" aria-label="medium">
+						<PlusIcon />
+					</IconButton>
+					<IconButton size="lg" aria-label="large">
 						<PlusIcon />
 					</IconButton>
 				</div>
 				<div className="flex items-center gap-2">
-					<IconButton size="small" variant="outlined" aria-label="small outlined">
+					<IconButton size="xs" variant="outlined" aria-label="extra small outlined">
 						<RocketIcon />
 					</IconButton>
-					<IconButton size="medium" variant="outlined" aria-label="medium outlined">
+					<IconButton size="sm" variant="outlined" aria-label="small outlined">
 						<RocketIcon />
 					</IconButton>
-					<IconButton size="large" variant="outlined" aria-label="large outlined">
+					<IconButton size="md" variant="outlined" aria-label="medium outlined">
+						<RocketIcon />
+					</IconButton>
+					<IconButton size="lg" variant="outlined" aria-label="large outlined">
 						<RocketIcon />
 					</IconButton>
 				</div>
 				<div className="flex items-center gap-2">
-					<IconButton size="small" variant="text" aria-label="small text">
+					<IconButton size="xs" variant="text" aria-label="extra small text">
 						<BellIcon />
 					</IconButton>
-					<IconButton size="medium" variant="text" aria-label="medium text">
+					<IconButton size="sm" variant="text" aria-label="small text">
 						<BellIcon />
 					</IconButton>
-					<IconButton size="large" variant="text" aria-label="large text">
+					<IconButton size="md" variant="text" aria-label="medium text">
+						<BellIcon />
+					</IconButton>
+					<IconButton size="lg" variant="text" aria-label="large text">
 						<BellIcon />
 					</IconButton>
 				</div>
+			</div>
+		);
+	}
+};
+
+export const Shape: Story = {
+	render: () => {
+		return (
+			<div className="flex gap-5">
+				<IconButton shape="circle" aria-label="circle">
+					<PlusIcon />
+				</IconButton>
+				<IconButton shape="square" aria-label="square">
+					<PlusIcon />
+				</IconButton>
 			</div>
 		);
 	}
@@ -108,6 +141,9 @@ export const ColorPalette: Story = {
 		return (
 			<div className="flex flex-col gap-5">
 				<div className="flex items-center gap-2">
+					<IconButton color="default" aria-label="default">
+						<PlusIcon />
+					</IconButton>
 					<IconButton color="primary" aria-label="primary">
 						<PlusIcon />
 					</IconButton>
@@ -125,6 +161,9 @@ export const ColorPalette: Story = {
 					</IconButton>
 				</div>
 				<div className="flex items-center gap-2">
+					<IconButton color="default" variant="outlined" aria-label="default outlined">
+						<PlusIcon />
+					</IconButton>
 					<IconButton color="primary" variant="outlined" aria-label="primary outlined">
 						<PlusIcon />
 					</IconButton>
@@ -142,6 +181,9 @@ export const ColorPalette: Story = {
 					</IconButton>
 				</div>
 				<div className="flex items-center gap-2">
+					<IconButton color="default" variant="text" aria-label="default text">
+						<PlusIcon />
+					</IconButton>
 					<IconButton color="primary" variant="text" aria-label="primary text">
 						<PlusIcon />
 					</IconButton>
