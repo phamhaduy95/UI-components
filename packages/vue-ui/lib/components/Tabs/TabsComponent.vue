@@ -60,7 +60,7 @@
 					class="Tabs_CloseButton"
 					aria-label="close tab"
 					variant="text"
-					size="small"
+					size="sm"
 					color="secondary"
 					tabindex="0"
 					@click.stop="emit('close', item.value)"

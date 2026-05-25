@@ -90,7 +90,7 @@
 				<div class="BaseField_Trailing">
 					<IconButton
 						v-if="shouldShowClearButton"
-						size="medium"
+						size="md"
 						variant="text"
 						color="secondary"
 						aria-label="Clear value"
@@ -108,7 +108,7 @@
 						as-child
 					>
 						<IconButton
-							size="medium"
+							size="md"
 							variant="text"
 							color="secondary"
 							aria-label="Toggle password visibility"
