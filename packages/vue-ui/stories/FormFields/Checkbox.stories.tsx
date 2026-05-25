@@ -204,7 +204,7 @@ export const Controllable: Story = {
 					<div style="display: flex; gap: 8px;">
 						<Button
 							color="secondary"
-							size="small"
+							size="sm"
 							onClick={() => {
 								checked.value = !checked.value;
 							}}

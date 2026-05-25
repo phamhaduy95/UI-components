@@ -87,7 +87,7 @@ const TextInput = (props: TextInputProp): JSX.Element => {
 					{shouldShowClearIcon && (
 						<IconButton
 							aria-label="Clear"
-							size="medium"
+							size="md"
 							variant="text"
 							color="secondary"
 							onClick={handleClear}

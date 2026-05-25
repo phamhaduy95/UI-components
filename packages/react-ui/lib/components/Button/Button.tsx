@@ -4,8 +4,8 @@ import { ComponentPropsWithRef, JSX } from 'react';
 import '@packages/styles/components/Button.css';
 
 type ButtonVariant = 'contained' | 'outlined' | 'text';
-type ButtonSize = 'small' | 'medium' | 'large';
-type ButtonColor = 'primary' | 'secondary' | 'success' | 'warning' | 'error';
+type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
+type ButtonColor = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
 
 export interface ButtonProps extends ComponentPropsWithRef<'button'> {
 	children?: React.ReactNode;
@@ -21,7 +21,7 @@ const Button = (props: ButtonProps): JSX.Element => {
 		className,
 		ref,
 		variant = 'contained',
-		size = 'medium',
+		size = 'md',
 		color = 'primary',
 		...rest
 	} = props;

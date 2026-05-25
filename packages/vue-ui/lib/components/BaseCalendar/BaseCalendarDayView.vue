@@ -16,7 +16,7 @@
 					as-child
 				>
 					<IconButton
-						size="large"
+						size="lg"
 						variant="text"
 						color="secondary"
 					>
@@ -35,7 +35,7 @@
 					as-child
 				>
 					<IconButton
-						size="large"
+						size="lg"
 						variant="text"
 						color="secondary"
 					>

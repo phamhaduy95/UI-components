@@ -122,14 +122,14 @@ const DatePicker = (props: DatePickerProps): JSX.Element => {
 					<div className="BaseField_Trailing DatePicker_Trailing">
 						{clearable && (
 							<ArkDatePicker.ClearTrigger asChild>
-								<IconButton size="medium" variant="text" color="secondary" aria-label="Clear value">
+								<IconButton size="md" variant="text" color="secondary" aria-label="Clear value">
 									<Cross2Icon />
 								</IconButton>
 							</ArkDatePicker.ClearTrigger>
 						)}
 
 						<ArkDatePicker.Trigger asChild>
-							<IconButton size="medium" variant="text" color="secondary" aria-label="Open calendar">
+							<IconButton size="md" variant="text" color="secondary" aria-label="Open calendar">
 								<CalendarIcon />
 							</IconButton>
 						</ArkDatePicker.Trigger>

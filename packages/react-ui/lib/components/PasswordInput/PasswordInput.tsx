@@ -118,7 +118,7 @@ const PasswordInput = ({
 					<div className="BaseField_Trailing">
 						{shouldShowClearButton && (
 							<IconButton
-								size="medium"
+								size="md"
 								variant="text"
 								color="secondary"
 								aria-label="Clear value"
@@ -133,7 +133,7 @@ const PasswordInput = ({
 							asChild
 						>
 							<IconButton
-								size="medium"
+								size="md"
 								variant="text"
 								color="secondary"
 								aria-label="Toggle password visibility"

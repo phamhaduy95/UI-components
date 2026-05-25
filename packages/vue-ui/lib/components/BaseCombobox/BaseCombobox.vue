@@ -137,7 +137,7 @@
 					<IconButton
 						variant="text"
 						color="secondary"
-						size="medium"
+						size="md"
 					>
 						<slot name="clearIcon">
 							<XMarkIcon />
@@ -153,7 +153,7 @@
 					<IconButton
 						variant="text"
 						color="secondary"
-						size="medium"
+						size="md"
 					>
 						<slot name="triggerIcon">
 							<ChevronDownIcon class="Combobox_TriggerIcon" />

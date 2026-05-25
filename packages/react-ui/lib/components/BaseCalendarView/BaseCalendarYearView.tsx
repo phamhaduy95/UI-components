@@ -12,13 +12,13 @@ const BaseCalendarYearView = (): JSX.Element => {
 					<>
 						<DatePicker.ViewControl className="CalendarView_Control">
 							<DatePicker.PrevTrigger className="CalendarView_NavTrigger" asChild>
-								<IconButton size="large" variant="text" color="secondary">
+								<IconButton size="lg" variant="text" color="secondary">
 									<ChevronLeftIcon />
 								</IconButton>
 							</DatePicker.PrevTrigger>
 							<DatePicker.RangeText />
 							<DatePicker.NextTrigger className="CalendarView_NavTrigger" asChild>
-								<IconButton size="large" variant="text" color="secondary">
+								<IconButton size="lg" variant="text" color="secondary">
 									<ChevronRightIcon />
 								</IconButton>
 							</DatePicker.NextTrigger>

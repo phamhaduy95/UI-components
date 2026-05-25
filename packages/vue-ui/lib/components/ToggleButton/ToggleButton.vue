@@ -14,7 +14,7 @@
 	type ArkToggleRootProps = ComponentInstance<typeof ArkToggle.Root>;
 
 	const props = withDefaults(defineProps<ToggleButtonProps>(), {
-		size: 'medium',
+		size: 'md',
 		defaultPressed: false,
 		pressed: undefined
 	});

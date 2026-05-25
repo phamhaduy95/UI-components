@@ -16,17 +16,23 @@ const meta = {
 		},
 		size: {
 			control: 'select',
-			options: ['small', 'medium', 'large']
+			options: ['xs', 'sm', 'md', 'lg']
 		},
 		color: {
 			control: 'select',
-			options: ['primary', 'secondary', 'success', 'warning', 'error']
+			options: ['default', 'primary', 'secondary', 'success', 'warning', 'error']
 		},
 		type: {
 			control: 'select',
 			options: ['button', 'submit', 'reset']
 		},
 		loading: { control: 'boolean' }
+	},
+	args: {
+		variant: 'contained',
+		size: 'md',
+		color: 'primary',
+		default: 'Button'
 	}
 } satisfies Meta<typeof Button>;
 
@@ -35,12 +41,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	args: {
-		variant: 'contained',
-		size: 'medium',
-		color: 'primary',
-		default: 'Button'
-	},
 	render: (args) => ({
 		components: { Button },
 		setup() {
@@ -76,19 +76,22 @@ export const Sizes: Story = {
 		template: `
 			<div style="display: flex; flex-direction: column; gap: 20px;">
 				<div style="display: flex; align-items: center; gap: 8px;">
-					<Button size="small">Small</Button>
-					<Button size="medium">Medium</Button>
-					<Button size="large">Large</Button>
+					<Button size="xs">Extra Small</Button>
+					<Button size="sm">Small</Button>
+					<Button size="md">Medium</Button>
+					<Button size="lg">Large</Button>
 				</div>
 				<div style="display: flex; align-items: center; gap: 8px;">
-					<Button variant="outlined" size="small">Small</Button>
-					<Button variant="outlined" size="medium">Medium</Button>
-					<Button variant="outlined" size="large">Large</Button>
+					<Button variant="outlined" size="xs">Extra Small</Button>
+					<Button variant="outlined" size="sm">Small</Button>
+					<Button variant="outlined" size="md">Medium</Button>
+					<Button variant="outlined" size="lg">Large</Button>
 				</div>
 				<div style="display: flex; align-items: center; gap: 8px;">
-					<Button variant="text" size="small">Small</Button>
-					<Button variant="text" size="medium">Medium</Button>
-					<Button variant="text" size="large">Large</Button>
+					<Button variant="text" size="xs">Extra Small</Button>
+					<Button variant="text" size="sm">Small</Button>
+					<Button variant="text" size="md">Medium</Button>
+					<Button variant="text" size="lg">Large</Button>
 				</div>
 			</div>
 		`
@@ -101,6 +104,7 @@ export const Colors: Story = {
 		template: `
 			<div style="display: flex; flex-direction: column; gap: 20px;">
 				<div style="display: flex; align-items: center; gap: 8px;">
+					<Button color="default">Default</Button>
 					<Button color="primary">Primary</Button>
 					<Button color="secondary">Secondary</Button>
 					<Button color="success">Success</Button>
@@ -108,6 +112,7 @@ export const Colors: Story = {
 					<Button color="error">Error</Button>
 				</div>
 				<div style="display: flex; align-items: center; gap: 8px;">
+					<Button variant="outlined" color="default">Default</Button>
 					<Button variant="outlined" color="primary">Primary</Button>
 					<Button variant="outlined" color="secondary">Secondary</Button>
 					<Button variant="outlined" color="success">Success</Button>
@@ -115,6 +120,7 @@ export const Colors: Story = {
 					<Button variant="outlined" color="error">Error</Button>
 				</div>
 				<div style="display: flex; align-items: center; gap: 8px;">
+					<Button variant="text" color="default">Default</Button>
 					<Button variant="text" color="primary">Primary</Button>
 					<Button variant="text" color="secondary">Secondary</Button>
 					<Button variant="text" color="success">Success</Button>

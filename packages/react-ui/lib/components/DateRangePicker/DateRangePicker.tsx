@@ -113,13 +113,13 @@ const DateRangePicker = (props: DateRangePickerProps) => {
 					<div className="BaseField_Trailing">
 						{clearable && (
 							<ArkDatePicker.ClearTrigger asChild>
-								<IconButton variant="text" size="medium" color="secondary" aria-label="Clear value">
+								<IconButton variant="text" size="md" color="secondary" aria-label="Clear value">
 									<Cross2Icon />
 								</IconButton>
 							</ArkDatePicker.ClearTrigger>
 						)}
 						<ArkDatePicker.Trigger asChild>
-							<IconButton variant="text" size="medium" color="secondary" aria-label="Open calendar">
+							<IconButton variant="text" size="md" color="secondary" aria-label="Open calendar">
 								<CalendarIcon />
 							</IconButton>
 						</ArkDatePicker.Trigger>

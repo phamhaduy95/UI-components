@@ -4,7 +4,7 @@
 
 	withDefaults(defineProps<ButtonProps>(), {
 		variant: 'contained',
-		size: 'medium',
+		size: 'md',
 		color: 'primary',
 		loading: false,
 		type: 'button'
@@ -20,7 +20,6 @@
 		:data-size="size"
 		:data-color="color"
 		:type="type"
-		v-bind="$attrs"
 	>
 		<slot />
 	</button>

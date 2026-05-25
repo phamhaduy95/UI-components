@@ -114,7 +114,7 @@
 						<ArkTagsInput.ClearTrigger as-child>
 							<IconButton
 								aria-label="Clear"
-								size="medium"
+								size="md"
 								variant="text"
 								color="secondary"
 							>

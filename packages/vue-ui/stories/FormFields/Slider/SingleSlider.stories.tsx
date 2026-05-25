@@ -323,7 +323,7 @@ export const CustomSlots: Story = {
 							trailing: ({ setValue }: { setValue: (val: number[]) => void }) => (
 								<Button
 									class="ml-4"
-									size="small"
+									size="sm"
 									onClick={() => setValue([100])}
 									data-testid="max-button"
 								>
