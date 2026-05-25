@@ -19,7 +19,11 @@ const meta = {
 	argTypes: {
 		size: {
 			control: 'select',
-			options: ['small', 'medium', 'large']
+			options: ['xs', 'sm', 'md', 'lg']
+		},
+		color: {
+			control: 'select',
+			options: ['default', 'primary', 'secondary', 'success', 'warning', 'error']
 		},
 		'onUpdate:pressed': { action: 'update:pressed' },
 		onPressedChange: { action: 'pressedChange' },

@@ -8,8 +8,9 @@
 
 	withDefaults(defineProps<IconButtonProps>(), {
 		variant: 'contained',
-		size: 'medium',
+		size: 'md',
 		color: 'primary',
+		shape: 'circle',
 		loading: false,
 		type: 'button'
 	});
@@ -20,6 +21,7 @@
 <template>
 	<BaseButton
 		class="IconButton"
+		:data-shape="shape"
 		:variant="variant"
 		:size="size"
 		:color="color"
