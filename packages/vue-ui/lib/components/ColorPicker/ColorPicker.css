@@ -43,7 +43,7 @@
 	gap: 1rem;
 	padding: 0.5rem;
 	border: 1px solid var(--color-outline-variant);
-	border-radius: var();
+	border-radius: var(--field-border-radius);
 
 	background-color: var(--color-surface-container-lowest);
 	box-shadow: var(--shadow);
