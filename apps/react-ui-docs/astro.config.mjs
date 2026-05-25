@@ -84,7 +84,8 @@ export default defineConfig({
 				src: path.resolve(path.dirname('.'), './src'),
 				'@styles': path.resolve(path.dirname('.'), './src/styles'),
 				'@pages': path.resolve(path.dirname('.'), './src/pages'),
-				'@components': path.resolve(path.dirname('.'), './src/components')
+				'@components': path.resolve(path.dirname('.'), './src/components'),
+				'@public': path.resolve(path.dirname('.'), './public')
 			}
 		}
 	}
