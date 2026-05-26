@@ -369,8 +369,8 @@ export const Size: Story = {
 		setup() {
 			return () => (
 				<div class="flex flex-col gap-2">
-					<DatePicker {...args} size="small" label="Small" />
-					<DatePicker {...args} size="medium" label="Medium" />
+					<DatePicker {...args} size="sm" label="Small" />
+					<DatePicker {...args} size="md" label="Medium" />
 				</div>
 			);
 		}

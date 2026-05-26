@@ -3,7 +3,8 @@ import type {
 	BaseSelectSlots,
 	SelectBaseProps
 } from '@components/BaseSelect/BaseSelect.type';
-import type { CommonFieldProps, SelectItem } from '@components/type';
+import type { SelectItem } from '@components/type';
+import type { CommonFieldProps } from '@components/BaseField';
 import type { SelectHTMLAttributes } from 'vue';
 
 export interface SingleSelectBaseProps

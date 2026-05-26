@@ -18,7 +18,7 @@
 
 	const props = withDefaults(defineProps<BaseSelectProps>(), {
 		items: () => [],
-		size: 'medium',
+		size: 'md',
 		multiple: false,
 		loopFocus: false,
 		deselectable: false,

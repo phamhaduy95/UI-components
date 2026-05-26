@@ -331,8 +331,8 @@ export const Sizes: Story = {
 		setup() {
 			return () => (
 				<div style="display: flex; flex-direction: column; gap: 16px;">
-					<TagInput label="Small" size="small" placeholder="Add tag" />
-					<TagInput label="Medium" size="medium" placeholder="Add tag" />
+					<TagInput label="Small" size="sm" placeholder="Add tag" />
+					<TagInput label="Medium" size="md" placeholder="Add tag" />
 				</div>
 			);
 		}

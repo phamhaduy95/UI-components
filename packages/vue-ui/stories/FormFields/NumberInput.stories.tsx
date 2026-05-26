@@ -333,8 +333,8 @@ export const Sizes: Story = {
 		setup() {
 			return () => (
 				<div style="display: flex; flex-direction: column; gap: 16px;">
-					<NumberInput label="Small" size="small" placeholder="Small input" />
-					<NumberInput label="Medium" size="medium" placeholder="Medium input" />
+					<NumberInput label="Small" size="sm" placeholder="Small input" />
+					<NumberInput label="Medium" size="md" placeholder="Medium input" />
 				</div>
 			);
 		}

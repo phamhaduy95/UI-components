@@ -449,8 +449,8 @@ export const Size: Story = {
 		setup() {
 			return () => (
 				<div class="flex flex-col gap-2">
-					<MultipleSelect {...args} size="small" label="Small" />
-					<MultipleSelect {...args} size="medium" label="Medium" />
+					<MultipleSelect {...args} size="sm" label="Small" />
+					<MultipleSelect {...args} size="md" label="Medium" />
 				</div>
 			);
 		}

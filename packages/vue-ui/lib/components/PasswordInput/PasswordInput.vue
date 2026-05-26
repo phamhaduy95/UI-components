@@ -12,7 +12,7 @@
 	defineOptions({ inheritAttrs: false });
 
 	const props = withDefaults(defineProps<PasswordInputProps>(), {
-		size: 'medium',
+		size: 'md',
 		required: false,
 		disabled: false,
 		clearable: false,

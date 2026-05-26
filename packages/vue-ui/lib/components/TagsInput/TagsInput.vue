@@ -15,7 +15,7 @@
 	defineOptions({ inheritAttrs: false });
 
 	const props = withDefaults(defineProps<TagInputProps>(), {
-		size: 'medium',
+		size: 'md',
 		required: false,
 		disabled: false,
 		clearable: false,

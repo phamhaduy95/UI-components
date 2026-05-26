@@ -314,8 +314,8 @@ export const Sizes: Story = {
 		setup() {
 			return () => (
 				<div style="display: flex; flex-direction: column; gap: 16px;">
-					<ColorPicker label="Small" size="small" />
-					<ColorPicker label="Medium" size="medium" />
+					<ColorPicker label="Small" size="sm" />
+					<ColorPicker label="Medium" size="md" />
 				</div>
 			);
 		}

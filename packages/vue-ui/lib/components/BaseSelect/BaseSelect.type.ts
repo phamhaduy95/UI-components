@@ -1,5 +1,6 @@
 import { type SelectRootEmits, type SelectRootProps } from '@ark-ui/vue/select';
-import type { CommonFieldProps, SelectItem, VirtualizationConfig } from '@components/type';
+import type { SelectItem, VirtualizationConfig } from '@components/type';
+import type { CommonFieldProps } from '@components/BaseField';
 
 import type { SelectHTMLAttributes } from 'vue';
 

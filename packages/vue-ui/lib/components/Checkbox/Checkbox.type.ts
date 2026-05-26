@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'vue';
-import type { CommonFieldProps } from '@components/type';
+import type { CommonFieldProps } from '@components/BaseField';
 
 export interface CheckboxProps
 	extends Pick<CommonFieldProps<boolean>, 'status' | 'label' | 'supportingText'>,

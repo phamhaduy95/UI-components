@@ -13,7 +13,7 @@
 	defineOptions({ inheritAttrs: false });
 
 	const props = withDefaults(defineProps<SingleSelectProps>(), {
-		size: 'medium',
+		size: 'md',
 		loopFocus: false,
 		deselectable: false,
 		items: () => [],

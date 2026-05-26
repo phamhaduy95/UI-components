@@ -11,7 +11,7 @@
 	defineOptions({ inheritAttrs: false });
 
 	const props = withDefaults(defineProps<TextInputProps>(), {
-		size: 'medium',
+		size: 'md',
 		required: false,
 		disabled: false,
 		clearable: false

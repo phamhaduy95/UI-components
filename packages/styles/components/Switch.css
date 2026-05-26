@@ -1,16 +1,12 @@
 .Switch {
-	--switch-border-color: var(--border-outline);
-	--switch-bg-color: var(--color-outline);
-	--switch-thumb-size: 1.25rem;
-	--switch-thumb-bg-color: var(--color-surface);
-	--switch-thumb-label-color: var(--color-on-surface);
-	--switch-bg-color--checked: var(--color-primary);
-	--switch-outline-color-focus: var(--color-primary);
-	--switch-label-font-size: var(--text-sm);
-	--switch-thumb-translate-x: 1rem;
-	--switch-bg-color--hover: var(--color-outline-hover);
-	--switch-bg-color-hover--checked: var(--color-primary-hover);
+	--switch-sm-thumb-size: 1rem;
+	--switch-sm-translate-x: 1.25rem;
 
+	--switch-md-thumb-size: 1.25rem;
+	--switch-md-translate-x: 1rem;
+}
+
+.Switch {
 	display: inline-flex;
 	align-items: center;
 	position: relative;
@@ -20,64 +16,12 @@
 		opacity: 0.8;
 		filter: grayscale(100%);
 	}
-
-	&[data-size='small'] {
-		--switch-thumb-size: 1rem;
-		--switch-thumb-translate-x: 1.25rem;
-		--switch-label-font-size: var(--text-xs);
-	}
-
-	&[data-size='medium'] {
-		--switch-thumb-size: 1.25rem;
-		--switch-thumb-translate-x: 1rem;
-		--switch-label-font-size: var(--text-sm);
-	}
-
-	&[data-color='primary'] {
-		--switch-border-color: var(--color-primary);
-		--switch-bg-color: var(--color-primary-container);
-		--switch-bg-color--hover: var(--color-primary-container-hover);
-		--switch-bg-color--checked: var(--color-primary);
-		--switch-bg-color-hover--checked: var(--color-primary-hover);
-	}
-
-	&[data-color='secondary'] {
-		--switch-border-color: var(--color-secondary);
-		--switch-bg-color: var(--color-secondary-container);
-		--switch-bg-color--hover: var(--color-secondary-container-hover);
-		--switch-bg-color--checked: var(--color-secondary);
-		--switch-bg-color-hover--checked: var(--color-secondary-hover);
-	}
-
-	&[data-color='success'] {
-		--switch-border-color: var(--color-success);
-		--switch-bg-color: var(--color-success-container);
-		--switch-bg-color--hover: var(--color-success-container-hover);
-		--switch-bg-color--checked: var(--color-success);
-		--switch-bg-color-hover--checked: var(--color-success-hover);
-	}
-
-	&[data-color='error'] {
-		--switch-border-color: var(--color-error);
-		--switch-bg-color: var(--color-error-container);
-		--switch-bg-color--hover: var(--color-error-container-hover);
-		--switch-bg-color--checked: var(--color-error);
-		--switch-bg-color-hover--checked: var(--color-error-hover);
-	}
-
-	&[data-color='warning'] {
-		--switch-border-color: var(--color-warning);
-		--switch-bg-color: var(--color-warning-container);
-		--switch-bg-color--hover: var(--color-warning-container-hover);
-		--switch-bg-color--checked: var(--color-warning);
-		--switch-bg-color-hover--checked: var(--color-warning-hover);
-	}
 }
 
 .Switch_Label {
-	font-size: var(--switch-label-font-size);
+	font-size: var(--text-sm);
 	user-select: none;
-	color: var(--switch-thumb-label-color);
+	color: var(--color-on-surface);
 }
 
 .Switch_Control {
@@ -86,7 +30,7 @@
 	flex-shrink: 0;
 	width: 2.5rem;
 	padding: 0.125rem;
-	background-color: var(--switch-bg-color);
+	background-color: var(--color-outline);
 	border-radius: 9999px;
 
 	transition:
@@ -94,20 +38,20 @@
 		box-shadow 0.15s ease;
 
 	&[data-state='checked'] {
-		background-color: var(--switch-bg-color--checked);
+		background-color: var(--color-primary);
 	}
 
 	&[data-focus-visible] {
-		outline: 1px solid var(--switch-outline-color-focus);
+		outline: 1px solid var(--color-primary);
 		outline-offset: 2px;
 	}
 
 	&:hover {
-		background-color: var(--switch-bg-color--hover);
+		background-color: var(--color-outline-hover);
 	}
 
 	&[data-state='checked']:hover {
-		background-color: var(--switch-bg-color-hover--checked);
+		background-color: var(--color-primary-hover);
 	}
 }
 
@@ -115,14 +59,160 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: var(--switch-thumb-size);
-	height: var(--switch-thumb-size);
+	width: var(--switch-md-thumb-size);
+	height: var(--switch-md-thumb-size);
 	background: var(--color-surface);
 	border-radius: 9999px;
 
 	transition: transform 0.15s ease;
 
 	&[data-state='checked'] {
-		transform: translateX(var(--switch-thumb-translate-x));
+		transform: translateX(var(--switch-md-translate-x));
+	}
+}
+
+.Switch {
+	/* Size variants */
+	&[data-size='sm'] {
+		.Switch_Label {
+			font-size: var(--text-xs);
+		}
+
+		.Switch_Thumb {
+			width: var(--switch-sm-thumb-size);
+			height: var(--switch-sm-thumb-size);
+
+			&[data-state='checked'] {
+				transform: translateX(var(--switch-sm-translate-x));
+			}
+		}
+	}
+
+	&[data-size='md'] {
+		.Switch_Label {
+			font-size: var(--text-sm);
+		}
+
+		.Switch_Thumb {
+			width: var(--switch-md-thumb-size);
+			height: var(--switch-md-thumb-size);
+
+			&[data-state='checked'] {
+				transform: translateX(var(--switch-md-translate-x));
+			}
+		}
+	}
+}
+
+.Switch {
+	/* Color variants */
+	&[data-color='primary'] {
+		.Switch_Control {
+			background-color: var(--color-primary-container);
+
+			&[data-focus-visible] {
+				outline: 1px solid var(--color-primary);
+			}
+
+			&:hover {
+				background-color: var(--color-primary-container-hover);
+			}
+
+			&[data-state='checked'] {
+				background-color: var(--color-primary);
+
+				&:hover {
+					background-color: var(--color-primary-hover);
+				}
+			}
+		}
+	}
+
+	&[data-color='secondary'] {
+		.Switch_Control {
+			background-color: var(--color-secondary-container);
+
+			&[data-focus-visible] {
+				outline: 1px solid var(--color-secondary);
+			}
+
+			&:hover {
+				background-color: var(--color-secondary-container-hover);
+			}
+
+			&[data-state='checked'] {
+				background-color: var(--color-secondary);
+
+				&:hover {
+					background-color: var(--color-secondary-hover);
+				}
+			}
+		}
+	}
+
+	&[data-color='success'] {
+		.Switch_Control {
+			background-color: var(--color-success-container);
+
+			&[data-focus-visible] {
+				outline: 1px solid var(--color-success);
+			}
+
+			&:hover {
+				background-color: var(--color-success-container-hover);
+			}
+
+			&[data-state='checked'] {
+				background-color: var(--color-success);
+
+				&:hover {
+					background-color: var(--color-success-hover);
+				}
+			}
+		}
+	}
+
+	&[data-color='warning'] {
+		.Switch_Control {
+			background-color: var(--color-warning-container);
+
+			&[data-focus-visible] {
+				outline: 1px solid var(--color-warning);
+			}
+
+			&:hover {
+				background-color: var(--color-warning-container-hover);
+			}
+
+			&[data-state='checked'] {
+				background-color: var(--color-warning);
+
+				&:hover {
+					background-color: var(--color-warning-hover);
+				}
+			}
+		}
+	}
+
+	&[data-color='error'] {
+		.Switch_Control {
+			background-color: var(--color-error-container);
+
+			&[data-focus-visible] {
+				outline: 1px solid var(--color-error);
+			}
+
+			&:hover {
+				background-color: var(--color-error-container-hover);
+			}
+
+			&[data-state='checked'] {
+				background-color: var(--color-error);
+
+				&:hover {
+					background-color: var(--color-error-hover);
+				}
+			}
+		}
 	}
 }

@@ -1,4 +1,4 @@
-import type { CommonFieldProps } from '@components/type';
+import type { CommonFieldProps } from '@components/BaseField';
 import type { HTMLAttributes } from 'vue';
 
 export interface SwitchProps

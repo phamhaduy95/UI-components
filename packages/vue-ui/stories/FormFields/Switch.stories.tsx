@@ -187,8 +187,8 @@ export const Sizes: Story = {
 		setup() {
 			return () => (
 				<div style="display: flex; flex-direction: column; gap: 16px;">
-					<Switch label="Small" size="small" />
-					<Switch label="Medium" size="medium" />
+					<Switch label="Small" size="sm" />
+					<Switch label="Medium" size="md" />
 				</div>
 			);
 		}

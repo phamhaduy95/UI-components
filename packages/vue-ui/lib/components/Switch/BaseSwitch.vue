@@ -8,8 +8,8 @@
 
 	const props = withDefaults(defineProps<SwitchProps>(), {
 		color: 'primary',
-		size: 'medium',
 		defaultChecked: false,
+		size: 'md',
 		checked: undefined
 	});
 

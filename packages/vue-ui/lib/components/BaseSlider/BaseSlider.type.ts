@@ -1,5 +1,5 @@
 import type { SliderRootProps as ArkSliderRootProps } from '@ark-ui/vue/slider';
-import type { CommonFieldProps } from '@components/type';
+import type { CommonFieldProps } from '@components/BaseField';
 import type { HTMLAttributes } from 'vue';
 
 export interface BaseSliderProps
