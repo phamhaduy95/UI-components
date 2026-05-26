@@ -1,18 +1,18 @@
-import type { PopoverRootProps } from '@ark-ui/vue/popover';
+import type { PopoverRootBaseProps } from '@ark-ui/vue/popover';
+import type { PositioningOptions } from '@zag-js/popper';
 
-export interface PopoverProps
-	extends Pick<
-		PopoverRootProps,
-		| 'autoFocus'
-		| 'open'
-		| 'defaultOpen'
-		| 'closeOnInteractOutside'
-		| 'unmountOnExit'
-		| 'closeOnEscape'
-		| 'lazyMount'
-	> {
-	positioning?: PopoverRootProps['positioning'];
-}
+export type PopoverProps = Pick<
+	PopoverRootBaseProps,
+	| 'autoFocus'
+	| 'open'
+	| 'defaultOpen'
+	| 'closeOnInteractOutside'
+	| 'unmountOnExit'
+	| 'closeOnEscape'
+	| 'lazyMount'
+> & {
+	positioning?: PositioningOptions;
+};
 
 export type PopoverEmits = {
 	'update:open': [open: boolean];

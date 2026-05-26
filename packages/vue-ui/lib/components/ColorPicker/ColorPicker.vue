@@ -20,11 +20,7 @@
 		modelValue: undefined,
 		open: undefined,
 		defaultOpen: undefined,
-		format: 'hex',
-		positioning: () => ({
-			placement: 'bottom-start',
-			strategy: 'fixed'
-		})
+		format: 'hex'
 	});
 
 	const innerFormat = computed(() => {

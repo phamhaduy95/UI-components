@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 	import { Popover as ArkPopover } from '@ark-ui/vue/popover';
 	import type { PopoverEmits, PopoverProps, PopoverSlots } from './Popover.type';
@@ -9,8 +10,7 @@
 		closeOnInteractOutside: undefined,
 		closeOnEscape: undefined,
 		lazyMount: undefined,
-		unmountOnExit: undefined,
-		positioning: undefined
+		unmountOnExit: undefined
 	});
 
 	const emit = defineEmits<PopoverEmits>();
@@ -34,7 +34,6 @@
 		:unmount-on-exit="unmountOnExit"
 		:close-on-interact-outside="closeOnInteractOutside"
 		:lazy-mount="lazyMount"
-		:positioning="positioning"
 		@update:open="handleUpdateOpen"
 		@exit-complete="handleExitComplete"
 	>
