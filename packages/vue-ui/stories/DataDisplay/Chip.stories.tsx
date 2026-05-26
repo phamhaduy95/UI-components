@@ -20,7 +20,7 @@ const meta = {
 		},
 		size: {
 			control: 'select',
-			options: ['medium', 'small']
+			options: ['md', 'sm']
 		},
 		onRemove: { action: 'removed' },
 		onClick: { action: 'clicked' }

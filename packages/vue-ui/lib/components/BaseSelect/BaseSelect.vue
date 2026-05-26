@@ -120,7 +120,7 @@
 							<IconButton
 								variant="text"
 								color="secondary"
-								size="md"
+								:size="size"
 								@click.stop="setOpen(false)"
 							>
 								<slot name="clearIcon">

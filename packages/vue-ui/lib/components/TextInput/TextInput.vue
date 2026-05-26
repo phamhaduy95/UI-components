@@ -80,7 +80,7 @@
 				<IconButton
 					v-if="shouldShowClearIcon"
 					aria-label="Clear"
-					size="md"
+					:size="size"
 					variant="text"
 					color="secondary"
 					@click="handleClear"

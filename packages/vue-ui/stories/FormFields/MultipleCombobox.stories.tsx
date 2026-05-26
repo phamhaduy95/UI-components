@@ -453,8 +453,10 @@ export const Size: Story = {
 		setup() {
 			return () => (
 				<div class="flex flex-col gap-2">
+					<MultipleCombobox {...args} size="xs" label="Extra Small" />
 					<MultipleCombobox {...args} size="sm" label="Small" />
 					<MultipleCombobox {...args} size="md" label="Medium" />
+					<MultipleCombobox {...args} size="lg" label="Large" />
 				</div>
 			);
 		}

@@ -285,8 +285,10 @@ export const Sizes: Story = {
 		setup() {
 			return () => (
 				<div style="display: flex; flex-direction: column; gap: 16px;">
+					<PasswordInput label="Extra Small" size="xs" placeholder="Password" />
 					<PasswordInput label="Small" size="sm" placeholder="Password" />
 					<PasswordInput label="Medium" size="md" placeholder="Password" />
+					<PasswordInput label="Large" size="lg" placeholder="Password" />
 				</div>
 			);
 		}

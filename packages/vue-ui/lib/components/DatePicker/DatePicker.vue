@@ -18,6 +18,7 @@
 
 	const props = withDefaults(defineProps<DatePickerProps>(), {
 		format: 'DD-MM-YYYY',
+		size: 'md',
 		disabled: false,
 		required: false,
 		clearable: false,
@@ -100,7 +101,7 @@
 						as-child
 					>
 						<IconButton
-							size="md"
+							:size="size"
 							variant="text"
 							color="secondary"
 							aria-label="Clear value"
@@ -111,7 +112,7 @@
 
 					<ArkDatePicker.Trigger as-child>
 						<IconButton
-							size="md"
+							:size="size"
 							variant="text"
 							color="secondary"
 							aria-label="Open calendar"

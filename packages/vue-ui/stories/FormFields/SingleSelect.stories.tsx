@@ -413,8 +413,10 @@ export const Size: Story = {
 		setup() {
 			return () => (
 				<div class="flex flex-col gap-2">
+					<SingleSelect {...args} size="xs" label="Extra Small" />
 					<SingleSelect {...args} size="sm" label="Small" />
 					<SingleSelect {...args} size="md" label="Medium" />
+					<SingleSelect {...args} size="lg" label="Large" />
 				</div>
 			);
 		}
