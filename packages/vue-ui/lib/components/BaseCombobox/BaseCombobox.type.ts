@@ -49,26 +49,26 @@ export type BaseComboboxSlots = {
 	 * Slot for customizing the input element or value display.
 	 * Passes `supportingTextId` from the BaseField for accessibility.
 	 */
-	customValueText(props: { supportingTextId: string }): void;
+	customValueText?(props: { supportingTextId: string }): void;
 
 	/** Slot for a custom clear icon. */
-	clearIcon(): void;
+	clearIcon?(): void;
 
 	/** Slot for a custom trigger (chevron) icon. */
-	triggerIcon(): void;
+	triggerIcon?(): void;
 
 	/** Slot for adding content at the top of the dropdown menu. */
-	menuHeader(): void;
+	menuHeader?(): void;
 
 	/**
 	 * Slot for customizing individual items in the dropdown menu.
 	 * Overrides the default highlighted text rendering.
 	 */
-	itemContent(props: { item: SelectItem; itemIndex: number }): void;
+	itemContent?(props: { item: SelectItem; itemIndex: number }): void;
 
 	/** Slot for adding content when the combobox has no matching items. */
-	emptyContent(): void;
+	emptyContent?(): void;
 
 	/** Slot for adding content at the bottom of the dropdown menu. */
-	menuFooter(): void;
+	menuFooter?(): void;
 };

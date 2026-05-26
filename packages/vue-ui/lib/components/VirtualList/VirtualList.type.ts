@@ -70,12 +70,12 @@ export type VirtualListSlots<TData> = {
 	/**
 	 * Optional content rendered at the very end of the scrollable area, after the last virtual item.
 	 */
-	footer(): void;
+	footer?(): void;
 
 	/**
 	 * Optional content rendered at the very top of the scrollable area, before the first virtual item.
 	 */
-	header(): void;
+	header?(): void;
 };
 
 export interface VirtualListEmits {

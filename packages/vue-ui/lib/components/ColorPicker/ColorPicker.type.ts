@@ -6,8 +6,9 @@ import type {
 	ColorPickerRootBaseProps,
 	Color
 } from '@ark-ui/vue/color-picker';
-
 export type ColorValue = Pick<Color, 'toString' | 'isEqual'>;
+
+import type { PositioningOptions } from '@zag-js/popper';
 
 export type ColorPickerColorFormat = ArkColorFormat | 'hex';
 
@@ -15,18 +16,13 @@ export interface BaseColorPickerProps
 	extends CommonFieldProps<string>,
 		Pick<
 			ColorPickerRootBaseProps,
-			| 'closeOnSelect'
-			| 'lazyMount'
-			| 'positioning'
-			| 'unmountOnExit'
-			| 'openAutoFocus'
-			| 'open'
-			| 'defaultOpen'
+			'closeOnSelect' | 'lazyMount' | 'unmountOnExit' | 'openAutoFocus' | 'open' | 'defaultOpen'
 		> {
 	modelValue?: string;
 	defaultValue?: string;
 	defaultFormat?: ColorPickerColorFormat;
 	format?: ColorPickerColorFormat;
+	positioning?: PositioningOptions;
 	dataTestid?: string;
 }
 

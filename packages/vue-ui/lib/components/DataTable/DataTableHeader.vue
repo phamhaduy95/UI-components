@@ -1,25 +1,12 @@
 <script setup lang="ts" generic="TData">
-	import type { Header, Table } from '@tanstack/vue-table';
 	import { BarsArrowUpIcon, BarsArrowDownIcon, ArrowsUpDownIcon } from '@heroicons/vue/20/solid';
 	import { Checkbox } from '@components/Checkbox';
-	import { type CSSProperties } from 'vue';
-	import type { HeaderSelectionSlotProps, HeaderSlotProps } from './DataTable.type';
 
-	interface DataTableHeaderProps {
-		header: Header<TData, unknown>;
-		table: Table<TData>;
-		headerStyle?: CSSProperties;
-		selectionMode?: 'single' | 'multiple';
-	}
-
-	interface DataTableHeaderSlots {
-		selection?(props: HeaderSelectionSlotProps): void;
-		regularHeader?(props: HeaderSlotProps): void;
-	}
+	import type { DataTableHeaderProps, DataTableHeaderSlots } from './DataTable.type';
 
 	defineOptions({ inheritAttrs: false });
 
-	const props = withDefaults(defineProps<DataTableHeaderProps>(), {
+	const props = withDefaults(defineProps<DataTableHeaderProps<TData>>(), {
 		headerStyle: undefined,
 		selectionMode: undefined
 	});

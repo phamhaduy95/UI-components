@@ -11,7 +11,7 @@
 		"ui"
 	],
 	"scripts": {
-		"build": "vite build",
+		"build": "vite build && pnpm build-types",
 		"lint": "eslint .",
 		"format": "prettier --write .",
 		"type-check": "vue-tsc --build",
@@ -21,7 +21,8 @@
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
 		"coverage-report": "http-server ./coverage -p 9000",
-		"preview-storybook": "http-server ./storybook-static -p 9001"
+		"preview-storybook": "http-server ./storybook-static -p 9001",
+		"build-types": "vue-tsc -p tsconfig.lib.json --declaration --emitDeclarationOnly"
 	},
 	"exports": {
 		".": {
@@ -49,14 +50,14 @@
 		"dist"
 	],
 	"dependencies": {
-		"@ark-ui/vue": "^5.34.1",
+		"@ark-ui/vue": "^5.36.2",
 		"@heroicons/vue": "^2.2.0",
 		"@packages/styles": "workspace:*",
 		"@tanstack/vue-table": "^8.21.3",
-		"@tanstack/vue-virtual": "^3.13.23",
-		"@vueuse/core": "^14.2.1",
-		"dayjs": "^1.11.19",
-		"vue": "^3.5.29"
+		"@tanstack/vue-virtual": "^3.13.26",
+		"@vueuse/core": "^14.3.0",
+		"dayjs": "^1.11.21",
+		"vue": "^3.5.34"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "catalog:",
@@ -68,30 +69,31 @@
 		"@storybook/vue3-vite": "catalog:",
 		"@tailwindcss/vite": "catalog:",
 		"@tsconfig/node24": "^24.0.4",
-		"@types/node": "^24.12.0",
+		"@types/node": "^24.12.4",
 		"@vitejs/plugin-vue": "catalog:",
 		"@vitejs/plugin-vue-jsx": "catalog:",
 		"@vitest/browser-playwright": "catalog:",
 		"@vitest/coverage-v8": "catalog:",
 		"@vue/tsconfig": "^0.8.1",
-		"eslint": "^10.0.3",
-		"eslint-plugin-vue": "^10.8.0",
-		"globals": "^17.4.0",
-		"globby": "^16.1.1",
+		"@zag-js/popper": "^1.41.0",
+		"eslint": "^10.4.0",
+		"eslint-plugin-vue": "^10.9.1",
+		"globals": "^17.6.0",
+		"globby": "^16.2.0",
 		"http-server": "^14.1.1",
-		"lightningcss": "^1.31.1",
+		"lightningcss": "^1.32.0",
 		"npm-run-all2": "^8.0.4",
-		"playwright": "^1.58.2",
+		"playwright": "^1.60.0",
 		"storybook": "catalog:",
-		"tailwindcss": "^4.2.1",
+		"tailwindcss": "^4.3.0",
 		"typescript": "catalog:",
-		"typescript-eslint": "^8.56.1",
+		"typescript-eslint": "^8.60.0",
 		"vite": "catalog:",
 		"vite-plugin-dts": "catalog:",
 		"vite-plugin-lib-inject-css": "catalog:",
 		"vitest": "catalog:",
 		"vue-eslint-parser": "^10.4.0",
-		"vue-tsc": "^3.2.6"
+		"vue-tsc": "^3.3.2"
 	},
 	"peerDependencies": {
 		"vue": ">=3.5.0"
