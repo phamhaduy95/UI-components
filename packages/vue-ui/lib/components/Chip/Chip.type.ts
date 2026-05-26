@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'vue';
 
-export type ChipSize = 'small' | 'medium';
+export type ChipSize = 'sm' | 'md';
 export type ChipColor = 'primary' | 'secondary' | 'error' | 'success' | 'warning';
 
 export interface ChipProps extends /* @vue-ignore */ HTMLAttributes {

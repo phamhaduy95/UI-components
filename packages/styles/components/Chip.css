@@ -86,12 +86,12 @@
 		border-color: var(--chip-border-color);
 	}
 
-	&[data-size='small'] {
+	&[data-size='sm'] {
 		padding-block: 4px;
 		padding-inline: 8px;
 	}
 
-	&[data-size='medium'] {
+	&[data-size='md'] {
 		padding-block: 6px;
 		padding-inline: 10px;
 	}

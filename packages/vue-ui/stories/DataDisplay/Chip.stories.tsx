@@ -62,40 +62,42 @@ export const Default: Story = {
 export const ColorVariants: Story = {
 	render: () => ({
 		components: { Chip },
-		template: `
-			<div style="display: flex; flex-direction: column; gap: 16px;">
-				<div>
-					<p style="margin-bottom: 8px;">Non-Interactable</p>
-					<div style="display: flex; gap: 8px;">
-						<Chip label="Primary" color="primary" />
-						<Chip label="Secondary" color="secondary" />
-						<Chip label="Success" color="success" />
-						<Chip label="Warning" color="warning" />
-						<Chip label="Error" color="error" />
+		setup() {
+			return () => (
+				<div class="flex flex-col gap-4">
+					<div>
+						<p class="mb-2">Non-Interactable</p>
+						<div class="flex gap-2">
+							<Chip label="Primary" color="primary" />
+							<Chip label="Secondary" color="secondary" />
+							<Chip label="Success" color="success" />
+							<Chip label="Warning" color="warning" />
+							<Chip label="Error" color="error" />
+						</div>
+					</div>
+					<div>
+						<p class="mb-2">Clickable</p>
+						<div class="flex gap-2">
+							<Chip label="Primary" color="primary" clickable />
+							<Chip label="Secondary" color="secondary" clickable />
+							<Chip label="Success" color="success" clickable />
+							<Chip label="Warning" color="warning" clickable />
+							<Chip label="Error" color="error" clickable />
+						</div>
+					</div>
+					<div>
+						<p class="mb-2">Removeable</p>
+						<div class="flex gap-2">
+							<Chip label="Primary" color="primary" removable />
+							<Chip label="Secondary" color="secondary" removable />
+							<Chip label="Success" color="success" removable />
+							<Chip label="Warning" color="warning" removable />
+							<Chip label="Error" color="error" removable />
+						</div>
 					</div>
 				</div>
-				<div>
-					<p style="margin-bottom: 8px;">Clickable</p>
-					<div style="display: flex; gap: 8px;">
-						<Chip label="Primary" color="primary" clickable />
-						<Chip label="Secondary" color="secondary" clickable />
-						<Chip label="Success" color="success" clickable />
-						<Chip label="Warning" color="warning" clickable />
-						<Chip label="Error" color="error" clickable />
-					</div>
-				</div>
-				<div>
-					<p style="margin-bottom: 8px;">Removeable</p>
-					<div style="display: flex; gap: 8px;">
-						<Chip label="Primary" color="primary" removable />
-						<Chip label="Secondary" color="secondary" removable />
-						<Chip label="Success" color="success" removable />
-						<Chip label="Warning" color="warning" removable />
-						<Chip label="Error" color="error" removable />
-					</div>
-				</div>
-			</div>
-		`
+			);
+		}
 	})
 };
 
@@ -135,18 +137,20 @@ export const Clickable: Story = {
 export const Size: Story = {
 	render: () => ({
 		components: { Chip },
-		template: `
-			<div style="display: flex; flex-direction: column; gap: 16px;">
-				<div style="display: flex; align-items: center; gap: 8px;">
-					<Chip label="Default size" size="md" />
-					<Chip label="Default size" size="md" color="secondary" />
+		setup() {
+			return () => (
+				<div class="flex flex-col gap-4">
+					<div class="flex items-center gap-2">
+						<Chip label="Default size" size="sm" />
+						<Chip label="Default size" size="sm" color="secondary" />
+					</div>
+					<div class="flex items-center gap-2">
+						<Chip label="Small size" size="md" />
+						<Chip label="Small size" size="md" color="secondary" />
+					</div>
 				</div>
-				<div style="display: flex; align-items: center; gap: 8px;">
-					<Chip label="Small size" size="sm" />
-					<Chip label="Small size" size="sm" color="secondary" />
-				</div>
-			</div>
-		`
+			);
+		}
 	})
 };
 
@@ -200,15 +204,17 @@ export const Removable: Story = {
 export const RemovableVariants: Story = {
 	render: () => ({
 		components: { Chip },
-		template: `
-			<div style="display: flex; gap: 8px;">
-				<Chip label="Primary" color="primary" removable />
-				<Chip label="Secondary" color="secondary" removable />
-				<Chip label="Success" color="success" removable />
-				<Chip label="Warning" color="warning" removable />
-				<Chip label="Error" color="error" removable />
-			</div>
-		`
+		setup() {
+			return () => (
+				<div class="flex gap-2">
+					<Chip label="Primary" color="primary" removable />
+					<Chip label="Secondary" color="secondary" removable />
+					<Chip label="Success" color="success" removable />
+					<Chip label="Warning" color="warning" removable />
+					<Chip label="Error" color="error" removable />
+				</div>
+			);
+		}
 	})
 };
 
