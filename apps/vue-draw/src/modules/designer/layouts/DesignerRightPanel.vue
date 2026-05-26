@@ -7,12 +7,12 @@ import { useDebounceFn } from '@vueuse/core';
 import { computed, toRaw, type ComponentInstance } from 'vue';
 
 import type { NodePositionEntry, NodeSizeEntry } from '@modules/designer/types/Command.type';
-import { SingleSlider, NumberInput } from '@packages/vue-components';
+import { SingleSlider, NumberInput, ColorPicker } from '@packages/vue-components';
 
 type NumberInputProps = ComponentInstance<typeof NumberInput>['$props'];
 type SingleSliderProps = ComponentInstance<typeof SingleSlider>['$props'];
 
-const DEFAULT_TIME_DEBOUNCE = 50;
+const DEFAULT_TIME_DEBOUNCE = 10;
 
 const { getSelectedNodes, updateNodeData, updateNode } = useVueFlow();
 const { commit } = useHistory();
@@ -32,7 +32,7 @@ const nodeWidth = computed(() => String(Math.round(selectedNode.value?.dimension
 
 const nodeHeight = computed(() => String(Math.round(selectedNode.value?.dimensions.height ?? 0)));
 
-const nodeFill = computed(() => selectedNode.value?.data.fill ?? 'transparent');
+const nodeFill = computed(() => selectedNode.value?.data.fill || '#ffffff');
 
 const nodeStrokeWidth = computed(() => selectedNode.value?.data?.strokeWidth ?? 1);
 
@@ -132,11 +132,11 @@ const handleHeightChange: NumberInputProps['onValueChange'] = useDebounceFn(({ v
 	commit(createResizeNodesCommand(entries));
 }, DEFAULT_TIME_DEBOUNCE);
 
-const handleFillChange = useDebounceFn((e: Event) => {
+const handleFillChange = useDebounceFn((value: string) => {
 	const beforeData = structuredClone(toRaw(selectedNode.value?.data)) as BasicShapeNodeData;
 
 	if (selectedNode.value) {
-		updateNodeData(selectedNode.value.id, { fill: (e.target as HTMLInputElement).value });
+		updateNodeData(selectedNode.value.id, { fill: value });
 	}
 
 	const afterData = structuredClone(toRaw(selectedNode.value?.data)) as BasicShapeNodeData;
@@ -150,7 +150,7 @@ const handleFillChange = useDebounceFn((e: Event) => {
 			}
 		])
 	);
-}, DEFAULT_TIME_DEBOUNCE);
+}, 0);
 
 const hanldeStrokeWidthChange: SingleSliderProps['onUpdate:modelValue'] = useDebounceFn(
 	(val: number) => {
@@ -166,18 +166,18 @@ const hanldeStrokeWidthChange: SingleSliderProps['onUpdate:modelValue'] = useDeb
 	<aside
 		class="w-75 z-10 flex shrink-0 flex-col border-l border-gray-200 bg-white shadow-[-2px_0_5px_rgba(0,0,0,0.02)]"
 	>
-		<div class="border-b border-gray-100 px-4 py-3">
+		<div class="border-b border-gray-100 px-3 py-2">
 			<h2 class="text-md font-semibold uppercase tracking-wider text-gray-800">Properties</h2>
 		</div>
-		<div class="flex-1 space-y-6 overflow-y-auto p-4" v-if="selectedNode">
-			<div class="space-y-3">
+		<div class="flex-1 space-y-4 overflow-y-auto px-4 py-2" v-if="selectedNode">
+			<div class="space-y-2">
 				<h3 class="text-sm font-semibold uppercase tracking-wide text-gray-800">Layout</h3>
 				<div class="grid grid-cols-2 gap-3">
 					<div>
 						<NumberInput
 							class="w-full"
 							label="X"
-							size="small"
+							size="xs"
 							:model-value="nodeX"
 							@value-change="handleXChange"
 						/>
@@ -186,7 +186,7 @@ const hanldeStrokeWidthChange: SingleSliderProps['onUpdate:modelValue'] = useDeb
 						<NumberInput
 							class="w-full"
 							label="Y"
-							size="small"
+							size="xs"
 							:model-value="nodeY"
 							@value-change="handleYChange"
 						/>
@@ -195,7 +195,7 @@ const hanldeStrokeWidthChange: SingleSliderProps['onUpdate:modelValue'] = useDeb
 						<NumberInput
 							class="w-full"
 							label="width"
-							size="small"
+							size="xs"
 							:model-value="nodeWidth"
 							@value-change="handleWidthChange"
 						/>
@@ -204,7 +204,7 @@ const hanldeStrokeWidthChange: SingleSliderProps['onUpdate:modelValue'] = useDeb
 						<NumberInput
 							class="w-full"
 							label="height"
-							size="small"
+							size="xs"
 							:model-value="nodeHeight"
 							@value-change="handleHeightChange"
 						/>
@@ -213,28 +213,19 @@ const hanldeStrokeWidthChange: SingleSliderProps['onUpdate:modelValue'] = useDeb
 			</div>
 
 			<!-- Appearance -->
-			<div class="space-y-3">
+			<div class="space-y-2">
 				<h3 class="text-sm font-semibold uppercase tracking-wide text-gray-800">Appearance</h3>
-				<div class="space-y-1">
-					<label class="mb-1 text-sm text-gray-800">Background</label>
-
-					<div class="flex items-center space-x-2">
-						<div
-							class="h-8 w-8 rounded border border-gray-300"
-							:style="{ backgroundColor: nodeFill }"
-						></div>
-						<input
-							type="text"
-							:value="nodeFill"
-							@change="handleFillChange"
-							class="flex-1 rounded border border-gray-300 px-2 py-1.5 text-sm uppercase focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-						/>
-					</div>
-				</div>
+				<ColorPicker
+					label="Background"
+					:model-value="nodeFill"
+					@update:model-value="handleFillChange"
+					format="hex"
+					size="xs"
+				/>
 				<div class="space-y-4 pt-1">
 					<SingleSlider
 						label="Border Size"
-						size="small"
+						size="sm"
 						:model-value="nodeStrokeWidth"
 						:min="0"
 						:max="20"

@@ -19,7 +19,7 @@ export default defineConfig({
 		vue(),
 		libInjectCss(),
 		dts({
-			entryRoot: 'lib',
+			entryRoot: './lib',
 			staticImport: true,
 			tsconfigPath: './tsconfig.lib.json'
 		})

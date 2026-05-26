@@ -27,10 +27,10 @@ const navigateToDesigner = () => {
 				tools, intuitive layouts, and Vue Flow integration.
 			</p>
 			<div class="flex gap-4">
-				<Button color="primary" variant="contained" size="large" @click="navigateToDesigner">
+				<Button color="primary" variant="contained" size="lg" @click="navigateToDesigner">
 					Open Designer
 				</Button>
-				<Button color="secondary" variant="outlined" size="large"> View Documentation </Button>
+				<Button color="secondary" variant="outlined" size="lg"> View Documentation </Button>
 			</div>
 		</section>
 

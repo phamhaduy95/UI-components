@@ -8,8 +8,8 @@ import {
 export const defaultNodeData: BasicShapeNodeData = {
 	category: NodeCategory.BasicShape,
 	rotation: 0,
-	fill: 'transparent',
-	stroke: 'currentColor',
+	fill: '#ffffff',
+	stroke: '#0d0d0d',
 	strokeWidth: 1,
 	borderRadius: 0
 };
