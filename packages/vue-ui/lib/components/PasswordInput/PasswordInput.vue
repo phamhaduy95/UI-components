@@ -90,17 +90,13 @@
 				<div class="BaseField_Trailing">
 					<IconButton
 						v-if="shouldShowClearButton"
-						size="md"
+						:size="size"
 						variant="text"
 						color="secondary"
 						aria-label="Clear value"
 						@click="handleClearClicked"
 					>
-						<XMarkIcon
-							class="w-4 h-4"
-							width="15"
-							height="15"
-						/>
+						<XMarkIcon />
 					</IconButton>
 
 					<ArkPasswordInput.VisibilityTrigger
@@ -108,7 +104,7 @@
 						as-child
 					>
 						<IconButton
-							size="md"
+							:size="size"
 							variant="text"
 							color="secondary"
 							aria-label="Toggle password visibility"

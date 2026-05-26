@@ -117,7 +117,7 @@
 					>
 						<IconButton
 							variant="text"
-							size="md"
+							:size="size"
 							color="secondary"
 							aria-label="Clear value"
 						>
@@ -130,7 +130,7 @@
 					<ArkDatePicker.Trigger as-child>
 						<IconButton
 							variant="text"
-							size="md"
+							:size="size"
 							color="secondary"
 							aria-label="Open calendar"
 						>

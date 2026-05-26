@@ -63,19 +63,13 @@
 						class="NumberInput_IncrementTrigger"
 						aria-label="increase value"
 					>
-						<ChevronUpIcon
-							width="15"
-							height="15"
-						/>
+						<ChevronUpIcon />
 					</ArkNumberInput.IncrementTrigger>
 					<ArkNumberInput.DecrementTrigger
 						class="NumberInput_DecrementTrigger"
 						aria-label="decrease value"
 					>
-						<ChevronDownIcon
-							width="15"
-							height="15"
-						/>
+						<ChevronDownIcon />
 					</ArkNumberInput.DecrementTrigger>
 				</div>
 			</ArkNumberInput.Control>
