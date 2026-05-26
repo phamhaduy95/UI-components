@@ -8,6 +8,7 @@
 
 	const props = withDefaults(defineProps<ChipProps>(), {
 		color: 'primary',
+		size: 'md',
 		removable: false,
 		disabled: false,
 		clickable: false
