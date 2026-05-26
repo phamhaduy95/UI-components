@@ -1,8 +1,10 @@
 import { useVueFlow } from '@vue-flow/core';
-import type { NodeCategory } from '@/modules/designer/types/Designer.type';
+
+import { useNodeCreation } from '@/modules/designer/composables/useNodeCreation';
+
 import { generateNode } from '@/modules/designer/utils/node.utils';
-import { useHistory } from '@/modules/designer/composables/useHistory';
-import { useNodeCommandFactory } from './useCommandFactory';
+
+import type { NodeCategory } from '@/modules/designer/types/Node.type';
 
 interface DragPayload {
 	category: NodeCategory;
@@ -10,9 +12,8 @@ interface DragPayload {
 }
 
 export const useDnD = () => {
-	const { screenToFlowCoordinate, addNodes } = useVueFlow();
-	const { commit } = useHistory();
-	const { createAddNodesCommand } = useNodeCommandFactory();
+	const { screenToFlowCoordinate } = useVueFlow();
+	const { createNodes } = useNodeCreation();
 
 	const onPaletteDragStart = (event: DragEvent, payload: DragPayload) => {
 		if (event.dataTransfer) {
@@ -50,8 +51,7 @@ export const useDnD = () => {
 			}
 		});
 
-		addNodes(node);
-		commit(createAddNodesCommand([node]));
+		createNodes([node]);
 	};
 
 	return {

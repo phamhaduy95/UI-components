@@ -1,4 +1,5 @@
 import type { TooltipRootProps } from '@ark-ui/vue/tooltip';
+import type { PositioningOptions } from '@zag-js/popper';
 
 export interface TooltipProps
 	extends Pick<
@@ -14,7 +15,7 @@ export interface TooltipProps
 		| 'closeOnScroll'
 		| 'interactive'
 	> {
-	positioning?: TooltipRootProps['positioning'];
+	positioning?: PositioningOptions;
 	arrow?: boolean;
 	dataTestId?: string;
 }

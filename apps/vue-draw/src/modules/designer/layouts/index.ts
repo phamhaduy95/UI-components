@@ -1,3 +1,3 @@
 export { default as DesignerLeftPanel } from './DesignerLeftPanel.vue';
-export { default as DesignerRightPanel } from './DesignerRightPanel.vue';
+export * from './DesignRightPanel';
 export { default as DesignerToolbar } from './DesignerToolbar.vue';

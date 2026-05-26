@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
-import { IconButton } from '@packages/vue-components';
-import IconMenu from '@icons/menu.svg';
-import IconHome from '@icons/home.svg';
-import IconDesigner from '@icons/designer.svg';
-import IconSettings from '@icons/settings.svg';
-import IconLogo from '@icons/logo.svg';
+	import { ref } from 'vue';
+	import { RouterLink } from 'vue-router';
+	import { IconButton } from '@packages/vue-components';
+	import IconMenu from '@icons/menu.svg';
+	import IconHome from '@icons/home.svg';
+	import IconDesigner from '@icons/designer.svg';
+	import IconSettings from '@icons/settings.svg';
+	import IconLogo from '@icons/logo.svg';
 
-const isSidebarOpen = ref(false);
+	const isSidebarOpen = ref(false);
 
-const toggleSidebar = () => {
-	isSidebarOpen.value = !isSidebarOpen.value;
-};
+	const toggleSidebar = () => {
+		isSidebarOpen.value = !isSidebarOpen.value;
+	};
 
-const iconMap: Record<string, string> = {
-	home: IconHome,
-	designer: IconDesigner,
-	settings: IconSettings
-};
+	const iconMap: Record<string, string> = {
+		home: IconHome,
+		designer: IconDesigner,
+		settings: IconSettings
+	};
 
-const navItems = [
-	{ name: 'Home', path: '/', icon: 'home' },
-	{ name: 'Designer', path: '/designer', icon: 'designer' },
-	{ name: 'Settings', path: '/settings', icon: 'settings' }
-];
+	const navItems = [
+		{ name: 'Home', path: '/', icon: 'home' },
+		{ name: 'Designer', path: '/designer', icon: 'designer' },
+		{ name: 'Settings', path: '/settings', icon: 'settings' }
+	];
 </script>
 
 <template>
@@ -35,13 +35,17 @@ const navItems = [
 			:class="isSidebarOpen ? 'w-64' : 'w-16'"
 		>
 			<div class="flex h-14 items-center justify-between border-b border-gray-200 px-4">
-				<span v-if="isSidebarOpen" class="whitespace-nowrap font-bold text-gray-700">Menu</span>
+				<span
+					v-if="isSidebarOpen"
+					class="whitespace-nowrap font-bold text-gray-700"
+					>Menu</span
+				>
 				<IconButton
 					variant="text"
 					color="secondary"
-					@click="toggleSidebar"
 					:class="isSidebarOpen ? '' : 'mx-auto'"
 					aria-label="Toggle Sidebar"
+					@click="toggleSidebar"
 				>
 					<IconMenu class="h-5 w-5" />
 				</IconButton>
@@ -49,7 +53,10 @@ const navItems = [
 
 			<nav class="flex-1 overflow-y-auto py-4">
 				<ul class="space-y-2 px-2">
-					<li v-for="item in navItems" :key="item.path">
+					<li
+						v-for="item in navItems"
+						:key="item.path"
+					>
 						<RouterLink
 							:to="item.path"
 							class="flex w-full items-center rounded-md px-3 py-2 text-gray-600 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-900 focus:outline-none"
@@ -59,9 +66,15 @@ const navItems = [
 							:title="!isSidebarOpen ? item.name : ''"
 						>
 							<div class="flex shrink-0 items-center justify-center">
-								<component :is="iconMap[item.icon]" class="h-5 w-5" />
+								<component
+									:is="iconMap[item.icon]"
+									class="h-5 w-5"
+								/>
 							</div>
-							<span v-if="isSidebarOpen" class="ml-3 truncate whitespace-nowrap">
+							<span
+								v-if="isSidebarOpen"
+								class="ml-3 truncate whitespace-nowrap"
+							>
 								{{ item.name }}
 							</span>
 						</RouterLink>
@@ -106,5 +119,5 @@ const navItems = [
 </template>
 
 <style scoped>
-/* Optional custom scrollbar styling could go here */
+	/* Optional custom scrollbar styling could go here */
 </style>

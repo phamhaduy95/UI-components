@@ -1,13 +1,21 @@
 import { markRaw, type Component } from 'vue';
 
-import { CircleNode, CirclePalette } from '@/modules/designer/components/CircleNode';
-import { EllipseNode, EllipsePalette } from '@/modules/designer/components/EllipseNode';
-import { GroupNode } from '@/modules/designer/components/GroupNode';
-import { HexagonNode, HexagonPalette } from '@/modules/designer/components/HexagonNode';
-import { RectangleNode, RectanglePalette } from '@/modules/designer/components/RectangleNode';
-import { StarNode, StarPalette } from '@/modules/designer/components/StarNode';
-import { TriangleNode, TrianglePalette } from '@/modules/designer/components/TriangleNode';
-import { NodeCategory } from '@/modules/designer/types/Designer.type';
+import { NodeCategory } from '@/modules/designer/types/Node.type';
+import {
+	RectangleNode,
+	CircleNode,
+	EllipseNode,
+	HexagonNode,
+	StarNode,
+	TriangleNode,
+	GroupNode,
+	RectanglePalette,
+	CirclePalette,
+	EllipsePalette,
+	HexagonPalette,
+	StarPalette,
+	TrianglePalette
+} from '@/modules/designer/components';
 
 type NodeTypeConfig = {
 	id: string;

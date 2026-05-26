@@ -1,90 +1,87 @@
 <script setup lang="ts">
-import { useDnD } from '@/modules/designer/composables/useDnD';
-import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
-import { Background } from '@vue-flow/background';
-import { useVueFlow, VueFlow, type Edge, type NodeChange } from '@vue-flow/core';
-import { DesignerLeftPanel, DesignerRightPanel, DesignerToolbar } from './layouts';
-import type { DesignerNode } from './types/Designer.type';
-import { useHistory } from './composables/useHistory';
-import { useNodeCommandFactory } from './composables/useCommandFactory';
-import type { NodePositionEntry } from './types/Command.type';
+	import { onMounted, onUnmounted, type ComponentInstance } from 'vue';
 
-// We let vue-flow manage state of nodes and edges internally to reduce memory usage
-const initialNodes: Array<DesignerNode> = [];
-const initialEdges: Array<Edge> = [];
+	import { Background } from '@vue-flow/background';
+	import { VueFlow, type Connection, type Edge, type NodeComponent } from '@vue-flow/core';
 
-const { findNode } = useVueFlow();
+	import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
+	import { NodeContextMenu } from './components/NodeContextMenu';
+	import { DesignerLeftPanel, DesignerRightPanel, DesignerToolbar } from './layouts';
 
-const { onPaletteDrop, onPaletteDragOver } = useDnD();
+	import { useDnD } from './composables/useDnD';
+	import { useCanvasConfig } from './composables/useCanvasConfig';
+	import { useNodeCommandFactory } from './composables/useCommandFactory';
+	import { useContextMenu } from './composables/useContextMenu';
+	import { useEdgeConfig } from './composables/useEdgeConfig';
+	import { useHistory } from './composables/useHistory';
+	import { useKeyboardBindings } from './composables/useKeyboardBindings';
+	import { useNodeMovement } from './composables/useNodeMovement';
+	import { useNodeConfig } from './composables/useNodeConfig';
 
-const initiateNodeTypes = () => {
-	const types: Record<string, any> = {};
-	for (const key in nodeConfigMap) {
-		const nodeComponent = nodeConfigMap[key]?.nodeComponent;
-		if (nodeComponent) {
-			types[key] = nodeComponent;
-		}
-	}
-	return types;
-};
+	import type { DesignerNode } from './types/Node.type';
 
-const { commit } = useHistory();
-const { createDeleteNodesCommand, createRepositionNodesCommand } = useNodeCommandFactory();
+	// We let vue-flow manage state of nodes and edges internally to reduce memory usage
+	const initialNodes: Array<DesignerNode> = [];
+	const initialEdges: Array<Edge> = [];
 
-const beforePositions = new Map<string, { x: number; y: number }>();
-let isDragging = false;
+	type VueFlowProps = ComponentInstance<typeof VueFlow>['$props'];
 
-const onNodesChange = (changes: NodeChange[]) => {
-	const positionChanges = changes.filter((c) => c.type === 'position');
-	if (positionChanges.length > 0) {
-		const firstChange = positionChanges[0] as { type: 'position'; id: string; dragging?: boolean };
+	const { onPaletteDrop, onPaletteDragOver } = useDnD();
 
-		if (firstChange.dragging && !isDragging) {
-			isDragging = true;
-			const { getSelectedNodes } = useVueFlow();
-			const selected = getSelectedNodes.value;
-			const targets =
-				selected.length > 0
-					? selected
-					: (positionChanges.map((c) => findNode((c as any).id)).filter(Boolean) as DesignerNode[]);
-			targets.forEach((n) => {
-				if (!beforePositions.has(n.id)) {
-					beforePositions.set(n.id, { x: n.position.x, y: n.position.y });
-				}
-			});
-		}
+	const { setSelectedNode } = useNodeConfig();
 
-		if (!firstChange.dragging && isDragging) {
-			isDragging = false;
+	const handleNodeClick: VueFlowProps['onNodeClick'] = (event) => {
+		setSelectedNode(event.node);
+	};
 
-			const entries: NodePositionEntry[] = [];
-			beforePositions.forEach((before, nodeId) => {
-				const node = findNode(nodeId);
-				if (!node) return;
-				const after = { x: node.position.x, y: node.position.y };
-				if (before.x !== after.x || before.y !== after.y) {
-					entries.push({ nodeId, before, after });
-				}
-			});
-
-			if (entries.length > 0) {
-				commit(createRepositionNodesCommand(entries));
+	const initiateNodeTypes = () => {
+		const types: Record<string, NodeComponent> = {};
+		for (const key in nodeConfigMap) {
+			const nodeComponent = nodeConfigMap[key]?.nodeComponent;
+			if (nodeComponent) {
+				types[key] = nodeComponent;
 			}
-			beforePositions.clear();
 		}
-	}
+		return types;
+	};
 
-	changes.forEach((change) => {
-		if (change.type === 'remove') {
-			const node = findNode(change.id);
-			if (!node) return;
-			const command = createDeleteNodesCommand([node]);
-			commit(command);
-		}
+	const { commit } = useHistory();
+	const { createAddEdgesCommand } = useNodeCommandFactory();
+	const { onNodeDragStart, onNodeDragStop } = useNodeMovement();
+
+	const { register, unregister } = useKeyboardBindings();
+
+	onMounted(() => {
+		register();
 	});
-};
 
-const nodeTypes = initiateNodeTypes();
+	onUnmounted(() => {
+		unregister();
+	});
+
+	const { setSelectedEdge } = useEdgeConfig();
+
+	const onEdgeClick: VueFlowProps['onEdgeClick'] = (event) => {
+		setSelectedEdge(event.edge);
+	};
+
+	const nodeTypes = initiateNodeTypes();
+
+	const { contextMenu, onNodeContextMenu, closeContextMenu } = useContextMenu();
+
+	const { canvasConfig } = useCanvasConfig();
+
+	const onConnect = (connection: Connection) => {
+		const edge: Edge = {
+			id: crypto.randomUUID(),
+			...connection,
+			type: 'smoothstep',
+			pathOptions: {
+				borderRadius: 0
+			}
+		};
+		commit(createAddEdgesCommand([edge]));
+	};
 </script>
 
 <template>
@@ -100,7 +97,11 @@ const nodeTypes = initiateNodeTypes();
 			<DesignerLeftPanel />
 
 			<!-- Center Canvas -->
-			<main class="relative flex-1" @drop="onPaletteDrop" @dragover="onPaletteDragOver">
+			<main
+				class="relative flex-1"
+				@drop="onPaletteDrop"
+				@dragover="onPaletteDragOver"
+			>
 				<VueFlow
 					:nodes="initialNodes"
 					:edges="initialEdges"
@@ -110,10 +111,30 @@ const nodeTypes = initiateNodeTypes();
 					:max-zoom="5"
 					:elevate-nodes-on-select="false"
 					:zoom-on-double-click="false"
-					@nodes-change="onNodesChange"
+					:delete-key-code="null"
+					@pane-click="closeContextMenu"
+					@node-context-menu="onNodeContextMenu"
+					@connect="onConnect"
+					@edge-click="onEdgeClick"
+					@node-drag-start="onNodeDragStart"
+					@node-drag-stop="onNodeDragStop"
+					@node-click="handleNodeClick"
 				>
-					<Background :variant="'dots'" :gap="24" :size="2" pattern-color="#d1d5db" />
+					<Background
+						v-if="canvasConfig.gridVisible"
+						:variant="canvasConfig.gridVariant"
+						:gap="canvasConfig.gridGap"
+						:size="canvasConfig.gridSize"
+						:pattern-color="canvasConfig.gridPatternColor"
+					/>
 				</VueFlow>
+				<NodeContextMenu
+					v-if="contextMenu.visible"
+					:node-id="contextMenu.nodeId"
+					:x="contextMenu.x"
+					:y="contextMenu.y"
+					@close="closeContextMenu"
+				/>
 			</main>
 			<!-- Right Panel: Properties -->
 			<DesignerRightPanel />

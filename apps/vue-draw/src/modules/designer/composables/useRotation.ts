@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue';
 import { useVueFlow, type GraphNode } from '@vue-flow/core';
-import { NodeCategory, type GroupNodeData } from '@/modules/designer/types/Designer.type';
+import { NodeCategory, type GroupNodeData } from '@/modules/designer/types/Node.type';
 import { useHistory } from '@/modules/designer/composables/useHistory';
 import { useNodeCommandFactory } from '@/modules/designer/composables/useCommandFactory';
 import type { NodeRotationEntry } from '@/modules/designer/types/Command.type';

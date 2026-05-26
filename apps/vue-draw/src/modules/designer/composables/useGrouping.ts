@@ -1,16 +1,16 @@
 import { getRectOfNodes, useVueFlow } from '@vue-flow/core';
 import { computed } from 'vue';
 
+import { useNodeCommandFactory } from '@/modules/designer/composables/useCommandFactory';
+import { useHistory } from '@/modules/designer/composables/useHistory';
 import { defaultGroupData } from '@/modules/designer/constant/default';
+import type { GroupEntry } from '@/modules/designer/types/Command.type';
 import {
 	NodeCategory,
 	type DesignerNode,
 	type GroupNodeData
-} from '@/modules/designer/types/Designer.type';
+} from '@/modules/designer/types/Node.type';
 import { generateNode } from '@/modules/designer/utils/node.utils';
-import { useHistory } from '@/modules/designer/composables/useHistory';
-import { useNodeCommandFactory } from '@/modules/designer/composables/useCommandFactory';
-import type { GroupEntry } from '@/modules/designer/types/Command.type';
 
 export const useGrouping = () => {
 	const {
@@ -19,9 +19,7 @@ export const useGrouping = () => {
 		findNode,
 		removeSelectedNodes,
 		addSelectedNodes,
-		addNodes,
-		removeNodes,
-		updateNode
+		removeNodes
 	} = useVueFlow();
 
 	const { commit } = useHistory();
@@ -71,8 +69,6 @@ export const useGrouping = () => {
 			data: groupData
 		});
 
-		addNodes(newGroupNode);
-
 		const groupId = newGroupNode.id;
 
 		const childEntries: GroupEntry['children'] = [];
@@ -87,17 +83,13 @@ export const useGrouping = () => {
 				relativePosition,
 				absolutePosition: { x: childNode.position.x, y: childNode.position.y }
 			});
-			updateNode(childNode.id, {
-				parentNode: groupId,
-				// The new postion of child node must be relative to group node
-				position: relativePosition
-			});
 		}
 
 		// automatically select group node when created
 		const groupNode = findNode(groupId);
 
 		removeSelectedNodes(selected);
+
 		if (groupNode) {
 			addSelectedNodes([groupNode]);
 		}
@@ -134,14 +126,7 @@ export const useGrouping = () => {
 				relativePosition: { x: childNode.position.x, y: childNode.position.y },
 				absolutePosition
 			});
-			updateNode(childNode.id, {
-				parentNode: undefined,
-				draggable: true,
-				position: absolutePosition
-			});
 		}
-
-		removeNodes([groupNode]);
 
 		commit(
 			createUngroupNodesCommand({

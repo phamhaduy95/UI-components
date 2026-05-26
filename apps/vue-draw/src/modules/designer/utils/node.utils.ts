@@ -4,7 +4,7 @@ import {
 	type DesignerNode,
 	type DesignerNodeData,
 	type GroupNodeData
-} from '@/modules/designer/types/Designer.type';
+} from '@/modules/designer/types/Node.type';
 import { defaultNodeData, defaultGroupData } from '@/modules/designer/constant/default';
 
 export const generateNodeId = () => `node_${crypto.randomUUID()}`;

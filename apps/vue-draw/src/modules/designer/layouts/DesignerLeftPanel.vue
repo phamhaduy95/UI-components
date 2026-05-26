@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
+	import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
 </script>
 
 <template>
@@ -15,8 +15,8 @@ import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
 				<h3 class="text-xs font-medium uppercase text-gray-500">Basic Shapes</h3>
 				<div class="grid grid-cols-4 gap-2">
 					<component
-						v-for="(config, key) in nodeConfigMap"
 						:is="config.paletteComponent"
+						v-for="(config, key) in nodeConfigMap"
 						:id="config.id"
 						:key="config.id"
 						:type="key"

@@ -15,4 +15,4 @@ export type SingleSliderEmits = {
 	valueChangeEnd: [value: number];
 };
 
-export type SingleSliderSlots = BaseSliderSlots;
+export type SingleSliderSlots = Partial<BaseSliderSlots>;

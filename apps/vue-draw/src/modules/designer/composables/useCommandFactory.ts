@@ -1,15 +1,37 @@
-import { useVueFlow } from '@vue-flow/core';
-import type { DesignerNode } from '@/modules/designer/types/Designer.type';
+import { useVueFlow, type Edge } from '@vue-flow/core';
+
 import type {
-	NodeRotationEntry,
-	NodePositionEntry,
-	NodeSizeEntry,
+	EdgeBasicPropEntry,
+	EdgeUpdateDataEntry,
 	GroupEntry,
-	NodeDataEntry
+	NodeRotationEntry,
+	NodeUpdateDataEntry,
+	NodeUpdateEntry
 } from '@/modules/designer/types/Command.type';
+import type { DesignerNode } from '@/modules/designer/types/Node.type';
 
 export const useNodeCommandFactory = () => {
-	const { removeNodes, addNodes, updateNode, updateNodeData } = useVueFlow();
+	const {
+		removeNodes,
+		addNodes,
+		updateNode,
+		updateNodeData,
+		addEdges,
+		findEdge,
+		removeEdges,
+		updateEdgeData
+	} = useVueFlow();
+
+	const createAddEdgesCommand = (edges: Edge[]) => ({
+		action: 'addEdge',
+		timestamp: Date().toString(),
+		revert: () => {
+			removeEdges(edges);
+		},
+		forward: () => {
+			addEdges(edges);
+		}
+	});
 
 	const createAddNodesCommand = (nodes: DesignerNode[]) => ({
 		action: 'addNode',
@@ -35,6 +57,40 @@ export const useNodeCommandFactory = () => {
 		};
 	};
 
+	const createUpdateNodesCommand = (entries: NodeUpdateEntry[]) => {
+		return {
+			action: 'updateNode',
+			timestamp: Date().toString(),
+			revert: () => {
+				entries.forEach(({ nodeId, before }) => {
+					updateNode(nodeId, before);
+				});
+			},
+			forward: () => {
+				entries.forEach(({ nodeId, after }) => {
+					updateNode(nodeId, after);
+				});
+			}
+		};
+	};
+
+	const createUpdateNodeDataCommand = (entries: NodeUpdateDataEntry[]) => {
+		return {
+			action: 'updateNodeData',
+			timestamp: Date().toString(),
+			revert: () => {
+				entries.forEach(({ nodeId, beforeData }) => {
+					updateNode(nodeId, { data: beforeData });
+				});
+			},
+			forward: () => {
+				entries.forEach(({ nodeId, afterData }) => {
+					updateNode(nodeId, { data: afterData });
+				});
+			}
+		};
+	};
+
 	const createRotateNodesCommand = (entries: NodeRotationEntry[]) => {
 		return {
 			action: 'rotateNode',
@@ -49,46 +105,6 @@ export const useNodeCommandFactory = () => {
 				entries.forEach(({ nodeId, afterRotation, afterPosition }) => {
 					updateNodeData(nodeId, { rotation: afterRotation });
 					if (afterPosition) updateNode(nodeId, { position: afterPosition });
-				});
-			}
-		};
-	};
-
-	const createRepositionNodesCommand = (entries: NodePositionEntry[]) => {
-		return {
-			action: 'repositionNode',
-			timestamp: Date().toString(),
-			revert: () => {
-				entries.forEach(({ nodeId, before }) => {
-					updateNode(nodeId, { position: before });
-				});
-			},
-			forward: () => {
-				entries.forEach(({ nodeId, after }) => {
-					updateNode(nodeId, { position: after });
-				});
-			}
-		};
-	};
-
-	const createResizeNodesCommand = (entries: NodeSizeEntry[]) => {
-		return {
-			action: 'resizeNodes',
-			timestamp: Date().toString(),
-			revert: () => {
-				entries.forEach(({ nodeId, beforeStyle, beforePosition }) => {
-					updateNode(nodeId, {
-						style: beforeStyle,
-						...(beforePosition ? { position: beforePosition } : {})
-					});
-				});
-			},
-			forward: () => {
-				entries.forEach(({ nodeId, afterStyle, afterPosition }) => {
-					updateNode(nodeId, {
-						style: afterStyle,
-						...(afterPosition ? { position: afterPosition } : {})
-					});
 				});
 			}
 		};
@@ -142,18 +158,37 @@ export const useNodeCommandFactory = () => {
 		};
 	};
 
-	const createUpdateNodeDataCommand = (entries: NodeDataEntry[]) => {
+	const createUpdateEdgeDataCommand = (entries: EdgeUpdateDataEntry[]) => {
 		return {
-			action: 'updateNodeData',
+			action: 'updateEdgeData',
 			timestamp: Date().toString(),
 			revert: () => {
-				entries.forEach(({ nodeId, beforeData }) => {
-					updateNode(nodeId, { data: beforeData });
+				entries.forEach(({ edgeId, beforeData }) => {
+					updateEdgeData(edgeId, beforeData);
 				});
 			},
 			forward: () => {
-				entries.forEach(({ nodeId, afterData }) => {
-					updateNode(nodeId, { data: afterData });
+				entries.forEach(({ edgeId, afterData }) => {
+					updateEdgeData(edgeId, afterData);
+				});
+			}
+		};
+	};
+
+	const createUpdateEdgeCommand = (entries: EdgeBasicPropEntry[]) => {
+		return {
+			action: 'updateEdge',
+			timestamp: Date().toString(),
+			revert: () => {
+				entries.forEach(({ edgeId, beforeData }) => {
+					const edge = findEdge(edgeId);
+					if (edge) Object.assign(edge, beforeData);
+				});
+			},
+			forward: () => {
+				entries.forEach(({ edgeId, afterData }) => {
+					const edge = findEdge(edgeId);
+					if (edge) Object.assign(edge, afterData);
 				});
 			}
 		};
@@ -161,12 +196,14 @@ export const useNodeCommandFactory = () => {
 
 	return {
 		createAddNodesCommand,
+		createUpdateNodesCommand,
+		createUpdateNodeDataCommand,
 		createDeleteNodesCommand,
 		createRotateNodesCommand,
-		createRepositionNodesCommand,
-		createResizeNodesCommand,
 		createGroupNodesCommand,
 		createUngroupNodesCommand,
-		createUpdateNodeDataCommand
+		createAddEdgesCommand,
+		createUpdateEdgeCommand,
+		createUpdateEdgeDataCommand
 	};
 };

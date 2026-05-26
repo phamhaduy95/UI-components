@@ -1,49 +1,94 @@
 import { ref } from 'vue';
-import { useVueFlow } from '@vue-flow/core';
+import { useVueFlow, type Dimensions } from '@vue-flow/core';
 import type { OnResize, OnResizeStart } from '@vue-flow/node-resizer';
+
 import { useHistory } from '@/modules/designer/composables/useHistory';
 import { useNodeCommandFactory } from '@/modules/designer/composables/useCommandFactory';
 
+import type { NodeUpdateEntry } from '@/modules/designer/types/Command.type';
+
 export const useResize = (nodeId: string) => {
 	const { commit } = useHistory();
-	const { findNode } = useVueFlow();
-	const { createResizeNodesCommand } = useNodeCommandFactory();
+	const { getSelectedNodes, updateNode } = useVueFlow();
+	const { createUpdateNodesCommand } = useNodeCommandFactory();
 
-	// Single-node resize: capture before-state on start, commit ResizeNodesCommand on end
-	const resizeBefore = ref<{ width: string; height: string; x: number; y: number } | null>(null);
+	// Multi-node resize: capture before-state on start for all selected, scale in onResize, commit on end
+	const resizeBefore = ref<Map<string, Dimensions>>(new Map());
 
 	const onResizeStart = () => {
-		const node = findNode(nodeId);
-		if (!node) return;
-		resizeBefore.value = {
-			width: `${node.dimensions.width}px`,
-			height: `${node.dimensions.height}px`,
-			x: node.position.x,
-			y: node.position.y
-		};
+		const selectedNodes = getSelectedNodes.value;
+		resizeBefore.value.clear();
+		for (const node of selectedNodes) {
+			resizeBefore.value.set(node.id, {
+				width: node.dimensions.width,
+				height: node.dimensions.height
+			});
+		}
+	};
+
+	const onResize = (event: OnResize) => {
+		const { params } = event;
+		const { width, height } = params;
+
+		const beforeA = resizeBefore.value.get(nodeId);
+		if (!beforeA) return;
+
+		const scaleX = width / beforeA.width;
+		const scaleY = height / beforeA.height;
+
+		for (const [id, before] of resizeBefore.value.entries()) {
+			if (id === nodeId) continue;
+
+			const newWidth = before.width * scaleX;
+			const newHeight = before.height * scaleY;
+
+			updateNode(id, {
+				style: { width: `${newWidth}px`, height: `${newHeight}px` },
+				width: newWidth,
+				height: newHeight
+			});
+		}
 	};
 
 	const onResizeEnd = (event: OnResizeStart) => {
-		const { params } = event as unknown as OnResize;
+		const { params } = event;
 		const { width, height } = params;
-		if (!resizeBefore.value) return;
-		const node = findNode(nodeId);
-		commit(
-			createResizeNodesCommand([
-				{
-					nodeId,
-					beforeStyle: { width: resizeBefore.value.width, height: resizeBefore.value.height },
-					afterStyle: { width: `${width}px`, height: `${height}px` },
-					beforePosition: { x: resizeBefore.value.x, y: resizeBefore.value.y },
-					...(node ? { afterPosition: { x: node.position.x, y: node.position.y } } : {})
+
+		const beforeDimension = resizeBefore.value.get(nodeId);
+		if (!beforeDimension) return;
+
+		const entries: NodeUpdateEntry[] = [];
+		const scaleX = width / beforeDimension.width;
+		const scaleY = height / beforeDimension.height;
+
+		for (const [id, before] of resizeBefore.value.entries()) {
+			let newWidth = width;
+			let newHeight = height;
+
+			if (id !== nodeId) {
+				newWidth = Math.max(1, before.width * scaleX);
+				newHeight = Math.max(1, before.height * scaleY);
+			}
+
+			entries.push({
+				nodeId: id,
+				before: { dimensions: beforeDimension },
+				after: {
+					dimensions: {
+						width: newWidth,
+						height: newHeight
+					}
 				}
-			])
-		);
-		resizeBefore.value = null;
+			});
+		}
+
+		commit(createUpdateNodesCommand(entries));
+		resizeBefore.value.clear();
 	};
 
 	return {
 		onResizeStart,
+		onResize,
 		onResizeEnd
 	};
 };

@@ -1,27 +1,16 @@
-import { computed, ref, toRaw } from 'vue';
+import { useNodeCreation } from '@/modules/designer/composables/useNodeCreation';
+import type { DesignerNode } from '@/modules/designer/types/Node.type';
+import { useVueFlow, type XYPosition } from '@vue-flow/core';
 import { defineStore } from 'pinia';
-import { useVueFlow } from '@vue-flow/core';
-import type { DesignerNode } from '@/modules/designer/types/Designer.type';
-import { generateNodeId } from '@/modules/designer/utils/node.utils';
+import { computed, ref } from 'vue';
 
 const useClipboardStore = defineStore('design-clipboard', () => {
 	const savedNodes = ref<Array<DesignerNode>>([]);
 
+	const { cloneNodes } = useNodeCreation();
+
 	const saveNodes = (nodes: Array<DesignerNode>) => {
-		savedNodes.value = nodes.map((node) => {
-			return {
-				id: node.id,
-				type: node.type,
-				position: node.position,
-				data: structuredClone(toRaw(node.data)),
-				style: structuredClone(toRaw(node.style)),
-				zIndex: node.zIndex,
-				parentNode: node.parentNode,
-				hidden: node.hidden,
-				height: node.height,
-				width: node.width
-			};
-		});
+		savedNodes.value = cloneNodes(nodes);
 	};
 
 	const clear = () => {
@@ -40,9 +29,12 @@ const useClipboardStore = defineStore('design-clipboard', () => {
 	};
 });
 
+const DEFAULT_OFFSET: XYPosition = { x: 10, y: 10 };
+
 export const useClipboard = () => {
 	const store = useClipboardStore();
-	const { getSelectedNodes, removeNodes, addNodes } = useVueFlow();
+	const { getSelectedNodes } = useVueFlow();
+	const { createNodes, removeNodes, cloneNodes } = useNodeCreation();
 
 	const canCopy = computed(() => getSelectedNodes.value.length > 0);
 
@@ -62,31 +54,27 @@ export const useClipboard = () => {
 		removeNodes(getSelectedNodes.value);
 	};
 
-	const pasteNodes = (args: { position: { x: number; y: number } }) => {
-		const { position } = args;
+	const pasteNodes = (args: { offset?: XYPosition; position?: XYPosition }) => {
+		const offset = args.offset || DEFAULT_OFFSET;
 
 		const nodesToPaste = store.getSavedNodes();
 		if (nodesToPaste.length === 0) return;
 
-		const newNodes: DesignerNode[] = nodesToPaste.map((node) => {
-			return {
-				id: generateNodeId(),
-				type: node.type,
-				position: {
-					x: position.x + (node.position.x - position.x),
-					y: position.y + (node.position.y - position.y)
-				},
-				data: structuredClone(toRaw(node.data)),
-				style: structuredClone(toRaw(node.style)),
-				parentNode: node.parentNode,
-				zIndex: node.zIndex,
-				height: node.height,
-				width: node.width,
-				hidden: node.hidden
-			};
+		const newNodes: DesignerNode[] = cloneNodes(nodesToPaste);
+
+		newNodes.forEach((node) => {
+			if (args.position) {
+				const minX = Math.min(...nodesToPaste.map((n) => n.position.x));
+				const minY = Math.min(...nodesToPaste.map((n) => n.position.y));
+				node.position.x += args.position.x - minX;
+				node.position.y += args.position.y - minY;
+			} else {
+				node.position.x += offset.x;
+				node.position.y += offset.y;
+			}
 		});
 
-		addNodes(newNodes);
+		createNodes(newNodes);
 	};
 
 	const clear = () => {

@@ -1,10 +1,13 @@
-import { ref } from 'vue';
 import { useVueFlow } from '@vue-flow/core';
+import { ref } from 'vue';
+
 import type { OnResize, OnResizeStart } from '@vue-flow/node-resizer';
-import type { GroupNodeData } from '@/modules/designer/types/Designer.type';
-import { useHistory } from '@/modules/designer/composables/useHistory';
+
 import { useNodeCommandFactory } from '@/modules/designer/composables/useCommandFactory';
-import type { NodeSizeEntry } from '@/modules/designer/types/Command.type';
+import { useHistory } from '@/modules/designer/composables/useHistory';
+
+import type { NodeUpdateEntry } from '@/modules/designer/types/Command.type';
+import type { GroupNodeData } from '@/modules/designer/types/Node.type';
 
 export interface ChildSnapshot {
 	id: string;
@@ -17,7 +20,7 @@ export interface ChildSnapshot {
 export const useGroupResize = (nodeId: string) => {
 	const { getNodes, updateNode, findNode } = useVueFlow();
 	const { commit } = useHistory();
-	const { createResizeNodesCommand } = useNodeCommandFactory();
+	const { createUpdateNodesCommand } = useNodeCommandFactory();
 
 	const groupResizeData = ref<{
 		groupWidth: number;
@@ -76,32 +79,31 @@ export const useGroupResize = (nodeId: string) => {
 
 		if (!groupResizeData.value) return;
 
-		const { groupWidth, groupHeight, groupX, groupY, children } = groupResizeData.value;
-		const groupNode = findNode(nodeId);
+		const { groupWidth, groupHeight, children } = groupResizeData.value;
 
 		const scaleX = width / groupWidth;
 		const scaleY = height / groupHeight;
 
-		const entries: NodeSizeEntry[] = [
+		const entries: NodeUpdateEntry[] = [
 			{
 				nodeId,
-				beforeStyle: { width: `${groupWidth}px`, height: `${groupHeight}px` },
-				afterStyle: { width: `${width}px`, height: `${height}px` },
-				beforePosition: { x: groupX, y: groupY },
-				...(groupNode
-					? { afterPosition: { x: groupNode.position.x, y: groupNode.position.y } }
-					: {})
+				before: { dimensions: { width: groupWidth, height: groupHeight } },
+				after: { dimensions: { width: width, height: height } }
 			},
 			...children.map((child) => ({
 				nodeId: child.id,
-				beforeStyle: { width: `${child.width}px`, height: `${child.height}px` },
-				afterStyle: { width: `${child.width * scaleX}px`, height: `${child.height * scaleY}px` },
-				beforePosition: { x: child.x, y: child.y },
-				afterPosition: { x: child.x * scaleX, y: child.y * scaleY }
+				before: {
+					position: { x: child.x, y: child.y },
+					dimensions: { width: child.width, height: child.height }
+				},
+				after: {
+					position: { x: child.x * scaleX, y: child.y * scaleY },
+					dimensions: { width: child.width * scaleX, height: child.height * scaleY }
+				}
 			}))
 		];
 
-		commit(createResizeNodesCommand(entries));
+		commit(createUpdateNodesCommand(entries));
 
 		groupResizeData.value = null;
 	};

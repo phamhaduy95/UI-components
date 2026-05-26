@@ -18,16 +18,16 @@ export const useZoom = () => {
 		zoomOut(options);
 	};
 
-	const handleZoomTo = (zoomLevel: number, options?: { duration?: number }) => {
-		zoomTo(zoomLevel, options);
+	const handleZoomTo = (zoomLevel: number) => {
+		zoomTo(zoomLevel, { duration: 0 });
 	};
 
-	const handleFitView = (options?: { duration?: number; padding?: number }) => {
-		fitView(options);
+	const handleFitView = () => {
+		fitView({ duration: 0 });
 	};
 
-	const resetZoom = (options?: { duration?: number }) => {
-		zoomTo(1, options);
+	const resetZoom = () => {
+		zoomTo(1, { duration: 0 });
 	};
 
 	return {

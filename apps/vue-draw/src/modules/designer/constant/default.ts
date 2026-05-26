@@ -3,7 +3,7 @@ import {
 	NodeCategory,
 	type BasicShapeNodeData,
 	type GroupNodeData
-} from '@/modules/designer/types/Designer.type';
+} from '@/modules/designer/types/Node.type';
 
 export const defaultNodeData: BasicShapeNodeData = {
 	category: NodeCategory.BasicShape,

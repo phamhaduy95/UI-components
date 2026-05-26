@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { Button } from '@packages/vue-components';
-import IconLayers from '@/assets/images/layers.svg';
-import IconLayout from '@/assets/images/layout.svg';
-import IconFileText from '@/assets/images/file-text.svg';
+	import { useRouter } from 'vue-router';
+	import { Button } from '@packages/vue-components';
+	import IconLayers from '@/assets/images/layers.svg';
+	import IconLayout from '@/assets/images/layout.svg';
+	import IconFileText from '@/assets/images/file-text.svg';
 
-const router = useRouter();
+	const router = useRouter();
 
-const navigateToDesigner = () => {
-	router.push('/designer');
-};
+	const navigateToDesigner = () => {
+		router.push('/designer');
+	};
 </script>
 
 <template>
@@ -27,10 +27,21 @@ const navigateToDesigner = () => {
 				tools, intuitive layouts, and Vue Flow integration.
 			</p>
 			<div class="flex gap-4">
-				<Button color="primary" variant="contained" size="lg" @click="navigateToDesigner">
+				<Button
+					color="primary"
+					variant="contained"
+					size="lg"
+					@click="navigateToDesigner"
+				>
 					Open Designer
 				</Button>
-				<Button color="secondary" variant="outlined" size="lg"> View Documentation </Button>
+				<Button
+					color="secondary"
+					variant="outlined"
+					size="lg"
+				>
+					View Documentation
+				</Button>
 			</div>
 		</section>
 
@@ -97,9 +108,21 @@ const navigateToDesigner = () => {
 		<!-- Footer -->
 		<footer class="mt-auto border-t border-gray-200 bg-gray-50 px-6 py-8 text-center">
 			<div class="mb-4 flex items-center justify-center space-x-6">
-				<a href="#" class="text-gray-500 transition-colors hover:text-gray-900">Documentation</a>
-				<a href="#" class="text-gray-500 transition-colors hover:text-gray-900">Support</a>
-				<a href="#" class="text-gray-500 transition-colors hover:text-gray-900">Terms</a>
+				<a
+					href="#"
+					class="text-gray-500 transition-colors hover:text-gray-900"
+					>Documentation</a
+				>
+				<a
+					href="#"
+					class="text-gray-500 transition-colors hover:text-gray-900"
+					>Support</a
+				>
+				<a
+					href="#"
+					class="text-gray-500 transition-colors hover:text-gray-900"
+					>Terms</a
+				>
 			</div>
 			<p class="text-sm text-gray-400">&copy; 2026 VueDraw. All rights reserved.</p>
 		</footer>

@@ -1,4 +1,6 @@
-import type { DesignerNode } from '@/modules/designer/types/Designer.type';
+import type { DesignerNode, DesignerNodeData } from '@/modules/designer/types/Node.type';
+import type { DesignerEdge, EdgeConfig } from './Edge.type';
+import type { GraphNode } from '@vue-flow/core';
 
 export interface Command {
 	action: string;
@@ -48,4 +50,33 @@ export interface GroupEntry {
 		relativePosition: { x: number; y: number };
 		absolutePosition: { x: number; y: number };
 	}>;
+}
+
+export type ConfigurableNodeProps = Partial<
+	Pick<GraphNode, 'style' | 'dimensions' | 'zIndex' | 'position'>
+>;
+
+export interface NodeUpdateEntry {
+	nodeId: string;
+	before: ConfigurableNodeProps;
+	after: ConfigurableNodeProps;
+}
+export interface NodeUpdateDataEntry {
+	nodeId: string;
+	beforeData: DesignerNodeData;
+	afterData: DesignerNodeData;
+}
+
+export interface EdgeUpdateDataEntry {
+	edgeId: string;
+	beforeData: EdgeConfig;
+	afterData: EdgeConfig;
+}
+
+export type ConfigurableEdgeProps = Partial<Pick<DesignerEdge, 'type' | 'label'>>;
+
+export interface EdgeBasicPropEntry {
+	edgeId: string;
+	beforeData: ConfigurableEdgeProps;
+	afterData: ConfigurableEdgeProps;
 }

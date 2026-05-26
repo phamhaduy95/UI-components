@@ -43,6 +43,7 @@ export const useHistory = () => {
 
 	const commit = (command: Command) => {
 		if (store.isRestoring) return;
+		command.forward();
 		store.pushUndo(command);
 	};
 
@@ -54,7 +55,6 @@ export const useHistory = () => {
 		command.revert();
 
 		store.pushRedo(command);
-		// wait until change is rendered
 		await nextTick();
 		store.isRestoring = false;
 	};

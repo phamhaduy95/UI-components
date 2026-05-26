@@ -1,5 +1,5 @@
 import { fileURLToPath, URL } from 'node:url';
-import dts from 'vite-plugin-dts';
+
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
@@ -15,15 +15,7 @@ const componentEntries: Array<[string, string]> = globbySync(['lib/**/*.vue', 'l
 });
 
 export default defineConfig({
-	plugins: [
-		vue(),
-		libInjectCss(),
-		dts({
-			entryRoot: './lib',
-			staticImport: true,
-			tsconfigPath: './tsconfig.lib.json'
-		})
-	],
+	plugins: [vue(), libInjectCss()],
 	css: {
 		transformer: 'lightningcss'
 	},

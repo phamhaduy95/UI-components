@@ -1,27 +1,29 @@
 <script setup lang="ts">
-import { useGrouping } from '@/modules/designer/composables/useGrouping';
-import { useZoom } from '@/modules/designer/composables/useZoom';
-import { useZindex } from '@/modules/designer/composables/useZindex';
-import { useHistory } from '@/modules/designer/composables/useHistory';
-import { useClipboard } from '@/modules/designer/composables/useClipboard';
+	import { useGrouping } from '@/modules/designer/composables/useGrouping';
+	import { useZoom } from '@/modules/designer/composables/useZoom';
+	import { useZindex } from '@/modules/designer/composables/useZindex';
+	import { useHistory } from '@/modules/designer/composables/useHistory';
+	import { useClipboard } from '@/modules/designer/composables/useClipboard';
 
-import IconBringToFront from '@icons/bring-to-front.svg';
-import IconGroup from '@icons/group.svg';
-import IconRedo from '@icons/redo.svg';
-import IconSendToBack from '@icons/send-to-back.svg';
-import IconUndo from '@icons/undo.svg';
-import IconUnGroup from '@icons/ungroup.svg';
-import IconZoomIn from '@icons/zoom-in.svg';
-import IconZoomOut from '@icons/zoom-out.svg';
-import IconCopy from '@icons/copy.svg';
-import IconPaste from '@icons/paste.svg';
+	import IconBringToFront from '@icons/bring-to-front.svg';
+	import IconGroup from '@icons/group.svg';
+	import IconRedo from '@icons/redo.svg';
+	import IconSendToBack from '@icons/send-to-back.svg';
+	import IconUndo from '@icons/undo.svg';
+	import IconUnGroup from '@icons/ungroup.svg';
+	import IconZoomIn from '@icons/zoom-in.svg';
+	import IconZoomOut from '@icons/zoom-out.svg';
+	import IconFitView from '@icons/fit-view.svg';
+	import IconResetZoom from '@icons/reset-zoom.svg';
+	import IconCopy from '@icons/copy.svg';
+	import IconPaste from '@icons/paste.svg';
 
-const { groupSelectedNodes, ungroup, canGroup, canUngroup } = useGrouping();
-const { zoomIn, zoomOut, canZoomIn, canZoomOut } = useZoom();
+	const { groupSelectedNodes, ungroup, canGroup, canUngroup } = useGrouping();
+	const { zoomIn, zoomOut, canZoomIn, canZoomOut, fitView, resetZoom, zoomPercentage } = useZoom();
 
-const { canCopy, canPaste, copyNodes, pasteNodes } = useClipboard();
-const { bringToFront, sendToBack, canChangeZIndex } = useZindex();
-const { undo, redo, canUndo, canRedo } = useHistory();
+	const { canCopy, canPaste, copyNodes, pasteNodes } = useClipboard();
+	const { bringToFront, sendToBack, canChangeZIndex } = useZindex();
+	const { undo, redo, canUndo, canRedo } = useHistory();
 </script>
 
 <template>
@@ -80,7 +82,7 @@ const { undo, redo, canUndo, canRedo } = useHistory();
 				"
 				:disabled="!canPaste"
 				title="Paste"
-				@click="pasteNodes({ position: { x: 0, y: 0 } })"
+				@click="pasteNodes({})"
 			>
 				<IconPaste class="h-[18px] w-[18px]" />
 			</button>
@@ -153,6 +155,9 @@ const { undo, redo, canUndo, canRedo } = useHistory();
 			>
 				<IconZoomIn class="h-[18px] w-[18px]" />
 			</button>
+			<span class="mx-1 w-10 text-center text-xs font-medium text-gray-600 select-none">
+				{{ zoomPercentage }}%
+			</span>
 			<button
 				class="tooltip-trigger rounded p-1.5 focus:outline-none"
 				:class="
@@ -165,6 +170,20 @@ const { undo, redo, canUndo, canRedo } = useHistory();
 				@click="zoomOut()"
 			>
 				<IconZoomOut class="h-[18px] w-[18px]" />
+			</button>
+			<button
+				class="tooltip-trigger cursor-pointer rounded p-1.5 text-gray-600 hover:bg-gray-100 focus:outline-none"
+				title="Fit to View"
+				@click="fitView()"
+			>
+				<IconFitView class="h-[18px] w-[18px]" />
+			</button>
+			<button
+				class="tooltip-trigger cursor-pointer rounded p-1.5 text-gray-600 hover:bg-gray-100 focus:outline-none"
+				title="Reset Zoom"
+				@click="resetZoom()"
+			>
+				<IconResetZoom class="h-[18px] w-[18px]" />
 			</button>
 		</div>
 	</div>

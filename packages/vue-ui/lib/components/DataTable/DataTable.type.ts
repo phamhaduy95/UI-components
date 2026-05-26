@@ -3,7 +3,9 @@ import type {
 	RowData,
 	SortingState,
 	SortingFn,
-	BuiltInSortingFn
+	BuiltInSortingFn,
+	Header,
+	Table
 } from '@tanstack/vue-table';
 import type { CSSProperties } from 'vue';
 
@@ -221,3 +223,15 @@ export type DataTableSlots<TData extends RowData> = {
 	[key: `header:${string}`]: () => void;
 	[key: `cell:${string}`]: () => void;
 };
+
+export interface DataTableHeaderProps<TData> {
+	header: Header<TData, unknown>;
+	table: Table<TData>;
+	headerStyle?: CSSProperties;
+	selectionMode?: 'single' | 'multiple';
+}
+
+export interface DataTableHeaderSlots {
+	selection?(props: HeaderSelectionSlotProps): void;
+	regularHeader?(props: HeaderSlotProps): void;
+}
