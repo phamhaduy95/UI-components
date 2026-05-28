@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 	import { Switch as ArkSwitch } from '@ark-ui/vue/switch';
 	import type { SwitchEmits, SwitchProps } from './Switch.type';

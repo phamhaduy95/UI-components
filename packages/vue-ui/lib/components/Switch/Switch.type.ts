@@ -1,12 +1,12 @@
-import type { CommonFieldProps } from '@components/BaseField';
+import type { FieldSize } from '@components/BaseField';
 import type { HTMLAttributes } from 'vue';
 
-export interface SwitchProps
-	extends Pick<
-			CommonFieldProps<boolean>,
-			'size' | 'supportingText' | 'disabled' | 'name' | 'label'
-		>,
-		/* @vue-ignore */ HTMLAttributes {
+export interface SwitchProps extends /* @vue-ignore */ HTMLAttributes {
+	size?: FieldSize;
+	supportingText?: string;
+	disabled?: boolean;
+	name?: string;
+	label?: string;
 	value?: string;
 	color?: 'primary' | 'success' | 'error' | 'warning' | 'secondary';
 	checked?: boolean;
