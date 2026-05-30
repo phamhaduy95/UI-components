@@ -1,8 +1,8 @@
-import type { NumberInputRootEmits } from '@ark-ui/vue/number-input';
 import type { CommonFieldProps } from '@components/BaseField';
 
-export interface NumberInputProps extends CommonFieldProps<string> {
-	modelValue?: string;
+type NumberValue = number | null;
+export interface NumberInputProps extends CommonFieldProps<NumberValue> {
+	modelValue?: NumberValue;
 	max?: number;
 	min?: number;
 	formatOptions?: Intl.NumberFormatOptions;
@@ -12,4 +12,8 @@ export interface NumberInputProps extends CommonFieldProps<string> {
 	dataTestid?: string;
 }
 
-export type NumberInputEmits = NumberInputRootEmits;
+export type NumberInputEmits = {
+	'update:modelValue': [value: NumberValue];
+	valueChange: [value: NumberValue, valueAsString: string];
+	focusChange: [focused: boolean, valueAsNumber: number];
+};
