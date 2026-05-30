@@ -33,6 +33,19 @@ export const useNodeCommandFactory = () => {
 		}
 	});
 
+	const createDeleteEdgesCommand = (edges: Edge[]) => {
+		return {
+			action: 'deleteEdge',
+			timestamp: Date().toString(),
+			revert: () => {
+				addEdges(edges);
+			},
+			forward: () => {
+				removeEdges(edges);
+			}
+		};
+	};
+
 	const createAddNodesCommand = (nodes: DesignerNode[]) => ({
 		action: 'addNode',
 		timestamp: Date().toString(),
@@ -203,6 +216,7 @@ export const useNodeCommandFactory = () => {
 		createGroupNodesCommand,
 		createUngroupNodesCommand,
 		createAddEdgesCommand,
+		createDeleteEdgesCommand,
 		createUpdateEdgeCommand,
 		createUpdateEdgeDataCommand
 	};

@@ -8,6 +8,8 @@
 	import { NodeContextMenu } from './components/NodeContextMenu';
 	import { DesignerLeftPanel, DesignerRightPanel, DesignerToolbar } from './layouts';
 
+	import { BaseEdge, EdgeMarkerDef, ConnectionLine } from './components/Edges';
+
 	import { useDnD } from './composables/useDnD';
 	import { useCanvasConfig } from './composables/useCanvasConfig';
 	import { useNodeCommandFactory } from './composables/useCommandFactory';
@@ -17,6 +19,8 @@
 	import { useKeyboardBindings } from './composables/useKeyboardBindings';
 	import { useNodeMovement } from './composables/useNodeMovement';
 	import { useNodeConfig } from './composables/useNodeConfig';
+
+	import { generateEdge } from '@/modules/designer/utils/edge.utils';
 
 	import type { DesignerNode } from './types/Node.type';
 
@@ -72,14 +76,10 @@
 	const { canvasConfig } = useCanvasConfig();
 
 	const onConnect = (connection: Connection) => {
-		const edge: Edge = {
-			id: crypto.randomUUID(),
+		const edge = generateEdge({
 			...connection,
-			type: 'smoothstep',
-			pathOptions: {
-				borderRadius: 0
-			}
-		};
+			type: 'default'
+		});
 		commit(createAddEdgesCommand([edge]));
 	};
 </script>
@@ -102,6 +102,7 @@
 				@drop="onPaletteDrop"
 				@dragover="onPaletteDragOver"
 			>
+				<EdgeMarkerDef />
 				<VueFlow
 					:nodes="initialNodes"
 					:edges="initialEdges"
@@ -127,6 +128,12 @@
 						:size="canvasConfig.gridSize"
 						:pattern-color="canvasConfig.gridPatternColor"
 					/>
+					<template #connection-line="connectionLineProps">
+						<ConnectionLine v-bind="connectionLineProps" />
+					</template>
+					<template #edge-default="edgeProps">
+						<BaseEdge v-bind="edgeProps" />
+					</template>
 				</VueFlow>
 				<NodeContextMenu
 					v-if="contextMenu.visible"

@@ -4,6 +4,7 @@ import {
 	type BasicShapeNodeData,
 	type GroupNodeData
 } from '@/modules/designer/types/Node.type';
+import type { EdgeData } from '@/modules/designer/types/Edge.type';
 
 export const defaultNodeData: BasicShapeNodeData = {
 	category: NodeCategory.BasicShape,
@@ -19,6 +20,20 @@ export const defaultGroupData: GroupNodeData = {
 	rotation: 0,
 	initialWidth: 200,
 	initialHeight: 200
+};
+
+export const defaultEdgeData: EdgeData = {
+	strokeColor: '#b1b1b7',
+	strokeWidth: 2,
+	lineType: 'solid',
+	curve: 'smoothstep',
+	markerStart: 'none',
+	markerEnd: 'none',
+	labelPosition: 'center',
+	labelColor: '#000000',
+	labelFontSize: 12,
+	labelFontWeight: 'normal',
+	labelFontStyle: 'normal'
 };
 
 export const resizerLineStyle: CSSProperties = {

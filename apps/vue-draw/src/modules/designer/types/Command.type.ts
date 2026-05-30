@@ -1,6 +1,6 @@
 import type { DesignerNode, DesignerNodeData } from '@/modules/designer/types/Node.type';
-import type { DesignerEdge, EdgeConfig } from './Edge.type';
-import type { GraphNode } from '@vue-flow/core';
+import type { DesignerEdge, EdgeData } from './Edge.type';
+import type { GraphNode, XYPosition } from '@vue-flow/core';
 
 export interface Command {
 	action: string;
@@ -9,26 +9,12 @@ export interface Command {
 	forward: () => void;
 }
 
-export interface NodePositionEntry {
-	nodeId: string;
-	before: { x: number; y: number };
-	after: { x: number; y: number };
-}
-
 export interface NodeRotationEntry {
 	nodeId: string;
 	beforeRotation: number;
 	afterRotation: number;
-	beforePosition?: { x: number; y: number };
-	afterPosition?: { x: number; y: number };
-}
-
-export interface NodeSizeEntry {
-	nodeId: string;
-	beforeStyle: Record<string, string>;
-	afterStyle: Record<string, string>;
-	beforePosition?: { x: number; y: number };
-	afterPosition?: { x: number; y: number };
+	beforePosition?: XYPosition;
+	afterPosition?: XYPosition;
 }
 
 export interface NodeDataEntry {
@@ -47,8 +33,8 @@ export interface GroupEntry {
 	groupNode: DesignerNode;
 	children: Array<{
 		node: DesignerNode;
-		relativePosition: { x: number; y: number };
-		absolutePosition: { x: number; y: number };
+		relativePosition: XYPosition;
+		absolutePosition: XYPosition;
 	}>;
 }
 
@@ -69,8 +55,8 @@ export interface NodeUpdateDataEntry {
 
 export interface EdgeUpdateDataEntry {
 	edgeId: string;
-	beforeData: EdgeConfig;
-	afterData: EdgeConfig;
+	beforeData: EdgeData;
+	afterData: EdgeData;
 }
 
 export type ConfigurableEdgeProps = Partial<Pick<DesignerEdge, 'type' | 'label'>>;

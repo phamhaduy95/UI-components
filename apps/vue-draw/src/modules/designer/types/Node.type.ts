@@ -1,4 +1,4 @@
-import type { Node } from '@vue-flow/core';
+import type { GraphNode } from '@vue-flow/core';
 
 export enum NodeCategory {
 	BasicShape = 'basic-shape',
@@ -25,7 +25,7 @@ export type DesignerNodeData = BasicShapeNodeData | GroupNodeData;
 
 export interface DesignerNode
 	extends Pick<
-		Node,
+		GraphNode,
 		'id' | 'type' | 'style' | 'width' | 'height' | 'parentNode' | 'position' | 'zIndex' | 'hidden'
 	> {
 	data?: DesignerNodeData;

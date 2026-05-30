@@ -1,6 +1,6 @@
 import { ref, toRaw } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
-import type { DesignerEdge, EdgeConfig } from '@/modules/designer/types/Edge.type';
+import type { DesignerEdge, EdgeData } from '@/modules/designer/types/Edge.type';
 
 import { useNodeCommandFactory } from './useCommandFactory';
 import { useHistory } from './useHistory';
@@ -48,11 +48,11 @@ export const useEdgeConfig = () => {
 		commit(command);
 	};
 
-	const updateEdgeData = (config: Partial<EdgeConfig>) => {
+	const updateEdgeData = (config: Partial<EdgeData>) => {
 		const edge = selectedEdge.value;
 		if (!edge) return;
 
-		const beforeData = structuredClone(toRaw(edge.data)) as EdgeConfig;
+		const beforeData = structuredClone(toRaw(edge.data)) as EdgeData;
 		const afterData = structuredClone(toRaw({ ...beforeData, ...config }));
 
 		const command = createUpdateEdgeDataCommand([{ edgeId: edge.id, beforeData, afterData }]);

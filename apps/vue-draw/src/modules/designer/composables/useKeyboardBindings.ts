@@ -5,6 +5,7 @@ import { ref } from 'vue';
 
 import { defineStore } from 'pinia';
 import { useNodeCreation } from './useNodeCreation';
+import { useEdgeCreation } from './useEdgeCreation';
 
 const MODIFIER_KEYS = ['ctrlCmd', 'ctrl', 'cmd', 'alt', 'shift', 'meta'];
 
@@ -43,8 +44,10 @@ export const useKeyboardBindings = () => {
 
 	const { copyNodes, pasteNodes, canCopy, canPaste } = useClipboard();
 	const { undo, redo, canUndo, canRedo } = useHistory();
-	const { screenToFlowCoordinate, getSelectedNodes } = useVueFlow();
+	const { screenToFlowCoordinate, getSelectedNodes, getSelectedEdges } = useVueFlow();
 	const { removeNodes } = useNodeCreation();
+
+	const { removeEdges } = useEdgeCreation();
 
 	const mousePos = ref({ x: 0, y: 0 });
 
@@ -94,6 +97,20 @@ export const useKeyboardBindings = () => {
 			const nodes = getSelectedNodes.value;
 			if (!nodes.length) return;
 			removeNodes(nodes);
+		});
+
+		store.registerShortcut(['delete'], (e) => {
+			e.preventDefault();
+			const edges = getSelectedEdges.value;
+			if (!edges.length) return;
+			removeEdges(edges);
+		});
+
+		store.registerShortcut(['backspace'], (e) => {
+			e.preventDefault();
+			const edges = getSelectedEdges.value;
+			if (!edges.length) return;
+			removeEdges(edges);
 		});
 
 		store.registerShortcut(['backspace'], (e) => {
