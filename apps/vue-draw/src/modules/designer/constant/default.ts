@@ -1,4 +1,6 @@
 import type { CSSProperties } from 'vue';
+import { type Dimensions } from '@vue-flow/core';
+
 import {
 	NodeCategory,
 	type BasicShapeNodeData,
@@ -6,7 +8,12 @@ import {
 } from '@/modules/designer/types/Node.type';
 import type { EdgeData } from '@/modules/designer/types/Edge.type';
 
-export const defaultNodeData: BasicShapeNodeData = {
+export const defaultNodeDimensions: Readonly<Dimensions> = {
+	width: 64,
+	height: 64
+};
+
+export const defaultNodeData: Readonly<BasicShapeNodeData> = {
 	category: NodeCategory.BasicShape,
 	rotation: 0,
 	fill: '#ffffff',
@@ -15,14 +22,14 @@ export const defaultNodeData: BasicShapeNodeData = {
 	borderRadius: 0
 };
 
-export const defaultGroupData: GroupNodeData = {
+export const defaultGroupData: Readonly<GroupNodeData> = {
 	category: NodeCategory.Group,
 	rotation: 0,
 	initialWidth: 200,
 	initialHeight: 200
 };
 
-export const defaultEdgeData: EdgeData = {
+export const defaultEdgeData: Readonly<EdgeData> = {
 	strokeColor: '#b1b1b7',
 	strokeWidth: 2,
 	lineType: 'solid',
@@ -36,11 +43,11 @@ export const defaultEdgeData: EdgeData = {
 	labelFontStyle: 'normal'
 };
 
-export const resizerLineStyle: CSSProperties = {
+export const resizerLineStyle: Readonly<CSSProperties> = {
 	borderColor: '#6366F5',
 	borderStyle: 'dashed'
 };
-export const resizerHandleStyle: CSSProperties = {
+export const resizerHandleStyle: Readonly<CSSProperties> = {
 	width: '8px',
 	height: '8px',
 	borderRadius: '999px',

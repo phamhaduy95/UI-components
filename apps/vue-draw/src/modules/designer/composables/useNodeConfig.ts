@@ -5,10 +5,12 @@ import type { DesignerNodeData } from '@/modules/designer/types/Node.type';
 import { useNodeCommandFactory } from './useCommandFactory';
 import { useHistory } from './useHistory';
 import type { ConfigurableNodeProps } from '@/modules/designer/types/Command.type';
-import type { GraphNode } from '@vue-flow/core';
+import type { DesignerNode, BasicShapeNodeData } from '@/modules/designer/types/Node.type';
+
+type BasicShapNode = DesignerNode<BasicShapeNodeData>;
 
 const useNodeConfigStore = defineStore('designer-node-config', () => {
-	const selectedNode = ref<GraphNode | null>(null);
+	const selectedNode = ref<BasicShapNode | null>(null);
 
 	return {
 		selectedNode
@@ -23,7 +25,7 @@ export const useNodeConfig = () => {
 	const { createUpdateNodesCommand, createUpdateNodeDataCommand } = useNodeCommandFactory();
 	const { commit } = useHistory();
 
-	const setSelectedNode = (node: GraphNode<DesignerNodeData> | null) => {
+	const setSelectedNode = (node: BasicShapNode | null) => {
 		selectedNode.value = node;
 	};
 

@@ -33,7 +33,7 @@ export const useNodeCreation = () => {
 				zIndex: node.zIndex,
 				height: node.height,
 				width: node.width,
-				hidden: node.hidden
+				dimensions: structuredClone(toRaw(node.dimensions))
 			};
 		});
 

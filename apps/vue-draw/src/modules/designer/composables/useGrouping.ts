@@ -66,7 +66,8 @@ export const useGrouping = () => {
 			type: NodeCategory.Group,
 			position: { x: groupX, y: groupY },
 			style: { width: `${groupWidth}px`, height: `${groupHeight}px` },
-			data: groupData
+			data: groupData,
+			dimensions: { width: groupWidth, height: groupHeight }
 		});
 
 		const groupId = newGroupNode.id;

@@ -1,8 +1,8 @@
 import { useVueFlow } from '@vue-flow/core';
 
 import { useNodeCreation } from '@/modules/designer/composables/useNodeCreation';
-
 import { generateNode } from '@/modules/designer/utils/node.utils';
+import { defaultNodeDimensions } from '@/modules/designer/constant/default';
 
 import type { NodeCategory } from '@/modules/designer/types/Node.type';
 
@@ -48,7 +48,8 @@ export const useDnD = () => {
 			position,
 			data: {
 				category: payload.category
-			}
+			},
+			dimensions: structuredClone(defaultNodeDimensions)
 		});
 
 		createNodes([node]);

@@ -23,10 +23,17 @@ export interface GroupNodeData {
 
 export type DesignerNodeData = BasicShapeNodeData | GroupNodeData;
 
-export interface DesignerNode
-	extends Pick<
-		GraphNode,
-		'id' | 'type' | 'style' | 'width' | 'height' | 'parentNode' | 'position' | 'zIndex' | 'hidden'
-	> {
-	data?: DesignerNodeData;
-}
+export type DesignerNode<T = DesignerNodeData> = Pick<
+	GraphNode<T>,
+	| 'id'
+	| 'type'
+	| 'style'
+	| 'width'
+	| 'height'
+	| 'parentNode'
+	| 'position'
+	| 'zIndex'
+	| 'hidden'
+	| 'dimensions'
+	| 'data'
+>;

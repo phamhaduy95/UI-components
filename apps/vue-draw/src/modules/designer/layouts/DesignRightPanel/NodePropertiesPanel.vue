@@ -3,46 +3,44 @@
 
 	import { SingleSlider, NumberInput, ColorPicker } from '@packages/vue-components';
 	import { useNodeConfig } from '@/modules/designer/composables/useNodeConfig';
+	import { defaultNodeData } from '@/modules/designer/constant/default';
 
 	type NumberInputProps = ComponentInstance<typeof NumberInput>['$props'];
 	type SingleSliderProps = ComponentInstance<typeof SingleSlider>['$props'];
 
 	const { selectedNode, updateNodeBasicProps, updateNodeData } = useNodeConfig();
 
-	const nodeX = computed(() => String(Math.round(selectedNode.value?.position.x ?? 0)));
-	const nodeY = computed(() => String(Math.round(selectedNode.value?.position.y ?? 0)));
-	const nodeWidth = computed(() => String(Math.round(selectedNode.value?.dimensions.width ?? 0)));
-	const nodeHeight = computed(() => String(Math.round(selectedNode.value?.dimensions.height ?? 0)));
-	const nodeFill = computed(() => selectedNode.value?.data?.fill ?? '#ffffff');
-	const nodeStroke = computed(() => selectedNode.value?.data?.stroke ?? '#000000');
-	const nodeStrokeWidth = computed(() => selectedNode.value?.data?.strokeWidth ?? 1);
+	const nodePosition = computed(() => selectedNode.value?.position);
+	const nodeDimensions = computed(() => selectedNode.value?.dimensions);
 
-	const handleXChange: NumberInputProps['onValueChange'] = (details) => {
+	const nodeConfigurableData = computed(() => selectedNode.value?.data || defaultNodeData);
+
+	const handleXChange: NumberInputProps['onValueChange'] = (value) => {
 		updateNodeBasicProps({
-			position: { x: details.valueAsNumber, y: selectedNode.value?.position.y ?? 0 }
+			position: { x: value ?? 0, y: nodePosition.value?.y ?? 0 }
 		});
 	};
 
-	const handleYChange: NumberInputProps['onValueChange'] = (details) => {
+	const handleYChange: NumberInputProps['onValueChange'] = (value) => {
 		updateNodeBasicProps({
-			position: { x: selectedNode.value?.position.x ?? 0, y: details.valueAsNumber }
+			position: { x: nodePosition.value?.x ?? 0, y: value ?? 0 }
 		});
 	};
 
-	const handleWidthChange: NumberInputProps['onValueChange'] = (details) => {
+	const handleWidthChange: NumberInputProps['onValueChange'] = (value) => {
 		updateNodeBasicProps({
 			dimensions: {
-				width: details.valueAsNumber,
-				height: selectedNode.value?.dimensions.height ?? 0
+				width: value ?? 0,
+				height: nodeDimensions.value?.height ?? 0
 			}
 		});
 	};
 
-	const handleHeightChange: NumberInputProps['onValueChange'] = (details) => {
+	const handleHeightChange: NumberInputProps['onValueChange'] = (value) => {
 		updateNodeBasicProps({
 			dimensions: {
-				width: selectedNode.value?.dimensions.width ?? 0,
-				height: details.valueAsNumber
+				width: nodeDimensions.value?.width ?? 0,
+				height: value ?? 0
 			}
 		});
 	};
@@ -55,8 +53,8 @@
 		updateNodeData({ stroke: value });
 	};
 
-	const hanldeStrokeWidthChange: SingleSliderProps['onUpdate:modelValue'] = (val: number) => {
-		updateNodeData({ strokeWidth: val });
+	const hanldeStrokeWidthChange: SingleSliderProps['onUpdate:modelValue'] = (value: number) => {
+		updateNodeData({ strokeWidth: value });
 	};
 </script>
 
@@ -71,7 +69,7 @@
 						label="X"
 						size="xs"
 						:min="0"
-						:model-value="nodeX"
+						:model-value="nodePosition?.x"
 						@value-change="handleXChange"
 					/>
 				</div>
@@ -81,7 +79,7 @@
 						label="Y"
 						size="xs"
 						:min="0"
-						:model-value="nodeY"
+						:model-value="nodePosition?.y"
 						@value-change="handleYChange"
 					/>
 				</div>
@@ -91,7 +89,7 @@
 						label="width"
 						size="xs"
 						:min="0"
-						:model-value="nodeWidth"
+						:model-value="nodeDimensions?.width"
 						@value-change="handleWidthChange"
 					/>
 				</div>
@@ -101,7 +99,7 @@
 						label="height"
 						size="xs"
 						:min="0"
-						:model-value="nodeHeight"
+						:model-value="nodeDimensions?.height"
 						@value-change="handleHeightChange"
 					/>
 				</div>
@@ -113,14 +111,14 @@
 			<h3 class="text-sm font-semibold uppercase tracking-wide text-gray-800">Appearance</h3>
 			<ColorPicker
 				label="Background"
-				:model-value="nodeFill"
+				:model-value="nodeConfigurableData.fill"
 				format="hex"
 				size="xs"
-				@change="handleFillChange"
+				@update:model-value="handleFillChange"
 			/>
 			<ColorPicker
 				label="Stroke Color"
-				:model-value="nodeStroke"
+				:model-value="nodeConfigurableData.stroke"
 				format="hex"
 				size="xs"
 				@update:model-value="handleStrokeChange"
@@ -128,8 +126,7 @@
 			<div class="space-y-4 pt-1">
 				<SingleSlider
 					label="Border Size"
-					size="sm"
-					:model-value="nodeStrokeWidth"
+					:model-value="nodeConfigurableData.strokeWidth"
 					:min="0"
 					:max="5"
 					:step="0.1"

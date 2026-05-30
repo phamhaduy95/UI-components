@@ -16,10 +16,11 @@
 	import type { BasicShapeNodeData, GroupNodeData } from '@/modules/designer/types/Node.type.ts';
 
 	import IconRotate from '@/assets/icons/rotate.svg';
-	import { resizerHandleStyle, resizerLineStyle } from '@/modules/designer/constant/default';
-
-	const DEFAULT_NODE_WIDTH = 64;
-	const DEFAULT_NODE_HEIGHT = 64;
+	import {
+		defaultNodeDimensions,
+		resizerHandleStyle,
+		resizerLineStyle
+	} from '@/modules/designer/constant/default';
 
 	export interface GenericCanvasNodeProps extends NodeProps<BasicShapeNodeData | GroupNodeData> {
 		defaultNodeWidth?: number;
@@ -28,8 +29,8 @@
 	}
 
 	const props = withDefaults(defineProps<GenericCanvasNodeProps>(), {
-		defaultNodeWidth: DEFAULT_NODE_WIDTH,
-		defaultNodeHeight: DEFAULT_NODE_HEIGHT,
+		defaultNodeWidth: defaultNodeDimensions.width,
+		defaultNodeHeight: defaultNodeDimensions.height,
 		keepAspectRatio: false
 	});
 
