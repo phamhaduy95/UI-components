@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { NumberInput } from '@components/NumberInput';
-import { ref, type ExtractPropTypes } from 'vue';
+import { ref, type ComponentInstance } from 'vue';
 import { expect, within, userEvent, fn, waitFor } from 'storybook/test';
 
 const mockedOnValueChange = fn();
@@ -50,8 +50,7 @@ export const Default: Story = {
 		supportingText: 'Enter quantity.'
 	},
 
-	play: async ({ canvasElement, args, step }) => {
-		const canvas = within(canvasElement);
+	play: async ({ canvas, args, step }) => {
 		const { dataTestid: testId = '', label = '', placeholder = '', supportingText = '' } = args;
 
 		const container = canvas.getByTestId(testId);
@@ -96,12 +95,11 @@ export const Default: Story = {
 export const WithDefaultValue: Story = {
 	args: {
 		label: 'Initial Value',
-		defaultValue: '10'
+		defaultValue: 10
 	},
 
-	play: async ({ canvasElement, args, step }) => {
-		const canvas = within(canvasElement);
-		const { label = '', defaultValue = '' } = args;
+	play: async ({ canvas, args, step }) => {
+		const { label = '', defaultValue } = args;
 
 		let input: HTMLElement;
 		await step('Check if input exists', async () => {
@@ -110,7 +108,7 @@ export const WithDefaultValue: Story = {
 		});
 
 		await step('Check if input has default value', async () => {
-			expect(input).toHaveValue(defaultValue);
+			expect(input).toHaveValue(defaultValue?.toString());
 		});
 	}
 };
@@ -121,7 +119,7 @@ export const MinMaxStep: Story = {
 		min: 0,
 		max: 20,
 		step: 5,
-		defaultValue: '5'
+		defaultValue: 5
 	},
 
 	play: async ({ canvasElement, args, step }) => {
@@ -169,7 +167,7 @@ export const Formatting: Story = {
 	args: {
 		label: 'Currency (USD)',
 		formatOptions: { style: 'currency', currency: 'USD' },
-		defaultValue: '1000'
+		defaultValue: 1000
 	},
 
 	play: async ({ canvasElement, args, step }) => {
@@ -188,21 +186,21 @@ export const Formatting: Story = {
 export const Controllable: Story = {
 	args: {
 		label: 'Controllable',
-		modelValue: '10'
+		modelValue: 10
 	},
 	render: (args) => ({
 		components: { NumberInput },
 		setup() {
+			type NumberInputProps = ComponentInstance<typeof NumberInput>['$props'];
+
 			const { onValueChange, modelValue, 'onUpdate:modelValue': updateModelValue } = args;
 			const value = ref(modelValue);
 
-			const handleValueChange: ExtractPropTypes<typeof args>['onValueChange'] = (e) => {
-				if (onValueChange) onValueChange(e);
+			const handleValueChange: NumberInputProps['onValueChange'] = (value, valueAsString) => {
+				if (onValueChange) onValueChange(value, valueAsString);
 			};
 
-			const handleUpdateModelValue: ExtractPropTypes<typeof args>['onUpdate:modelValue'] = (
-				val
-			) => {
+			const handleUpdateModelValue: NumberInputProps['onUpdate:modelValue'] = (val) => {
 				value.value = val;
 				if (updateModelValue) updateModelValue(val);
 			};
@@ -222,10 +220,8 @@ export const Controllable: Story = {
 			);
 		}
 	}),
-	play: async ({ canvasElement, args, step }) => {
-		const canvas = within(canvasElement);
-
-		const { label = '', dataTestid: testId = '', modelValue = '' } = args;
+	play: async ({ canvas, args, step }) => {
+		const { label = '', dataTestid: testId = '', modelValue } = args;
 
 		const container = canvas.getByTestId(testId);
 		const input = canvas.getByLabelText(label);
@@ -234,7 +230,7 @@ export const Controllable: Story = {
 		const decrementBtn = within(container).getByRole('button', { name: decreaseTriggerLabel });
 
 		await step('Check initial value', async () => {
-			expect(input).toHaveValue(modelValue);
+			expect(input).toHaveValue(modelValue?.toString());
 		});
 
 		await step('Type in new value', async () => {
@@ -243,14 +239,14 @@ export const Controllable: Story = {
 		});
 
 		await step('Check if onUpdateModelValue is called', async () => {
-			expect(mockedOnUpdateModelValue).toHaveBeenLastCalledWith('20');
+			expect(mockedOnUpdateModelValue).toHaveBeenLastCalledWith(20);
 
 			const displayedValue = canvas.getByLabelText('Displayed value');
 			expect(displayedValue).toHaveTextContent('Value: 20');
 		});
 
 		await step('Check if onValueChange is called', async () => {
-			expect(mockedOnValueChange).toHaveBeenCalled();
+			expect(mockedOnValueChange).toHaveBeenCalledWith(20, '20');
 		});
 
 		await step('Use increment button', async () => {
@@ -264,8 +260,8 @@ export const Controllable: Story = {
 		});
 
 		await step('Check if onValueChange is called again', async () => {
-			expect(mockedOnValueChange).toHaveBeenCalled();
-			expect(mockedOnUpdateModelValue).toHaveBeenLastCalledWith('21');
+			expect(mockedOnValueChange).toHaveBeenLastCalledWith(21, '21');
+			expect(mockedOnUpdateModelValue).toHaveBeenLastCalledWith(21);
 		});
 
 		await step('Click on decrease button', async () => {
@@ -279,8 +275,8 @@ export const Controllable: Story = {
 		});
 
 		await step('Check if onValueChange is called again', async () => {
-			expect(mockedOnValueChange).toHaveBeenCalled();
-			expect(mockedOnUpdateModelValue).toHaveBeenLastCalledWith('20');
+			expect(mockedOnValueChange).toHaveBeenCalledWith(20, '20');
+			expect(mockedOnUpdateModelValue).toHaveBeenLastCalledWith(20);
 		});
 	}
 };
@@ -289,11 +285,10 @@ export const Disabled: Story = {
 	args: {
 		label: 'Disabled Input',
 		disabled: true,
-		defaultValue: '5'
+		defaultValue: 5
 	},
 
-	play: async ({ canvasElement, args, step }) => {
-		const canvas = within(canvasElement);
+	play: async ({ canvas, args, step }) => {
 		const { label = '' } = args;
 
 		await step('Check if input is disabled', async () => {
@@ -351,19 +346,19 @@ export const Statuses: Story = {
 				<div style="display: flex; flex-direction: column; gap: 16px;">
 					<NumberInput
 						label="Error"
-						defaultValue="0"
+						defaultValue={0}
 						supportingText="Invalid value"
 						status="error"
 					/>
 					<NumberInput
 						label="Warning"
-						defaultValue="0"
+						defaultValue={0}
 						supportingText="Be careful"
 						status="warning"
 					/>
 					<NumberInput
 						label="Success"
-						defaultValue="0"
+						defaultValue={0}
 						supportingText="Good job"
 						status="success"
 					/>
