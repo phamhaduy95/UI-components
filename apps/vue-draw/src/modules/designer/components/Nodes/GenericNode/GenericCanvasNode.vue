@@ -11,7 +11,7 @@
 
 	import { useRotation } from '@/modules/designer/composables/useRotation';
 	import { useResize } from '@/modules/designer/composables/useResize';
-	import GenericNodeConnector from './GenericNodeConnector.vue';
+	import GenericNodeConnector, { type ConnectorProps } from './GenericNodeConnector.vue';
 
 	import type { BasicShapeNodeData, GroupNodeData } from '@/modules/designer/types/Node.type.ts';
 
@@ -26,6 +26,8 @@
 		defaultNodeWidth?: number;
 		defaultNodeHeight?: number;
 		keepAspectRatio?: boolean;
+		hideConnector?: boolean;
+		connectors?: ConnectorProps[];
 	}
 
 	const props = withDefaults(defineProps<GenericCanvasNodeProps>(), {
@@ -49,7 +51,7 @@
 	export type GenericCanvasNodeSlots = {
 		resizer?: (props: GenericResizerProps) => void;
 		rotateHandler?: (props: { selected: boolean }) => void;
-		connector?: (props: { isVisible: boolean }) => void;
+		connector?: (props: { isVisible: boolean; shapeWidth: number; shapeHeight: number }) => void;
 		default?: (props: { shapeWidth: number; shapeHeight: number }) => void;
 	};
 
@@ -65,11 +67,13 @@
 <template>
 	<div
 		ref="nodeRef"
-		class="generic-shape-container relative flex items-center justify-center overflow-visible rounded-none border border-dashed border-transparent bg-transparent"
+		class="generic-shape-container relative overflow-visible rounded-none border border-dashed border-transparent bg-transparent"
 		:style="{
 			transform: `rotate(${props.data.rotation || 0}deg)`,
 			width: `${shapeWidth}px`,
-			height: `${shapeHeight}px`
+			height: `${shapeHeight}px`,
+			top: '0px',
+			left: '0px'
 		}"
 	>
 		<slot
@@ -109,10 +113,18 @@
 			/>
 		</slot>
 		<slot
+			v-if="!hideConnector"
 			name="connector"
 			:is-visible="selected"
+			:shape-width="shapeWidth"
+			:shape-height="shapeHeight"
 		>
-			<GenericNodeConnector :is-visible="selected" />
+			<GenericNodeConnector
+				:is-visible="selected"
+				:shape-width="shapeWidth"
+				:shape-height="shapeHeight"
+				:connectors="connectors"
+			/>
 		</slot>
 		<slot
 			name="default"

@@ -46,6 +46,25 @@ export const useNodeCommandFactory = () => {
 		};
 	};
 
+	const createDeleteMultipleEntitiesCommand = ({
+		nodes,
+		edges
+	}: {
+		nodes: DesignerNode[];
+		edges: Edge[];
+	}) => ({
+		action: 'deleteMultipleEntities',
+		timestamp: Date().toString(),
+		revert: () => {
+			addNodes(nodes);
+			addEdges(edges);
+		},
+		forward: () => {
+			removeNodes(nodes);
+			removeEdges(edges);
+		}
+	});
+
 	const createAddNodesCommand = (nodes: DesignerNode[]) => ({
 		action: 'addNode',
 		timestamp: Date().toString(),
@@ -211,6 +230,7 @@ export const useNodeCommandFactory = () => {
 		createAddNodesCommand,
 		createUpdateNodesCommand,
 		createUpdateNodeDataCommand,
+		createDeleteMultipleEntitiesCommand,
 		createDeleteNodesCommand,
 		createRotateNodesCommand,
 		createGroupNodesCommand,

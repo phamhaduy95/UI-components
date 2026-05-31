@@ -2,15 +2,72 @@
 	import { computed } from 'vue';
 	import {
 		GenericCanvasNode,
-		type GenericCanvasNodeProps
+		type GenericCanvasNodeProps,
+		GenericNodeConnector,
+		type GenericNodeConnectorProps
 	} from '@/modules/designer/components/Nodes/GenericNode';
 	import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
+	import { Position } from '@vue-flow/core';
 
 	export type HexagonNodeProps = GenericCanvasNodeProps;
 
 	const props = defineProps<HexagonNodeProps>();
 
 	const nodeConfig = computed(() => props.data as BasicShapeNodeData);
+
+	const path = computed(() => {
+		const w = (props.dimensions.width || 50) - 2;
+		const h = (props.dimensions.height || 50) - 2;
+
+		return `polygon(${w * 0.25}px 0px, ${w * 0.75}px 0px, ${w}px ${h * 0.5}px, ${w * 0.75}px ${h}px, ${w * 0.25}px ${h}px, 0px ${h * 0.5}px)`;
+	});
+
+	type ConnectorProps = GenericNodeConnectorProps['connectors'];
+
+	const connectors = computed<ConnectorProps>(() => {
+		const w = (props.dimensions.width || 50) - 2;
+		const h = (props.dimensions.height || 50) - 2;
+
+		const topEdge = w * 0.5;
+		const slantEdge = Math.sqrt(Math.pow(w * 0.25, 2) + Math.pow(h * 0.5, 2));
+
+		const edges = [
+			{ length: topEdge },
+			{ length: slantEdge },
+			{ length: slantEdge },
+			{ length: topEdge },
+			{ length: slantEdge },
+			{ length: slantEdge }
+		];
+
+		const result: ConnectorProps = [];
+		const pointsPerEdge = 2; // 12 total points
+
+		let currentOffset = 0;
+		let index = 0;
+
+		edges.forEach((edge) => {
+			for (let i = 0; i < pointsPerEdge; i++) {
+				let position = Position.Top;
+				if ([3, 4, 5].includes(index)) {
+					position = Position.Right;
+				} else if ([6, 7, 8].includes(index)) {
+					position = Position.Bottom;
+				} else if ([9, 10, 11].includes(index)) {
+					position = Position.Left;
+				}
+
+				result.push({
+					position,
+					offsetDistance: currentOffset + (edge.length / pointsPerEdge) * i + 'px'
+				});
+				index++;
+			}
+			currentOffset += edge.length;
+		});
+
+		return result;
+	});
 </script>
 
 <template>
@@ -30,6 +87,13 @@
 					style="vector-effect: non-scaling-stroke"
 				></polygon>
 			</svg>
+		</template>
+		<template #connector="connectorProps">
+			<GenericNodeConnector
+				:path="path"
+				v-bind="connectorProps"
+				:connectors="connectors"
+			/>
 		</template>
 	</GenericCanvasNode>
 </template>

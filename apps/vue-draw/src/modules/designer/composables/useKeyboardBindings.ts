@@ -4,8 +4,8 @@ import { useVueFlow } from '@vue-flow/core';
 import { ref } from 'vue';
 
 import { defineStore } from 'pinia';
-import { useNodeCreation } from './useNodeCreation';
-import { useEdgeCreation } from './useEdgeCreation';
+
+import { useNodeCommandFactory } from './useCommandFactory';
 
 const MODIFIER_KEYS = ['ctrlCmd', 'ctrl', 'cmd', 'alt', 'shift', 'meta'];
 
@@ -43,11 +43,9 @@ export const useKeyboardBindings = () => {
 	const store = useKeyboardStore();
 
 	const { copyNodes, pasteNodes, canCopy, canPaste } = useClipboard();
-	const { undo, redo, canUndo, canRedo } = useHistory();
+	const { undo, redo, canUndo, canRedo, commit } = useHistory();
 	const { screenToFlowCoordinate, getSelectedNodes, getSelectedEdges } = useVueFlow();
-	const { removeNodes } = useNodeCreation();
-
-	const { removeEdges } = useEdgeCreation();
+	const { createDeleteMultipleEntitiesCommand } = useNodeCommandFactory();
 
 	const mousePos = ref({ x: 0, y: 0 });
 
@@ -95,29 +93,19 @@ export const useKeyboardBindings = () => {
 		store.registerShortcut(['delete'], (e) => {
 			e.preventDefault();
 			const nodes = getSelectedNodes.value;
-			if (!nodes.length) return;
-			removeNodes(nodes);
-		});
-
-		store.registerShortcut(['delete'], (e) => {
-			e.preventDefault();
 			const edges = getSelectedEdges.value;
-			if (!edges.length) return;
-			removeEdges(edges);
-		});
-
-		store.registerShortcut(['backspace'], (e) => {
-			e.preventDefault();
-			const edges = getSelectedEdges.value;
-			if (!edges.length) return;
-			removeEdges(edges);
+			if (!nodes.length && !edges.length) return;
+			const command = createDeleteMultipleEntitiesCommand({ nodes, edges });
+			commit(command);
 		});
 
 		store.registerShortcut(['backspace'], (e) => {
 			e.preventDefault();
 			const nodes = getSelectedNodes.value;
-			if (!nodes.length) return;
-			removeNodes(nodes);
+			const edges = getSelectedEdges.value;
+			if (!nodes.length && !edges.length) return;
+			const command = createDeleteMultipleEntitiesCommand({ nodes, edges });
+			commit(command);
 		});
 
 		store.registerShortcut(['ctrlCmd', 'c'], (e) => {

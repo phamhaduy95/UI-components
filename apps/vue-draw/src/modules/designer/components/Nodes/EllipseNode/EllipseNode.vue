@@ -4,10 +4,13 @@
 
 	import {
 		GenericCanvasNode,
-		type GenericCanvasNodeProps
+		type GenericCanvasNodeProps,
+		GenericNodeConnector,
+		type GenericNodeConnectorProps
 	} from '@/modules/designer/components/Nodes/GenericNode';
 	import { resizerHandleStyle, resizerLineStyle } from '@/modules/designer/constant/default';
 	import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
+	import { Position } from '@vue-flow/core';
 
 	const DEFAULT_ELLIPSE_HEIGHT = 32;
 
@@ -16,6 +19,41 @@
 	const props = defineProps<EllipseNodeProps>();
 
 	const nodeData = computed(() => props.data as BasicShapeNodeData);
+
+	const path = computed(() => {
+		const width = props.dimensions.width! - 2;
+		const height = (props.dimensions.height || DEFAULT_ELLIPSE_HEIGHT) - 2;
+
+		const rx = width / 2;
+		const ry = height / 2;
+
+		return `ellipse(${rx}px ${ry}px at ${rx}px ${ry}px)`;
+	});
+
+	type ConnectorProps = GenericNodeConnectorProps['connectors'];
+
+	const connectors = computed<ConnectorProps>(() => {
+		const result: ConnectorProps = [];
+		const totalPoints = 16;
+
+		for (let i = 0; i < totalPoints; i++) {
+			let position = Position.Top;
+			if ([14, 15, 0, 1].includes(i)) {
+				position = Position.Right;
+			} else if (i >= 2 && i <= 5) {
+				position = Position.Bottom;
+			} else if (i >= 6 && i <= 9) {
+				position = Position.Left;
+			}
+
+			result.push({
+				position,
+				offsetDistance: (i * 100) / totalPoints + '%'
+			});
+		}
+
+		return result;
+	});
 </script>
 
 <template>
@@ -50,6 +88,13 @@
 					:ry="shapeHeight / 2"
 				></ellipse>
 			</svg>
+		</template>
+		<template #connector="connectorProps">
+			<GenericNodeConnector
+				:path="path"
+				v-bind="connectorProps"
+				:connectors="connectors"
+			/>
 		</template>
 	</GenericCanvasNode>
 </template>

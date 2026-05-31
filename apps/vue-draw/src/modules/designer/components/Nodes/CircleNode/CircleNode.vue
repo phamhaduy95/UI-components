@@ -2,16 +2,56 @@
 	import { computed } from 'vue';
 	import {
 		GenericCanvasNode,
-		type GenericCanvasNodeProps
+		type GenericCanvasNodeProps,
+		GenericNodeConnector,
+		type GenericNodeConnectorProps
 	} from '@/modules/designer/components/Nodes/GenericNode';
 
 	import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
+	import { Position } from '@vue-flow/core';
 
 	export type CircleNodeProps = GenericCanvasNodeProps;
 
 	const props = defineProps<CircleNodeProps>();
 
 	const nodeData = computed(() => props.data as BasicShapeNodeData);
+
+	const path = computed(() => {
+		const width = props.dimensions.width! - 2;
+		const height = props.dimensions.height! - 2;
+
+		const radius = Math.min(width, height) / 2;
+
+		return `circle(${radius}px at ${radius}px ${radius}px)`;
+	});
+
+	type ConnectorProps = GenericNodeConnectorProps['connectors'];
+
+	const connectors = computed<ConnectorProps>(() => {
+		const radius = Math.min(props.dimensions.width! - 2, props.dimensions.height! - 2) / 2;
+		const result: ConnectorProps = [];
+		const totalPoints = 16;
+		const circumference = Math.PI * radius * 2;
+
+		for (let i = 0; i < totalPoints; i++) {
+			let position = Position.Top;
+			if ([15, 0, 1].includes(i)) {
+				position = Position.Right;
+			} else if (i >= 2 && i <= 5) {
+				position = Position.Bottom;
+			} else if (i >= 6 && i <= 8) {
+				position = Position.Left;
+			}
+
+			const offsetDistance = (i * circumference) / totalPoints;
+			result.push({
+				position,
+				offsetDistance: offsetDistance + 'px'
+			});
+		}
+
+		return result;
+	});
 </script>
 
 <template>
@@ -29,12 +69,20 @@
 				overflow="visible"
 			>
 				<circle
+					:id="`circle-${props.id}`"
 					:cx="shapeWidth / 2"
 					:cy="shapeHeight / 2"
 					:r="Math.min(shapeWidth, shapeHeight) / 2"
 					style="vector-effect: non-scaling-stroke"
 				></circle>
 			</svg>
+		</template>
+		<template #connector="connectorProps">
+			<GenericNodeConnector
+				:path="path"
+				v-bind="connectorProps"
+				:connectors="connectors"
+			/>
 		</template>
 	</GenericCanvasNode>
 </template>

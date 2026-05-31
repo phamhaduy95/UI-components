@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { computed, type ComponentInstance } from 'vue';
+	import type { Dimensions, XYPosition } from '@vue-flow/core';
 
 	import { SingleSlider, NumberInput, ColorPicker } from '@packages/vue-components';
 	import { useNodeConfig } from '@/modules/designer/composables/useNodeConfig';
@@ -10,8 +11,14 @@
 
 	const { selectedNode, updateNodeBasicProps, updateNodeData } = useNodeConfig();
 
-	const nodePosition = computed(() => selectedNode.value?.position);
-	const nodeDimensions = computed(() => selectedNode.value?.dimensions);
+	const nodePosition = computed<XYPosition>(() => ({
+		x: Math.round(selectedNode.value?.position?.x ?? 0),
+		y: Math.round(selectedNode.value?.position?.y ?? 0)
+	}));
+	const nodeDimensions = computed<Dimensions>(() => ({
+		width: Math.round(selectedNode.value?.dimensions?.width ?? 0),
+		height: Math.round(selectedNode.value?.dimensions?.height ?? 0)
+	}));
 
 	const nodeConfigurableData = computed(() => selectedNode.value?.data || defaultNodeData);
 

@@ -29,7 +29,10 @@
 </script>
 
 <template>
-	<GenericCanvasNode v-bind="props">
+	<GenericCanvasNode
+		v-bind="props"
+		:hide-connector="true"
+	>
 		<template #resizer="{ selected }">
 			<NodeResizer
 				:is-visible="selected"
