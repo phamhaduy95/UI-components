@@ -60,7 +60,7 @@
 
 <template>
 	<Popover
-		:open="true"
+		:open="open"
 		:positioning="positioningProps"
 		@update:open="(val: boolean) => !val && emit('close')"
 	>

@@ -27,15 +27,16 @@
 
 	type ConnectorProps = GenericNodeConnectorProps['connectors'];
 
+	const TOTAL_CONNECTORS = 12;
+
 	const connectors = computed<ConnectorProps>(() => {
 		const radius = Math.min(props.dimensions.width! - 2, props.dimensions.height! - 2) / 2;
 		const result: ConnectorProps = [];
-		const totalPoints = 16;
 		const circumference = Math.PI * radius * 2;
 
-		for (let i = 0; i < totalPoints; i++) {
+		for (let i = 0; i < TOTAL_CONNECTORS; i++) {
 			let position = Position.Top;
-			if ([15, 0, 1].includes(i)) {
+			if ([11, 0, 1].includes(i)) {
 				position = Position.Right;
 			} else if (i >= 2 && i <= 5) {
 				position = Position.Bottom;
@@ -43,7 +44,7 @@
 				position = Position.Left;
 			}
 
-			const offsetDistance = (i * circumference) / totalPoints;
+			const offsetDistance = (i * circumference) / TOTAL_CONNECTORS;
 			result.push({
 				position,
 				offsetDistance: offsetDistance + 'px'

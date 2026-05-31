@@ -1,11 +1,11 @@
 <script setup lang="ts">
 	import { computed } from 'vue';
-	import { getBezierPath, type ConnectionLineProps } from '@vue-flow/core';
+	import { getSmoothStepPath, type ConnectionLineProps } from '@vue-flow/core';
 
 	const props = defineProps<ConnectionLineProps>();
 
 	const path = computed(() => {
-		const [d] = getBezierPath({
+		const [d] = getSmoothStepPath({
 			sourceX: props.sourceX,
 			sourceY: props.sourceY,
 			sourcePosition: props.sourcePosition,
@@ -25,14 +25,7 @@
 			:stroke-width="2"
 			class="animated"
 			:d="path"
-		/>
-		<circle
-			:cx="targetX"
-			:cy="targetY"
-			fill="#fff"
-			:r="4"
-			stroke="#b1b1b7"
-			:stroke-width="2"
+			marker-end="url(#marker-arrow-end)"
 		/>
 	</g>
 </template>

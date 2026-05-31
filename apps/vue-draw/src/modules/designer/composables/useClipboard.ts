@@ -55,23 +55,28 @@ export const useClipboard = () => {
 	};
 
 	const pasteNodes = (args: { offset?: XYPosition; position?: XYPosition }) => {
-		const offset = args.offset || DEFAULT_OFFSET;
-
 		const nodesToPaste = store.getSavedNodes();
 		if (nodesToPaste.length === 0) return;
 
 		const newNodes: DesignerNode[] = cloneNodes(nodesToPaste);
 
+		let deltaX = 0;
+		let deltaY = 0;
+
+		if (args.position) {
+			const minX = Math.min(...nodesToPaste.map((n) => n.position.x));
+			const minY = Math.min(...nodesToPaste.map((n) => n.position.y));
+			deltaX = args.position.x - minX;
+			deltaY = args.position.y - minY;
+		} else {
+			const offset = args.offset || DEFAULT_OFFSET;
+			deltaX = offset.x;
+			deltaY = offset.y;
+		}
+
 		newNodes.forEach((node) => {
-			if (args.position) {
-				const minX = Math.min(...nodesToPaste.map((n) => n.position.x));
-				const minY = Math.min(...nodesToPaste.map((n) => n.position.y));
-				node.position.x += args.position.x - minX;
-				node.position.y += args.position.y - minY;
-			} else {
-				node.position.x += offset.x;
-				node.position.y += offset.y;
-			}
+			node.position.x += deltaX;
+			node.position.y += deltaY;
 		});
 
 		createNodes(newNodes);

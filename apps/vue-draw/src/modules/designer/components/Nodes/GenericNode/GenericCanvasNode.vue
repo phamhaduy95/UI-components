@@ -51,7 +51,12 @@
 	export type GenericCanvasNodeSlots = {
 		resizer?: (props: GenericResizerProps) => void;
 		rotateHandler?: (props: { selected: boolean }) => void;
-		connector?: (props: { isVisible: boolean; shapeWidth: number; shapeHeight: number }) => void;
+		connector?: (props: {
+			isVisible: boolean;
+			shapeWidth: number;
+			shapeHeight: number;
+			isNodeSelected: boolean;
+		}) => void;
 		default?: (props: { shapeWidth: number; shapeHeight: number }) => void;
 	};
 
@@ -118,12 +123,14 @@
 			:is-visible="selected"
 			:shape-width="shapeWidth"
 			:shape-height="shapeHeight"
+			:is-node-selected="selected"
 		>
 			<GenericNodeConnector
 				:is-visible="selected"
 				:shape-width="shapeWidth"
 				:shape-height="shapeHeight"
 				:connectors="connectors"
+				:is-node-selected="selected"
 			/>
 		</slot>
 		<slot

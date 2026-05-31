@@ -86,6 +86,13 @@ export const useGrouping = () => {
 			});
 		}
 
+		commit(
+			createGroupNodesCommand({
+				groupNode: newGroupNode as DesignerNode,
+				children: childEntries
+			})
+		);
+
 		// automatically select group node when created
 		const groupNode = findNode(groupId);
 
@@ -94,13 +101,6 @@ export const useGrouping = () => {
 		if (groupNode) {
 			addSelectedNodes([groupNode]);
 		}
-
-		commit(
-			createGroupNodesCommand({
-				groupNode: newGroupNode as DesignerNode,
-				children: childEntries
-			})
-		);
 	};
 
 	const removeEntireGroup = (groupId: string) => {

@@ -23,69 +23,62 @@
 
 		const curve = props.data?.curve || 'smoothstep';
 
-		if (props.data?.routingPoint) {
-			const { x, y } = props.data.routingPoint;
-			if (curve === 'default') {
-				return [
-					`M ${props.sourceX} ${props.sourceY} Q ${x} ${y} ${props.targetX} ${props.targetY}`,
-					x,
-					y
-				];
-			}
-			return [
-				`M ${props.sourceX} ${props.sourceY} L ${x} ${y} L ${props.targetX} ${props.targetY}`,
-				x,
-				y
-			];
+		switch (curve) {
+			case 'straight':
+				return getStraightPath(params);
+			case 'default':
+				return getBezierPath(params);
+			case 'smoothstep':
+			default:
+				return getSmoothStepPath({ ...params, borderRadius: props.data?.borderRadius ?? 0 });
 		}
-
-		if (curve === 'straight') {
-			return getStraightPath(params);
-		}
-		if (curve === 'default') {
-			return getBezierPath(params);
-		}
-		return getSmoothStepPath({ ...params, borderRadius: 0 }); // smoothstep
 	});
 
+	// Styling configuration maps
+	const STYLES = {
+		dashArray: { dashed: '5, 5', dotted: '2, 2', solid: 'none' } as Record<string, string>,
+		labelPosition: {
+			top: 'translate(-50%, -150%)',
+			bottom: 'translate(-50%, 50%)',
+			center: 'translate(-50%, -50%)'
+		} as Record<string, string>
+	};
+
+	// Path & Coordinates
 	const path = computed(() => pathDetails.value[0]);
 	const labelX = computed(() => pathDetails.value[1]);
 	const labelY = computed(() => pathDetails.value[2]);
 
+	// Edge Styling
 	const strokeWidth = computed(() => props.data?.strokeWidth ?? 2);
 	const strokeColor = computed(() => props.data?.strokeColor ?? '#b1b1b7');
-	const lineType = computed(() => props.data?.lineType ?? 'solid');
+	const strokeDasharray = computed(
+		() => STYLES.dashArray[props.data?.lineType ?? 'solid'] ?? 'none'
+	);
 
-	const strokeDasharray = computed(() => {
-		if (lineType.value === 'dashed') return '5, 5';
-		if (lineType.value === 'dotted') return '2, 2';
-		return 'none';
-	});
-
-	const getMarkerUrl = (type: string | undefined, isStart: boolean) => {
-		if (!type || type === 'none') return '';
-		return `url(#marker-${type}${isStart ? '-start' : '-end'})`;
+	// Markers
+	const getMarkerUrl = (type?: string, isStart?: boolean) => {
+		return !type || type === 'none' ? '' : `url(#marker-${type}${isStart ? '-start' : '-end'})`;
 	};
-
 	const markerStartUrl = computed(() => getMarkerUrl(props.data?.markerStart, true));
 	const markerEndUrl = computed(() => getMarkerUrl(props.data?.markerEnd, false));
 
-	const labelPositionTranslate = computed(() => {
-		const pos = props.data?.labelPosition || 'center';
-		if (pos === 'top') return 'translate(-50%, -150%)';
-		if (pos === 'bottom') return 'translate(-50%, 50%)';
-		return 'translate(-50%, -50%)';
-	});
+	// Label Styling
+	const labelStyle = computed(() => {
+		const data = props.data || {};
+		const pos = data.labelPosition || 'center';
+		const transform = STYLES.labelPosition[pos] ?? STYLES.labelPosition.center;
 
-	const labelStyle = computed(() => ({
-		position: 'absolute' as const,
-		transform: `${labelPositionTranslate.value} translate(${labelX.value}px,${labelY.value}px)`,
-		color: props.data?.labelColor ?? '#000000',
-		fontSize: `${props.data?.labelFontSize ?? 12}px`,
-		fontWeight: props.data?.labelFontWeight ?? 'normal',
-		fontStyle: props.data?.labelFontStyle ?? 'normal',
-		pointerEvents: 'all' as const
-	}));
+		return {
+			position: 'absolute' as const,
+			transform: `${transform} translate(${labelX.value}px,${labelY.value}px)`,
+			color: data.labelColor ?? '#000000',
+			fontSize: `${data.labelFontSize ?? 12}px`,
+			fontWeight: data.labelFontWeight ?? 'normal',
+			fontStyle: data.labelFontStyle ?? 'normal',
+			pointerEvents: 'all' as const
+		};
+	});
 </script>
 
 <template>
@@ -96,8 +89,7 @@
 		:path="path"
 		:style="{
 			stroke: '#3b82f6',
-			strokeWidth: Number(strokeWidth) + 4,
-			opacity: 0.5
+			strokeWidth: Number(strokeWidth) + 2
 		}"
 	/>
 

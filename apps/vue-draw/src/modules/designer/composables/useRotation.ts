@@ -6,7 +6,8 @@ import { useNodeCommandFactory } from '@/modules/designer/composables/useCommand
 import type { NodeRotationEntry } from '@/modules/designer/types/Command.type';
 
 export const useRotation = (nodeId: string) => {
-	const { updateNodeData, getSelectedNodes, findNode, getNodes, updateNode } = useVueFlow();
+	const { updateNodeData, getSelectedNodes, findNode, updateNodeInternals, getNodes, updateNode } =
+		useVueFlow();
 	const { commit } = useHistory();
 	const { createRotateNodesCommand } = useNodeCommandFactory();
 	const nodeRef = ref<HTMLElement | null>(null);
@@ -62,10 +63,12 @@ export const useRotation = (nodeId: string) => {
 		}
 
 		updateNodeData(nodeId, { rotation: absoluteAngle });
+		updateNodeInternals([nodeId, ...children.map((child) => child.id)]);
 	};
 
 	const handleSingleNodeRotation = (absoluteAngle: number) => {
 		updateNodeData(nodeId, { rotation: absoluteAngle });
+		updateNodeInternals([nodeId]);
 	};
 
 	const onRotateMouseDown = (e: MouseEvent) => {

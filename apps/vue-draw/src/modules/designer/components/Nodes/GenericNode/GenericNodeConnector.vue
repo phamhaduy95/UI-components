@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import { useZoom } from '@/modules/designer/composables/useZoom';
 	import { Handle, Position } from '@vue-flow/core';
 	import { computed } from 'vue';
 
@@ -14,16 +15,24 @@
 		connectors?: ConnectorProps[];
 		shapeWidth: number;
 		shapeHeight: number;
+		isNodeSelected?: boolean;
 	}
+
+	const DEFAULT_NO_CONNECTORS = 16;
+
+	const DEFAULT_CONNECTOR_SIZE = 3; // in px
 
 	const props = withDefaults(defineProps<GenericNodeConnectorProps>(), {
 		isVisible: false,
 		path: ''
 	});
 
-	const DEFAULT_NO_CONNECTORS = 16;
+	const { currentZoom } = useZoom();
 
-	const DEFAULT_CONNECTOR_SIZE = '3px';
+	const connectorSize = computed(() => {
+		const value = Math.max(DEFAULT_CONNECTOR_SIZE / currentZoom.value, DEFAULT_CONNECTOR_SIZE);
+		return `${value}px`;
+	});
 
 	const computedConnectors = computed(() => {
 		if (props.connectors) return props.connectors;
@@ -32,6 +41,7 @@
 		const height = props.shapeHeight - 2;
 
 		const result: ConnectorProps[] = [];
+
 		const pointsPerSide = DEFAULT_NO_CONNECTORS / 4;
 
 		const sides = [
@@ -63,13 +73,14 @@
 
 <template>
 	<div
-		class="Connector inset-0 pointer-events-none"
+		class="Connector inset-0"
 		:style="{
 			position: 'absolute',
 			offsetPosition: 'center',
 			maxWidth: `${shapeWidth}px`,
 			minHeight: `${shapeHeight}px`
 		}"
+		:data-selected="isNodeSelected"
 	>
 		<template
 			v-for="(connector, index) in computedConnectors"
@@ -79,13 +90,13 @@
 				:id="`source-${index}`"
 				type="source"
 				:position="connector.position"
-				class="pointer-events-auto transition-opacity opacity-0 hover:opacity-100"
+				class="SourceHandle pointer-events-auto opacity-0 hover:opacity-100"
 				:style="{
 					offsetPath: path,
-					width: DEFAULT_CONNECTOR_SIZE,
-					height: DEFAULT_CONNECTOR_SIZE,
-					minWidth: DEFAULT_CONNECTOR_SIZE,
-					minHeight: DEFAULT_CONNECTOR_SIZE,
+					width: connectorSize,
+					height: connectorSize,
+					minWidth: connectorSize,
+					minHeight: connectorSize,
 					border: 'none',
 					offsetDistance: connector.offsetDistance,
 					offsetAnchor: 'center',
@@ -101,13 +112,13 @@
 				:id="`target-${index}`"
 				type="target"
 				:position="connector.position"
-				class="pointer-events-auto transition-colors opacity-0"
+				class="TargetHandle pointer-events-auto opacity-0 hover:opacity-100"
 				:style="{
 					offsetPath: path,
-					width: DEFAULT_CONNECTOR_SIZE,
-					height: DEFAULT_CONNECTOR_SIZE,
-					minWidth: DEFAULT_CONNECTOR_SIZE,
-					minHeight: DEFAULT_CONNECTOR_SIZE,
+					width: connectorSize,
+					height: connectorSize,
+					minWidth: connectorSize,
+					minHeight: connectorSize,
 					border: 'none',
 					offsetDistance: connector.offsetDistance,
 					offsetAnchor: 'center',
@@ -122,3 +133,11 @@
 		</template>
 	</div>
 </template>
+
+<style scoped lang="css">
+	.Connector {
+		> .SourceHandle {
+			opacity: 1;
+		}
+	}
+</style>

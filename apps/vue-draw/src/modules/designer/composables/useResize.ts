@@ -30,17 +30,19 @@ export const useResize = (nodeId: string) => {
 		const { params } = event;
 		const { width, height } = params;
 
-		const beforeA = resizeBefore.value.get(nodeId);
-		if (!beforeA) return;
+		const before = resizeBefore.value.get(nodeId);
+		if (!before) return;
 
-		const scaleX = width / beforeA.width;
-		const scaleY = height / beforeA.height;
+		// Guard against division by zero
+		const scaleX = width / (before.width || 1);
+		const scaleY = height / (before.height || 1);
 
 		for (const [id, before] of resizeBefore.value.entries()) {
 			if (id === nodeId) continue;
 
-			const newWidth = before.width * scaleX;
-			const newHeight = before.height * scaleY;
+			// Clamp minimum size to prevent SVG rendering bugs and round to nearest pixel
+			const newWidth = Math.max(1, Math.round(before.width * scaleX));
+			const newHeight = Math.max(1, Math.round(before.height * scaleY));
 
 			updateNode(id, {
 				style: { width: `${newWidth}px`, height: `${newHeight}px` },
@@ -58,21 +60,21 @@ export const useResize = (nodeId: string) => {
 		if (!beforeDimension) return;
 
 		const entries: NodeUpdateEntry[] = [];
-		const scaleX = width / beforeDimension.width;
-		const scaleY = height / beforeDimension.height;
+		const scaleX = width / (beforeDimension.width || 1);
+		const scaleY = height / (beforeDimension.height || 1);
 
 		for (const [id, before] of resizeBefore.value.entries()) {
 			let newWidth = width;
 			let newHeight = height;
 
 			if (id !== nodeId) {
-				newWidth = Math.max(1, before.width * scaleX);
-				newHeight = Math.max(1, before.height * scaleY);
+				newWidth = Math.max(1, Math.round(before.width * scaleX));
+				newHeight = Math.max(1, Math.round(before.height * scaleY));
 			}
 
 			entries.push({
 				nodeId: id,
-				before: { dimensions: beforeDimension },
+				before: { dimensions: { ...before } },
 				after: {
 					dimensions: {
 						width: newWidth,

@@ -16,6 +16,12 @@ export const useKeyboardStore = defineStore('design-keyboard', () => {
 		shortcuts.value.set(generateKey(keys), handler);
 	};
 
+	const registerManyShortcuts = (keys: Array<string[]>, handler: (e: KeyboardEvent) => void) => {
+		keys.forEach((key) => {
+			registerShortcut(key, handler);
+		});
+	};
+
 	const getShortcut = (keys: string[]) => {
 		const key = generateKey(keys);
 		return shortcuts.value.get(key);
@@ -32,10 +38,10 @@ export const useKeyboardStore = defineStore('design-keyboard', () => {
 
 	return {
 		shortcuts,
-
 		registerShortcut,
 		getShortcut,
-		generateKey
+		generateKey,
+		registerManyShortcuts
 	};
 });
 
@@ -44,7 +50,8 @@ export const useKeyboardBindings = () => {
 
 	const { copyNodes, pasteNodes, canCopy, canPaste } = useClipboard();
 	const { undo, redo, canUndo, canRedo, commit } = useHistory();
-	const { screenToFlowCoordinate, getSelectedNodes, getSelectedEdges } = useVueFlow();
+	const { screenToFlowCoordinate, getSelectedNodes, getSelectedEdges, getConnectedEdges } =
+		useVueFlow();
 	const { createDeleteMultipleEntitiesCommand } = useNodeCommandFactory();
 
 	const mousePos = ref({ x: 0, y: 0 });
@@ -90,21 +97,17 @@ export const useKeyboardBindings = () => {
 	};
 
 	const registerBasicShortcuts = () => {
-		store.registerShortcut(['delete'], (e) => {
+		store.registerManyShortcuts([['delete'], ['backspace']], (e) => {
 			e.preventDefault();
 			const nodes = getSelectedNodes.value;
 			const edges = getSelectedEdges.value;
 			if (!nodes.length && !edges.length) return;
-			const command = createDeleteMultipleEntitiesCommand({ nodes, edges });
-			commit(command);
-		});
-
-		store.registerShortcut(['backspace'], (e) => {
-			e.preventDefault();
-			const nodes = getSelectedNodes.value;
-			const edges = getSelectedEdges.value;
-			if (!nodes.length && !edges.length) return;
-			const command = createDeleteMultipleEntitiesCommand({ nodes, edges });
+			const connectedEdges = getConnectedEdges(nodes);
+			const removeEdges = connectedEdges.filter((e) => !edges.includes(e));
+			const command = createDeleteMultipleEntitiesCommand({
+				nodes,
+				edges: [...edges, ...removeEdges]
+			});
 			commit(command);
 		});
 
