@@ -4,6 +4,7 @@
 	import { useZindex } from '@/modules/designer/composables/useZindex';
 	import { useHistory } from '@/modules/designer/composables/useHistory';
 	import { useClipboard } from '@/modules/designer/composables/useClipboard';
+	import { useImportExport } from '@/modules/designer/composables/useImportExport';
 
 	import IconBringToFront from '@icons/bring-to-front.svg';
 	import IconGroup from '@icons/group.svg';
@@ -24,6 +25,8 @@
 	const { canCopy, canPaste, copyNodes, pasteNodes } = useClipboard();
 	const { bringToFront, sendToBack, canChangeZIndex } = useZindex();
 	const { undo, redo, canUndo, canRedo } = useHistory();
+
+	const { exportGraph, importGraph } = useImportExport();
 </script>
 
 <template>
@@ -184,6 +187,59 @@
 				@click="resetZoom()"
 			>
 				<IconResetZoom class="h-[18px] w-[18px]" />
+			</button>
+		</div>
+
+		<!-- Right Actions -->
+		<div class="flex items-center space-x-2">
+			<button
+				class="toolbar-btn tooltip-trigger flex items-center gap-1.5 rounded bg-gray-50 text-gray-600 border border-gray-200 px-3 py-1.5 text-xs font-semibold focus:outline-none hover:bg-gray-100 transition-colors"
+				title="Import Graph from JSON"
+				@click="importGraph()"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="14"
+					height="14"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+					<polyline points="17 8 12 3 7 8"></polyline>
+					<line
+						x1="12"
+						y1="3"
+						x2="12"
+						y2="15"
+					></line>
+				</svg>
+				Import
+			</button>
+			<button
+				class="toolbar-btn tooltip-trigger flex items-center gap-1.5 rounded bg-indigo-50 text-indigo-600 border border-transparent px-3 py-1.5 text-xs font-semibold focus:outline-none hover:bg-indigo-100 transition-colors"
+				title="Export Graph to JSON"
+				@click="exportGraph()"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="14"
+					height="14"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+					<polyline points="17 21 17 13 7 13 7 21"></polyline>
+					<polyline points="7 3 7 8 15 8"></polyline>
+				</svg>
+				Save
 			</button>
 		</div>
 	</div>
