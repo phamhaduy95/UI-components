@@ -2,7 +2,6 @@ import { useHistory } from '@/modules/designer/composables/useHistory';
 import { useNodeCommandFactory } from '@/modules/designer/composables/useCommandFactory';
 import type { DesignerNode } from '@/modules/designer/types/Node.type';
 import { generateNodeId } from '@/modules/designer/utils/node.utils';
-import { toRaw } from 'vue';
 
 export const useNodeCreation = () => {
 	const { commit } = useHistory();
@@ -24,16 +23,8 @@ export const useNodeCreation = () => {
 
 		const newNodes: DesignerNode[] = nodes.map((node) => {
 			return {
-				id: generateNodeId(),
-				type: node.type,
-				position: structuredClone(toRaw(node.position)),
-				data: structuredClone(toRaw(node.data)),
-				style: structuredClone(toRaw(node.style)),
-				parentNode: node.parentNode,
-				zIndex: node.zIndex,
-				height: node.height,
-				width: node.width,
-				dimensions: structuredClone(toRaw(node.dimensions))
+				...(JSON.parse(JSON.stringify(node)) as DesignerNode),
+				id: generateNodeId()
 			};
 		});
 

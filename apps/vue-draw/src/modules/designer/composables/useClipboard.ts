@@ -1,5 +1,5 @@
 import { useNodeCreation } from '@/modules/designer/composables/useNodeCreation';
-import type { DesignerNode } from '@/modules/designer/types/Node.type';
+import { NodeCategory, type DesignerNode } from '@/modules/designer/types/Node.type';
 import { useVueFlow, type XYPosition } from '@vue-flow/core';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
@@ -33,7 +33,7 @@ const DEFAULT_OFFSET: XYPosition = { x: 10, y: 10 };
 
 export const useClipboard = () => {
 	const store = useClipboardStore();
-	const { getSelectedNodes } = useVueFlow();
+	const { getSelectedNodes, getNodes } = useVueFlow();
 	const { createNodes, removeNodes, cloneNodes } = useNodeCreation();
 
 	const canCopy = computed(() => getSelectedNodes.value.length > 0);
@@ -41,8 +41,24 @@ export const useClipboard = () => {
 	const canPaste = computed(() => store.savedNodes.length > 0);
 
 	const saveNodes = () => {
-		const selectedNodes = getSelectedNodes.value;
-		store.saveNodes(selectedNodes);
+		const selectedNodes = getSelectedNodes.value as DesignerNode[];
+
+		const allNodes = getNodes.value as DesignerNode[];
+
+		const nodesToSaveMap = new Map<string, DesignerNode>();
+
+		selectedNodes.forEach((node) => {
+			nodesToSaveMap.set(node.id, node);
+			if (node.data.category === NodeCategory.Group) {
+				const children = allNodes.filter((n) => n.parentNode === node.id);
+
+				children.forEach((child) => {
+					nodesToSaveMap.set(child.id, child);
+				});
+			}
+		});
+
+		store.saveNodes(Array.from(nodesToSaveMap.values()));
 	};
 
 	const copyNodes = () => {
@@ -58,7 +74,7 @@ export const useClipboard = () => {
 		const nodesToPaste = store.getSavedNodes();
 		if (nodesToPaste.length === 0) return;
 
-		const newNodes: DesignerNode[] = cloneNodes(nodesToPaste);
+		const newNodes = cloneNodes(nodesToPaste);
 
 		let deltaX = 0;
 		let deltaY = 0;
