@@ -70,9 +70,9 @@
 		:style="style"
 	>
 		<div class="flex justify-between items-center mb-3 px-1 border-b border-gray-100 pb-2">
-			<span class="text-xs font-semibold text-gray-700 uppercase tracking-wider"
-				>Select Shape to Bind Tag</span
-			>
+			<span class="text-xs font-semibold text-gray-700 uppercase tracking-wider">
+				Select Shape to Bind Tag
+			</span>
 			<button
 				class="text-gray-400 hover:text-gray-600 transition-colors"
 				@click="closeShapeSelector"

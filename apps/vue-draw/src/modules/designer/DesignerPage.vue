@@ -7,7 +7,7 @@
 	import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
 	import { NodeContextMenu } from './components/NodeContextMenu';
 	import ShapeSelectorPopup from './components/ShapeSelectorPopup/ShapeSelectorPopup.vue';
-	import { DesignerLeftPanel, DesignerRightPanel, DesignerToolbar } from './layouts';
+	import { DesignLeftPanel, DesignRightPanel, DesignToolbar } from './layouts';
 
 	import { BaseEdge, EdgeMarkerDef, ConnectionLine } from './components/Edges';
 
@@ -92,11 +92,11 @@
 		<div
 			class="z-10 flex h-12 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm"
 		>
-			<DesignerToolbar />
+			<DesignToolbar />
 		</div>
 		<div class="flex flex-1 overflow-hidden">
 			<!-- Left Panel: Asset Library -->
-			<DesignerLeftPanel />
+			<DesignLeftPanel />
 
 			<!-- Center Canvas -->
 			<main
@@ -147,7 +147,7 @@
 				<ShapeSelectorPopup />
 			</main>
 			<!-- Right Panel: Properties -->
-			<DesignerRightPanel />
+			<DesignRightPanel />
 		</div>
 	</div>
 </template>

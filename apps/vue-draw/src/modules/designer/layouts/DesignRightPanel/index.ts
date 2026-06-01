@@ -1,1 +1,1 @@
-export { default as DesignerRightPanel } from './DesignRightPanel.vue';
+export { default as DesignRightPanel } from './DesignRightPanel.vue';
