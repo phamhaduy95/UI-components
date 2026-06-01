@@ -38,6 +38,32 @@ export const useDnD = () => {
 		}
 	};
 
+	const onTagDrop = (event: DragEvent, payload: TagDragPayload) => {
+		const targetEl = document.elementFromPoint(event.clientX, event.clientY);
+		const nodeEl = targetEl?.closest('.vue-flow__node');
+
+		const position = screenToFlowCoordinate({
+			x: event.clientX,
+			y: event.clientY
+		});
+
+		if (!nodeEl) {
+			openShapeSelector(event.clientX, event.clientY, position, payload.tag);
+			return;
+		}
+
+		const nodeId = nodeEl.getAttribute('data-id');
+		if (!nodeId) return;
+
+		const node = findNode(nodeId);
+		if (!node) return;
+
+		updateNodeData(nodeId, {
+			tagId: payload.tag.id
+		});
+		return;
+	};
+
 	const onPaletteDrop = (event: DragEvent) => {
 		event.preventDefault();
 
@@ -48,29 +74,7 @@ export const useDnD = () => {
 		if (!payload) return;
 
 		if (payload.isTag) {
-			const targetEl = document.elementFromPoint(event.clientX, event.clientY);
-			const nodeEl = targetEl?.closest('.vue-flow__node');
-
-			const position = screenToFlowCoordinate({
-				x: event.clientX,
-				y: event.clientY
-			});
-
-			if (nodeEl) {
-				const nodeId = nodeEl.getAttribute('data-id');
-				if (nodeId) {
-					const node = findNode(nodeId);
-					if (node) {
-						updateNodeData(nodeId, {
-							tagId: payload.tag.id
-						});
-					}
-				}
-			} else {
-				// Dropped on empty canvas space
-				openShapeSelector(event.clientX, event.clientY, position, payload.tag);
-			}
-			return;
+			return onTagDrop(event, payload);
 		}
 
 		const position = screenToFlowCoordinate({

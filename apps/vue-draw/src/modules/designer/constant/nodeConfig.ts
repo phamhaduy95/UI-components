@@ -20,7 +20,13 @@ import {
 	TextFieldNode,
 	TextFieldPalette,
 	DatePickerNode,
-	DatePickerPalette
+	DatePickerPalette,
+	FanNode,
+	FanPalette,
+	PumpNode,
+	PumpPalette,
+	TankNode,
+	TankPalette
 } from '@/modules/designer/components';
 
 type NodeTypeConfig = {
@@ -117,7 +123,35 @@ export const GroupNodeTypes: Record<string, NodeTypeConfig> = {
 	}
 };
 
+export const IndustrialEquipmentTypes: Record<string, NodeTypeConfig> = {
+	[NodeType.Fan]: {
+		id: NodeType.Fan,
+		category: NodeCategory.Industrial,
+		type: NodeType.Fan,
+		paletteComponent: markRaw(FanPalette),
+		nodeComponent: markRaw(FanNode),
+		label: 'Fan'
+	},
+	[NodeType.Pump]: {
+		id: NodeType.Pump,
+		category: NodeCategory.Industrial,
+		type: NodeType.Pump,
+		paletteComponent: markRaw(PumpPalette),
+		nodeComponent: markRaw(PumpNode),
+		label: 'Pump'
+	},
+	[NodeType.Tank]: {
+		id: NodeType.Tank,
+		category: NodeCategory.Industrial,
+		type: NodeType.Tank,
+		paletteComponent: markRaw(TankPalette),
+		nodeComponent: markRaw(TankNode),
+		label: 'Tank'
+	}
+};
+
 export const nodeConfigMap: Record<string, NodeTypeConfig> = {
 	...BasicShapeTypes,
+	...IndustrialEquipmentTypes,
 	...GroupNodeTypes
 };

@@ -3,7 +3,8 @@ import type { GraphNode } from '@vue-flow/core';
 export enum NodeCategory {
 	BasicShape = 'basic-shape',
 	Group = 'group',
-	FormField = 'form-field'
+	FormField = 'form-field',
+	Industrial = 'industrial'
 }
 
 export enum NodeType {
@@ -16,7 +17,10 @@ export enum NodeType {
 	Text = 'text',
 	TextField = 'textField',
 	DatePicker = 'datePicker',
-	Group = 'group'
+	Group = 'group',
+	Fan = 'fan',
+	Pump = 'pump',
+	Tank = 'tank'
 }
 
 export interface TagData {
@@ -26,12 +30,23 @@ export interface TagData {
 }
 
 export interface BaseNodeData {
+	category: NodeCategory;
+	label?: string;
 	tagId?: string;
 	showTag?: boolean;
 }
 
 export interface BasicShapeNodeData extends BaseNodeData {
 	category: NodeCategory.BasicShape;
+	rotation: number;
+	fill: string;
+	stroke: string;
+	strokeWidth: number;
+	borderRadius: number;
+}
+
+export interface IndustrialNodeData extends BaseNodeData {
+	category: NodeCategory.Industrial;
 	rotation: number;
 	fill: string;
 	stroke: string;
@@ -56,7 +71,7 @@ export interface TextNodeData extends BaseNodeData {
 	textAlign?: 'left' | 'center' | 'right';
 }
 
-export interface TextFieldNodeData extends BaseNodeData {
+export interface FormFieldNodeData extends BaseNodeData {
 	category: NodeCategory.FormField;
 	rotation: number;
 	placeholder: string;
@@ -70,31 +85,15 @@ export interface TextFieldNodeData extends BaseNodeData {
 	fontSize?: number;
 }
 
-export interface DatePickerNodeData extends BaseNodeData {
-	category: NodeCategory.FormField;
-	rotation: number;
-	placeholder: string;
-	value: string | null;
-	disabled?: boolean;
-	fill?: string;
-	stroke?: string;
-	strokeWidth?: number;
-	borderRadius?: number;
-	color?: string;
-	fontSize?: number;
-}
-
 export type DesignerNodeData =
 	| BasicShapeNodeData
 	| GroupNodeData
 	| TextNodeData
-	| TextFieldNodeData
-	| DatePickerNodeData;
+	| IndustrialNodeData
+	| FormFieldNodeData;
 
 export type DesignerNode<T = DesignerNodeData> = Pick<
-	GraphNode<T>,
-	| 'id'
-	| 'type'
+	Partial<GraphNode<T>>,
 	| 'style'
 	| 'width'
 	| 'height'
@@ -104,4 +103,10 @@ export type DesignerNode<T = DesignerNodeData> = Pick<
 	| 'hidden'
 	| 'dimensions'
 	| 'data'
->;
+	| 'type'
+	| 'id'
+	| 'isParent'
+	| 'selected'
+> & {
+	id: string;
+};

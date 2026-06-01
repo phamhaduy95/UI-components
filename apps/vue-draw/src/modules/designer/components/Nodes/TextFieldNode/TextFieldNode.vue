@@ -6,13 +6,13 @@
 		GenericCanvasNode,
 		type GenericCanvasNodeProps
 	} from '@/modules/designer/components/Nodes/GenericNode';
-	import type { TextFieldNodeData } from '@/modules/designer/types/Node.type';
+	import type { FormFieldNodeData } from '@/modules/designer/types/Node.type';
 
 	export type TextFieldNodeProps = GenericCanvasNodeProps;
 
 	const props = defineProps<TextFieldNodeProps>();
 
-	const nodeConfig = computed(() => props.data as TextFieldNodeData);
+	const nodeConfig = computed(() => props.data as FormFieldNodeData);
 	const { updateNodeData } = useVueFlow();
 
 	const onInput = (value: string) => {

@@ -5,23 +5,21 @@ import {
 	type DesignerNodeData,
 	type GroupNodeData,
 	type TextNodeData,
-	type TextFieldNodeData,
-	type DatePickerNodeData
+	type FormFieldNodeData
 } from '@/modules/designer/types/Node.type';
 import {
 	defaultNodeData,
 	defaultGroupData,
 	defaultTextData,
-	defaultTextFieldData,
-	defaultDatePickerData
+	defaultFormFieldData
 } from '@/modules/designer/constant/default';
 import type { Dimensions } from '@vue-flow/core';
 
 export const generateNodeId = () => `node_${crypto.randomUUID()}`;
 
-type GenerateNodeArg = Omit<DesignerNode, 'id' | 'data' | 'dimensions'> & {
-	data?: Partial<DesignerNodeData>;
+type GenerateNodeArg = Omit<Partial<DesignerNode>, 'id' | 'data' | 'dimensions'> & {
 	dimensions?: Dimensions;
+	data?: Partial<DesignerNodeData>;
 };
 
 const basicShapeDimensions: Dimensions = { width: 100, height: 100 };
@@ -44,27 +42,28 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 				data: { ...defaultGroupData, ...data } as GroupNodeData
 			} as DesignerNode;
 		case NodeCategory.FormField:
-			if (rest.type === 'datePicker') {
-				return {
-					...rest,
-					id: generateNodeId(),
-					data: { ...defaultDatePickerData, ...data } as DatePickerNodeData,
-					dimensions: dimensions ?? structuredClone(textFieldDimensions)
-				} as DesignerNode;
+			switch (rest.type) {
+				case 'text':
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultTextData, ...data } as TextNodeData,
+						dimensions: dimensions ?? structuredClone(textDimensions)
+					} as DesignerNode;
+				default:
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
+						dimensions: dimensions ?? structuredClone(textFieldDimensions)
+					} as DesignerNode;
 			}
-			if (rest.type === 'text') {
-				return {
-					...rest,
-					id: generateNodeId(),
-					data: { ...defaultTextData, ...data } as TextNodeData,
-					dimensions: dimensions ?? structuredClone(textDimensions)
-				} as DesignerNode;
-			}
+		case NodeCategory.Industrial:
 			return {
 				...rest,
 				id: generateNodeId(),
-				data: { ...defaultTextFieldData, ...data } as TextFieldNodeData,
-				dimensions: dimensions ?? structuredClone(textFieldDimensions)
+				data: { ...defaultNodeData, ...data } as BasicShapeNodeData,
+				dimensions: dimensions ?? structuredClone(basicShapeDimensions)
 			} as DesignerNode;
 		default:
 			throw new Error(`Unknown node category: ${data?.category}`);

@@ -6,8 +6,7 @@ import {
 	type BasicShapeNodeData,
 	type GroupNodeData,
 	type TextNodeData,
-	type TextFieldNodeData,
-	type DatePickerNodeData
+	type FormFieldNodeData
 } from '@/modules/designer/types/Node.type';
 import type { EdgeData } from '@/modules/designer/types/Edge.type';
 
@@ -42,25 +41,11 @@ export const defaultTextData: Readonly<TextNodeData> = {
 	textAlign: 'center'
 };
 
-export const defaultTextFieldData: Readonly<TextFieldNodeData> = {
+export const defaultFormFieldData: Readonly<FormFieldNodeData> = {
 	category: NodeCategory.FormField,
 	rotation: 0,
 	placeholder: 'Enter text...',
 	value: '',
-	disabled: false,
-	fill: '#ffffff',
-	stroke: '#d1d5db',
-	strokeWidth: 1,
-	borderRadius: 4,
-	color: '#000000',
-	fontSize: 14
-};
-
-export const defaultDatePickerData: Readonly<DatePickerNodeData> = {
-	category: NodeCategory.FormField,
-	rotation: 0,
-	placeholder: 'Select a date...',
-	value: null,
 	disabled: false,
 	fill: '#ffffff',
 	stroke: '#d1d5db',
