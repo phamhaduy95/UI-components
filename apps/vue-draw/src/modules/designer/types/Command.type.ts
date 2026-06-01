@@ -1,4 +1,4 @@
-import type { DesignerNode, DesignerNodeData } from '@/modules/designer/types/Node.type';
+import type { DesignGraphNode, DesignerNodeData } from '@/modules/designer/types/Node.type';
 import type { DesignerEdge, EdgeData } from './Edge.type';
 import type { GraphNode, XYPosition } from '@vue-flow/core';
 
@@ -19,8 +19,8 @@ export interface NodeRotationEntry {
 
 export interface NodeDataEntry {
 	nodeId: string;
-	beforeData: DesignerNode['data'];
-	afterData: DesignerNode['data'];
+	beforeData: DesignGraphNode['data'];
+	afterData: DesignGraphNode['data'];
 }
 
 export interface ZIndexEntry {
@@ -30,9 +30,9 @@ export interface ZIndexEntry {
 }
 
 export interface GroupEntry {
-	groupNode: DesignerNode;
+	groupNode: DesignGraphNode;
 	children: Array<{
-		node: DesignerNode;
+		node: DesignGraphNode;
 		relativePosition: XYPosition;
 		absolutePosition: XYPosition;
 	}>;

@@ -1,7 +1,7 @@
 import {
 	NodeCategory,
 	type BasicShapeNodeData,
-	type DesignerNode,
+	type DesignGraphNode,
 	type DesignerNodeData,
 	type GroupNodeData,
 	type TextNodeData,
@@ -17,7 +17,7 @@ import type { Dimensions } from '@vue-flow/core';
 
 export const generateNodeId = () => `node_${crypto.randomUUID()}`;
 
-type GenerateNodeArg = Omit<Partial<DesignerNode>, 'id' | 'data' | 'dimensions'> & {
+type GenerateNodeArg = Omit<Partial<DesignGraphNode>, 'id' | 'data' | 'dimensions'> & {
 	dimensions?: Dimensions;
 	data?: Partial<DesignerNodeData>;
 };
@@ -34,13 +34,13 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 				id: generateNodeId(),
 				data: { ...defaultNodeData, ...data } as BasicShapeNodeData,
 				dimensions: dimensions ?? structuredClone(basicShapeDimensions)
-			} as DesignerNode;
+			} as DesignGraphNode;
 		case NodeCategory.Group:
 			return {
 				...rest,
 				id: generateNodeId(),
 				data: { ...defaultGroupData, ...data } as GroupNodeData
-			} as DesignerNode;
+			} as DesignGraphNode;
 		case NodeCategory.FormField:
 			switch (rest.type) {
 				case 'text':
@@ -49,14 +49,14 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						id: generateNodeId(),
 						data: { ...defaultTextData, ...data } as TextNodeData,
 						dimensions: dimensions ?? structuredClone(textDimensions)
-					} as DesignerNode;
+					} as DesignGraphNode;
 				default:
 					return {
 						...rest,
 						id: generateNodeId(),
 						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
 						dimensions: dimensions ?? structuredClone(textFieldDimensions)
-					} as DesignerNode;
+					} as DesignGraphNode;
 			}
 		case NodeCategory.Industrial:
 			return {
@@ -64,7 +64,7 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 				id: generateNodeId(),
 				data: { ...defaultNodeData, ...data } as BasicShapeNodeData,
 				dimensions: dimensions ?? structuredClone(basicShapeDimensions)
-			} as DesignerNode;
+			} as DesignGraphNode;
 		default:
 			throw new Error(`Unknown node category: ${data?.category}`);
 	}

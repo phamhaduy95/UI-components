@@ -2,17 +2,19 @@
 	import { computed } from 'vue';
 	import { DatePicker } from '@packages/vue-components';
 	import { useVueFlow } from '@vue-flow/core';
+
+	import type { FormFieldNodeData } from '@/modules/designer/types/Node.type';
+
 	import {
 		GenericCanvasNode,
 		type GenericCanvasNodeProps
 	} from '@/modules/designer/components/Nodes/GenericNode';
-	import type { DatePickerNodeData } from '@/modules/designer/types/Node.type';
 
 	export type DatePickerNodeProps = GenericCanvasNodeProps;
 
 	const props = defineProps<DatePickerNodeProps>();
 
-	const nodeConfig = computed(() => props.data as DatePickerNodeData);
+	const nodeConfig = computed(() => props.data as FormFieldNodeData);
 	const { updateNodeData } = useVueFlow();
 
 	const dateValue = computed(() => {

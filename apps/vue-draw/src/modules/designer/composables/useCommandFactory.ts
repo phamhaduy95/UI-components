@@ -8,7 +8,7 @@ import type {
 	NodeUpdateDataEntry,
 	NodeUpdateEntry
 } from '@/modules/designer/types/Command.type';
-import type { DesignerNode } from '@/modules/designer/types/Node.type';
+import type { DesignGraphNode } from '@/modules/designer/types/Node.type';
 
 export const useNodeCommandFactory = () => {
 	const {
@@ -50,7 +50,7 @@ export const useNodeCommandFactory = () => {
 		nodes,
 		edges
 	}: {
-		nodes: DesignerNode[];
+		nodes: DesignGraphNode[];
 		edges: Edge[];
 	}) => ({
 		action: 'deleteMultipleEntities',
@@ -65,7 +65,7 @@ export const useNodeCommandFactory = () => {
 		}
 	});
 
-	const createAddNodesCommand = (nodes: DesignerNode[]) => ({
+	const createAddNodesCommand = (nodes: DesignGraphNode[]) => ({
 		action: 'addNode',
 		timestamp: Date().toString(),
 		revert: () => {
@@ -76,7 +76,7 @@ export const useNodeCommandFactory = () => {
 		}
 	});
 
-	const createDeleteNodesCommand = (nodes: DesignerNode[]) => {
+	const createDeleteNodesCommand = (nodes: DesignGraphNode[]) => {
 		return {
 			action: 'deleteNode',
 			timestamp: Date().toString(),

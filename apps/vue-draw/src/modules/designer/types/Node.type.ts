@@ -1,4 +1,4 @@
-import type { GraphNode } from '@vue-flow/core';
+import type { GraphNode, Node } from '@vue-flow/core';
 
 export enum NodeCategory {
 	BasicShape = 'basic-shape',
@@ -92,8 +92,8 @@ export type DesignerNodeData =
 	| IndustrialNodeData
 	| FormFieldNodeData;
 
-export type DesignerNode<T = DesignerNodeData> = Pick<
-	Partial<GraphNode<T>>,
+export type DesignGraphNode<T = DesignerNodeData> = Pick<
+	GraphNode<T>,
 	| 'style'
 	| 'width'
 	| 'height'
@@ -107,6 +107,7 @@ export type DesignerNode<T = DesignerNodeData> = Pick<
 	| 'id'
 	| 'isParent'
 	| 'selected'
-> & {
-	id: string;
-};
+	| 'computedPosition'
+>;
+
+export type DesignNode<T = DesignerNodeData> = Node<T>;

@@ -1,15 +1,15 @@
 import { useNodeCreation } from '@/modules/designer/composables/useNodeCreation';
-import { NodeCategory, type DesignerNode } from '@/modules/designer/types/Node.type';
+import { NodeCategory, type DesignGraphNode } from '@/modules/designer/types/Node.type';
 import { useVueFlow, type XYPosition } from '@vue-flow/core';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 
 const useClipboardStore = defineStore('design-clipboard', () => {
-	const savedNodes = ref<Array<DesignerNode>>([]);
+	const savedNodes = ref<Array<DesignGraphNode>>([]);
 
 	const { cloneNodes } = useNodeCreation();
 
-	const saveNodes = (nodes: Array<DesignerNode>) => {
+	const saveNodes = (nodes: Array<DesignGraphNode>) => {
 		savedNodes.value = cloneNodes(nodes);
 	};
 
@@ -17,7 +17,7 @@ const useClipboardStore = defineStore('design-clipboard', () => {
 		savedNodes.value = [];
 	};
 
-	const getSavedNodes = (): DesignerNode[] => {
+	const getSavedNodes = () => {
 		return savedNodes.value;
 	};
 
@@ -41,11 +41,11 @@ export const useClipboard = () => {
 	const canPaste = computed(() => store.savedNodes.length > 0);
 
 	const saveNodes = () => {
-		const selectedNodes = getSelectedNodes.value as DesignerNode[];
+		const selectedNodes = getSelectedNodes.value as DesignGraphNode[];
 
-		const allNodes = getNodes.value as DesignerNode[];
+		const allNodes = getNodes.value as DesignGraphNode[];
 
-		const nodesToSaveMap = new Map<string, DesignerNode>();
+		const nodesToSaveMap = new Map<string, DesignGraphNode>();
 
 		selectedNodes.forEach((node) => {
 			nodesToSaveMap.set(node.id, node);
@@ -74,7 +74,7 @@ export const useClipboard = () => {
 		const nodesToPaste = store.getSavedNodes();
 		if (nodesToPaste.length === 0) return;
 
-		const newNodes = cloneNodes(nodesToPaste);
+		const newNodes: DesignGraphNode[] = cloneNodes(nodesToPaste) as DesignGraphNode[];
 
 		let deltaX = 0;
 		let deltaY = 0;

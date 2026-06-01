@@ -7,7 +7,7 @@ import { defaultGroupData } from '@/modules/designer/constant/default';
 import type { GroupEntry } from '@/modules/designer/types/Command.type';
 import {
 	NodeCategory,
-	type DesignerNode,
+	type DesignGraphNode,
 	type GroupNodeData
 } from '@/modules/designer/types/Node.type';
 import { generateNode } from '@/modules/designer/utils/node.utils';
@@ -80,7 +80,7 @@ export const useGrouping = () => {
 				y: childNode.position.y - groupBounds.y
 			};
 			childEntries.push({
-				node: { ...childNode } as DesignerNode,
+				node: { ...childNode } as DesignGraphNode,
 				relativePosition,
 				absolutePosition: { x: childNode.position.x, y: childNode.position.y }
 			});
@@ -88,7 +88,7 @@ export const useGrouping = () => {
 
 		commit(
 			createGroupNodesCommand({
-				groupNode: newGroupNode as DesignerNode,
+				groupNode: newGroupNode as DesignGraphNode,
 				children: childEntries
 			})
 		);
@@ -109,7 +109,7 @@ export const useGrouping = () => {
 		removeNodes(nodesToRemove);
 	};
 
-	const removeGroupNode = (groupNode: DesignerNode) => {
+	const removeGroupNode = (groupNode: DesignGraphNode) => {
 		const allNodes = getNodes.value;
 		const groupAbsoluteX = groupNode.position.x;
 		const groupAbsoluteY = groupNode.position.y;
@@ -123,7 +123,7 @@ export const useGrouping = () => {
 				y: groupAbsoluteY + childNode.position.y
 			};
 			childEntries.push({
-				node: { ...childNode } as DesignerNode,
+				node: { ...childNode } as DesignGraphNode,
 				relativePosition: { x: childNode.position.x, y: childNode.position.y },
 				absolutePosition
 			});
@@ -131,7 +131,7 @@ export const useGrouping = () => {
 
 		commit(
 			createUngroupNodesCommand({
-				groupNode: { ...groupNode } as DesignerNode,
+				groupNode: { ...groupNode } as DesignGraphNode,
 				children: childEntries
 			})
 		);

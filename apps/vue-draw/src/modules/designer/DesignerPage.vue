@@ -23,10 +23,10 @@
 
 	import { generateEdge } from '@/modules/designer/utils/edge.utils';
 
-	import type { DesignerNode } from './types/Node.type';
+	import type { DesignGraphNode } from './types/Node.type';
 
 	// We let vue-flow manage state of nodes and edges internally to reduce memory usage
-	const initialNodes: Array<DesignerNode> = [];
+	const initialNodes: Array<DesignGraphNode> = [];
 	const initialEdges: Array<Edge> = [];
 
 	type VueFlowProps = ComponentInstance<typeof VueFlow>['$props'];

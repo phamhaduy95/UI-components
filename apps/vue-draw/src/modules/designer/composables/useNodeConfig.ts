@@ -5,9 +5,9 @@ import type { DesignerNodeData } from '@/modules/designer/types/Node.type';
 import { useNodeCommandFactory } from './useCommandFactory';
 import { useHistory } from './useHistory';
 import type { ConfigurableNodeProps } from '@/modules/designer/types/Command.type';
-import type { DesignerNode, BasicShapeNodeData } from '@/modules/designer/types/Node.type';
+import type { DesignGraphNode, BasicShapeNodeData } from '@/modules/designer/types/Node.type';
 
-type BasicShapNode = DesignerNode<BasicShapeNodeData>;
+type BasicShapNode = DesignGraphNode<BasicShapeNodeData>;
 
 const useNodeConfigStore = defineStore('designer-node-config', () => {
 	const selectedNode = ref<BasicShapNode | null>(null);
