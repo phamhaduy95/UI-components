@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { GenericNodePalette } from '@/modules/designer/components';
 	import type { GenericNodePaletteProps } from '@/modules/designer/components/Nodes/GenericNode';
-	import { NodeCategory } from '@/modules/designer/types/Node.type';
+	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
 	import IconCircle from '@/assets/icons/circle.svg';
 
@@ -11,8 +11,8 @@
 <template>
 	<GenericNodePalette
 		v-bind="props"
-		type="circle"
 		:category="NodeCategory.BasicShape"
+		:type="NodeType.Circle"
 	>
 		<template #icon>
 			<IconCircle />

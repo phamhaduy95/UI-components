@@ -4,7 +4,10 @@ import { type Dimensions } from '@vue-flow/core';
 import {
 	NodeCategory,
 	type BasicShapeNodeData,
-	type GroupNodeData
+	type GroupNodeData,
+	type TextNodeData,
+	type TextFieldNodeData,
+	type DatePickerNodeData
 } from '@/modules/designer/types/Node.type';
 import type { EdgeData } from '@/modules/designer/types/Edge.type';
 
@@ -27,6 +30,44 @@ export const defaultGroupData: Readonly<GroupNodeData> = {
 	rotation: 0,
 	initialWidth: 200,
 	initialHeight: 200
+};
+
+export const defaultTextData: Readonly<TextNodeData> = {
+	category: NodeCategory.FormField,
+	rotation: 0,
+	content: 'Double click to edit',
+	color: '#000000',
+	fontSize: 16,
+	fontWeight: 'normal',
+	textAlign: 'center'
+};
+
+export const defaultTextFieldData: Readonly<TextFieldNodeData> = {
+	category: NodeCategory.FormField,
+	rotation: 0,
+	placeholder: 'Enter text...',
+	value: '',
+	disabled: false,
+	fill: '#ffffff',
+	stroke: '#d1d5db',
+	strokeWidth: 1,
+	borderRadius: 4,
+	color: '#000000',
+	fontSize: 14
+};
+
+export const defaultDatePickerData: Readonly<DatePickerNodeData> = {
+	category: NodeCategory.FormField,
+	rotation: 0,
+	placeholder: 'Select a date...',
+	value: null,
+	disabled: false,
+	fill: '#ffffff',
+	stroke: '#d1d5db',
+	strokeWidth: 1,
+	borderRadius: 4,
+	color: '#000000',
+	fontSize: 14
 };
 
 export const defaultEdgeData: Readonly<EdgeData> = {

@@ -1,6 +1,6 @@
 import { markRaw, type Component } from 'vue';
 
-import { NodeCategory } from '@/modules/designer/types/Node.type';
+import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 import {
 	RectangleNode,
 	CircleNode,
@@ -14,7 +14,13 @@ import {
 	EllipsePalette,
 	HexagonPalette,
 	StarPalette,
-	TrianglePalette
+	TrianglePalette,
+	TextNode,
+	TextPalette,
+	TextFieldNode,
+	TextFieldPalette,
+	DatePickerNode,
+	DatePickerPalette
 } from '@/modules/designer/components';
 
 type NodeTypeConfig = {
@@ -26,61 +32,92 @@ type NodeTypeConfig = {
 	type: string;
 };
 
-// 1. Explicitly mark components raw to keep Vue from tracking internal component overhead
-export const nodeConfigMap: Record<string, NodeTypeConfig> = {
-	rectangle: {
-		id: 'rectangle',
+const BasicShapeTypes: Record<string, NodeTypeConfig> = {
+	[NodeType.Rectangle]: {
+		id: NodeType.Rectangle,
 		category: NodeCategory.BasicShape,
-		type: 'rectangle',
+		type: NodeType.Rectangle,
 		paletteComponent: markRaw(RectanglePalette),
 		nodeComponent: markRaw(RectangleNode),
 		label: 'Rectangle'
 	},
-	circle: {
-		id: 'circle',
+	[NodeType.Circle]: {
+		id: NodeType.Circle,
 		category: NodeCategory.BasicShape,
-		type: 'circle',
+		type: NodeType.Circle,
 		paletteComponent: markRaw(CirclePalette),
 		nodeComponent: markRaw(CircleNode),
 		label: 'Circle'
 	},
-	ellipse: {
-		id: 'ellipse',
+	[NodeType.Ellipse]: {
+		id: NodeType.Ellipse,
 		category: NodeCategory.BasicShape,
-		type: 'ellipse',
+		type: NodeType.Ellipse,
 		paletteComponent: markRaw(EllipsePalette),
 		nodeComponent: markRaw(EllipseNode),
 		label: 'Ellipse'
 	},
-	triangle: {
-		id: 'triangle',
+	[NodeType.Triangle]: {
+		id: NodeType.Triangle,
 		category: NodeCategory.BasicShape,
-		type: 'triangle',
+		type: NodeType.Triangle,
 		paletteComponent: markRaw(TrianglePalette),
 		nodeComponent: markRaw(TriangleNode),
 		label: 'Triangle'
 	},
-	hexagon: {
-		id: 'hexagon',
+	[NodeType.Hexagon]: {
+		id: NodeType.Hexagon,
 		category: NodeCategory.BasicShape,
-		type: 'hexagon',
+		type: NodeType.Hexagon,
 		paletteComponent: markRaw(HexagonPalette),
 		nodeComponent: markRaw(HexagonNode),
 		label: 'Hexagon'
 	},
-	star: {
-		id: 'star',
+	[NodeType.Star]: {
+		id: NodeType.Star,
 		category: NodeCategory.BasicShape,
-		type: 'star',
+		type: NodeType.Star,
 		paletteComponent: markRaw(StarPalette),
 		nodeComponent: markRaw(StarNode),
 		label: 'Star'
 	},
-	group: {
-		id: 'group',
+	[NodeType.Text]: {
+		id: NodeType.Text,
+		category: NodeCategory.FormField,
+		type: NodeType.Text,
+		paletteComponent: markRaw(TextPalette),
+		nodeComponent: markRaw(TextNode),
+		label: 'Text'
+	},
+	[NodeType.TextField]: {
+		id: NodeType.TextField,
+		category: NodeCategory.FormField,
+		type: NodeType.TextField,
+		paletteComponent: markRaw(TextFieldPalette),
+		nodeComponent: markRaw(TextFieldNode),
+		label: 'TextField'
+	},
+	[NodeType.DatePicker]: {
+		id: NodeType.DatePicker,
+		category: NodeCategory.FormField,
+		type: NodeType.DatePicker,
+		paletteComponent: markRaw(DatePickerPalette),
+		nodeComponent: markRaw(DatePickerNode),
+		label: 'Date Picker'
+	}
+};
+
+export const GroupNodeTypes: Record<string, NodeTypeConfig> = {
+	[NodeType.Group]: {
+		id: NodeType.Group,
 		category: NodeCategory.Group,
-		type: 'group',
+		type: NodeType.Group,
 		nodeComponent: markRaw(GroupNode),
 		label: 'Group'
 	}
+};
+
+export const nodeConfigMap: Record<string, NodeTypeConfig> = {
+	...BasicShapeTypes,
+	...GroupNodeTypes
 };

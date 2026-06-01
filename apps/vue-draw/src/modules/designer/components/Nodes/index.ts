@@ -6,3 +6,6 @@ export * from './HexagonNode';
 export * from './TriangleNode';
 export * from './EllipseNode';
 export * from './StarNode';
+export * from './TextNode';
+export * from './TextFieldNode';
+export * from './DatePickerNode';

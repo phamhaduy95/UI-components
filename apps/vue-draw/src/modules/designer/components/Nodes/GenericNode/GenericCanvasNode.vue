@@ -1,5 +1,4 @@
 <script setup lang="ts">
-	import { computed, type CSSProperties } from 'vue';
 	import type { NodeProps } from '@vue-flow/core';
 	import {
 		NodeResizer,
@@ -8,12 +7,13 @@
 		type OnResizeEnd,
 		type OnResizeStart
 	} from '@vue-flow/node-resizer';
+	import { computed, type CSSProperties } from 'vue';
 
-	import { useRotation } from '@/modules/designer/composables/useRotation';
 	import { useResize } from '@/modules/designer/composables/useResize';
+	import { useRotation } from '@/modules/designer/composables/useRotation';
 	import GenericNodeConnector, { type ConnectorProps } from './GenericNodeConnector.vue';
 
-	import type { BasicShapeNodeData, GroupNodeData } from '@/modules/designer/types/Node.type.ts';
+	import type { DesignerNodeData } from '@/modules/designer/types/Node.type.ts';
 
 	import IconRotate from '@/assets/icons/rotate.svg';
 	import {
@@ -22,7 +22,7 @@
 		resizerLineStyle
 	} from '@/modules/designer/constant/default';
 
-	export interface GenericCanvasNodeProps extends NodeProps<BasicShapeNodeData | GroupNodeData> {
+	export interface GenericCanvasNodeProps extends NodeProps<DesignerNodeData> {
 		defaultNodeWidth?: number;
 		defaultNodeHeight?: number;
 		keepAspectRatio?: boolean;

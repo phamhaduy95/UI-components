@@ -46,6 +46,7 @@
 				types[key] = nodeComponent;
 			}
 		}
+
 		return types;
 	};
 

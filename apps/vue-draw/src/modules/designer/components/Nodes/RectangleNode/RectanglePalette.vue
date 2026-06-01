@@ -3,7 +3,7 @@
 		GenericNodePalette,
 		type GenericNodePaletteProps
 	} from '@/modules/designer/components/Nodes/GenericNode';
-	import { NodeCategory } from '@/modules/designer/types/Node.type';
+	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
 	import IconRectangle from '@/assets/icons/rectangle.svg';
 
@@ -14,7 +14,7 @@
 	<GenericNodePalette
 		v-bind="props"
 		:category="NodeCategory.BasicShape"
-		type="rectangle"
+		:type="NodeType.Rectangle"
 	>
 		<template #icon>
 			<IconRectangle />
