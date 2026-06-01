@@ -19,7 +19,18 @@ export enum NodeType {
 	Group = 'group'
 }
 
-export interface BasicShapeNodeData {
+export interface TagData {
+	id: string;
+	label: string;
+	value: string;
+}
+
+export interface BaseNodeData {
+	tagId?: string;
+	showTag?: boolean;
+}
+
+export interface BasicShapeNodeData extends BaseNodeData {
 	category: NodeCategory.BasicShape;
 	rotation: number;
 	fill: string;
@@ -28,14 +39,14 @@ export interface BasicShapeNodeData {
 	borderRadius: number;
 }
 
-export interface GroupNodeData {
+export interface GroupNodeData extends BaseNodeData {
 	category: NodeCategory.Group;
 	rotation: number;
 	initialWidth: number;
 	initialHeight: number;
 }
 
-export interface TextNodeData {
+export interface TextNodeData extends BaseNodeData {
 	category: NodeCategory.FormField;
 	rotation: number;
 	content: string;
@@ -45,7 +56,7 @@ export interface TextNodeData {
 	textAlign?: 'left' | 'center' | 'right';
 }
 
-export interface TextFieldNodeData {
+export interface TextFieldNodeData extends BaseNodeData {
 	category: NodeCategory.FormField;
 	rotation: number;
 	placeholder: string;
@@ -59,7 +70,7 @@ export interface TextFieldNodeData {
 	fontSize?: number;
 }
 
-export interface DatePickerNodeData {
+export interface DatePickerNodeData extends BaseNodeData {
 	category: NodeCategory.FormField;
 	rotation: number;
 	placeholder: string;

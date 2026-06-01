@@ -2,14 +2,26 @@
 	import { computed, type ComponentInstance } from 'vue';
 	import type { Dimensions, XYPosition } from '@vue-flow/core';
 
-	import { SingleSlider, NumberInput, ColorPicker } from '@packages/vue-components';
+	import {
+		SingleSlider,
+		NumberInput,
+		ColorPicker,
+		Switch,
+		TextInput
+	} from '@packages/vue-components';
 	import { useNodeConfig } from '@/modules/designer/composables/useNodeConfig';
 	import { defaultNodeData } from '@/modules/designer/constant/default';
+	import { useTagsStore } from '@/modules/designer/composables/useTagsStore';
 
 	type NumberInputProps = ComponentInstance<typeof NumberInput>['$props'];
 	type SingleSliderProps = ComponentInstance<typeof SingleSlider>['$props'];
 
+	const tagsStore = useTagsStore();
 	const { selectedNode, updateNodeBasicProps, updateNodeData } = useNodeConfig();
+
+	const boundTag = computed(() => {
+		return tagsStore.tags.find((t) => t.id === nodeConfigurableData.value.tagId);
+	});
 
 	const nodePosition = computed<XYPosition>(() => ({
 		x: Math.round(selectedNode.value?.position?.x ?? 0),
@@ -141,6 +153,25 @@
 					@update:model-value="hanldeStrokeWidthChange"
 				/>
 			</div>
+		</div>
+
+		<!-- Bound Tag -->
+		<div
+			v-if="boundTag"
+			class="space-y-4"
+		>
+			<h3 class="text-sm font-semibold uppercase tracking-wide text-gray-800">Data Binding</h3>
+			<Switch
+				name="show-tag"
+				label="Show Bound Data"
+				:model-value="nodeConfigurableData.showTag"
+				@update:model-value="updateNodeData({ showTag: $event })"
+			/>
+			<TextInput
+				:label="boundTag.label"
+				:model-value="boundTag.value"
+				@update:model-value="tagsStore.updateTagValue(boundTag.id, $event)"
+			/>
 		</div>
 	</div>
 </template>

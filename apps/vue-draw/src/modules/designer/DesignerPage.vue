@@ -6,6 +6,7 @@
 
 	import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
 	import { NodeContextMenu } from './components/NodeContextMenu';
+	import ShapeSelectorPopup from './components/ShapeSelectorPopup/ShapeSelectorPopup.vue';
 	import { DesignerLeftPanel, DesignerRightPanel, DesignerToolbar } from './layouts';
 
 	import { BaseEdge, EdgeMarkerDef, ConnectionLine } from './components/Edges';
@@ -143,6 +144,7 @@
 					:y="contextMenu.y"
 					@close="closeContextMenu"
 				/>
+				<ShapeSelectorPopup />
 			</main>
 			<!-- Right Panel: Properties -->
 			<DesignerRightPanel />

@@ -21,6 +21,7 @@
 		resizerHandleStyle,
 		resizerLineStyle
 	} from '@/modules/designer/constant/default';
+	import { useTagsStore } from '@/modules/designer/composables/useTagsStore';
 
 	export interface GenericCanvasNodeProps extends NodeProps<DesignerNodeData> {
 		defaultNodeWidth?: number;
@@ -67,6 +68,9 @@
 
 	const shapeWidth = computed(() => props.dimensions.width || props.defaultNodeWidth);
 	const shapeHeight = computed(() => props.dimensions.height || props.defaultNodeHeight);
+
+	const tagsStore = useTagsStore();
+	const boundTag = computed(() => tagsStore.tags.find((t) => t.id === props.data.tagId));
 </script>
 
 <template>
@@ -139,5 +143,38 @@
 			:shape-height="shapeHeight"
 		>
 		</slot>
+
+		<!-- Tag Display -->
+		<div
+			v-if="boundTag && props.data.showTag"
+			class="absolute left-0 -top-2 -translate-y-full pointer-events-none z-10"
+		>
+			<span
+				class="px-2 py-0.5 rounded text-[10px] font-medium text-purple-700 bg-purple-100 border border-purple-200 shadow-sm pointer-events-auto flex items-center gap-1"
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="10"
+					height="10"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<path
+						d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"
+					/>
+					<circle
+						cx="7.5"
+						cy="7.5"
+						r=".5"
+						fill="currentColor"
+					/>
+				</svg>
+				{{ boundTag.label }}: {{ boundTag.value }}
+			</span>
+		</div>
 	</div>
 </template>
