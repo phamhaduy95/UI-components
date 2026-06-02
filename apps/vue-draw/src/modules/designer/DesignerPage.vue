@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { onMounted, onUnmounted, type ComponentInstance } from 'vue';
+	import { onMounted, onUnmounted, warn, type ComponentInstance } from 'vue';
 
 	import { Background } from '@vue-flow/background';
 	import { VueFlow, type Connection, type Edge, type NodeComponent } from '@vue-flow/core';
@@ -24,6 +24,7 @@
 	import { generateEdge } from '@/modules/designer/utils/edge.utils';
 
 	import type { DesignGraphNode } from './types/Node.type';
+	import { useEdgeCreation } from './composables/useEdgeCreation';
 
 	// We let vue-flow manage state of nodes and edges internally to reduce memory usage
 	const initialNodes: Array<DesignGraphNode> = [];
@@ -52,7 +53,8 @@
 	};
 
 	const { commit } = useHistory();
-	const { createAddEdgesCommand, createUpdateEdgeCommand } = useNodeCommandFactory();
+	const { createEdges } = useEdgeCreation();
+	const { createUpdateEdgeCommand } = useNodeCommandFactory();
 	const { onNodeDragStart, onNodeDragStop } = useNodeMovement();
 
 	const { register, unregister } = useKeyboardBindings();
@@ -78,13 +80,19 @@
 	const { canvasConfig } = useCanvasConfig();
 
 	const onConnect = (connection: Connection) => {
+		if (connection.source === connection.target) {
+			warn('Source and target cannot be the same');
+			return;
+		}
+
 		const edge = generateEdge({
 			...connection,
 			type: 'default'
 		});
-		commit(createAddEdgesCommand([edge]));
+		createEdges([edge]);
 	};
 
+	// the event handler when user change connection
 	const onEdgeUpdate = (edgeUpdate: { edge: Edge; connection: Connection }) => {
 		commit(
 			createUpdateEdgeCommand([

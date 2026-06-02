@@ -77,8 +77,8 @@
 		:style="{
 			position: 'absolute',
 			offsetPosition: 'center',
-			maxWidth: `${shapeWidth}px`,
-			minHeight: `${shapeHeight}px`
+			width: `${shapeWidth}px`,
+			height: `${shapeHeight}px`
 		}"
 		:data-selected="isNodeSelected"
 	>
@@ -90,7 +90,7 @@
 				:id="`source-${index}`"
 				type="source"
 				:position="connector.position"
-				class="SourceHandle pointer-events-auto opacity-0 hover:opacity-100"
+				class="SourceHandle pointer-events-auto"
 				:style="{
 					offsetPath: path,
 					width: connectorSize,
@@ -108,11 +108,12 @@
 					offsetRotate: 'auto'
 				}"
 			/>
+
 			<Handle
 				:id="`target-${index}`"
 				type="target"
 				:position="connector.position"
-				class="TargetHandle pointer-events-auto opacity-0 hover:opacity-100"
+				class="TargetHandle pointer-events-auto"
 				:style="{
 					offsetPath: path,
 					width: connectorSize,
@@ -136,8 +137,39 @@
 
 <style scoped lang="css">
 	.Connector {
+		position: relative;
+	}
+
+	.TargetHandle,
+	.SourceHandle {
+		opacity: 0;
+		z-index: 2;
+		&::before {
+			content: '';
+			border-radius: 999px;
+			position: absolute;
+			background-color: #2141de66;
+			top: -2px;
+			left: -2px;
+			right: -2px;
+			bottom: -2px;
+		}
+	}
+
+	.Connector:where(:hover) {
 		> .SourceHandle {
 			opacity: 1;
+		}
+	}
+
+	.Connector:where([data-selected='true']) {
+		> .SourceHandle {
+			opacity: 0;
+			pointer-events: none;
+		}
+		> .TargetHandle {
+			opacity: 0;
+			pointer-events: none;
 		}
 	}
 </style>

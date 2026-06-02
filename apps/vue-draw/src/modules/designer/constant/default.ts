@@ -56,11 +56,11 @@ export const defaultFormFieldData: Readonly<FormFieldNodeData> = {
 };
 
 export const defaultEdgeData: Readonly<EdgeData> = {
-	strokeColor: '#b1b1b7',
-	strokeWidth: 2,
+	strokeColor: '#0d0d0d',
+	strokeWidth: 1,
 	lineType: 'solid',
 	curve: 'smoothstep',
-	markerStart: 'none',
+	markerStart: 'arrow',
 	markerEnd: 'none',
 	labelPosition: 'center',
 	labelColor: '#000000',

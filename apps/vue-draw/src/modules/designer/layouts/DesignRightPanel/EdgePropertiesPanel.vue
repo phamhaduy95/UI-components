@@ -11,7 +11,7 @@
 
 	const { selectedEdge, updateEdgeBasicProps, updateEdgeData } = useEdgeConfig();
 
-	const edgeData = computed(() => selectedEdge.value?.data ?? defaultEdgeData);
+	const edgeData = computed(() => selectedEdge.value?.data ?? structuredClone(defaultEdgeData));
 
 	const edgeLabel = computed(() => selectedEdge.value?.label || '');
 

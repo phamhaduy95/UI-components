@@ -90,6 +90,7 @@
 				:path="path"
 				v-bind="connectorProps"
 				:connectors="connectors"
+				:is-node-selected="selected"
 			/>
 		</template>
 	</GenericCanvasNode>

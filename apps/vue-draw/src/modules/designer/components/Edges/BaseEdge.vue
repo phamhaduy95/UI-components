@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed } from 'vue';
+	import { computed, type CSSProperties } from 'vue';
 	import {
 		BaseEdge,
 		EdgeLabelRenderer,
@@ -8,8 +8,11 @@
 		getStraightPath,
 		type EdgeProps
 	} from '@vue-flow/core';
+	import { defaultEdgeData } from '../../constant/default';
 
 	const props = defineProps<EdgeProps>();
+
+	const edgeData = computed(() => props.data ?? structuredClone(defaultEdgeData));
 
 	const pathDetails = computed(() => {
 		const params = {
@@ -21,7 +24,7 @@
 			targetPosition: props.targetPosition
 		};
 
-		const curve = props.data?.curve || 'smoothstep';
+		const curve = edgeData.value.curve || 'smoothstep';
 
 		switch (curve) {
 			case 'straight':
@@ -30,7 +33,7 @@
 				return getBezierPath(params);
 			case 'smoothstep':
 			default:
-				return getSmoothStepPath({ ...params, borderRadius: props.data?.borderRadius ?? 0 });
+				return getSmoothStepPath({ ...params, borderRadius: edgeData.value.borderRadius });
 		}
 	});
 
@@ -50,33 +53,34 @@
 	const labelY = computed(() => pathDetails.value[2]);
 
 	// Edge Styling
-	const strokeWidth = computed(() => props.data?.strokeWidth ?? 2);
-	const strokeColor = computed(() => props.data?.strokeColor ?? '#b1b1b7');
-	const strokeDasharray = computed(
-		() => STYLES.dashArray[props.data?.lineType ?? 'solid'] ?? 'none'
-	);
+	const strokeWidth = computed<number>(() => edgeData.value.strokeWidth);
+	const strokeColor = computed<string>(() => edgeData.value.strokeColor);
+	const strokeDasharray = computed(() => STYLES.dashArray[edgeData.value.lineType]);
 
-	// Markers
-	const getMarkerUrl = (type?: string, isStart?: boolean) => {
-		return !type || type === 'none' ? '' : `url(#marker-${type}${isStart ? '-start' : '-end'})`;
-	};
-	const markerStartUrl = computed(() => getMarkerUrl(props.data?.markerStart, true));
-	const markerEndUrl = computed(() => getMarkerUrl(props.data?.markerEnd, false));
+	const startMarkerURL = computed(() => {
+		const markerType = edgeData.value.markerStart;
+		if (markerType === 'none') return '';
+		return `url(#marker-${markerType}-start)`;
+	});
+
+	const markerEndURL = computed(() => {
+		const markerType = edgeData.value.markerEnd;
+		if (markerType === 'none') return '';
+		return `url(#marker-${markerType}-end)`;
+	});
 
 	// Label Styling
-	const labelStyle = computed(() => {
-		const data = props.data || {};
-		const pos = data.labelPosition || 'center';
-		const transform = STYLES.labelPosition[pos] ?? STYLES.labelPosition.center;
+	const labelStyle = computed<CSSProperties>(() => {
+		const pos = edgeData.value.labelPosition;
+		const transform = STYLES.labelPosition[pos];
 
 		return {
-			position: 'absolute' as const,
+			position: 'absolute',
 			transform: `${transform} translate(${labelX.value}px,${labelY.value}px)`,
-			color: data.labelColor ?? '#000000',
-			fontSize: `${data.labelFontSize ?? 12}px`,
-			fontWeight: data.labelFontWeight ?? 'normal',
-			fontStyle: data.labelFontStyle ?? 'normal',
-			pointerEvents: 'all' as const
+			color: edgeData.value.labelColor,
+			fontSize: `${edgeData.value.labelFontSize}px`,
+			fontWeight: edgeData.value.labelFontWeight,
+			fontStyle: edgeData.value.labelFontStyle
 		};
 	});
 </script>
@@ -88,7 +92,7 @@
 		:id="`${id}-selection`"
 		:path="path"
 		:style="{
-			stroke: '#3b82f6',
+			stroke: '#2141de66',
 			strokeWidth: Number(strokeWidth) + 2
 		}"
 	/>
@@ -111,15 +115,15 @@
 			strokeWidth: strokeWidth,
 			strokeDasharray: strokeDasharray
 		}"
-		:marker-start="markerStartUrl"
-		:marker-end="markerEndUrl"
+		:marker-start="startMarkerURL"
+		:marker-end="markerEndURL"
 		class="cursor-pointer"
 	/>
 	<EdgeLabelRenderer>
 		<div
 			v-if="label"
 			:style="labelStyle"
-			class="nodrag nopan bg-white px-1 rounded-sm border border-transparent hover:border-gray-300 transition-colors cursor-pointer"
+			class="nodrag nopan bg-white! px-1 rounded-sm border border-transparent cursor-pointer"
 		>
 			{{ label }}
 		</div>
