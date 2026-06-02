@@ -39,7 +39,7 @@ export interface GroupEntry {
 }
 
 export type ConfigurableNodeProps = Partial<
-	Pick<GraphNode, 'style' | 'dimensions' | 'zIndex' | 'position'>
+	Pick<GraphNode, 'style' | 'dimensions' | 'zIndex' | 'position' | 'hidden'>
 >;
 
 export interface NodeUpdateEntry {

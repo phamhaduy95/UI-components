@@ -80,6 +80,17 @@
 	const handleShowTagChange = (value: boolean) => {
 		updateNodeData({ showTag: value });
 	};
+
+	const nodeHidden = computed(() => selectedNode.value?.hidden ?? false);
+	const nodeZIndex = computed(() => selectedNode.value?.zIndex ?? 0);
+
+	const handleHiddenChange = (value: boolean) => {
+		updateNodeBasicProps({ hidden: value ?? false });
+	};
+
+	const handleZIndexChange: NumberInputProps['onValueChange'] = (value) => {
+		updateNodeBasicProps({ zIndex: value ?? 0 });
+	};
 </script>
 
 <template>
@@ -133,6 +144,19 @@
 		<!-- Appearance -->
 		<div class="space-y-2">
 			<h3 class="text-sm font-semibold uppercase tracking-wide text-gray-800">Appearance</h3>
+			<Switch
+				name="hidden"
+				label="Hidden Component"
+				:checked="nodeHidden"
+				@update:checked="handleHiddenChange"
+			/>
+			<NumberInput
+				class="w-full"
+				label="Z-Index"
+				size="xs"
+				:model-value="nodeZIndex"
+				@value-change="handleZIndexChange"
+			/>
 			<ColorPicker
 				label="Background"
 				:model-value="nodeConfigurableData.fill"

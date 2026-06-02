@@ -37,8 +37,9 @@ export const useNodeConfig = () => {
 			'style',
 			'dimensions',
 			'position',
-			'zIndex'
-		];
+			'zIndex',
+			'hidden'
+		] as const;
 
 		const beforeData = fieldsToKeep.reduce((acc, key) => {
 			if (key in basicProps) {
