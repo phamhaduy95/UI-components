@@ -75,6 +75,10 @@
 	const hanldeStrokeWidthChange: SingleSliderProps['onUpdate:modelValue'] = (value: number) => {
 		updateNodeData({ strokeWidth: value });
 	};
+
+	const handleShowTagChange = (value: boolean) => {
+		updateNodeData({ showTag: value });
+	};
 </script>
 
 <template>
@@ -164,8 +168,8 @@
 			<Switch
 				name="show-tag"
 				label="Show Bound Data"
-				:model-value="nodeConfigurableData.showTag"
-				@update:model-value="updateNodeData({ showTag: $event })"
+				:checked="nodeConfigurableData.showTag"
+				@update:checked="handleShowTagChange"
 			/>
 			<TextInput
 				:label="boundTag.label"

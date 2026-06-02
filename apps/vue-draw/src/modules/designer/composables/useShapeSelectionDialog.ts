@@ -18,8 +18,8 @@ const state = reactive<ShapeSelectorState>({
 	flowPosition: null
 });
 
-export const useShapeSelector = () => {
-	const openShapeSelector = (x: number, y: number, flowPosition: XYPosition, tag: TagData) => {
+export const useShapeSelectionDialog = () => {
+	const openShapeSelection = (x: number, y: number, flowPosition: XYPosition, tag: TagData) => {
 		state.visible = true;
 		state.x = x;
 		state.y = y;
@@ -27,7 +27,7 @@ export const useShapeSelector = () => {
 		state.tag = tag;
 	};
 
-	const closeShapeSelector = () => {
+	const closeShapeSelection = () => {
 		state.visible = false;
 		state.tag = null;
 		state.flowPosition = null;
@@ -35,7 +35,7 @@ export const useShapeSelector = () => {
 
 	return {
 		shapeSelectorState: state,
-		openShapeSelector,
-		closeShapeSelector
+		openShapeSelection,
+		closeShapeSelection
 	};
 };

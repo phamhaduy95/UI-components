@@ -17,7 +17,7 @@
 
 	const { findNode } = useVueFlow();
 	const { copyNodes, pasteNodes, canPaste } = useClipboard();
-	const { cloneNodes, removeNodes } = useNodeCreation();
+	const { removeNodes } = useNodeCreation();
 
 	const open = ref(true);
 
@@ -34,19 +34,23 @@
 			copyNodes();
 		}
 		open.value = false;
+		emit('close');
 	};
 
 	const handlePaste = () => {
 		pasteNodes({});
 		open.value = false;
+		emit('close');
 	};
 
 	const handleDuplicate = () => {
 		const node = findNode(props.nodeId);
 		if (node) {
-			cloneNodes([node]);
+			copyNodes();
+			pasteNodes({});
 		}
 		open.value = false;
+		emit('close');
 	};
 
 	const handleDelete = () => {
@@ -55,6 +59,7 @@
 			removeNodes([node]);
 		}
 		open.value = false;
+		emit('close');
 	};
 </script>
 

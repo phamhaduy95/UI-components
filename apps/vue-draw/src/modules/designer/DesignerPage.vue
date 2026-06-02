@@ -5,8 +5,8 @@
 	import { VueFlow, type Connection, type Edge, type NodeComponent } from '@vue-flow/core';
 
 	import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
-	import { NodeContextMenu } from './components/NodeContextMenu';
-	import ShapeSelectorPopup from './components/ShapeSelectorPopup/ShapeSelectorPopup.vue';
+	import { NodeContextMenu } from './components/Dialog/NodeContextMenu';
+	import { ShapeSelectionDialog } from './components/Dialog/ShapeSelectionDialog';
 	import { DesignLeftPanel, DesignRightPanel, DesignToolbar } from './layouts';
 
 	import { BaseEdge, EdgeMarkerDef, ConnectionLine } from './components/Edges';
@@ -144,7 +144,7 @@
 					:y="contextMenu.y"
 					@close="closeContextMenu"
 				/>
-				<ShapeSelectorPopup />
+				<ShapeSelectionDialog />
 			</main>
 			<!-- Right Panel: Properties -->
 			<DesignRightPanel />

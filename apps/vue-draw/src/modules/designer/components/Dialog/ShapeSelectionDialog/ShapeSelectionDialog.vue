@@ -1,13 +1,13 @@
 <script setup lang="ts">
 	import { useNodeCommandFactory } from '@/modules/designer/composables/useCommandFactory';
 	import { useHistory } from '@/modules/designer/composables/useHistory';
-	import { useShapeSelector } from '@/modules/designer/composables/useShapeSelector';
+	import { useShapeSelectionDialog } from '@/modules/designer/composables/useShapeSelectionDialog';
 	import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
 	import { NodeCategory } from '@/modules/designer/types/Node.type';
 	import { generateNode } from '@/modules/designer/utils/node.utils';
 	import { computed, onMounted, onUnmounted, ref } from 'vue';
 
-	const { shapeSelectorState, closeShapeSelector } = useShapeSelector();
+	const { shapeSelectorState, closeShapeSelection: closeShapeSelector } = useShapeSelectionDialog();
 	const { commit } = useHistory();
 	const { createAddNodesCommand } = useNodeCommandFactory();
 

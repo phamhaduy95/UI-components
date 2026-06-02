@@ -2,7 +2,7 @@ import { useVueFlow } from '@vue-flow/core';
 
 import { useNodeCreation } from '@/modules/designer/composables/useNodeCreation';
 import { generateNode } from '@/modules/designer/utils/node.utils';
-import { useShapeSelector } from '@/modules/designer/composables/useShapeSelector';
+import { useShapeSelectionDialog } from '@/modules/designer/composables/useShapeSelectionDialog';
 
 import type { NodeCategory, TagData } from '@/modules/designer/types/Node.type';
 
@@ -22,7 +22,7 @@ export type DragPayload = NodeDragPayload | TagDragPayload;
 export const useDnD = () => {
 	const { screenToFlowCoordinate, findNode, updateNodeData } = useVueFlow();
 	const { createNodes } = useNodeCreation();
-	const { openShapeSelector } = useShapeSelector();
+	const { openShapeSelection: openShapeSelector } = useShapeSelectionDialog();
 
 	const onPaletteDragStart = (event: DragEvent, payload: DragPayload) => {
 		if (event.dataTransfer) {

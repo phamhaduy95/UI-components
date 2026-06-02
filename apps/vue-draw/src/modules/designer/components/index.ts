@@ -1,2 +1,2 @@
 export * from './Nodes';
-export * from './NodeContextMenu';
+export * from './Dialog/NodeContextMenu';
