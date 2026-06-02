@@ -59,7 +59,9 @@ export interface EdgeUpdateDataEntry {
 	afterData: EdgeData;
 }
 
-export type ConfigurableEdgeProps = Partial<Pick<DesignerEdge, 'type' | 'label'>>;
+export type ConfigurableEdgeProps = Partial<
+	Pick<DesignerEdge, 'type' | 'label' | 'source' | 'target' | 'sourceHandle' | 'targetHandle'>
+>;
 
 export interface EdgeBasicPropEntry {
 	edgeId: string;

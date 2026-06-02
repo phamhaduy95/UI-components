@@ -4,3 +4,12 @@
 @import '@vue-flow/core/dist/style.css';
 @import '@vue-flow/core/dist/theme-default.css';
 @import '@vue-flow/node-resizer/dist/style.css';
+
+/* Ensure edges render above nodes but below context menus (z-100) */
+.vue-flow__edges {
+	z-index: 50 !important;
+}
+
+.vue-flow__nodes {
+	z-index: 10 !important;
+}

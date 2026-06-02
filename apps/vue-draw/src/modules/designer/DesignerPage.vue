@@ -52,7 +52,7 @@
 	};
 
 	const { commit } = useHistory();
-	const { createAddEdgesCommand } = useNodeCommandFactory();
+	const { createAddEdgesCommand, createUpdateEdgeCommand } = useNodeCommandFactory();
 	const { onNodeDragStart, onNodeDragStop } = useNodeMovement();
 
 	const { register, unregister } = useKeyboardBindings();
@@ -83,6 +83,28 @@
 			type: 'default'
 		});
 		commit(createAddEdgesCommand([edge]));
+	};
+
+	const onEdgeUpdate = (edgeUpdate: { edge: Edge; connection: Connection }) => {
+		commit(
+			createUpdateEdgeCommand([
+				{
+					edgeId: edgeUpdate.edge.id,
+					beforeData: {
+						source: edgeUpdate.edge.source,
+						target: edgeUpdate.edge.target,
+						sourceHandle: edgeUpdate.edge.sourceHandle,
+						targetHandle: edgeUpdate.edge.targetHandle
+					},
+					afterData: {
+						source: edgeUpdate.connection.source,
+						target: edgeUpdate.connection.target,
+						sourceHandle: edgeUpdate.connection.sourceHandle,
+						targetHandle: edgeUpdate.connection.targetHandle
+					}
+				}
+			])
+		);
 	};
 </script>
 
@@ -115,10 +137,12 @@
 					:elevate-nodes-on-select="false"
 					:zoom-on-double-click="false"
 					:delete-key-code="null"
+					:edges-updatable="true"
 					@pane-click="closeContextMenu"
 					@node-context-menu="onNodeContextMenu"
 					@connect="onConnect"
 					@edge-click="onEdgeClick"
+					@edge-update="onEdgeUpdate"
 					@node-drag-start="onNodeDragStart"
 					@node-drag-stop="onNodeDragStop"
 					@node-click="handleNodeClick"
