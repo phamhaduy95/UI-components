@@ -32,7 +32,7 @@ export interface TagData {
 export interface BaseNodeData {
 	category: NodeCategory;
 	label?: string;
-	tagId?: string;
+	tagIds?: string[];
 	showTag?: boolean;
 }
 

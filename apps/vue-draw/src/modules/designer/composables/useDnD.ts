@@ -3,6 +3,8 @@ import { useVueFlow } from '@vue-flow/core';
 import { useNodeCreation } from '@/modules/designer/composables/useNodeCreation';
 import { generateNode } from '@/modules/designer/utils/node.utils';
 import { useShapeSelectionDialog } from '@/modules/designer/composables/useShapeSelectionDialog';
+import { useHistory } from '@/modules/designer/composables/useHistory';
+import { useNodeCommandFactory } from '@/modules/designer/composables/useCommandFactory';
 
 import type { NodeCategory, TagData } from '@/modules/designer/types/Node.type';
 
@@ -20,9 +22,11 @@ interface TagDragPayload {
 export type DragPayload = NodeDragPayload | TagDragPayload;
 
 export const useDnD = () => {
-	const { screenToFlowCoordinate, findNode, updateNodeData } = useVueFlow();
+	const { screenToFlowCoordinate, findNode } = useVueFlow();
 	const { createNodes } = useNodeCreation();
 	const { openShapeSelection: openShapeSelector } = useShapeSelectionDialog();
+	const { commit } = useHistory();
+	const { createUpdateNodeDataCommand } = useNodeCommandFactory();
 
 	const onPaletteDragStart = (event: DragEvent, payload: DragPayload) => {
 		if (event.dataTransfer) {
@@ -58,9 +62,18 @@ export const useDnD = () => {
 		const node = findNode(nodeId);
 		if (!node) return;
 
-		updateNodeData(nodeId, {
-			tagId: payload.tag.id
-		});
+		const currentTagIds = node.data.tagIds || [];
+		if (currentTagIds.includes(payload.tag.id)) return;
+
+		commit(
+			createUpdateNodeDataCommand([
+				{
+					nodeId,
+					beforeData: node?.data,
+					afterData: { ...node?.data, tagIds: [...currentTagIds, payload.tag.id], showTag: true }
+				}
+			])
+		);
 		return;
 	};
 

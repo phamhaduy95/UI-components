@@ -30,7 +30,7 @@
 			position: shapeSelectorState.flowPosition,
 			data: {
 				category,
-				tagId: shapeSelectorState.tag.id,
+				tagIds: [shapeSelectorState.tag.id],
 				showTag: true
 			}
 		});

@@ -70,7 +70,10 @@
 	const shapeHeight = computed(() => props.dimensions.height || props.defaultNodeHeight);
 
 	const tagsStore = useTagsStore();
-	const boundTag = computed(() => tagsStore.tags.find((t) => t.id === props.data.tagId));
+	const boundTags = computed(() => {
+		const tagIds = props.data.tagIds || [];
+		return tagsStore.tags.filter((t) => tagIds.includes(t.id));
+	});
 </script>
 
 <template>
@@ -146,11 +149,13 @@
 
 		<!-- Tag Display -->
 		<div
-			v-if="boundTag && props.data.showTag"
-			class="absolute w-max -right-1 translate-x-full top-0 translate-y-2 pointer-events-none z-10"
+			v-if="boundTags.length > 0 && props.data.showTag"
+			class="absolute -right-1 translate-x-full top-0 translate-y-2 pointer-events-none z-10 flex flex-col gap-1"
 		>
 			<span
-				class="px-2 py-0.5 rounded text-xs block text-center font-medium text-gray-700 bg-purple-100 border border-purple-200 pointer-events-auto"
+				v-for="boundTag in boundTags"
+				:key="boundTag.id"
+				class="px-2 py-0.5 w-max rounded text-xs font-medium text-gray-700 bg-purple-100 border border-purple-200 pointer-events-auto"
 			>
 				{{ boundTag.value }}
 			</span>

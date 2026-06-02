@@ -19,8 +19,9 @@
 	const tagsStore = useTagsStore();
 	const { selectedNode, updateNodeBasicProps, updateNodeData } = useNodeConfig();
 
-	const boundTag = computed(() => {
-		return tagsStore.tags.find((t) => t.id === nodeConfigurableData.value.tagId);
+	const boundTags = computed(() => {
+		const tagIds = nodeConfigurableData.value.tagIds || [];
+		return tagsStore.tags.filter((t) => tagIds.includes(t.id));
 	});
 
 	const nodePosition = computed<XYPosition>(() => ({
@@ -161,7 +162,7 @@
 
 		<!-- Bound Tag -->
 		<div
-			v-if="boundTag"
+			v-if="boundTags.length > 0"
 			class="space-y-4"
 		>
 			<h3 class="text-sm font-semibold uppercase tracking-wide text-gray-800">Data Binding</h3>
@@ -171,11 +172,15 @@
 				:checked="nodeConfigurableData.showTag"
 				@update:checked="handleShowTagChange"
 			/>
-			<TextInput
-				:label="boundTag.label"
-				:model-value="boundTag.value"
-				@update:model-value="tagsStore.updateTagValue(boundTag.id, $event)"
-			/>
+			<div class="space-y-2">
+				<TextInput
+					v-for="boundTag in boundTags"
+					:key="boundTag.id"
+					:label="boundTag.label"
+					:model-value="boundTag.value"
+					@update:model-value="tagsStore.updateTagValue(boundTag.id, $event)"
+				/>
+			</div>
 		</div>
 	</div>
 </template>
