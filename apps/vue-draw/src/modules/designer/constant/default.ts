@@ -71,12 +71,15 @@ export const defaultEdgeData: Readonly<EdgeData> = {
 
 export const resizerLineStyle: Readonly<CSSProperties> = {
 	borderColor: '#6366F5',
-	borderStyle: 'dashed'
+	borderStyle: 'dashed',
+	zIndex: 100
 };
+
 export const resizerHandleStyle: Readonly<CSSProperties> = {
 	width: '8px',
 	height: '8px',
 	borderRadius: '999px',
 	background: '#6366F5',
+	zIndex: 100,
 	border: 'none'
 };

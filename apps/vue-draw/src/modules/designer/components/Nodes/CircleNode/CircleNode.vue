@@ -59,6 +59,7 @@
 	<GenericCanvasNode
 		v-bind="props"
 		:keep-aspect-ratio="true"
+		:keep-default-ratio="true"
 	>
 		<template #default="{ shapeHeight, shapeWidth }">
 			<svg

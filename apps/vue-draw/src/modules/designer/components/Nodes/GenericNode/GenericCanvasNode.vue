@@ -22,6 +22,7 @@
 		resizerLineStyle
 	} from '@/modules/designer/constant/default';
 	import { useTagsStore } from '@/modules/designer/composables/useTagsStore';
+	import { useKeyModifier } from '@vueuse/core';
 
 	export interface GenericCanvasNodeProps extends NodeProps<DesignerNodeData> {
 		defaultNodeWidth?: number;
@@ -29,12 +30,13 @@
 		keepAspectRatio?: boolean;
 		hideConnector?: boolean;
 		connectors?: ConnectorProps[];
+		keepDefaultRatio?: boolean;
 	}
 
 	const props = withDefaults(defineProps<GenericCanvasNodeProps>(), {
 		defaultNodeWidth: defaultNodeDimensions.width,
 		defaultNodeHeight: defaultNodeDimensions.height,
-		keepAspectRatio: false
+		keepDefaultRatio: false
 	});
 
 	type GenericResizerProps = NodeResizerProps & {
@@ -62,6 +64,16 @@
 	};
 
 	defineSlots<GenericCanvasNodeSlots>();
+
+	const isShift = useKeyModifier('Shift');
+
+	const computedKeepAspectRatio = computed(() => {
+		const isShiftPressed = Boolean(isShift.value);
+		if (props.keepDefaultRatio) {
+			return props.keepAspectRatio;
+		}
+		return isShiftPressed;
+	});
 
 	const { nodeRef, onRotateMouseDown: onRotateMouseDown, canRotate } = useRotation(props.id);
 	const { onResizeStart, onResize, onResizeEnd } = useResize(props.id);
@@ -110,7 +122,7 @@
 			:handle-style="resizerHandleStyle"
 			:min-width="24"
 			:min-height="24"
-			:keep-aspect-ratio="keepAspectRatio"
+			:keep-aspect-ratio="computedKeepAspectRatio"
 		>
 			<NodeResizer
 				:is-visible="selected"
@@ -118,7 +130,7 @@
 				:handle-style="resizerHandleStyle"
 				:min-width="24"
 				:min-height="24"
-				:keep-aspect-ratio="keepAspectRatio"
+				:keep-aspect-ratio="computedKeepAspectRatio"
 				@resize-start="onResizeStart"
 				@resize="onResize"
 				@resize-end="onResizeEnd"

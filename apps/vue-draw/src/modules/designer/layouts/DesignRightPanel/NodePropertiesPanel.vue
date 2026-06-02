@@ -148,6 +148,7 @@
 				name="hidden"
 				label="Hidden Component"
 				:checked="nodeHidden"
+				size="xs"
 				@update:checked="handleHiddenChange"
 			/>
 			<NumberInput
