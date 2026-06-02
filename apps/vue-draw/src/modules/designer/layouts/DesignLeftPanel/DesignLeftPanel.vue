@@ -13,7 +13,7 @@
 
 <template>
 	<aside
-		class="z-10 flex w-64 shrink-0 flex-col border-r border-gray-200 bg-white shadow-[2px_0_5px_rgba(0,0,0,0.02)]"
+		class="z-10 flex w-56 shrink-0 flex-col border-r border-gray-200 bg-white shadow-[2px_0_5px_rgba(0,0,0,0.02)]"
 	>
 		<Tabs
 			class="flex-1 flex flex-col overflow-hidden"

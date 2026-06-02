@@ -120,7 +120,7 @@
 	<div class="flex h-full w-full flex-col overflow-hidden bg-gray-50">
 		<!-- Top Toolbar -->
 		<div
-			class="z-10 flex h-12 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm"
+			class="z-10 flex h-10 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-2 shadow-sm"
 		>
 			<DesignToolbar />
 		</div>
@@ -144,8 +144,11 @@
 					:max-zoom="5"
 					:elevate-nodes-on-select="false"
 					:zoom-on-double-click="false"
+					:pan-on-drag="[1]"
 					:delete-key-code="null"
 					:edges-updatable="true"
+					:snap-to-grid="canvasConfig.snapToGrid"
+					:snap-grid="[canvasConfig.gridGap, canvasConfig.gridGap]"
 					@pane-click="closeContextMenu"
 					@node-context-menu="onNodeContextMenu"
 					@connect="onConnect"

@@ -21,7 +21,7 @@
 
 <template>
 	<aside
-		class="w-75 z-10 flex shrink-0 flex-col border-l border-gray-200 bg-white shadow-[-2px_0_5px_rgba(0,0,0,0.02)]"
+		class="w-64 z-10 flex shrink-0 flex-col border-l border-gray-200 bg-white shadow-[-2px_0_5px_rgba(0,0,0,0.02)]"
 	>
 		<NodePropertiesPanel v-if="selectedNode" />
 		<EdgePropertiesPanel v-else-if="selectedEdge" />

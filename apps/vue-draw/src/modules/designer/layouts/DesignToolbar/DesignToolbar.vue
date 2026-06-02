@@ -32,9 +32,9 @@
 <template>
 	<div class="flex flex-1 items-center justify-between">
 		<!-- Left Actions -->
-		<div class="flex items-center space-x-2">
+		<div class="flex items-center space-x-1">
 			<button
-				class="toolbar-btn tooltip-trigger rounded p-1.5 focus:outline-none"
+				class="toolbar-btn tooltip-trigger rounded p-1 focus:outline-none"
 				:class="
 					canUndo
 						? 'cursor-pointer text-gray-600 hover:bg-gray-100'
@@ -44,10 +44,10 @@
 				title="Undo"
 				@click="undo()"
 			>
-				<IconUndo class="h-[18px] w-[18px]" />
+				<IconUndo class="h-4 w-4" />
 			</button>
 			<button
-				class="toolbar-btn tooltip-trigger rounded p-1.5 focus:outline-none"
+				class="toolbar-btn tooltip-trigger rounded p-1 focus:outline-none"
 				:class="
 					canRedo
 						? 'cursor-pointer text-gray-600 hover:bg-gray-100'
@@ -57,14 +57,14 @@
 				title="Redo"
 				@click="redo()"
 			>
-				<IconRedo class="h-[18px] w-[18px]" />
+				<IconRedo class="h-4 w-4" />
 			</button>
 
-			<div class="mx-2 h-5 w-px bg-gray-300"></div>
+			<div class="mx-1 h-4 w-px bg-gray-300"></div>
 
 			<!-- Copy/Paste -->
 			<button
-				class="toolbar-btn tooltip-trigger rounded p-1.5 focus:outline-none"
+				class="toolbar-btn tooltip-trigger rounded p-1 focus:outline-none"
 				:class="
 					canCopy
 						? 'cursor-pointer text-gray-600 hover:bg-gray-100'
@@ -74,10 +74,10 @@
 				title="Copy"
 				@click="copyNodes()"
 			>
-				<IconCopy class="h-[18px] w-[18px]" />
+				<IconCopy class="h-4 w-4" />
 			</button>
 			<button
-				class="toolbar-btn tooltip-trigger rounded p-1.5 focus:outline-none"
+				class="toolbar-btn tooltip-trigger rounded p-1 focus:outline-none"
 				:class="
 					canPaste
 						? 'cursor-pointer text-gray-600 hover:bg-gray-100'
@@ -87,20 +87,20 @@
 				title="Paste"
 				@click="pasteNodes({})"
 			>
-				<IconPaste class="h-[18px] w-[18px]" />
+				<IconPaste class="h-4 w-4" />
 			</button>
 
-			<div class="mx-2 h-5 w-px bg-gray-300"></div>
+			<div class="mx-1 h-4 w-px bg-gray-300"></div>
 
 			<!-- Group button -->
 			<button
-				class="toolbar-btn tooltip-trigger rounded p-1.5 focus:outline-none"
+				class="toolbar-btn tooltip-trigger rounded p-1 focus:outline-none"
 				:class="canGroup ? 'cursor-pointer' : 'cursor-not-allowed text-gray-300'"
 				:disabled="!canGroup"
 				title="Grouping"
 				@click="groupSelectedNodes"
 			>
-				<IconGroup class="h-[18px] w-[18px]" />
+				<IconGroup class="h-4 w-4" />
 			</button>
 
 			<!-- Ungroup button -->
@@ -111,13 +111,13 @@
 				title="Ungrouping"
 				@click="ungroup"
 			>
-				<IconUnGroup class="h-[18px] w-[18px]" />
+				<IconUnGroup class="h-4 w-4" />
 			</button>
 
-			<div class="mx-2 h-5 w-px bg-gray-300"></div>
+			<div class="mx-1 h-4 w-px bg-gray-300"></div>
 
 			<button
-				class="toolbar-btn tooltip-trigger rounded p-1.5 focus:outline-none"
+				class="toolbar-btn tooltip-trigger rounded p-1 focus:outline-none"
 				:class="
 					canChangeZIndex
 						? 'cursor-pointer text-gray-600 hover:bg-gray-100'
@@ -127,10 +127,10 @@
 				title="Bring to Front"
 				@click="bringToFront"
 			>
-				<IconBringToFront class="h-[18px] w-[18px]" />
+				<IconBringToFront class="h-4 w-4" />
 			</button>
 			<button
-				class="toolbar-btn tooltip-trigger rounded p-1.5 focus:outline-none"
+				class="toolbar-btn tooltip-trigger rounded p-1 focus:outline-none"
 				:class="
 					canChangeZIndex
 						? 'cursor-pointer text-gray-600 hover:bg-gray-100'
@@ -140,13 +140,13 @@
 				title="Send to Back"
 				@click="sendToBack"
 			>
-				<IconSendToBack class="h-[18px] w-[18px]" />
+				<IconSendToBack class="h-4 w-4" />
 			</button>
 
-			<div class="mx-2 h-5 w-px bg-gray-300"></div>
+			<div class="mx-1 h-4 w-px bg-gray-300"></div>
 
 			<button
-				class="tooltip-trigger rounded p-1.5 focus:outline-none"
+				class="tooltip-trigger rounded p-1 focus:outline-none"
 				:class="
 					canZoomIn
 						? 'cursor-pointer text-gray-600 hover:bg-gray-100'
@@ -156,13 +156,13 @@
 				title="Zoom In"
 				@click="zoomIn()"
 			>
-				<IconZoomIn class="h-[18px] w-[18px]" />
+				<IconZoomIn class="h-4 w-4" />
 			</button>
 			<span class="mx-1 w-10 text-center text-xs font-medium text-gray-600 select-none">
 				{{ zoomPercentage }}%
 			</span>
 			<button
-				class="tooltip-trigger rounded p-1.5 focus:outline-none"
+				class="tooltip-trigger rounded p-1 focus:outline-none"
 				:class="
 					canZoomOut
 						? 'cursor-pointer text-gray-600 hover:bg-gray-100'
@@ -172,28 +172,28 @@
 				title="Zoom Out"
 				@click="zoomOut()"
 			>
-				<IconZoomOut class="h-[18px] w-[18px]" />
+				<IconZoomOut class="h-4 w-4" />
 			</button>
 			<button
-				class="tooltip-trigger cursor-pointer rounded p-1.5 text-gray-600 hover:bg-gray-100 focus:outline-none"
+				class="tooltip-trigger cursor-pointer rounded p-1 text-gray-600 hover:bg-gray-100 focus:outline-none"
 				title="Fit to View"
 				@click="fitView()"
 			>
-				<IconFitView class="h-[18px] w-[18px]" />
+				<IconFitView class="h-4 w-4" />
 			</button>
 			<button
-				class="tooltip-trigger cursor-pointer rounded p-1.5 text-gray-600 hover:bg-gray-100 focus:outline-none"
+				class="tooltip-trigger cursor-pointer rounded p-1 text-gray-600 hover:bg-gray-100 focus:outline-none"
 				title="Reset Zoom"
 				@click="resetZoom()"
 			>
-				<IconResetZoom class="h-[18px] w-[18px]" />
+				<IconResetZoom class="h-4 w-4" />
 			</button>
 		</div>
 
 		<!-- Right Actions -->
-		<div class="flex items-center space-x-2">
+		<div class="flex items-center space-x-1">
 			<button
-				class="toolbar-btn tooltip-trigger flex items-center gap-1.5 rounded bg-gray-50 text-gray-600 border border-gray-200 px-3 py-1.5 text-xs font-semibold focus:outline-none hover:bg-gray-100 transition-colors"
+				class="toolbar-btn tooltip-trigger flex items-center gap-1 rounded bg-gray-50 text-gray-600 border border-gray-200 px-2 py-1 text-xs font-semibold focus:outline-none hover:bg-gray-100 transition-colors"
 				title="Import Graph from JSON"
 				@click="importGraph()"
 			>
@@ -220,7 +220,7 @@
 				Import
 			</button>
 			<button
-				class="toolbar-btn tooltip-trigger flex items-center gap-1.5 rounded bg-indigo-50 text-indigo-600 border border-transparent px-3 py-1.5 text-xs font-semibold focus:outline-none hover:bg-indigo-100 transition-colors"
+				class="toolbar-btn tooltip-trigger flex items-center gap-1 rounded bg-indigo-50 text-indigo-600 border border-transparent px-2 py-1 text-xs font-semibold focus:outline-none hover:bg-indigo-100 transition-colors"
 				title="Export Graph to JSON"
 				@click="exportGraph()"
 			>

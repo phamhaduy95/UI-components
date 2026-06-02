@@ -20,6 +20,11 @@
 				<Switch v-model:checked="canvasConfig.gridVisible" />
 			</div>
 
+			<div class="flex items-center justify-between">
+				<span class="text-sm font-medium text-gray-700">Snap to Grid</span>
+				<Switch v-model:checked="canvasConfig.snapToGrid" />
+			</div>
+
 			<template v-if="canvasConfig.gridVisible">
 				<SingleSelect
 					v-model="canvasConfig.gridVariant"

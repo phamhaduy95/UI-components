@@ -5,6 +5,7 @@ import type { CanvasConfig } from '@/modules/designer/types/Config.type';
 const useCanvasConfigStore = defineStore('designer-canvas-config', () => {
 	const canvasConfig = ref<CanvasConfig>({
 		gridVisible: true,
+		snapToGrid: true,
 		gridVariant: 'dots',
 		gridGap: 24,
 		gridSize: 2,
