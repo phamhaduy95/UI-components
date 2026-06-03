@@ -1,0 +1,116 @@
+.Editable {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	width: 100%;
+
+	--field-height: 2.5rem;
+	--field-padding-block: 0.5rem;
+	--field-padding-inline: 1rem;
+	--field-border-radius: var(--radius-xs);
+	--field-font-size: var(--text-base);
+	--field-font-line-height: var(--text-base--line-height);
+	--field-label-size: var(--text-sm);
+	--field-label-line-height: var(--text-sm--line-height);
+}
+
+.Editable[data-size='sm'] {
+	--field-height: 2rem;
+	--field-padding-block: 0.25rem;
+	--field-padding-inline: 0.5rem;
+	--field-font-size: var(--text-sm);
+	--field-font-line-height: var(--text-sm--line-height);
+	--field-label-size: var(--text-xs);
+	--field-label-line-height: var(--text-xs--line-height);
+}
+
+.Editable[data-size='lg'] {
+	--field-height: 3rem;
+	--field-padding-block: 0.6125rem;
+	--field-padding-inline: 1.25rem;
+	--field-font-size: var(--text-lg);
+	--field-font-line-height: var(--text-lg--line-height);
+	--field-label-size: var(--text-base);
+	--field-label-line-height: var(--text-base--line-height);
+}
+
+.Editable_Header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.Editable_Label {
+	font-size: var(--field-label-size);
+	line-height: var(--field-label-line-height);
+	color: var(--color-on-surface);
+	font-weight: 500;
+}
+
+.Editable_Area {
+	position: relative;
+	width: 100%;
+	flex: 1;
+	min-width: 0;
+}
+
+.Editable_Content {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+}
+
+.Editable_Preview {
+	display: inline-flex;
+	align-items: center;
+	min-height: var(--field-height);
+	padding-inline: var(--field-padding-inline);
+	padding-block: var(--field-padding-block);
+	border-radius: var(--field-border-radius);
+	font-size: var(--field-font-size);
+	line-height: var(--field-font-line-height);
+	cursor: text;
+	width: 100%;
+	border: 1px solid transparent;
+	color: var(--color-on-surface);
+	transition: background-color 0.2s ease;
+}
+
+.Editable_Preview[data-placeholder-shown] {
+	color: var(--color-on-surface-variant);
+	opacity: 0.8;
+}
+
+.Editable_Preview:hover {
+	background-color: var(--color-surface-container-highest);
+}
+
+.Editable_Input {
+	width: 100%;
+	height: var(--field-height);
+	padding-inline: var(--field-padding-inline);
+	padding-block: var(--field-padding-block);
+	font-size: var(--field-font-size);
+	line-height: var(--field-font-line-height);
+	border: 1px solid var(--color-outline);
+	border-radius: var(--field-border-radius);
+	outline: none;
+	background: var(--color-surface);
+	color: var(--color-on-surface);
+}
+
+.Editable_Input:focus {
+	border-color: var(--color-primary);
+	outline: 1px solid var(--color-primary);
+}
+
+.Editable[data-status='error'] .Editable_Input {
+	border-color: var(--color-error);
+}
+
+.Editable_Control {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+}

@@ -10,6 +10,7 @@ export * from './Chip';
 export * from './DatePicker';
 export * from './DateRangePicker';
 export * from './DropdownMenu';
+export * from './Editable';
 export * from './FieldLabel';
 export * from './Hover';
 export * from './IconButton';
