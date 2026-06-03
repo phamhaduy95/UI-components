@@ -7,22 +7,25 @@
 		type OnResizeEnd,
 		type OnResizeStart
 	} from '@vue-flow/node-resizer';
-	import { computed, type CSSProperties } from 'vue';
+	import { computed, ref, nextTick, type CSSProperties } from 'vue';
+
+	import { useVueFlow } from '@vue-flow/core';
 
 	import { useResize } from '@/modules/designer/composables/useResize';
 	import { useRotation } from '@/modules/designer/composables/useRotation';
 	import GenericNodeConnector, { type ConnectorProps } from './GenericNodeConnector.vue';
 
-	import type { DesignerNodeData } from '@/modules/designer/types/Node.type.ts';
+	import { NodeCategory, type DesignerNodeData } from '@/modules/designer/types/Node.type.ts';
 
 	import IconRotate from '@/assets/icons/rotate.svg';
+	import { Chip } from '@packages/vue-components';
 	import {
 		defaultNodeDimensions,
 		resizerHandleStyle,
 		resizerLineStyle
 	} from '@/modules/designer/constant/default';
 	import { useTagsStore } from '@/modules/designer/composables/useTagsStore';
-	import { useKeyModifier } from '@vueuse/core';
+	import { useKeyModifier, useEventListener } from '@vueuse/core';
 
 	export interface GenericCanvasNodeProps extends NodeProps<DesignerNodeData> {
 		defaultNodeWidth?: number;
@@ -86,6 +89,95 @@
 		const tagIds = props.data.tagIds || [];
 		return tagsStore.tags.filter((t) => tagIds.includes(t.id));
 	});
+
+	const { updateNodeData } = useVueFlow();
+
+	const unbindTag = (tagId: string) => {
+		const newTagIds = props.data.tagIds?.filter((id) => id !== tagId) || [];
+		updateNodeData(props.id, { tagIds: newTagIds });
+	};
+
+	const isEditing = ref(false);
+	const textareaRef = ref<HTMLTextAreaElement | null>(null);
+
+	const showLabel = computed(() => {
+		return (
+			props.data.category === NodeCategory.BasicShape ||
+			props.data.category === NodeCategory.Industrial
+		);
+	});
+
+	useEventListener('keydown', (e: KeyboardEvent) => {
+		if (!props.selected || isEditing.value || !showLabel.value) return;
+
+		const target = e.target as HTMLElement;
+		if (
+			target &&
+			(target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)
+		) {
+			return;
+		}
+
+		if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+			isEditing.value = true;
+
+			const newLabel = (props.data.label || '') + e.key;
+			updateNodeData(props.id, { label: newLabel });
+
+			e.preventDefault();
+
+			nextTick(() => {
+				if (textareaRef.value) {
+					textareaRef.value.focus();
+					textareaRef.value.setSelectionRange(
+						textareaRef.value.value.length,
+						textareaRef.value.value.length
+					);
+				}
+			});
+		} else if (e.key === 'Enter') {
+			isEditing.value = true;
+			e.preventDefault();
+			nextTick(() => {
+				if (textareaRef.value) {
+					textareaRef.value.focus();
+					textareaRef.value.setSelectionRange(
+						textareaRef.value.value.length,
+						textareaRef.value.value.length
+					);
+				}
+			});
+		}
+	});
+
+	const onDoubleClick = async () => {
+		if (!showLabel.value) return;
+		isEditing.value = true;
+		await nextTick();
+		if (textareaRef.value) {
+			textareaRef.value.focus();
+			textareaRef.value.setSelectionRange(
+				textareaRef.value.value.length,
+				textareaRef.value.value.length
+			);
+		}
+	};
+
+	const onBlur = () => {
+		isEditing.value = false;
+	};
+
+	const onInput = (e: Event) => {
+		const target = e.target as HTMLTextAreaElement;
+		updateNodeData(props.id, { label: target.value });
+	};
+
+	const onLabelKeyDown = (e: KeyboardEvent) => {
+		e.stopPropagation();
+		if (e.key === 'Escape') {
+			textareaRef.value?.blur();
+		}
+	};
 </script>
 
 <template>
@@ -99,6 +191,7 @@
 			top: '0px',
 			left: '0px'
 		}"
+		@dblclick="onDoubleClick"
 	>
 		<slot
 			name="rotateHandler"
@@ -159,18 +252,43 @@
 		>
 		</slot>
 
+		<!-- Label Display -->
+		<div
+			v-if="showLabel"
+			class="absolute inset-0 flex items-center justify-center pointer-events-none"
+		>
+			<textarea
+				v-if="isEditing"
+				ref="textareaRef"
+				class="w-full h-full bg-transparent border-none outline-none resize-none overflow-hidden text-center pointer-events-auto p-2"
+				:value="props.data.label"
+				@input="onInput"
+				@blur="onBlur"
+				@keydown="onLabelKeyDown"
+			/>
+			<div
+				v-else-if="props.data.label"
+				class="w-full h-full whitespace-pre-wrap wrap-break-word flex flex-col justify-center text-center p-2"
+			>
+				{{ props.data.label }}
+			</div>
+		</div>
+
 		<!-- Tag Display -->
 		<div
 			v-if="boundTags.length > 0 && props.data.showTag"
 			class="absolute -right-1 translate-x-full top-0 translate-y-2 pointer-events-none z-10 flex flex-col gap-1"
 		>
-			<span
+			<Chip
 				v-for="boundTag in boundTags"
 				:key="boundTag.id"
-				class="px-2 py-0.5 w-max rounded text-xs font-medium text-gray-700 bg-purple-100 border border-purple-200 pointer-events-auto"
-			>
-				{{ boundTag.value }}
-			</span>
+				:label="boundTag.value"
+				removable
+				color="primary"
+				size="sm"
+				class="pointer-events-auto w-min"
+				@remove="unbindTag(boundTag.id)"
+			/>
 		</div>
 	</div>
 </template>
