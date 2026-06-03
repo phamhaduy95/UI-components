@@ -7,6 +7,7 @@ export * from './BaseSlider';
 export * from './Button';
 export * from './Checkbox';
 export * from './Chip';
+export * from './DataTable';
 export * from './DatePicker';
 export * from './DateRangePicker';
 export * from './DropdownMenu';

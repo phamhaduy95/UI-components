@@ -1,0 +1,71 @@
+<script setup lang="ts">
+	import { DataTable, type DataTableColumn } from '@packages/vue-components';
+	import {
+		GenericCanvasNode,
+		type GenericCanvasNodeProps
+	} from '@/modules/designer/components/Nodes/GenericNode';
+
+	export type TableNodeProps = GenericCanvasNodeProps;
+
+	const props = defineProps<TableNodeProps>();
+
+	type MockData = {
+		id: number;
+		name: string;
+		status: string;
+	};
+
+	const mockColumns: DataTableColumn<MockData>[] = [
+		{
+			id: 'id',
+			header: 'ID',
+			cell: (_, data: MockData) => String(data.id),
+			type: 'data',
+			field: 'id'
+		},
+		{
+			id: 'name',
+			header: 'Name',
+			cell: (_, data: MockData) => String(data.name),
+			type: 'data',
+			field: 'name'
+		},
+		{
+			id: 'status',
+			header: 'Status',
+			cell: (_, data: MockData) => String(data.status),
+			type: 'data',
+			field: 'status'
+		}
+	];
+
+	const mockData: MockData[] = [
+		{ id: 1, name: 'Item 1', status: 'Active' },
+		{ id: 2, name: 'Item 2', status: 'Inactive' },
+		{ id: 3, name: 'Item 3', status: 'Pending' }
+	];
+
+	const onKeyDown = (e: KeyboardEvent) => {
+		e.stopPropagation();
+	};
+</script>
+
+<template>
+	<GenericCanvasNode
+		v-bind="props"
+		dynamic-size
+	>
+		<template #default>
+			<div
+				class="w-full h-full pointer-events-auto bg-white overflow-auto border border-gray-200 rounded shadow-sm"
+				@keydown="onKeyDown"
+			>
+				<DataTable
+					:columns="mockColumns"
+					:data="mockData"
+					data-key="id"
+				/>
+			</div>
+		</template>
+	</GenericCanvasNode>
+</template>

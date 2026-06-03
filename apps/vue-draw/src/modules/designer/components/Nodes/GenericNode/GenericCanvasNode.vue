@@ -34,6 +34,7 @@
 		hideConnector?: boolean;
 		connectors?: ConnectorProps[];
 		keepDefaultRatio?: boolean;
+		dynamicSize?: boolean;
 	}
 
 	const props = withDefaults(defineProps<GenericCanvasNodeProps>(), {
@@ -186,8 +187,8 @@
 		class="generic-shape-container relative overflow-visible rounded-none border border-dashed border-transparent bg-transparent"
 		:style="{
 			transform: `rotate(${props.data.rotation || 0}deg)`,
-			width: `${shapeWidth}px`,
-			height: `${shapeHeight}px`,
+			width: dynamicSize ? 'max-content' : `${shapeWidth}px`,
+			height: dynamicSize ? 'max-content' : `${shapeHeight}px`,
 			top: '0px',
 			left: '0px'
 		}"

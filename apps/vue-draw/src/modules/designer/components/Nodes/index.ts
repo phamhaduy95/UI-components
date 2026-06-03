@@ -12,3 +12,4 @@ export * from './DatePickerNode';
 export * from './FanNode';
 export * from './PumpNode';
 export * from './TankNode';
+export * from './TableNode';

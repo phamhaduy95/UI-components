@@ -17,6 +17,7 @@ export enum NodeType {
 	Text = 'text',
 	TextField = 'textField',
 	DatePicker = 'datePicker',
+	Table = 'table',
 	Group = 'group',
 	Fan = 'fan',
 	Pump = 'pump',
@@ -85,12 +86,18 @@ export interface FormFieldNodeData extends BaseNodeData {
 	fontSize?: number;
 }
 
+export interface TableNodeData extends BaseNodeData {
+	category: NodeCategory.FormField;
+	rotation: number;
+}
+
 export type DesignerNodeData =
 	| BasicShapeNodeData
 	| GroupNodeData
 	| TextNodeData
 	| IndustrialNodeData
-	| FormFieldNodeData;
+	| FormFieldNodeData
+	| TableNodeData;
 
 export type DesignGraphNode<T = DesignerNodeData> = Pick<
 	GraphNode<T>,

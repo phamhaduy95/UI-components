@@ -26,7 +26,9 @@ import {
 	PumpNode,
 	PumpPalette,
 	TankNode,
-	TankPalette
+	TankPalette,
+	TableNode,
+	TablePalette
 } from '@/modules/designer/components';
 
 type NodeTypeConfig = {
@@ -110,6 +112,14 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(DatePickerPalette),
 		nodeComponent: markRaw(DatePickerNode),
 		label: 'Date Picker'
+	},
+	[NodeType.Table]: {
+		id: NodeType.Table,
+		category: NodeCategory.FormField,
+		type: NodeType.Table,
+		paletteComponent: markRaw(TablePalette),
+		nodeComponent: markRaw(TableNode),
+		label: 'Table'
 	}
 };
 

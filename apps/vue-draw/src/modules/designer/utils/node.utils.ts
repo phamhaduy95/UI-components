@@ -50,6 +50,20 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						data: { ...defaultTextData, ...data } as TextNodeData,
 						dimensions: dimensions ?? structuredClone(textDimensions)
 					} as DesignGraphNode;
+				case 'table':
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultFormFieldData, ...data },
+						dimensions: {
+							width: 400,
+							height: 0
+						},
+						style: {
+							width: 'max-content',
+							height: 'max-content'
+						}
+					} as DesignGraphNode;
 				default:
 					return {
 						...rest,
