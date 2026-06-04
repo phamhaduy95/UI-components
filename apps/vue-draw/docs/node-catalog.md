@@ -32,7 +32,7 @@ This document provides a comprehensive list of all nodes available in the `vue-d
 | **DatePicker**    | FormField  | A calendar date selection input.                 | width: 200px<br>height: 40px                               | width: 30px<br>height: 30px                               |
 | **Select**        | FormField  | A dropdown selection input.                      | width: 200px<br>height: 40px                               | width: 30px<br>height: 30px                               |
 | **Slider**        | FormField  | An interactive slider input.                     | width: 200px<br>height: 40px                               | width: 30px<br>height: 30px                               |
-| **Button**        | FormField  | A clickable action button.                       | width: 100px<br>height: 40px                               | width: 30px<br>height: 30px                               |
+| **Button**        | FormField  | A clickable action button.                       | width: 100px<br>height: 40px                               | width: 30px<br>height: 12px                               |
 | **Spinner**       | FormField  | A numeric stepper/spinner input.                 | width: 200px<br>height: 40px                               | width: 30px<br>height: 30px                               |
 | **Checkbox**      | FormField  | A boolean toggle checkbox.                       | width: 30px<br>height: 30px                                | width: 30px<br>height: 30px                               |
 | **Table**         | FormField  | A multi-column data table.                       | width: 400px<br>height: auto                               | width: 30px<br>height: 30px                               |
