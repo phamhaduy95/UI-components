@@ -12,7 +12,7 @@
 	import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
 	import { Position } from '@vue-flow/core';
 
-	const DEFAULT_ELLIPSE_HEIGHT = 32;
+	const DEFAULT_ELLIPSE_HEIGHT = 50;
 
 	export type EllipseNodeProps = GenericCanvasNodeProps;
 

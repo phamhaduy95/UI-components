@@ -1,5 +1,6 @@
 import {
 	NodeCategory,
+	NodeType,
 	type BasicShapeNodeData,
 	type DesignGraphNode,
 	type DesignerNodeData,
@@ -33,7 +34,13 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 				...rest,
 				id: generateNodeId(),
 				data: { ...defaultNodeData, ...data } as BasicShapeNodeData,
-				dimensions: dimensions ?? structuredClone(basicShapeDimensions)
+				dimensions:
+					dimensions ??
+					(rest.type === NodeType.Rectangle
+						? { width: 100, height: 60 }
+						: rest.type === NodeType.Ellipse
+							? { width: 100, height: 50 }
+							: structuredClone(basicShapeDimensions))
 			} as DesignGraphNode;
 		case NodeCategory.Group:
 			return {

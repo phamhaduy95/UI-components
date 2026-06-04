@@ -34,7 +34,7 @@
 </script>
 
 <template>
-	<div class="flex flex-col h-full">
+	<div class="flex flex-col h-max overflow-auto">
 		<div class="border-b border-gray-100 px-4 py-3 shrink-0 flex flex-col gap-3">
 			<h2 class="text-sm font-semibold uppercase tracking-wider text-gray-800">Asset Library</h2>
 			<TextInput

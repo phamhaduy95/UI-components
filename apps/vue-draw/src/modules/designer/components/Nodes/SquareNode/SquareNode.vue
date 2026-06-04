@@ -51,7 +51,11 @@
 </script>
 
 <template>
-	<GenericCanvasNode v-bind="props">
+	<GenericCanvasNode
+		v-bind="props"
+		:keep-aspect-ratio="true"
+		:keep-default-ratio="true"
+	>
 		<template #default="{ shapeHeight, shapeWidth }">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

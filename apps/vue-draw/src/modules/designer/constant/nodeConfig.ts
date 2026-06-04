@@ -17,8 +17,6 @@ import {
 	TrianglePalette,
 	DiamondNode,
 	DiamondPalette,
-	RhombusNode,
-	RhombusPalette,
 	TrapezoidNode,
 	TrapezoidPalette,
 	ParallelogramNode,
@@ -83,6 +81,14 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		nodeComponent: markRaw(RectangleNode),
 		label: 'Rectangle'
 	},
+	[NodeType.Square]: {
+		id: NodeType.Square,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Square,
+		paletteComponent: markRaw(SquarePalette),
+		nodeComponent: markRaw(SquareNode),
+		label: 'Square'
+	},
 	[NodeType.Circle]: {
 		id: NodeType.Circle,
 		category: NodeCategory.BasicShape,
@@ -131,14 +137,7 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		nodeComponent: markRaw(DiamondNode),
 		label: 'Diamond'
 	},
-	[NodeType.Rhombus]: {
-		id: NodeType.Rhombus,
-		category: NodeCategory.BasicShape,
-		type: NodeType.Rhombus,
-		paletteComponent: markRaw(RhombusPalette),
-		nodeComponent: markRaw(RhombusNode),
-		label: 'Rhombus'
-	},
+
 	[NodeType.Trapezoid]: {
 		id: NodeType.Trapezoid,
 		category: NodeCategory.BasicShape,
@@ -227,14 +226,7 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		nodeComponent: markRaw(NonagonNode),
 		label: 'Nonagon'
 	},
-	[NodeType.Square]: {
-		id: NodeType.Square,
-		category: NodeCategory.BasicShape,
-		type: NodeType.Square,
-		paletteComponent: markRaw(SquarePalette),
-		nodeComponent: markRaw(SquareNode),
-		label: 'Square'
-	},
+
 	[NodeType.Text]: {
 		id: NodeType.Text,
 		category: NodeCategory.FormField,
