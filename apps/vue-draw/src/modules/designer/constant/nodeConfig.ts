@@ -19,6 +19,30 @@ import {
 	DiamondPalette,
 	RhombusNode,
 	RhombusPalette,
+	TrapezoidNode,
+	TrapezoidPalette,
+	ParallelogramNode,
+	ParallelogramPalette,
+	CrossNode,
+	CrossPalette,
+	RightArrowNode,
+	RightArrowPalette,
+	LeftArrowNode,
+	LeftArrowPalette,
+	UpArrowNode,
+	UpArrowPalette,
+	DownArrowNode,
+	DownArrowPalette,
+	PentagonNode,
+	PentagonPalette,
+	HeptagonNode,
+	HeptagonPalette,
+	OctagonNode,
+	OctagonPalette,
+	NonagonNode,
+	NonagonPalette,
+	SquareNode,
+	SquarePalette,
 	TextNode,
 	TextPalette,
 	TextFieldNode,
@@ -114,6 +138,102 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(RhombusPalette),
 		nodeComponent: markRaw(RhombusNode),
 		label: 'Rhombus'
+	},
+	[NodeType.Trapezoid]: {
+		id: NodeType.Trapezoid,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Trapezoid,
+		paletteComponent: markRaw(TrapezoidPalette),
+		nodeComponent: markRaw(TrapezoidNode),
+		label: 'Trapezoid'
+	},
+	[NodeType.Parallelogram]: {
+		id: NodeType.Parallelogram,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Parallelogram,
+		paletteComponent: markRaw(ParallelogramPalette),
+		nodeComponent: markRaw(ParallelogramNode),
+		label: 'Parallelogram'
+	},
+	[NodeType.Cross]: {
+		id: NodeType.Cross,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Cross,
+		paletteComponent: markRaw(CrossPalette),
+		nodeComponent: markRaw(CrossNode),
+		label: 'Cross'
+	},
+	[NodeType.RightArrow]: {
+		id: NodeType.RightArrow,
+		category: NodeCategory.BasicShape,
+		type: NodeType.RightArrow,
+		paletteComponent: markRaw(RightArrowPalette),
+		nodeComponent: markRaw(RightArrowNode),
+		label: 'Right Arrow'
+	},
+	[NodeType.LeftArrow]: {
+		id: NodeType.LeftArrow,
+		category: NodeCategory.BasicShape,
+		type: NodeType.LeftArrow,
+		paletteComponent: markRaw(LeftArrowPalette),
+		nodeComponent: markRaw(LeftArrowNode),
+		label: 'Left Arrow'
+	},
+	[NodeType.UpArrow]: {
+		id: NodeType.UpArrow,
+		category: NodeCategory.BasicShape,
+		type: NodeType.UpArrow,
+		paletteComponent: markRaw(UpArrowPalette),
+		nodeComponent: markRaw(UpArrowNode),
+		label: 'Up Arrow'
+	},
+	[NodeType.DownArrow]: {
+		id: NodeType.DownArrow,
+		category: NodeCategory.BasicShape,
+		type: NodeType.DownArrow,
+		paletteComponent: markRaw(DownArrowPalette),
+		nodeComponent: markRaw(DownArrowNode),
+		label: 'Down Arrow'
+	},
+	[NodeType.Pentagon]: {
+		id: NodeType.Pentagon,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Pentagon,
+		paletteComponent: markRaw(PentagonPalette),
+		nodeComponent: markRaw(PentagonNode),
+		label: 'Pentagon'
+	},
+	[NodeType.Heptagon]: {
+		id: NodeType.Heptagon,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Heptagon,
+		paletteComponent: markRaw(HeptagonPalette),
+		nodeComponent: markRaw(HeptagonNode),
+		label: 'Heptagon'
+	},
+	[NodeType.Octagon]: {
+		id: NodeType.Octagon,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Octagon,
+		paletteComponent: markRaw(OctagonPalette),
+		nodeComponent: markRaw(OctagonNode),
+		label: 'Octagon'
+	},
+	[NodeType.Nonagon]: {
+		id: NodeType.Nonagon,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Nonagon,
+		paletteComponent: markRaw(NonagonPalette),
+		nodeComponent: markRaw(NonagonNode),
+		label: 'Nonagon'
+	},
+	[NodeType.Square]: {
+		id: NodeType.Square,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Square,
+		paletteComponent: markRaw(SquarePalette),
+		nodeComponent: markRaw(SquareNode),
+		label: 'Square'
 	},
 	[NodeType.Text]: {
 		id: NodeType.Text,

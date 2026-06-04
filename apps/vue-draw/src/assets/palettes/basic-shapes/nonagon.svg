@@ -1,0 +1,18 @@
+<svg class="scada-icon"
+	xmlns="http://www.w3.org/2000/svg"
+	width="100%"
+	height="100%"
+	viewBox="0 0 102 102"
+	fill="none"
+	stroke="gray"
+	stroke-width="1"
+	stroke-linecap="square"
+	stroke-linejoin="miter"
+>
+	<style>
+		.scada-icon * {
+			vector-effect: non-scaling-stroke;
+		}
+	</style>
+	<polygon points="51 1 83.635 13.061 101 43.602 94.969 78.331 68.364 101 33.636 101 7.031 78.331 1 43.602 18.365 13.061"></polygon>
+</svg>
