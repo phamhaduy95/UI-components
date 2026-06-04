@@ -29,19 +29,26 @@ const textDimensions: Dimensions = { width: 150, height: 40 };
 
 export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => {
 	switch (data?.category) {
-		case NodeCategory.BasicShape:
+		case NodeCategory.BasicShape: {
+			let shapeDimensions: Dimensions;
+			switch (rest.type) {
+				case NodeType.Rectangle:
+					shapeDimensions = { width: 100, height: 60 };
+					break;
+				case NodeType.Ellipse:
+					shapeDimensions = { width: 100, height: 50 };
+					break;
+				default:
+					shapeDimensions = structuredClone(basicShapeDimensions);
+					break;
+			}
 			return {
 				...rest,
 				id: generateNodeId(),
 				data: { ...defaultNodeData, ...data } as BasicShapeNodeData,
-				dimensions:
-					dimensions ??
-					(rest.type === NodeType.Rectangle
-						? { width: 100, height: 60 }
-						: rest.type === NodeType.Ellipse
-							? { width: 100, height: 50 }
-							: structuredClone(basicShapeDimensions))
+				dimensions: dimensions ?? shapeDimensions
 			} as DesignGraphNode;
+		}
 		case NodeCategory.Group:
 			return {
 				...rest,
@@ -70,6 +77,20 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 							width: 'max-content',
 							height: 'max-content'
 						}
+					} as DesignGraphNode;
+				case 'button':
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
+						dimensions: dimensions ?? { width: 100, height: 40 }
+					} as DesignGraphNode;
+				case 'checkbox':
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
+						dimensions: dimensions ?? { width: 30, height: 30 }
 					} as DesignGraphNode;
 				default:
 					return {

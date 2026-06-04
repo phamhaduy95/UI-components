@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'vue';
 import type { CommonFieldProps } from '@components/BaseField';
 
 export interface CheckboxProps
-	extends Pick<CommonFieldProps<boolean>, 'status' | 'label' | 'supportingText'>,
+	extends Partial<Pick<CommonFieldProps<string>, 'status' | 'label' | 'supportingText'>>,
 		/* @vue-ignore */ HTMLAttributes {
 	checked?: boolean;
 	value?: string;

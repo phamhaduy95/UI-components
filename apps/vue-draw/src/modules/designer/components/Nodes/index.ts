@@ -30,3 +30,8 @@ export * from './ValveNode';
 export * from './MotorNode';
 export * from './GaugeNode';
 export * from './TableNode';
+export * from './SelectNode';
+export * from './SliderNode';
+export * from './ButtonNode';
+export * from './SpinnerNode';
+export * from './CheckboxNode';

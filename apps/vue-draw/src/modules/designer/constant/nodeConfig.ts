@@ -60,7 +60,17 @@ import {
 	GaugeNode,
 	GaugePalette,
 	TableNode,
-	TablePalette
+	TablePalette,
+	SelectNode,
+	SelectPalette,
+	SliderNode,
+	SliderPalette,
+	ButtonNode,
+	ButtonPalette,
+	SpinnerNode,
+	SpinnerPalette,
+	CheckboxNode,
+	CheckboxPalette
 } from '@/modules/designer/components';
 
 type NodeTypeConfig = {
@@ -250,6 +260,46 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(DatePickerPalette),
 		nodeComponent: markRaw(DatePickerNode),
 		label: 'Date Picker'
+	},
+	[NodeType.Select]: {
+		id: NodeType.Select,
+		category: NodeCategory.FormField,
+		type: NodeType.Select,
+		paletteComponent: markRaw(SelectPalette),
+		nodeComponent: markRaw(SelectNode),
+		label: 'Select'
+	},
+	[NodeType.Slider]: {
+		id: NodeType.Slider,
+		category: NodeCategory.FormField,
+		type: NodeType.Slider,
+		paletteComponent: markRaw(SliderPalette),
+		nodeComponent: markRaw(SliderNode),
+		label: 'Slider'
+	},
+	[NodeType.Button]: {
+		id: NodeType.Button,
+		category: NodeCategory.FormField,
+		type: NodeType.Button,
+		paletteComponent: markRaw(ButtonPalette),
+		nodeComponent: markRaw(ButtonNode),
+		label: 'Button'
+	},
+	[NodeType.Spinner]: {
+		id: NodeType.Spinner,
+		category: NodeCategory.FormField,
+		type: NodeType.Spinner,
+		paletteComponent: markRaw(SpinnerPalette),
+		nodeComponent: markRaw(SpinnerNode),
+		label: 'Spinner'
+	},
+	[NodeType.Checkbox]: {
+		id: NodeType.Checkbox,
+		category: NodeCategory.FormField,
+		type: NodeType.Checkbox,
+		paletteComponent: markRaw(CheckboxPalette),
+		nodeComponent: markRaw(CheckboxNode),
+		label: 'Checkbox'
 	},
 	[NodeType.Table]: {
 		id: NodeType.Table,
