@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/GenericNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconTable from '@/assets/palettes/form-fields/table.svg';
+	import IconTable from '@assets/palettes/form-fields/table.svg';
 
 	const props = defineProps<GenericNodePaletteProps>();
 </script>

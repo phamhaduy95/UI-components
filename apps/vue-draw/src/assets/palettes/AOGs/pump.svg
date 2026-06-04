@@ -1,4 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36px" height="36px" fill="none" stroke="gray" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+<svg class="scada-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36px" height="36px" fill="none" stroke="gray" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+	<style>
+		.scada-icon * {
+			vector-effect: non-scaling-stroke;
+		}
+	</style>
   <!-- Base Mount -->
   <path d="M 40 75 C 40 82 35 85 35 85 L 35 90 L 75 90 L 75 85 C 75 85 70 82 70 75" />
   <!-- Outer Casing and Discharge Pipe -->

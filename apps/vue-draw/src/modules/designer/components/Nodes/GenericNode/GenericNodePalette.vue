@@ -24,7 +24,7 @@
 
 <template>
 	<div
-		class="tooltip-trigger flex aspect-square cursor-grab items-center justify-center border border-transparent bg-transparent p-1 text-gray-500 transition-all duration-200 hover:text-gray-900 active:cursor-grabbing"
+		class="tooltip-trigger flex h-8 w-8 aspect-square cursor-grab items-center justify-center border border-transparent bg-transparent transition-all duration-200 hover:bg-gray-50 active:cursor-grabbing"
 		draggable="true"
 		:title="label"
 		@dragstart="(event) => onPaletteDragStart(event, { category, type })"

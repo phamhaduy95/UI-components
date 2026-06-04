@@ -1,12 +1,18 @@
-<svg
+<svg class="scada-icon"
 	xmlns="http://www.w3.org/2000/svg"
-	width="36px"
-	height="36px"
+	width="100%"
+	height="100%"
 	viewBox="0 0 100 100"
 	fill="none"
 	stroke="gray"
 	stroke-width="1"
+	stroke-linecap="square"
 	stroke-linejoin="miter"
 >
-	<rect x="2" y="2" width="98" height="98" style="vector-effect: non-scaling-stroke;"></rect>
+	<style>
+		.scada-icon * {
+			vector-effect: non-scaling-stroke;
+		}
+	</style>
+	<rect x="1" y="1" width="98" height="98"></rect>
 </svg>

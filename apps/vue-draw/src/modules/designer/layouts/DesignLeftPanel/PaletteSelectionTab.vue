@@ -43,7 +43,7 @@
 				size="sm"
 			/>
 		</div>
-		<div class="flex-1 space-y-5 overflow-y-auto p-4">
+		<div class="flex-1 space-y-5 overflow-y-auto py-2">
 			<div
 				v-for="(configs, category) in groupedNodes"
 				:key="category"

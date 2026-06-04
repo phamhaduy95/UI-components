@@ -1,5 +1,7 @@
 <script setup lang="ts">
-	import type { NodeProps } from '@vue-flow/core';
+	import { computed, ref, nextTick, type CSSProperties } from 'vue';
+	import { useKeyModifier, useEventListener } from '@vueuse/core';
+	import { useVueFlow, type NodeProps } from '@vue-flow/core';
 	import {
 		NodeResizer,
 		type NodeResizerProps,
@@ -7,25 +9,23 @@
 		type OnResizeEnd,
 		type OnResizeStart
 	} from '@vue-flow/node-resizer';
-	import { computed, ref, nextTick, type CSSProperties } from 'vue';
 
-	import { useVueFlow } from '@vue-flow/core';
+	import { Chip } from '@packages/vue-components';
 
-	import { useResize } from '@/modules/designer/composables/useResize';
+	import { useTagsStore } from '@/modules/designer/composables/useTagsStore';
 	import { useRotation } from '@/modules/designer/composables/useRotation';
-	import GenericNodeConnector, { type ConnectorProps } from './GenericNodeConnector.vue';
+	import { useResize } from '@/modules/designer/composables/useResize';
 
+	import GenericNodeConnector, { type ConnectorProps } from './GenericNodeConnector.vue';
 	import { NodeCategory, type DesignerNodeData } from '@/modules/designer/types/Node.type.ts';
 
-	import IconRotate from '@/assets/icons/rotate.svg';
-	import { Chip } from '@packages/vue-components';
 	import {
 		defaultNodeDimensions,
 		resizerHandleStyle,
 		resizerLineStyle
 	} from '@/modules/designer/constant/default';
-	import { useTagsStore } from '@/modules/designer/composables/useTagsStore';
-	import { useKeyModifier, useEventListener } from '@vueuse/core';
+
+	import IconRotate from '@assets/toolbar-icons/rotate.svg';
 
 	export interface GenericCanvasNodeProps extends NodeProps<DesignerNodeData> {
 		defaultNodeWidth?: number;

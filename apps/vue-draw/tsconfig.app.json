@@ -7,7 +7,7 @@
 		"paths": {
 			"@/*": ["./src/*"],
 			"@modules/*": ["./src/modules/*"],
-			"@icons/*": ["./src/assets/icons/*"],
+			"@assets/*": ["./src/assets/*"],
 			"@types/*": ["./src/types/*"]
 		},
 

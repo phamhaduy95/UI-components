@@ -6,18 +6,18 @@
 	import { useClipboard } from '@/modules/designer/composables/useClipboard';
 	import { useImportExport } from '@/modules/designer/composables/useImportExport';
 
-	import IconBringToFront from '@icons/bring-to-front.svg';
-	import IconGroup from '@icons/group.svg';
-	import IconRedo from '@icons/redo.svg';
-	import IconSendToBack from '@icons/send-to-back.svg';
-	import IconUndo from '@icons/undo.svg';
-	import IconUnGroup from '@icons/ungroup.svg';
-	import IconZoomIn from '@icons/zoom-in.svg';
-	import IconZoomOut from '@icons/zoom-out.svg';
-	import IconFitView from '@icons/fit-view.svg';
-	import IconResetZoom from '@icons/reset-zoom.svg';
-	import IconCopy from '@icons/copy.svg';
-	import IconPaste from '@icons/paste.svg';
+	import IconBringToFront from '@assets/toolbar-icons/bring-to-front.svg';
+	import IconGroup from '@assets/toolbar-icons/group.svg';
+	import IconRedo from '@assets/toolbar-icons/redo.svg';
+	import IconSendToBack from '@assets/toolbar-icons/send-to-back.svg';
+	import IconUndo from '@assets/toolbar-icons/undo.svg';
+	import IconUnGroup from '@assets/toolbar-icons/ungroup.svg';
+	import IconZoomIn from '@assets/toolbar-icons/zoom-in.svg';
+	import IconZoomOut from '@assets/toolbar-icons/zoom-out.svg';
+	import IconFitView from '@assets/toolbar-icons/fit-view.svg';
+	import IconResetZoom from '@assets/toolbar-icons/reset-zoom.svg';
+	import IconCopy from '@assets/toolbar-icons/copy.svg';
+	import IconPaste from '@assets/toolbar-icons/paste.svg';
 
 	const { groupSelectedNodes, ungroup, canGroup, canUngroup } = useGrouping();
 	const { zoomIn, zoomOut, canZoomIn, canZoomOut, fitView, resetZoom, zoomPercentage } = useZoom();

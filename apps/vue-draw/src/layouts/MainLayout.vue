@@ -2,11 +2,12 @@
 	import { ref } from 'vue';
 	import { RouterLink } from 'vue-router';
 	import { IconButton } from '@packages/vue-components';
-	import IconMenu from '@icons/menu.svg';
-	import IconHome from '@icons/home.svg';
-	import IconDesigner from '@icons/designer.svg';
-	import IconSettings from '@icons/settings.svg';
-	import IconLogo from '@icons/logo.svg';
+
+	import IconMenu from '@assets/navigation-icons/menu.svg';
+	import IconHome from '@assets/navigation-icons/home.svg';
+	import IconDesigner from '@assets/navigation-icons/designer.svg';
+	import IconSettings from '@assets/navigation-icons/settings.svg';
+	import IconLogo from '@assets/navigation-icons/logo.svg';
 
 	const isSidebarOpen = ref(false);
 

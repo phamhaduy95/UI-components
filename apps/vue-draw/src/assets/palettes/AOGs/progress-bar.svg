@@ -1,4 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" width="36px" height="36px" fill="none" stroke="gray" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+<svg class="scada-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" width="36px" height="36px" fill="none" stroke="gray" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+	<style>
+		.scada-icon * {
+			vector-effect: non-scaling-stroke;
+		}
+	</style>
   <!-- Container -->
   <rect x="5" y="5" width="90" height="30" rx="4" />
   <!-- Filled Segments (Representing ~70% full) -->
