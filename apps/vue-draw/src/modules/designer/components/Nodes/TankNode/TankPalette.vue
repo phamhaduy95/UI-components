@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/GenericNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconTank from '@/assets/icons/tank.svg';
+	import IconTank from '@/assets/palettes/AOGs/tank.svg';
 
 	const props = defineProps<GenericNodePaletteProps>();
 </script>

@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/GenericNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconEllipse from '@/assets/icons/ellipse.svg';
+	import IconEllipse from '@/assets/palettes/basic-shapes/ellipse.svg';
 
 	const props = defineProps<GenericNodePaletteProps>();
 </script>

@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/GenericNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconPump from '@/assets/icons/pump.svg';
+	import IconPump from '@/assets/palettes/AOGs/pump.svg';
 
 	const props = defineProps<GenericNodePaletteProps>();
 </script>

@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/GenericNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconTriangle from '@/assets/icons/triangle.svg';
+	import IconTriangle from '@/assets/palettes/basic-shapes/triangle.svg';
 
 	const props = defineProps<GenericNodePaletteProps>();
 </script>

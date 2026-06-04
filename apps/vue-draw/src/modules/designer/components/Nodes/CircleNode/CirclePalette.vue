@@ -3,7 +3,7 @@
 	import type { GenericNodePaletteProps } from '@/modules/designer/components/Nodes/GenericNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconCircle from '@/assets/icons/circle.svg';
+	import IconCircle from '@/assets/palettes/basic-shapes/circle.svg';
 
 	const props = defineProps<GenericNodePaletteProps>();
 </script>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="36px" height="36px" fill="none" stroke="gray" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
   <!-- Base Mount -->
   <path d="M 40 74 L 40 79 L 34 79 L 34 85 L 76 85 L 76 79 L 70 79 L 70 74" />
   <!-- Main Cylinder Body -->
@@ -16,5 +16,5 @@
   <!-- Terminal Box Lid -->
   <rect x="41" y="11" width="28" height="4" rx="1" />
   <!-- Terminal Box Circle -->
-  <circle cx="55" cy="20.5" r="4" stroke-width="2" />
+  <circle cx="55" cy="20.5" r="4" stroke-width="1" />
 </svg>
