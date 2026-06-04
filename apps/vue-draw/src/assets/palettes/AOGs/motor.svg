@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Base Mount -->
+  <path d="M 40 74 L 40 79 L 34 79 L 34 85 L 76 85 L 76 79 L 70 79 L 70 74" />
+  <!-- Main Cylinder Body -->
+  <rect x="20" y="26" width="70" height="48" rx="6" />
+  <!-- Vertical Separators -->
+  <path d="M 29 26 L 29 74 M 81 26 L 81 74" />
+  <!-- Cooling Fins (Reduced to 5) -->
+  <path d="M 33 32 L 77 32 M 33 41 L 77 41 M 33 50 L 77 50 M 33 59 L 77 59 M 33 68 L 77 68" />
+  <!-- Front Hub -->
+  <path d="M 20 40 L 16 40 L 16 60 L 20 60" />
+  <!-- Drive Shaft -->
+  <path d="M 16 44 L 10 44 L 10 47 L 4 47 L 4 56 L 16 56" />
+  <!-- Terminal Box Base -->
+  <path d="M 45 26 L 43 15 L 67 15 L 65 26" />
+  <!-- Terminal Box Lid -->
+  <rect x="41" y="11" width="28" height="4" rx="1" />
+  <!-- Terminal Box Circle -->
+  <circle cx="55" cy="20.5" r="4" stroke-width="2" />
+</svg>

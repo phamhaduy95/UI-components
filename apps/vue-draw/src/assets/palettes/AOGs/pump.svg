@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Base Mount -->
+  <path d="M 40 75 C 40 82 35 85 35 85 L 35 90 L 75 90 L 75 85 C 75 85 70 82 70 75" />
+  <!-- Outer Casing and Discharge Pipe -->
+  <path d="M 40 20 L 40 35 A 25 25 0 1 1 30 55 L 30 20" />
+  <!-- Discharge Flange -->
+  <rect x="25" y="15" width="20" height="5" />
+  <!-- Inner Rings -->
+  <circle cx="55" cy="55" r="16" />
+  <circle cx="55" cy="55" r="6" />
+  <!-- Impeller Blades -->
+  <g>
+    <path d="M 61 55 Q 65 57 70.5 51" />
+    <path d="M 61 55 Q 65 57 70.5 51" transform="rotate(45, 55, 55)" />
+    <path d="M 61 55 Q 65 57 70.5 51" transform="rotate(90, 55, 55)" />
+    <path d="M 61 55 Q 65 57 70.5 51" transform="rotate(135, 55, 55)" />
+    <path d="M 61 55 Q 65 57 70.5 51" transform="rotate(180, 55, 55)" />
+    <path d="M 61 55 Q 65 57 70.5 51" transform="rotate(225, 55, 55)" />
+    <path d="M 61 55 Q 65 57 70.5 51" transform="rotate(270, 55, 55)" />
+    <path d="M 61 55 Q 65 57 70.5 51" transform="rotate(315, 55, 55)" />
+  </g>
+</svg>

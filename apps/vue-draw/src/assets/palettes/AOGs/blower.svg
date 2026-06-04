@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Volute and Exhaust Duct -->
+  <path d="M 75 45 A 30 30 0 1 0 45 75 L 85 75 L 85 45 Z" />
+  <!-- Duct Flange -->
+  <path d="M 85 35 L 85 85" />
+  <!-- Internal Fan Detail (Squirrel Cage) -->
+  <circle cx="45" cy="45" r="18" />
+  <circle cx="45" cy="45" r="6" />
+  <!-- Straight Blades -->
+  <path d="M 45 27 L 45 39 M 45 51 L 45 63 M 27 45 L 39 45 M 51 45 L 63 45" stroke-width="2" />
+  <path d="M 32 32 L 41 41 M 49 49 L 58 58 M 32 58 L 41 49 M 49 41 L 58 32" stroke-width="2" />
+</svg>

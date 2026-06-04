@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Outer Casing -->
+  <circle cx="50" cy="50" r="40" />
+  <!-- Inner Ring Detailing -->
+  <circle cx="50" cy="50" r="32" stroke-width="2" stroke-dasharray="2 4" opacity="0.6" />
+  <!-- Tick Marks -->
+  <path d="M 25 75 L 30 70 M 15 50 L 22 50 M 25 25 L 30 30 M 50 15 L 50 22 M 75 25 L 70 30 M 85 50 L 78 50 M 75 75 L 70 70" stroke-width="2" />
+  <!-- Center Pin -->
+  <circle cx="50" cy="50" r="4" fill="currentColor" />
+  <!-- Needle -->
+  <path d="M 50 50 L 65 35" stroke-width="2" />
+</svg>
