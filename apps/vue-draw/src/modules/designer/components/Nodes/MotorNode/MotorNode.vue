@@ -5,11 +5,11 @@
 	} from '@/modules/designer/components/Nodes/GenericNode';
 	import { computed } from 'vue';
 	import type { IndustrialNodeData } from '@/modules/designer/types/Node.type';
-	import IconPump from '@/assets/palettes/AOGs/pump.svg';
+	import IconMotor from '@/assets/palettes/AOGs/motor.svg';
 
-	export type PumpNodeProps = GenericCanvasNodeProps;
+	export type MotorNodeProps = GenericCanvasNodeProps;
 
-	const props = defineProps<PumpNodeProps>();
+	const props = defineProps<MotorNodeProps>();
 
 	const nodeConfig = computed(() => props.data as IndustrialNodeData);
 </script>
@@ -19,7 +19,7 @@
 		v-slot="{ shapeHeight, shapeWidth }"
 		v-bind="props"
 	>
-		<IconPump
+		<IconMotor
 			:style="{
 				width: shapeWidth + 'px',
 				height: shapeHeight + 'px',

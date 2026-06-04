@@ -15,6 +15,10 @@ import {
 	HexagonPalette,
 	StarPalette,
 	TrianglePalette,
+	DiamondNode,
+	DiamondPalette,
+	RhombusNode,
+	RhombusPalette,
 	TextNode,
 	TextPalette,
 	TextFieldNode,
@@ -27,6 +31,12 @@ import {
 	PumpPalette,
 	TankNode,
 	TankPalette,
+	ValveNode,
+	ValvePalette,
+	MotorNode,
+	MotorPalette,
+	GaugeNode,
+	GaugePalette,
 	TableNode,
 	TablePalette
 } from '@/modules/designer/components';
@@ -88,6 +98,22 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(StarPalette),
 		nodeComponent: markRaw(StarNode),
 		label: 'Star'
+	},
+	[NodeType.Diamond]: {
+		id: NodeType.Diamond,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Diamond,
+		paletteComponent: markRaw(DiamondPalette),
+		nodeComponent: markRaw(DiamondNode),
+		label: 'Diamond'
+	},
+	[NodeType.Rhombus]: {
+		id: NodeType.Rhombus,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Rhombus,
+		paletteComponent: markRaw(RhombusPalette),
+		nodeComponent: markRaw(RhombusNode),
+		label: 'Rhombus'
 	},
 	[NodeType.Text]: {
 		id: NodeType.Text,
@@ -157,6 +183,30 @@ export const IndustrialEquipmentTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(TankPalette),
 		nodeComponent: markRaw(TankNode),
 		label: 'Tank'
+	},
+	[NodeType.Valve]: {
+		id: NodeType.Valve,
+		category: NodeCategory.Industrial,
+		type: NodeType.Valve,
+		paletteComponent: markRaw(ValvePalette),
+		nodeComponent: markRaw(ValveNode),
+		label: 'Valve'
+	},
+	[NodeType.Motor]: {
+		id: NodeType.Motor,
+		category: NodeCategory.Industrial,
+		type: NodeType.Motor,
+		paletteComponent: markRaw(MotorPalette),
+		nodeComponent: markRaw(MotorNode),
+		label: 'Motor'
+	},
+	[NodeType.Gauge]: {
+		id: NodeType.Gauge,
+		category: NodeCategory.Industrial,
+		type: NodeType.Gauge,
+		paletteComponent: markRaw(GaugePalette),
+		nodeComponent: markRaw(GaugeNode),
+		label: 'Gauge'
 	}
 };
 

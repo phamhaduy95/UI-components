@@ -14,6 +14,8 @@ export enum NodeType {
 	Triangle = 'triangle',
 	Hexagon = 'hexagon',
 	Star = 'star',
+	Diamond = 'diamond',
+	Rhombus = 'rhombus',
 	Text = 'text',
 	TextField = 'textField',
 	DatePicker = 'datePicker',
@@ -21,7 +23,10 @@ export enum NodeType {
 	Group = 'group',
 	Fan = 'fan',
 	Pump = 'pump',
-	Tank = 'tank'
+	Tank = 'tank',
+	Valve = 'valve',
+	Motor = 'motor',
+	Gauge = 'gauge'
 }
 
 export interface TagData {
