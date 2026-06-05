@@ -38,7 +38,7 @@ This document provides a comprehensive list of all nodes available in the `vue-d
 | **Table**         | FormField  | A multi-column data table.                       | width: 400px<br>height: auto                               | width: 30px<br>height: 30px                               |
 | **Group**         | Group      | A container node to group multiple other nodes.  | width: 200px<br>height: 200px                              | -                                                         |
 | **Fan**           | Industrial | SCADA asset for a ventilation/exhaust fan.       | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
-| **Pump**          | Industrial | SCADA asset for a fluid pump.                    | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
+| **Pump**          | Industrial | SCADA asset for a fluid pump.                    | width: 100px<br>height: 100px                              | width: 30px<br>height: 30x                                |
 | **Tank**          | Industrial | SCADA asset for a storage tank/silo.             | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
 | **Valve**         | Industrial | SCADA asset for a control valve.                 | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
 | **Motor**         | Industrial | SCADA asset for an electric motor.               | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
