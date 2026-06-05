@@ -17,7 +17,7 @@ This document provides a comprehensive list of all nodes available in the `vue-d
 | **Star**          | BasicShape | A 5-point star shape.                            | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
 | **Diamond**       | BasicShape | A rhombus/diamond shape block.                   | width: 100px<br>height: 100px<br>edge ≈ 71px               | width: 30px<br>height: 30px<br>edge ≈ 21.3px              |
 | **Trapezoid**     | BasicShape | A quadrilateral with one pair of parallel sides. | width: 100px<br>height: 100px<br>top: 50px, base: 100px    | width: 30px<br>height: 30px<br>top: 15px, base: 30px      |
-| **Parallelogram** | BasicShape | A slanted rectangular block.                     | width: 100px<br>height: 100px<br>edge: 100px, slant ≈ 56px | width: 30px<br>height: 30px<br>edge: 30px, slant ≈ 16.8px |
+| **Parallelogram** | BasicShape | A slanted rectangular block.                     | width: 100px<br>height: 50px<br>edge: 100px, slant ≈ 56px  | width: 30px<br>height: 15px<br>edge: 30px, slant ≈ 16.8px |
 | **Cross**         | BasicShape | A plus-sign / cross block.                       | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
 | **Right Arrow**   | BasicShape | A block arrow pointing right.                    | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
 | **Left Arrow**    | BasicShape | A block arrow pointing left.                     | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
@@ -35,6 +35,7 @@ This document provides a comprehensive list of all nodes available in the `vue-d
 | **Button**        | FormField  | A clickable action button.                       | width: 100px<br>height: 40px                               | width: 30px<br>height: 12px                               |
 | **Spinner**       | FormField  | A numeric stepper/spinner input.                 | width: 200px<br>height: 40px                               | width: 30px<br>height: 30px                               |
 | **Checkbox**      | FormField  | A boolean toggle checkbox.                       | width: 30px<br>height: 30px                                | width: 30px<br>height: 30px                               |
+| **RadioGroup**    | FormField  | A mutually exclusive radio button group.         | width: 150px<br>height: 60px                               | width: 30px<br>height: 12px                               |
 | **Table**         | FormField  | A multi-column data table.                       | width: 400px<br>height: auto                               | width: 30px<br>height: 30px                               |
 | **Group**         | Group      | A container node to group multiple other nodes.  | width: 200px<br>height: 200px                              | -                                                         |
 | **Fan**           | Industrial | SCADA asset for a ventilation/exhaust fan.       | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |

@@ -38,6 +38,9 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 				case NodeType.Ellipse:
 					shapeDimensions = { width: 100, height: 50 };
 					break;
+				case NodeType.Parallelogram:
+					shapeDimensions = { width: 100, height: 50 };
+					break;
 				default:
 					shapeDimensions = structuredClone(basicShapeDimensions);
 					break;
@@ -91,6 +94,13 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						id: generateNodeId(),
 						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
 						dimensions: dimensions ?? { width: 30, height: 30 }
+					} as DesignGraphNode;
+				case 'radioGroup':
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
+						dimensions: dimensions ?? { width: 150, height: 60 }
 					} as DesignGraphNode;
 				default:
 					return {

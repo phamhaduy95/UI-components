@@ -35,3 +35,4 @@ export * from './SliderNode';
 export * from './ButtonNode';
 export * from './SpinnerNode';
 export * from './CheckboxNode';
+export * from './RadioGroupNode';

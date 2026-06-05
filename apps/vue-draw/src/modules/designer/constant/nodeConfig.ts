@@ -70,7 +70,9 @@ import {
 	SpinnerNode,
 	SpinnerPalette,
 	CheckboxNode,
-	CheckboxPalette
+	CheckboxPalette,
+	RadioGroupNode,
+	RadioGroupPalette
 } from '@/modules/designer/components';
 
 type NodeTypeConfig = {
@@ -300,6 +302,14 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(CheckboxPalette),
 		nodeComponent: markRaw(CheckboxNode),
 		label: 'Checkbox'
+	},
+	[NodeType.RadioGroup]: {
+		id: NodeType.RadioGroup,
+		category: NodeCategory.FormField,
+		type: NodeType.RadioGroup,
+		paletteComponent: markRaw(RadioGroupPalette),
+		nodeComponent: markRaw(RadioGroupNode),
+		label: 'Radio Group'
 	},
 	[NodeType.Table]: {
 		id: NodeType.Table,
