@@ -1,10 +1,4 @@
 .Checkbox {
-	display: inline-flex;
-	position: relative;
-	align-items: center;
-	vertical-align: top;
-	gap: 0.5rem;
-
 	--checkbox-bg-color: transparent;
 	--checkbox-border-color: var(--color-outline);
 	--checkbox-hover-border-color: var(--color-primary);
@@ -15,10 +9,18 @@
 	--checkbox-checked-hover-bg-color: var(--color-primary-hover);
 	--checkbox-checked-active-bg-color: var(--color-primary-pressed);
 
-	&[data-disabled] {
-		opacity: 0.7;
-		filter: grayscale(100%);
-	}
+	--checkbox-indicator-width: var(--icon-size-md);
+	--checkbox-indicator-height: var(--icon-size-md);
+	--checkbox-label-size: var(--text-base);
+	--checkbox-label-line-height: var(--text-base--line-height);
+}
+
+.Checkbox {
+	display: inline-flex;
+	position: relative;
+	align-items: center;
+	vertical-align: top;
+	gap: 0.5rem;
 
 	&[data-status='error'] {
 		--checkbox-border-color: var(--color-error);
@@ -47,14 +49,30 @@
 		--checkbox-checked-active-bg-color: var(--color-success-pressed);
 	}
 
-	&[data-size='small'] {
+	&[data-size='sm'] {
 		--checkbox-indicator-width: var(--icon-size-sm);
 		--checkbox-indicator-height: var(--icon-size-sm);
+		--checkbox-label-size: var(--text-sm);
+		--checkbox-label-line-height: var(--text-sm--line-height);
 	}
 
-	&[data-size='medium'] {
+	&[data-size='md'] {
 		--checkbox-indicator-width: var(--icon-size-md);
 		--checkbox-indicator-height: var(--icon-size-md);
+		--checkbox-label-size: var(--text-base);
+		--checkbox-label-line-height: var(--text-base--line-height);
+	}
+
+	&[data-size='lg'] {
+		--checkbox-indicator-width: var(--icon-size-lg);
+		--checkbox-indicator-height: var(--icon-size-lg);
+		--checkbox-label-size: var(--text-lg);
+		--checkbox-label-line-height: var(--text-lg--line-height);
+	}
+
+	&[data-disabled] {
+		opacity: 0.7;
+		filter: grayscale(100%);
 	}
 }
 
@@ -108,8 +126,8 @@
 }
 
 .Checkbox_Label {
-	font-size: 1rem;
-	line-height: 1.25rem;
+	font-size: var(--checkbox-label-size);
+	line-height: var(--checkbox-label-line-height);
 	user-select: none;
 	text-overflow: ellipsis;
 	overflow: hidden;
