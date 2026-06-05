@@ -11,7 +11,7 @@ export interface CheckboxProps
 	readonly?: boolean;
 	indeterminate?: boolean;
 	required?: boolean;
-	size?: 'small' | 'medium';
+	size?: 'sm' | 'md' | 'lg';
 	dataTestid?: string;
 }
 

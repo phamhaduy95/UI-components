@@ -23,7 +23,7 @@ const meta = {
 		},
 		size: {
 			control: 'select',
-			options: ['small', 'medium']
+			options: ['sm', 'md', 'lg']
 		},
 		checked: {
 			control: 'boolean'
@@ -280,8 +280,9 @@ export const Sizes: Story = {
 		setup() {
 			return () => (
 				<div style="display: flex; flex-direction: column; gap: 16px;">
-					<Checkbox label="Small Checkbox" size="small" defaultChecked />
-					<Checkbox label="Medium Checkbox" size="medium" defaultChecked />
+					<Checkbox label="Small Checkbox" size="sm" defaultChecked />
+					<Checkbox label="Medium Checkbox" size="md" defaultChecked />
+					<Checkbox label="Large Checkbox" size="lg" defaultChecked />
 				</div>
 			);
 		}
