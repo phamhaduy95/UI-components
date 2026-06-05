@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { ColorPicker } from '@components/ColorPicker';
 import { ref } from 'vue';
-import { expect, within, fn, userEvent } from 'storybook/test';
+import { expect, within, fn, userEvent, waitFor } from 'storybook/test';
 
 const mockedOnModelValueUpdate = fn();
 
@@ -175,7 +175,9 @@ export const TestUpdateOpenEvent: Story = {
 		});
 
 		await step('Check if update:open was called with true', async () => {
-			expect(args['onUpdate:open']).toHaveBeenCalledWith(true);
+			await waitFor(() => {
+				expect(args['onUpdate:open']).toHaveBeenCalledWith(true);
+			});
 		});
 
 		await step('Press Escape to close dialog', async () => {
@@ -183,7 +185,9 @@ export const TestUpdateOpenEvent: Story = {
 		});
 
 		await step('Check if update:open was called with false', async () => {
-			expect(args['onUpdate:open']).toHaveBeenCalledWith(false);
+			await waitFor(() => {
+				expect(args['onUpdate:open']).toHaveBeenCalledWith(false);
+			});
 		});
 	}
 };
