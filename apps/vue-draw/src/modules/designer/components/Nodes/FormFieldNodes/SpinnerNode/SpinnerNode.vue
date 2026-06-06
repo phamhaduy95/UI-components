@@ -3,12 +3,12 @@
 	import { NumberInput } from '@packages/vue-components';
 	import { useVueFlow } from '@vue-flow/core';
 	import {
-		GenericCanvasNode,
-		type GenericCanvasNodeProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseCanvasNode,
+		type BaseCanvasNodeProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 	import type { FormFieldNodeData } from '@/modules/designer/types/Node.type';
 
-	export type SpinnerNodeProps = GenericCanvasNodeProps;
+	export type SpinnerNodeProps = BaseCanvasNodeProps;
 
 	const props = defineProps<SpinnerNodeProps>();
 
@@ -30,7 +30,7 @@
 </script>
 
 <template>
-	<GenericCanvasNode v-bind="props">
+	<BaseCanvasNode v-bind="props">
 		<template #default>
 			<NumberInput
 				class="w-full h-full pointer-events-auto"
@@ -39,5 +39,5 @@
 				@keydown="onKeyDown"
 			/>
 		</template>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>

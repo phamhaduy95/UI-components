@@ -1,16 +1,16 @@
 <script setup lang="ts">
 	import { computed } from 'vue';
 	import {
-		GenericCanvasNode,
-		type GenericCanvasNodeProps,
-		GenericNodeConnector,
-		type GenericNodeConnectorProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseCanvasNode,
+		type BaseCanvasNodeProps,
+		BaseNodeConnector,
+		type BaseNodeConnectorProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 
 	import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
 	import { Position } from '@vue-flow/core';
 
-	export type CircleNodeProps = GenericCanvasNodeProps;
+	export type CircleNodeProps = BaseCanvasNodeProps;
 
 	const props = defineProps<CircleNodeProps>();
 
@@ -25,7 +25,7 @@
 		return `circle(${radius}px at ${radius}px ${radius}px)`;
 	});
 
-	type ConnectorProps = GenericNodeConnectorProps['connectors'];
+	type ConnectorProps = BaseNodeConnectorProps['connectors'];
 
 	const TOTAL_CONNECTORS = 12;
 
@@ -56,7 +56,7 @@
 </script>
 
 <template>
-	<GenericCanvasNode
+	<BaseCanvasNode
 		v-bind="props"
 		:keep-aspect-ratio="true"
 		:keep-default-ratio="true"
@@ -80,12 +80,12 @@
 			</svg>
 		</template>
 		<template #connector="connectorProps">
-			<GenericNodeConnector
+			<BaseNodeConnector
 				:path="path"
 				v-bind="connectorProps"
 				:connectors="connectors"
 				:is-node-selected="selected"
 			/>
 		</template>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>

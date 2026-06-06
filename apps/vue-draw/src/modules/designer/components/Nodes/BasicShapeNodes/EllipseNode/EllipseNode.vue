@@ -3,18 +3,18 @@
 	import { NodeResizer } from '@vue-flow/node-resizer';
 
 	import {
-		GenericCanvasNode,
-		type GenericCanvasNodeProps,
-		GenericNodeConnector,
-		type GenericNodeConnectorProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseCanvasNode,
+		type BaseCanvasNodeProps,
+		BaseNodeConnector,
+		type BaseNodeConnectorProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { resizerHandleStyle, resizerLineStyle } from '@/modules/designer/constant/default';
 	import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
 	import { Position } from '@vue-flow/core';
 
 	const DEFAULT_ELLIPSE_HEIGHT = 50;
 
-	export type EllipseNodeProps = GenericCanvasNodeProps;
+	export type EllipseNodeProps = BaseCanvasNodeProps;
 
 	const props = defineProps<EllipseNodeProps>();
 
@@ -30,7 +30,7 @@
 		return `ellipse(${rx}px ${ry}px at ${rx}px ${ry}px)`;
 	});
 
-	type ConnectorProps = GenericNodeConnectorProps['connectors'];
+	type ConnectorProps = BaseNodeConnectorProps['connectors'];
 
 	const connectors = computed<ConnectorProps>(() => {
 		const result: ConnectorProps = [];
@@ -57,7 +57,7 @@
 </script>
 
 <template>
-	<GenericCanvasNode
+	<BaseCanvasNode
 		v-bind="props"
 		:default-node-height="DEFAULT_ELLIPSE_HEIGHT"
 	>
@@ -90,11 +90,11 @@
 			</svg>
 		</template>
 		<template #connector="connectorProps">
-			<GenericNodeConnector
+			<BaseNodeConnector
 				:path="path"
 				v-bind="connectorProps"
 				:connectors="connectors"
 			/>
 		</template>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>

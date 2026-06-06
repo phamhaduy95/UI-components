@@ -2,7 +2,7 @@
 	import { type NodeProps, useVueFlow } from '@vue-flow/core';
 	import { NodeResizer } from '@vue-flow/node-resizer';
 
-	import { GenericCanvasNode } from '@/modules/designer/components/Nodes/GenericNode';
+	import { BaseCanvasNode } from '@/modules/designer/components/Nodes/BaseNode';
 	import { useGrouping } from '@/modules/designer/composables/useGrouping';
 	import { useGroupResize } from '@/modules/designer/composables/useGroupResize';
 	import { resizerHandleStyle, resizerLineStyle } from '@/modules/designer/constant/default';
@@ -29,7 +29,7 @@
 </script>
 
 <template>
-	<GenericCanvasNode
+	<BaseCanvasNode
 		v-bind="props"
 		:hide-connector="true"
 	>
@@ -54,5 +54,5 @@
 				/>
 			</div>
 		</template>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>

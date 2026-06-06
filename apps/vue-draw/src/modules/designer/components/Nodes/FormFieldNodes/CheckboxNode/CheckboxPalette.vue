@@ -1,17 +1,17 @@
 <script setup lang="ts">
 	import {
-		GenericNodePalette,
-		type GenericNodePaletteProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseNodePalette,
+		type BaseNodePaletteProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
 	import IconCheckbox from '@/assets/palettes/form-fields/checkbox.svg';
 
-	const props = defineProps<GenericNodePaletteProps>();
+	const props = defineProps<BaseNodePaletteProps>();
 </script>
 
 <template>
-	<GenericNodePalette
+	<BaseNodePalette
 		v-bind="props"
 		:category="NodeCategory.FormField"
 		:type="NodeType.Checkbox"
@@ -19,5 +19,5 @@
 		<template #icon>
 			<IconCheckbox />
 		</template>
-	</GenericNodePalette>
+	</BaseNodePalette>
 </template>

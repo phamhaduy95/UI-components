@@ -16,7 +16,7 @@
 	import { useRotation } from '@/modules/designer/composables/useRotation';
 	import { useResize } from '@/modules/designer/composables/useResize';
 
-	import GenericNodeConnector, { type ConnectorProps } from './GenericNodeConnector.vue';
+	import BaseNodeConnector, { type ConnectorProps } from './BaseNodeConnector.vue';
 	import { NodeCategory, type DesignerNodeData } from '@/modules/designer/types/Node.type.ts';
 
 	import {
@@ -27,7 +27,7 @@
 
 	import IconRotate from '@assets/toolbar-icons/rotate.svg';
 
-	export interface GenericCanvasNodeProps extends NodeProps<DesignerNodeData> {
+	export interface BaseCanvasNodeProps extends NodeProps<DesignerNodeData> {
 		defaultNodeWidth?: number;
 		defaultNodeHeight?: number;
 		keepAspectRatio?: boolean;
@@ -37,7 +37,7 @@
 		dynamicSize?: boolean;
 	}
 
-	const props = withDefaults(defineProps<GenericCanvasNodeProps>(), {
+	const props = withDefaults(defineProps<BaseCanvasNodeProps>(), {
 		defaultNodeWidth: defaultNodeDimensions.width,
 		defaultNodeHeight: defaultNodeDimensions.height,
 		keepDefaultRatio: false
@@ -55,7 +55,7 @@
 		keepAspectRatio?: boolean;
 	};
 
-	export type GenericCanvasNodeSlots = {
+	export type BaseCanvasNodeSlots = {
 		resizer?: (props: GenericResizerProps) => void;
 		rotateHandler?: (props: { selected: boolean }) => void;
 		connector?: (props: {
@@ -67,7 +67,7 @@
 		default?: (props: { shapeWidth: number; shapeHeight: number }) => void;
 	};
 
-	defineSlots<GenericCanvasNodeSlots>();
+	defineSlots<BaseCanvasNodeSlots>();
 
 	const isShift = useKeyModifier('Shift');
 
@@ -238,7 +238,7 @@
 			:shape-height="shapeHeight"
 			:is-node-selected="selected"
 		>
-			<GenericNodeConnector
+			<BaseNodeConnector
 				:is-visible="selected"
 				:shape-width="shapeWidth"
 				:shape-height="shapeHeight"

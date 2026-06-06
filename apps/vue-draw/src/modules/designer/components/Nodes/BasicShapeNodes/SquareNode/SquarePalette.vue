@@ -1,17 +1,17 @@
 <script setup lang="ts">
 	import {
-		GenericNodePalette,
-		type GenericNodePaletteProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseNodePalette,
+		type BaseNodePaletteProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
 	import IconSquare from '@assets/palettes/basic-shapes/square.svg';
 
-	const props = defineProps<GenericNodePaletteProps>();
+	const props = defineProps<BaseNodePaletteProps>();
 </script>
 
 <template>
-	<GenericNodePalette
+	<BaseNodePalette
 		v-bind="props"
 		:category="NodeCategory.BasicShape"
 		:type="NodeType.Square"
@@ -19,5 +19,5 @@
 		<template #icon>
 			<IconSquare />
 		</template>
-	</GenericNodePalette>
+	</BaseNodePalette>
 </template>

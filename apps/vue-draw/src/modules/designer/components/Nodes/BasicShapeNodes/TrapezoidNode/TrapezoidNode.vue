@@ -1,15 +1,15 @@
 <script setup lang="ts">
 	import { computed } from 'vue';
 	import {
-		GenericCanvasNode,
-		type GenericCanvasNodeProps,
-		GenericNodeConnector,
-		type GenericNodeConnectorProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseCanvasNode,
+		type BaseCanvasNodeProps,
+		BaseNodeConnector,
+		type BaseNodeConnectorProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 	import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
 	import { Position } from '@vue-flow/core';
 
-	export type TrapezoidNodeProps = GenericCanvasNodeProps;
+	export type TrapezoidNodeProps = BaseCanvasNodeProps;
 
 	const props = defineProps<TrapezoidNodeProps>();
 
@@ -23,7 +23,7 @@
 		return `polygon(${offset}px 0px, ${w - offset}px 0px, ${w}px ${h}px, 0px ${h}px)`;
 	});
 
-	type ConnectorProps = GenericNodeConnectorProps['connectors'];
+	type ConnectorProps = BaseNodeConnectorProps['connectors'];
 
 	const connectors = computed<ConnectorProps>(() => {
 		const w = (props.dimensions.width || 50) - 2;
@@ -72,7 +72,7 @@
 </script>
 
 <template>
-	<GenericCanvasNode v-bind="props">
+	<BaseCanvasNode v-bind="props">
 		<template #default="{ shapeHeight, shapeWidth }">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -90,11 +90,11 @@
 			</svg>
 		</template>
 		<template #connector="connectorProps">
-			<GenericNodeConnector
+			<BaseNodeConnector
 				:path="path"
 				v-bind="connectorProps"
 				:connectors="connectors"
 			/>
 		</template>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>

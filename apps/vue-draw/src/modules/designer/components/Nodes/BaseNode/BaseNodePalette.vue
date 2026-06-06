@@ -5,14 +5,14 @@
 	import { useDnD } from '@/modules/designer/composables/useDnD';
 	import type { NodeCategory } from '@/modules/designer/types/Node.type';
 
-	export interface GenericNodePaletteProps {
+	export interface BaseNodePaletteProps {
 		id: string;
 		category: NodeCategory;
 		type: string;
 		label: string;
 	}
 
-	const props = defineProps<GenericNodePaletteProps>();
+	const props = defineProps<BaseNodePaletteProps>();
 
 	const { onPaletteDragStart } = useDnD();
 

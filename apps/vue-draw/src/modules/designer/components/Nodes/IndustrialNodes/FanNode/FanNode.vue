@@ -1,13 +1,13 @@
 <script setup lang="ts">
 	import {
-		GenericCanvasNode,
-		type GenericCanvasNodeProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseCanvasNode,
+		type BaseCanvasNodeProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { computed } from 'vue';
 	import type { IndustrialNodeData } from '@/modules/designer/types/Node.type';
 	import IconFan from '@/assets/palettes/AOGs/blower.svg';
 
-	export type FanNodeProps = GenericCanvasNodeProps;
+	export type FanNodeProps = BaseCanvasNodeProps;
 
 	const props = defineProps<FanNodeProps>();
 
@@ -15,7 +15,7 @@
 </script>
 
 <template>
-	<GenericCanvasNode
+	<BaseCanvasNode
 		v-slot="{ shapeHeight, shapeWidth }"
 		v-bind="props"
 	>
@@ -29,5 +29,5 @@
 			:stroke-width="nodeConfig.strokeWidth"
 			:fill="nodeConfig.fill"
 		/>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>

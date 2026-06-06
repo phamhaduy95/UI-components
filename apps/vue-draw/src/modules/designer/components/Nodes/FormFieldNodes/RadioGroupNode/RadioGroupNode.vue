@@ -3,12 +3,12 @@
 	import { RadioGroup } from '@packages/vue-components';
 	import { useVueFlow } from '@vue-flow/core';
 	import {
-		GenericCanvasNode,
-		type GenericCanvasNodeProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseCanvasNode,
+		type BaseCanvasNodeProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 	import type { FormFieldNodeData } from '@/modules/designer/types/Node.type';
 
-	export type RadioGroupNodeProps = GenericCanvasNodeProps;
+	export type RadioGroupNodeProps = BaseCanvasNodeProps;
 
 	const props = defineProps<RadioGroupNodeProps>();
 
@@ -27,7 +27,7 @@
 </script>
 
 <template>
-	<GenericCanvasNode v-bind="props">
+	<BaseCanvasNode v-bind="props">
 		<template #default>
 			<RadioGroup
 				class="w-full h-full pointer-events-auto"
@@ -37,5 +37,5 @@
 				@keydown="onKeyDown"
 			/>
 		</template>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>

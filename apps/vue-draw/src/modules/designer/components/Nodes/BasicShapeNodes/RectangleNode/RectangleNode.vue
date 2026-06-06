@@ -1,12 +1,12 @@
 <script setup lang="ts">
 	import {
-		GenericCanvasNode,
-		type GenericCanvasNodeProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseCanvasNode,
+		type BaseCanvasNodeProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { computed } from 'vue';
 	import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
 
-	export type RectangleNodeProps = GenericCanvasNodeProps;
+	export type RectangleNodeProps = BaseCanvasNodeProps;
 
 	const props = defineProps<RectangleNodeProps>();
 
@@ -14,7 +14,7 @@
 </script>
 
 <template>
-	<GenericCanvasNode
+	<BaseCanvasNode
 		v-slot="{ shapeHeight, shapeWidth }"
 		v-bind="props"
 	>
@@ -35,5 +35,5 @@
 				style="vector-effect: non-scaling-stroke"
 			></rect>
 		</svg>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>

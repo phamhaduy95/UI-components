@@ -2,15 +2,15 @@
 	import { computed } from 'vue';
 
 	import {
-		GenericCanvasNode,
-		type GenericCanvasNodeProps,
-		GenericNodeConnector,
-		type GenericNodeConnectorProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseCanvasNode,
+		type BaseCanvasNodeProps,
+		BaseNodeConnector,
+		type BaseNodeConnectorProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 	import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
 	import { Position } from '@vue-flow/core';
 
-	export type StarNodeProps = GenericCanvasNodeProps;
+	export type StarNodeProps = BaseCanvasNodeProps;
 
 	const props = defineProps<StarNodeProps>();
 
@@ -23,7 +23,7 @@
 		return `polygon(${w * 0.5}px 0px, ${w * 0.618}px ${h * 0.382}px, ${w}px ${h * 0.382}px, ${w * 0.691}px ${h * 0.618}px, ${w * 0.809}px ${h}px, ${w * 0.5}px ${h * 0.764}px, ${w * 0.191}px ${h}px, ${w * 0.309}px ${h * 0.618}px, 0px ${h * 0.382}px, ${w * 0.382}px ${h * 0.382}px)`;
 	});
 
-	type ConnectorProps = GenericNodeConnectorProps['connectors'];
+	type ConnectorProps = BaseNodeConnectorProps['connectors'];
 
 	// the tip at very top is index zero
 	const connectors = computed<ConnectorProps>(() => {
@@ -51,7 +51,7 @@
 </script>
 
 <template>
-	<GenericCanvasNode v-bind="props">
+	<BaseCanvasNode v-bind="props">
 		<template #default="{ shapeHeight, shapeWidth }">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -69,11 +69,11 @@
 			</svg>
 		</template>
 		<template #connector="connectorProps">
-			<GenericNodeConnector
+			<BaseNodeConnector
 				:path="path"
 				v-bind="connectorProps"
 				:connectors="connectors"
 			/>
 		</template>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>

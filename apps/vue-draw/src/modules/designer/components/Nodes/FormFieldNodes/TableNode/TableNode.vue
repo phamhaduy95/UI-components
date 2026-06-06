@@ -1,11 +1,11 @@
 <script setup lang="ts">
 	import { DataTable, type DataTableColumn } from '@packages/vue-components';
 	import {
-		GenericCanvasNode,
-		type GenericCanvasNodeProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseCanvasNode,
+		type BaseCanvasNodeProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 
-	export type TableNodeProps = GenericCanvasNodeProps;
+	export type TableNodeProps = BaseCanvasNodeProps;
 
 	const props = defineProps<TableNodeProps>();
 
@@ -51,7 +51,7 @@
 </script>
 
 <template>
-	<GenericCanvasNode
+	<BaseCanvasNode
 		v-bind="props"
 		dynamic-size
 	>
@@ -67,5 +67,5 @@
 				/>
 			</div>
 		</template>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>

@@ -8,7 +8,7 @@
 		offsetDistance: string;
 	};
 
-	export interface GenericNodeConnectorProps {
+	export interface BaseNodeConnectorProps {
 		isVisible?: boolean;
 		path?: string;
 		pathId?: string;
@@ -22,7 +22,7 @@
 
 	const DEFAULT_CONNECTOR_SIZE = 3; // in px
 
-	const props = withDefaults(defineProps<GenericNodeConnectorProps>(), {
+	const props = withDefaults(defineProps<BaseNodeConnectorProps>(), {
 		isVisible: false,
 		path: ''
 	});

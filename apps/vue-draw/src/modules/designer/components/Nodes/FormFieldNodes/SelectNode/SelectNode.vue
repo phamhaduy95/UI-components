@@ -3,12 +3,12 @@
 	import { SingleSelect } from '@packages/vue-components';
 	import { useVueFlow } from '@vue-flow/core';
 	import {
-		GenericCanvasNode,
-		type GenericCanvasNodeProps
-	} from '@/modules/designer/components/Nodes/GenericNode';
+		BaseCanvasNode,
+		type BaseCanvasNodeProps
+	} from '@/modules/designer/components/Nodes/BaseNode';
 	import type { FormFieldNodeData } from '@/modules/designer/types/Node.type';
 
-	export type SelectNodeProps = GenericCanvasNodeProps;
+	export type SelectNodeProps = BaseCanvasNodeProps;
 
 	const props = defineProps<SelectNodeProps>();
 
@@ -31,7 +31,7 @@
 </script>
 
 <template>
-	<GenericCanvasNode v-bind="props">
+	<BaseCanvasNode v-bind="props">
 		<template #default>
 			<SingleSelect
 				class="w-full h-full pointer-events-auto"
@@ -42,5 +42,5 @@
 				@keydown="onKeyDown"
 			/>
 		</template>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>
