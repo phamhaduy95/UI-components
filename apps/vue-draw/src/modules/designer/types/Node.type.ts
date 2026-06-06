@@ -58,11 +58,11 @@ export interface BaseNodeData {
 	label?: string;
 	tagIds?: string[];
 	showTag?: boolean;
+	rotation: number;
 }
 
 export interface BasicShapeNodeData extends BaseNodeData {
 	category: NodeCategory.BasicShape;
-	rotation: number;
 	fill: string;
 	stroke: string;
 	strokeWidth: number;
@@ -71,7 +71,6 @@ export interface BasicShapeNodeData extends BaseNodeData {
 
 export interface IndustrialNodeData extends BaseNodeData {
 	category: NodeCategory.Industrial;
-	rotation: number;
 	fill: string;
 	stroke: string;
 	strokeWidth: number;
@@ -80,14 +79,12 @@ export interface IndustrialNodeData extends BaseNodeData {
 
 export interface GroupNodeData extends BaseNodeData {
 	category: NodeCategory.Group;
-	rotation: number;
 	initialWidth: number;
 	initialHeight: number;
 }
 
 export interface TextNodeData extends BaseNodeData {
 	category: NodeCategory.FormField;
-	rotation: number;
 	content: string;
 	color?: string;
 	fontSize?: number;
@@ -97,7 +94,6 @@ export interface TextNodeData extends BaseNodeData {
 
 export interface FormFieldNodeData extends BaseNodeData {
 	category: NodeCategory.FormField;
-	rotation: number;
 	placeholder: string;
 	value: string;
 	disabled?: boolean;
