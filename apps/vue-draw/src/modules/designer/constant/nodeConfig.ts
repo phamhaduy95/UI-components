@@ -43,6 +43,8 @@ import {
 	SquarePalette,
 	LineNode,
 	LinePalette,
+	PolylineNode,
+	PolylinePalette,
 	TextNode,
 	TextPalette,
 	TextFieldNode,
@@ -203,6 +205,14 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(LinePalette),
 		nodeComponent: markRaw(LineNode),
 		label: 'Line'
+	},
+	[NodeType.Polyline]: {
+		id: NodeType.Polyline,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Polyline,
+		paletteComponent: markRaw(PolylinePalette),
+		nodeComponent: markRaw(PolylineNode),
+		label: 'Polyline'
 	},
 	[NodeType.RightArrow]: {
 		id: NodeType.RightArrow,
