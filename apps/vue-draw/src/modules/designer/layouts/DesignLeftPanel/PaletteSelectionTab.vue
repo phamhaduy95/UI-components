@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import { computed, ref } from 'vue';
-	import { TextInput } from '@packages/vue-components';
+	import { TextInput, Accordion } from '@packages/vue-components';
+	import type { AccordionItemObject } from '@packages/vue-components';
 	import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
 	import { NodeCategory } from '@/modules/designer/types/Node.type';
 
@@ -31,6 +32,15 @@
 			.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
 			.join(' ');
 	};
+
+	const accordionItems = computed<AccordionItemObject[]>(() => {
+		return Object.keys(groupedNodes.value).map((category) => ({
+			value: category,
+			title: formatCategoryLabel(category)
+		}));
+	});
+
+	const expandedCategories = ref<string[]>(Object.keys(groupedNodes.value));
 </script>
 
 <template>
@@ -43,27 +53,32 @@
 				size="sm"
 			/>
 		</div>
-		<div class="flex-1 space-y-5 overflow-y-auto py-2">
-			<div
-				v-for="(configs, category) in groupedNodes"
-				:key="category"
-				class="space-y-2"
+		<div class="flex-1 overflow-y-auto py-2">
+			<Accordion
+				v-model="expandedCategories"
+				:items="accordionItems"
+				multiple
+				:animated="false"
 			>
-				<h3 class="text-xs font-medium uppercase text-gray-500">
-					{{ formatCategoryLabel(category) }}
-				</h3>
-				<div class="grid grid-cols-4 gap-2">
-					<component
-						:is="config.paletteComponent"
-						v-for="(config, key) in configs"
-						:id="config.id"
-						:key="key"
-						:type="key"
-						:label="config.label"
-						:category="config.category"
-					/>
-				</div>
-			</div>
+				<template #title="{ item }">
+					<span class="text-xs font-medium uppercase text-gray-500">
+						{{ item.title }}
+					</span>
+				</template>
+				<template #content="{ item }">
+					<div class="grid grid-cols-4 gap-2 pb-4 px-2">
+						<component
+							:is="config.paletteComponent"
+							v-for="(config, key) in groupedNodes[item.value]"
+							:id="config.id"
+							:key="key"
+							:type="key"
+							:label="config.label"
+							:category="config.category"
+						/>
+					</div>
+				</template>
+			</Accordion>
 		</div>
 	</div>
 </template>
