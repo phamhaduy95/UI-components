@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { computed } from 'vue';
 	import type { IndustrialNodeData } from '@/modules/designer/types/Node.type';
-	import IconTank from '@/assets/palettes/AOGs/tank.svg';
+	import IconTank from '@/assets/palettes/industrial/tank.svg';
 
 	export type TankNodeProps = BaseCanvasNodeProps;
 

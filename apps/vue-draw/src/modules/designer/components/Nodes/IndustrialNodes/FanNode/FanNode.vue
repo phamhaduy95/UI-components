@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { computed } from 'vue';
 	import type { IndustrialNodeData } from '@/modules/designer/types/Node.type';
-	import IconFan from '@/assets/palettes/AOGs/blower.svg';
+	import IconFan from '@/assets/palettes/industrial/blower.svg';
 
 	export type FanNodeProps = BaseCanvasNodeProps;
 

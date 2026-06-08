@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { computed } from 'vue';
 	import type { IndustrialNodeData } from '@/modules/designer/types/Node.type';
-	import IconValve from '@/assets/palettes/AOGs/valve.svg';
+	import IconValve from '@/assets/palettes/industrial/valve.svg';
 
 	export type ValveNodeProps = BaseCanvasNodeProps;
 

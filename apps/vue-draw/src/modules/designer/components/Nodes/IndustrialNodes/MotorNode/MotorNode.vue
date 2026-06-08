@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { computed } from 'vue';
 	import type { IndustrialNodeData } from '@/modules/designer/types/Node.type';
-	import IconMotor from '@/assets/palettes/AOGs/motor.svg';
+	import IconMotor from '@/assets/palettes/industrial/motor.svg';
 
 	export type MotorNodeProps = BaseCanvasNodeProps;
 

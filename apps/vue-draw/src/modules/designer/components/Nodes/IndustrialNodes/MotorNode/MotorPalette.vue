@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconMotor from '@/assets/palettes/AOGs/motor.svg';
+	import IconMotor from '@/assets/palettes/industrial/motor.svg';
 
 	const props = defineProps<BaseNodePaletteProps>();
 </script>

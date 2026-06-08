@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { computed } from 'vue';
 	import type { IndustrialNodeData } from '@/modules/designer/types/Node.type';
-	import IconGauge from '@/assets/palettes/AOGs/gauge.svg';
+	import IconGauge from '@/assets/palettes/industrial/gauge.svg';
 
 	export type GaugeNodeProps = BaseCanvasNodeProps;
 

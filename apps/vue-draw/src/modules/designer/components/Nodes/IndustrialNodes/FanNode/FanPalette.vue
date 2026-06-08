@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconFan from '@/assets/palettes/AOGs/blower.svg';
+	import IconFan from '@/assets/palettes/industrial/blower.svg';
 
 	const props = defineProps<BaseNodePaletteProps>();
 </script>

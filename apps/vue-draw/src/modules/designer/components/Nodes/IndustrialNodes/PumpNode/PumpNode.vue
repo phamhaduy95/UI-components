@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { computed } from 'vue';
 	import type { IndustrialNodeData } from '@/modules/designer/types/Node.type';
-	import IconPump from '@/assets/palettes/AOGs/pump.svg';
+	import IconPump from '@/assets/palettes/industrial/pump.svg';
 
 	export type PumpNodeProps = BaseCanvasNodeProps;
 

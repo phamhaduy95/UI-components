@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconGauge from '@/assets/palettes/AOGs/gauge.svg';
+	import IconGauge from '@/assets/palettes/industrial/gauge.svg';
 
 	const props = defineProps<BaseNodePaletteProps>();
 </script>

@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconPump from '@/assets/palettes/AOGs/pump.svg';
+	import IconPump from '@/assets/palettes/industrial/pump.svg';
 
 	const props = defineProps<BaseNodePaletteProps>();
 </script>

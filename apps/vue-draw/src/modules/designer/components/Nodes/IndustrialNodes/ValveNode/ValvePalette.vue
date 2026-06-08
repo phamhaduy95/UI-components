@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconValve from '@/assets/palettes/AOGs/valve.svg';
+	import IconValve from '@/assets/palettes/industrial/valve.svg';
 
 	const props = defineProps<BaseNodePaletteProps>();
 </script>
