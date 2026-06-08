@@ -12,7 +12,11 @@
 	import { useNodeConfig } from '@/modules/designer/composables/useNodeConfig';
 	import { defaultNodeData } from '@/modules/designer/constant/default';
 	import { useTagsStore } from '@/modules/designer/composables/useTagsStore';
-	import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
+	import {
+		type BasicShapeNodeData,
+		type FormFieldNodeData,
+		NodeType
+	} from '@/modules/designer/types/Node.type';
 
 	type NumberInputProps = ComponentInstance<typeof NumberInput>['$props'];
 	type SingleSliderProps = ComponentInstance<typeof SingleSlider>['$props'];
@@ -91,6 +95,15 @@
 
 	const handleZIndexChange: NumberInputProps['onValueChange'] = (value) => {
 		updateNodeBasicProps({ zIndex: value ?? 0 });
+	};
+
+	const progressBarValue = computed(() => {
+		const data = nodeConfigurableData.value as unknown as FormFieldNodeData;
+		return Number(data.value) || 0;
+	});
+
+	const handleProgressBarValueChange = (value: number) => {
+		updateNodeData<FormFieldNodeData>({ value: value.toString() });
 	};
 </script>
 
@@ -184,6 +197,23 @@
 					@update:model-value="hanldeStrokeWidthChange"
 				/>
 			</div>
+		</div>
+
+		<!-- Progress Bar Settings -->
+		<div
+			v-if="selectedNode?.type === NodeType.ProgressBar"
+			class="space-y-4"
+		>
+			<h3 class="text-sm font-semibold uppercase tracking-wide text-gray-800">Progress Bar</h3>
+			<SingleSlider
+				label="Progress Level"
+				:model-value="progressBarValue"
+				:min="0"
+				:max="100"
+				:step="1"
+				editable
+				@update:model-value="handleProgressBarValueChange"
+			/>
 		</div>
 
 		<!-- Bound Tag -->

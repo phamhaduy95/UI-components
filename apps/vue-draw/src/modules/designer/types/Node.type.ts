@@ -37,6 +37,7 @@ export enum NodeType {
 	Spinner = 'spinner',
 	Checkbox = 'checkbox',
 	RadioGroup = 'radioGroup',
+	ProgressBar = 'progressBar',
 	Table = 'table',
 	Group = 'group',
 	Fan = 'fan',

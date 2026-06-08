@@ -73,6 +73,8 @@ import {
 	CheckboxPalette,
 	RadioGroupNode,
 	RadioGroupPalette,
+	ProgressBarNode,
+	ProgressBarPalette,
 	BitmapNode,
 	BitmapPalette
 } from '@/modules/designer/components';
@@ -320,6 +322,14 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(RadioGroupPalette),
 		nodeComponent: markRaw(RadioGroupNode),
 		label: 'Radio Group'
+	},
+	[NodeType.ProgressBar]: {
+		id: NodeType.ProgressBar,
+		category: NodeCategory.FormField,
+		type: NodeType.ProgressBar,
+		paletteComponent: markRaw(ProgressBarPalette),
+		nodeComponent: markRaw(ProgressBarNode),
+		label: 'Progress Bar'
 	},
 	[NodeType.Table]: {
 		id: NodeType.Table,

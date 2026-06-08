@@ -1,0 +1,9 @@
+<svg class="scada-icon" xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24" fill="none" stroke="gray" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+	<style>
+		.scada-icon * {
+			vector-effect: non-scaling-stroke;
+		}
+	</style>
+	<rect x="2" y="10" width="20" height="4"></rect>
+	<rect x="2" y="10" width="12" height="4" fill="gray" stroke="none"></rect>
+</svg>

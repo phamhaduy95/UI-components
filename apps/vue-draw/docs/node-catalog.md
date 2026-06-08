@@ -36,6 +36,7 @@ This document provides a comprehensive list of all nodes available in the `vue-d
 | **Spinner**       | FormField  | A numeric stepper/spinner input.                 | width: 200px<br>height: 40px                               | width: 30px<br>height: 30px                               |
 | **Checkbox**      | FormField  | A boolean toggle checkbox.                       | width: 30px<br>height: 30px                                | width: 30px<br>height: 30px                               |
 | **RadioGroup**    | FormField  | A mutually exclusive radio button group.         | width: 150px<br>height: 60px                               | width: 30px<br>height: 12px                               |
+| **ProgressBar**   | FormField  | A horizontal bar displaying completion progress. | width: 200px<br>height: 40px                               | width: 30px<br>height: 30px                               |
 | **Table**         | FormField  | A multi-column data table.                       | width: 400px<br>height: auto                               | width: 30px<br>height: 30px                               |
 | **Group**         | Group      | A container node to group multiple other nodes.  | width: 200px<br>height: 200px                              | -                                                         |
 | **Fan**           | Industrial | SCADA asset for a ventilation/exhaust fan.       | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
