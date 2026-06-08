@@ -21,3 +21,4 @@ export * from './SquareNode';
 export * from './LineNode';
 export * from './PolylineNode';
 export * from './CurveNode';
+export * from './ArcNode';
