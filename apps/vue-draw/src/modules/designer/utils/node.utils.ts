@@ -96,19 +96,26 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
 						dimensions: dimensions ?? { width: 30, height: 30 }
 					} as DesignGraphNode;
-				case 'radioGroup':
+				case NodeType.RadioGroup:
 					return {
 						...rest,
 						id: generateNodeId(),
 						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
 						dimensions: dimensions ?? { width: 150, height: 60 }
 					} as DesignGraphNode;
-				case 'bitmap':
+				case NodeType.Bitmap:
 					return {
 						...rest,
 						id: generateNodeId(),
 						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
-						dimensions: dimensions ?? { width: 120, height: 120 }
+						dimensions: dimensions ?? { width: 240, height: 160 }
+					} as DesignGraphNode;
+				case NodeType.TrendChart:
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultNodeData, ...data },
+						dimensions: dimensions ?? { width: 400, height: 240 }
 					} as DesignGraphNode;
 				default:
 					return {

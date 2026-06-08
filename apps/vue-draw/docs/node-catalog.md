@@ -45,3 +45,4 @@ This document provides a comprehensive list of all nodes available in the `vue-d
 | **Valve**         | Industrial | SCADA asset for a control valve.                 | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
 | **Motor**         | Industrial | SCADA asset for an electric motor.               | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
 | **Gauge**         | Industrial | SCADA asset for an analog meter/gauge.           | width: 100px<br>height: 100px                              | width: 30px<br>height: 30px                               |
+| **TrendChart**    | Industrial | Line chart visualization using Echarts.          | width: 360px<br>height: 360px                              | width: 30px<br>height: 30px                               |

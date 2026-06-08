@@ -76,7 +76,9 @@ import {
 	ProgressBarNode,
 	ProgressBarPalette,
 	BitmapNode,
-	BitmapPalette
+	BitmapPalette,
+	TrendChartNode,
+	TrendChartPalette
 } from '@/modules/designer/components';
 
 type NodeTypeConfig = {
@@ -338,6 +340,14 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(TablePalette),
 		nodeComponent: markRaw(TableNode),
 		label: 'Table'
+	},
+	[NodeType.TrendChart]: {
+		id: NodeType.TrendChart,
+		category: NodeCategory.FormField,
+		type: NodeType.TrendChart,
+		paletteComponent: markRaw(TrendChartPalette),
+		nodeComponent: markRaw(TrendChartNode),
+		label: 'Trend Chart'
 	}
 };
 

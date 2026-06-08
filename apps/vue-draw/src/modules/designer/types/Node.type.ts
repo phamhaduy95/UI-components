@@ -46,7 +46,8 @@ export enum NodeType {
 	Valve = 'valve',
 	Motor = 'motor',
 	Gauge = 'gauge',
-	Bitmap = 'bitmap'
+	Bitmap = 'bitmap',
+	TrendChart = 'trendChart'
 }
 
 export interface TagData {
