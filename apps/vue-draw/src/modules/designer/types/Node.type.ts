@@ -49,7 +49,8 @@ export enum NodeType {
 	Gauge = 'gauge',
 	Bitmap = 'bitmap',
 	TrendChart = 'trendChart',
-	Sparkline = 'sparkline'
+	Sparkline = 'sparkline',
+	ScatterPlot = 'scatterPlot'
 }
 
 export interface TagData {

@@ -137,6 +137,13 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						data: { ...defaultNodeData, ...data },
 						dimensions: dimensions ?? { width: 160, height: 100 }
 					} as DesignGraphNode;
+				case NodeType.ScatterPlot:
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultNodeData, ...data },
+						dimensions: dimensions ?? { width: 400, height: 240 }
+					} as DesignGraphNode;
 				default:
 					return {
 						...rest,

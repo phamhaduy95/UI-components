@@ -80,7 +80,9 @@ import {
 	TrendChartNode,
 	TrendChartPalette,
 	SparklineNode,
-	SparklinePalette
+	SparklinePalette,
+	ScatterPlotNode,
+	ScatterPlotPalette
 } from '@/modules/designer/components';
 
 type NodeTypeConfig = {
@@ -361,6 +363,14 @@ export const DataDisplayTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(SparklinePalette),
 		nodeComponent: markRaw(SparklineNode),
 		label: 'Sparkline'
+	},
+	[NodeType.ScatterPlot]: {
+		id: NodeType.ScatterPlot,
+		category: NodeCategory.DataDisplay,
+		type: NodeType.ScatterPlot,
+		paletteComponent: markRaw(ScatterPlotPalette),
+		nodeComponent: markRaw(ScatterPlotNode),
+		label: 'Scatter Plot'
 	}
 };
 
