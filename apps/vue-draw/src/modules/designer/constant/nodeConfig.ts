@@ -91,6 +91,8 @@ import {
 	SparklinePalette,
 	ScatterPlotNode,
 	ScatterPlotPalette,
+	IframeNode,
+	IframePalette,
 	RhombusNode,
 	RhombusPalette
 } from '@/modules/designer/components';
@@ -421,6 +423,14 @@ export const DataDisplayTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(ScatterPlotPalette),
 		nodeComponent: markRaw(ScatterPlotNode),
 		label: 'Scatter Plot'
+	},
+	[NodeType.Iframe]: {
+		id: NodeType.Iframe,
+		category: NodeCategory.DataDisplay,
+		type: NodeType.Iframe,
+		paletteComponent: markRaw(IframePalette),
+		nodeComponent: markRaw(IframeNode),
+		label: 'Iframe'
 	}
 };
 

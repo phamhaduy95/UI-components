@@ -54,7 +54,8 @@ export enum NodeType {
 	Line = 'line',
 	Polyline = 'polyline',
 	Curve = 'curve',
-	Arc = 'arc'
+	Arc = 'arc',
+	Iframe = 'iframe'
 }
 
 export interface TagData {
@@ -91,6 +92,10 @@ export interface GroupNodeData extends BaseNodeData {
 	category: NodeCategory.Group;
 	initialWidth: number;
 	initialHeight: number;
+}
+
+export interface IframeNodeData extends BaseNodeData {
+	src?: string;
 }
 
 export interface TextNodeData extends BaseNodeData {

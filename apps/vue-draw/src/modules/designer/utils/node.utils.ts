@@ -144,6 +144,12 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						data: { ...defaultNodeData, ...data },
 						dimensions: dimensions ?? { width: 400, height: 240 }
 					} as DesignGraphNode;
+				case NodeType.Iframe:
+					return {
+						...rest,
+						id: generateNodeId(),
+						dimensions: dimensions ?? { width: 640, height: 480 }
+					} as DesignGraphNode;
 				default:
 					return {
 						...rest,
