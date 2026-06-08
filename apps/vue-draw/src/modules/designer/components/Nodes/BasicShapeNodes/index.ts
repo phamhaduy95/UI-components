@@ -18,3 +18,4 @@ export * from './HeptagonNode';
 export * from './OctagonNode';
 export * from './NonagonNode';
 export * from './SquareNode';
+export * from './LineNode';

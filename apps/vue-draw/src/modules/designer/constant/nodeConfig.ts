@@ -41,6 +41,8 @@ import {
 	NonagonPalette,
 	SquareNode,
 	SquarePalette,
+	LineNode,
+	LinePalette,
 	TextNode,
 	TextPalette,
 	TextFieldNode,
@@ -82,7 +84,9 @@ import {
 	SparklineNode,
 	SparklinePalette,
 	ScatterPlotNode,
-	ScatterPlotPalette
+	ScatterPlotPalette,
+	RhombusNode,
+	RhombusPalette
 } from '@/modules/designer/components';
 
 type NodeTypeConfig = {
@@ -183,6 +187,22 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(CrossPalette),
 		nodeComponent: markRaw(CrossNode),
 		label: 'Cross'
+	},
+	[NodeType.Rhombus]: {
+		id: NodeType.Rhombus,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Rhombus,
+		paletteComponent: markRaw(RhombusPalette),
+		nodeComponent: markRaw(RhombusNode),
+		label: 'Rhombus'
+	},
+	[NodeType.Line]: {
+		id: NodeType.Line,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Line,
+		paletteComponent: markRaw(LinePalette),
+		nodeComponent: markRaw(LineNode),
+		label: 'Line'
 	},
 	[NodeType.RightArrow]: {
 		id: NodeType.RightArrow,

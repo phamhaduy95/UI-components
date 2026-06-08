@@ -50,7 +50,8 @@ export enum NodeType {
 	Bitmap = 'bitmap',
 	LineChart = 'lineChart',
 	Sparkline = 'sparkline',
-	ScatterPlot = 'scatterPlot'
+	ScatterPlot = 'scatterPlot',
+	Line = 'line'
 }
 
 export interface TagData {
