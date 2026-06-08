@@ -48,7 +48,7 @@ export enum NodeType {
 	Motor = 'motor',
 	Gauge = 'gauge',
 	Bitmap = 'bitmap',
-	TrendChart = 'trendChart',
+	LineChart = 'lineChart',
 	Sparkline = 'sparkline',
 	ScatterPlot = 'scatterPlot'
 }

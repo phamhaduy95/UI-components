@@ -15,9 +15,9 @@
 
 	provide(THEME_KEY, 'light');
 
-	export type TrendChartNodeProps = BaseCanvasNodeProps;
+	export type LineChartNodeProps = BaseCanvasNodeProps;
 
-	const props = defineProps<TrendChartNodeProps>();
+	const props = defineProps<LineChartNodeProps>();
 
 	const generateMockData = () => {
 		const baseTime = new Date('2024-01-01T00:00:00Z').getTime();

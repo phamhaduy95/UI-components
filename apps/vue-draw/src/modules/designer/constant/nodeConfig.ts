@@ -77,8 +77,8 @@ import {
 	ProgressBarPalette,
 	BitmapNode,
 	BitmapPalette,
-	TrendChartNode,
-	TrendChartPalette,
+	LineChartNode,
+	LineChartPalette,
 	SparklineNode,
 	SparklinePalette,
 	ScatterPlotNode,
@@ -348,13 +348,13 @@ export const DataDisplayTypes: Record<string, NodeTypeConfig> = {
 		nodeComponent: markRaw(BitmapNode),
 		label: 'Bitmap'
 	},
-	[NodeType.TrendChart]: {
-		id: NodeType.TrendChart,
+	[NodeType.LineChart]: {
+		id: NodeType.LineChart,
 		category: NodeCategory.DataDisplay,
-		type: NodeType.TrendChart,
-		paletteComponent: markRaw(TrendChartPalette),
-		nodeComponent: markRaw(TrendChartNode),
-		label: 'Trend Chart'
+		type: NodeType.LineChart,
+		paletteComponent: markRaw(LineChartPalette),
+		nodeComponent: markRaw(LineChartNode),
+		label: 'Line Chart'
 	},
 	[NodeType.Sparkline]: {
 		id: NodeType.Sparkline,

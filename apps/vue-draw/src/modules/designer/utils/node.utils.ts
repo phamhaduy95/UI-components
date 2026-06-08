@@ -123,7 +123,7 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						data: { ...defaultNodeData, ...data } as BitmapNodeData,
 						dimensions: dimensions ?? { width: 240, height: 160 }
 					} as DesignGraphNode;
-				case NodeType.TrendChart:
+				case NodeType.LineChart:
 					return {
 						...rest,
 						id: generateNodeId(),
