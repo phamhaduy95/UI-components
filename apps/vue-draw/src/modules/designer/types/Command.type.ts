@@ -1,4 +1,4 @@
-import type { DesignGraphNode, DesignerNodeData } from '@/modules/designer/types/Node.type';
+import type { DesignGraphNode, BaseNodeData } from '@/modules/designer/types/Node.type';
 import type { DesignerEdge, EdgeData } from './Edge.type';
 import type { GraphNode, XYPosition } from '@vue-flow/core';
 
@@ -49,8 +49,8 @@ export interface NodeUpdateEntry {
 }
 export interface NodeUpdateDataEntry {
 	nodeId: string;
-	beforeData: DesignerNodeData;
-	afterData: DesignerNodeData;
+	beforeData: BaseNodeData;
+	afterData: BaseNodeData;
 }
 
 export interface EdgeUpdateDataEntry {

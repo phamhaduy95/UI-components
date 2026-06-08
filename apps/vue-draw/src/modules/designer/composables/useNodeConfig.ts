@@ -1,11 +1,13 @@
 import { ref, toRaw } from 'vue';
 import { defineStore, storeToRefs } from 'pinia';
-import type { DesignerNodeData } from '@/modules/designer/types/Node.type';
-
 import { useNodeCommandFactory } from './useCommandFactory';
 import { useHistory } from './useHistory';
 import type { ConfigurableNodeProps } from '@/modules/designer/types/Command.type';
-import type { DesignGraphNode, BasicShapeNodeData } from '@/modules/designer/types/Node.type';
+import type {
+	DesignGraphNode,
+	BasicShapeNodeData,
+	BaseNodeData
+} from '@/modules/designer/types/Node.type';
 
 type BasicShapNode = DesignGraphNode<BasicShapeNodeData>;
 
@@ -61,12 +63,12 @@ export const useNodeConfig = () => {
 		commit(command);
 	};
 
-	const updateNodeData = (config: Partial<DesignerNodeData>) => {
+	const updateNodeData = <T extends BaseNodeData = BaseNodeData>(config: Partial<T>) => {
 		const node = selectedNode.value;
 		if (!node || !node.data) return;
 
-		const beforeData = structuredClone(toRaw(node.data)) as DesignerNodeData;
-		const afterData = structuredClone(toRaw({ ...beforeData, ...config })) as DesignerNodeData;
+		const beforeData = structuredClone(toRaw(node.data));
+		const afterData = structuredClone(toRaw({ ...beforeData, ...config }));
 
 		const command = createUpdateNodeDataCommand([{ nodeId: node.id, beforeData, afterData }]);
 

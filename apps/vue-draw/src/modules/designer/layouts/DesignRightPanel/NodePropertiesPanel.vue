@@ -12,6 +12,7 @@
 	import { useNodeConfig } from '@/modules/designer/composables/useNodeConfig';
 	import { defaultNodeData } from '@/modules/designer/constant/default';
 	import { useTagsStore } from '@/modules/designer/composables/useTagsStore';
+	import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
 
 	type NumberInputProps = ComponentInstance<typeof NumberInput>['$props'];
 	type SingleSliderProps = ComponentInstance<typeof SingleSlider>['$props'];
@@ -66,19 +67,19 @@
 	};
 
 	const handleFillChange = (value: string) => {
-		updateNodeData({ fill: value });
+		updateNodeData<BasicShapeNodeData>({ fill: value });
 	};
 
 	const handleStrokeChange = (value: string) => {
-		updateNodeData({ stroke: value });
+		updateNodeData<BasicShapeNodeData>({ stroke: value });
 	};
 
 	const hanldeStrokeWidthChange: SingleSliderProps['onUpdate:modelValue'] = (value: number) => {
-		updateNodeData({ strokeWidth: value });
+		updateNodeData<BasicShapeNodeData>({ strokeWidth: value });
 	};
 
 	const handleShowTagChange = (value: boolean) => {
-		updateNodeData({ showTag: value });
+		updateNodeData<BasicShapeNodeData>({ showTag: value });
 	};
 
 	const nodeHidden = computed(() => selectedNode.value?.hidden ?? false);

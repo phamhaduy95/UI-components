@@ -17,7 +17,7 @@
 	import { useResize } from '@/modules/designer/composables/useResize';
 
 	import BaseNodeConnector, { type ConnectorProps } from './BaseNodeConnector.vue';
-	import { NodeCategory, type DesignerNodeData } from '@/modules/designer/types/Node.type.ts';
+	import { NodeCategory, type BaseNodeData } from '@/modules/designer/types/Node.type.ts';
 
 	import {
 		defaultNodeDimensions,
@@ -27,7 +27,7 @@
 
 	import IconRotate from '@assets/toolbar-icons/rotate.svg';
 
-	export interface BaseCanvasNodeProps extends NodeProps<DesignerNodeData> {
+	export interface BaseCanvasNodeProps extends NodeProps<BaseNodeData> {
 		defaultNodeWidth?: number;
 		defaultNodeHeight?: number;
 		keepAspectRatio?: boolean;

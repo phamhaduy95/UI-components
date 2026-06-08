@@ -44,7 +44,8 @@ export enum NodeType {
 	Tank = 'tank',
 	Valve = 'valve',
 	Motor = 'motor',
-	Gauge = 'gauge'
+	Gauge = 'gauge',
+	Bitmap = 'bitmap'
 }
 
 export interface TagData {
@@ -110,15 +111,13 @@ export interface TableNodeData extends BaseNodeData {
 	rotation: number;
 }
 
-export type DesignerNodeData =
-	| BasicShapeNodeData
-	| GroupNodeData
-	| TextNodeData
-	| IndustrialNodeData
-	| FormFieldNodeData
-	| TableNodeData;
+export interface BitmapNodeData extends BaseNodeData {
+	category: NodeCategory.BasicShape;
+	imageUrl?: string;
+	borderRadius?: number;
+}
 
-export type DesignGraphNode<T = DesignerNodeData> = Pick<
+export type DesignGraphNode<T extends BaseNodeData = BaseNodeData> = Pick<
 	GraphNode<T>,
 	| 'style'
 	| 'width'
@@ -136,4 +135,4 @@ export type DesignGraphNode<T = DesignerNodeData> = Pick<
 	| 'computedPosition'
 >;
 
-export type DesignNode<T = DesignerNodeData> = Node<T>;
+export type DesignNode<T extends BaseNodeData = BaseNodeData> = Node<T>;

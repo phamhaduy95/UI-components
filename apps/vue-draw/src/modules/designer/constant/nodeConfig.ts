@@ -72,7 +72,9 @@ import {
 	CheckboxNode,
 	CheckboxPalette,
 	RadioGroupNode,
-	RadioGroupPalette
+	RadioGroupPalette,
+	BitmapNode,
+	BitmapPalette
 } from '@/modules/designer/components';
 
 type NodeTypeConfig = {
@@ -140,6 +142,14 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(StarPalette),
 		nodeComponent: markRaw(StarNode),
 		label: 'Star'
+	},
+	[NodeType.Bitmap]: {
+		id: NodeType.Bitmap,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Bitmap,
+		paletteComponent: markRaw(BitmapPalette),
+		nodeComponent: markRaw(BitmapNode),
+		label: 'Bitmap'
 	},
 	[NodeType.Diamond]: {
 		id: NodeType.Diamond,

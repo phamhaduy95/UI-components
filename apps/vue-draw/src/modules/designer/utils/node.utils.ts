@@ -3,7 +3,7 @@ import {
 	NodeType,
 	type BasicShapeNodeData,
 	type DesignGraphNode,
-	type DesignerNodeData,
+	type BaseNodeData,
 	type GroupNodeData,
 	type TextNodeData,
 	type FormFieldNodeData
@@ -20,7 +20,7 @@ export const generateNodeId = () => `node_${crypto.randomUUID()}`;
 
 type GenerateNodeArg = Omit<Partial<DesignGraphNode>, 'id' | 'data' | 'dimensions'> & {
 	dimensions?: Dimensions;
-	data?: Partial<DesignerNodeData>;
+	data?: Partial<BaseNodeData>;
 };
 
 const basicShapeDimensions: Dimensions = { width: 100, height: 100 };
@@ -56,7 +56,8 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 			return {
 				...rest,
 				id: generateNodeId(),
-				data: { ...defaultGroupData, ...data } as GroupNodeData
+				data: { ...defaultGroupData, ...data } as GroupNodeData,
+				dimensions: dimensions ?? structuredClone(basicShapeDimensions)
 			} as DesignGraphNode;
 		case NodeCategory.FormField:
 			switch (rest.type) {
