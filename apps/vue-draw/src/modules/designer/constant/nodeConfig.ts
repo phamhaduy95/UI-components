@@ -78,7 +78,9 @@ import {
 	BitmapNode,
 	BitmapPalette,
 	TrendChartNode,
-	TrendChartPalette
+	TrendChartPalette,
+	SparklineNode,
+	SparklinePalette
 } from '@/modules/designer/components';
 
 type NodeTypeConfig = {
@@ -348,6 +350,14 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(TrendChartPalette),
 		nodeComponent: markRaw(TrendChartNode),
 		label: 'Trend Chart'
+	},
+	[NodeType.Sparkline]: {
+		id: NodeType.Sparkline,
+		category: NodeCategory.FormField,
+		type: NodeType.Sparkline,
+		paletteComponent: markRaw(SparklinePalette),
+		nodeComponent: markRaw(SparklineNode),
+		label: 'Sparkline'
 	}
 };
 

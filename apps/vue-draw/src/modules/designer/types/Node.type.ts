@@ -47,7 +47,8 @@ export enum NodeType {
 	Motor = 'motor',
 	Gauge = 'gauge',
 	Bitmap = 'bitmap',
-	TrendChart = 'trendChart'
+	TrendChart = 'trendChart',
+	Sparkline = 'sparkline'
 }
 
 export interface TagData {

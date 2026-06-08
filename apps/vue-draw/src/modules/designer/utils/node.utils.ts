@@ -117,6 +117,14 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						data: { ...defaultNodeData, ...data },
 						dimensions: dimensions ?? { width: 400, height: 240 }
 					} as DesignGraphNode;
+
+				case NodeType.Sparkline:
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultNodeData, ...data },
+						dimensions: dimensions ?? { width: 160, height: 100 }
+					} as DesignGraphNode;
 				default:
 					return {
 						...rest,
@@ -126,12 +134,15 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 					} as DesignGraphNode;
 			}
 		case NodeCategory.Industrial:
-			return {
-				...rest,
-				id: generateNodeId(),
-				data: { ...defaultNodeData, ...data } as BasicShapeNodeData,
-				dimensions: dimensions ?? structuredClone(basicShapeDimensions)
-			} as DesignGraphNode;
+			switch (rest.type) {
+				default:
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultNodeData, ...data } as BasicShapeNodeData,
+						dimensions: dimensions ?? structuredClone(basicShapeDimensions)
+					} as DesignGraphNode;
+			}
 		default:
 			throw new Error(`Unknown node category: ${data?.category}`);
 	}

@@ -1,0 +1,8 @@
+<svg class="scada-icon" xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24" fill="none" stroke="gray" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+	<style>
+		.scada-icon * {
+			vector-effect: non-scaling-stroke;
+		}
+	</style>
+	<path d="M2 16 L6 10 L10 14 L16 6 L22 8"></path>
+</svg>
