@@ -3,10 +3,12 @@ import {
 	NodeType,
 	type BasicShapeNodeData,
 	type DesignGraphNode,
-	type BaseNodeData,
 	type GroupNodeData,
 	type TextNodeData,
-	type FormFieldNodeData
+	type FormFieldNodeData,
+	type BitmapNodeData,
+	type TableNodeData,
+	type BaseNodeData
 } from '@/modules/designer/types/Node.type';
 import {
 	defaultNodeData,
@@ -68,20 +70,7 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						data: { ...defaultTextData, ...data } as TextNodeData,
 						dimensions: dimensions ?? structuredClone(textDimensions)
 					} as DesignGraphNode;
-				case 'table':
-					return {
-						...rest,
-						id: generateNodeId(),
-						data: { ...defaultFormFieldData, ...data },
-						dimensions: {
-							width: 400,
-							height: 0
-						},
-						style: {
-							width: 'max-content',
-							height: 'max-content'
-						}
-					} as DesignGraphNode;
+
 				case 'button':
 					return {
 						...rest,
@@ -103,11 +92,35 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
 						dimensions: dimensions ?? { width: 150, height: 60 }
 					} as DesignGraphNode;
-				case NodeType.Bitmap:
+				default:
 					return {
 						...rest,
 						id: generateNodeId(),
 						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
+						dimensions: dimensions ?? structuredClone(textFieldDimensions)
+					} as DesignGraphNode;
+			}
+		case NodeCategory.DataDisplay:
+			switch (rest.type) {
+				case NodeType.Table:
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultNodeData, ...data } as TableNodeData,
+						dimensions: dimensions ?? {
+							width: 400,
+							height: 0
+						},
+						style: {
+							width: 'max-content',
+							height: 'max-content'
+						}
+					} as DesignGraphNode;
+				case NodeType.Bitmap:
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultNodeData, ...data } as BitmapNodeData,
 						dimensions: dimensions ?? { width: 240, height: 160 }
 					} as DesignGraphNode;
 				case NodeType.TrendChart:
@@ -117,7 +130,6 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						data: { ...defaultNodeData, ...data },
 						dimensions: dimensions ?? { width: 400, height: 240 }
 					} as DesignGraphNode;
-
 				case NodeType.Sparkline:
 					return {
 						...rest,
@@ -129,8 +141,8 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 					return {
 						...rest,
 						id: generateNodeId(),
-						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
-						dimensions: dimensions ?? structuredClone(textFieldDimensions)
+						data: { ...defaultNodeData, ...data },
+						dimensions: dimensions ?? { width: 200, height: 200 }
 					} as DesignGraphNode;
 			}
 		case NodeCategory.Industrial:

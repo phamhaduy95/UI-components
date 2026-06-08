@@ -7,5 +7,4 @@ export * from './ButtonNode';
 export * from './SpinnerNode';
 export * from './CheckboxNode';
 export * from './RadioGroupNode';
-export * from './TableNode';
 export * from './ProgressBarNode';

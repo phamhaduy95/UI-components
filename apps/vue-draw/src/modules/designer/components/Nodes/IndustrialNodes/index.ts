@@ -4,5 +4,3 @@ export * from './TankNode';
 export * from './ValveNode';
 export * from './MotorNode';
 export * from './GaugeNode';
-export * from './TrendChartNode';
-export * from './SparklineNode';

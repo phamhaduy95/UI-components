@@ -4,7 +4,8 @@ export enum NodeCategory {
 	BasicShape = 'basic-shape',
 	Group = 'group',
 	FormField = 'form-field',
-	Industrial = 'industrial'
+	Industrial = 'industrial',
+	DataDisplay = 'data-display'
 }
 
 export enum NodeType {
@@ -110,12 +111,12 @@ export interface FormFieldNodeData extends BaseNodeData {
 }
 
 export interface TableNodeData extends BaseNodeData {
-	category: NodeCategory.FormField;
+	category: NodeCategory.DataDisplay;
 	rotation: number;
 }
 
 export interface BitmapNodeData extends BaseNodeData {
-	category: NodeCategory.BasicShape;
+	category: NodeCategory.DataDisplay;
 	imageUrl?: string;
 	borderRadius?: number;
 }

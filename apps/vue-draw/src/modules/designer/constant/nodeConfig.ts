@@ -149,14 +149,6 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		nodeComponent: markRaw(StarNode),
 		label: 'Star'
 	},
-	[NodeType.Bitmap]: {
-		id: NodeType.Bitmap,
-		category: NodeCategory.FormField,
-		type: NodeType.Bitmap,
-		paletteComponent: markRaw(BitmapPalette),
-		nodeComponent: markRaw(BitmapNode),
-		label: 'Bitmap'
-	},
 	[NodeType.Diamond]: {
 		id: NodeType.Diamond,
 		category: NodeCategory.BasicShape,
@@ -334,18 +326,29 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(ProgressBarPalette),
 		nodeComponent: markRaw(ProgressBarNode),
 		label: 'Progress Bar'
-	},
+	}
+};
+
+export const DataDisplayTypes: Record<string, NodeTypeConfig> = {
 	[NodeType.Table]: {
 		id: NodeType.Table,
-		category: NodeCategory.FormField,
+		category: NodeCategory.DataDisplay,
 		type: NodeType.Table,
 		paletteComponent: markRaw(TablePalette),
 		nodeComponent: markRaw(TableNode),
 		label: 'Table'
 	},
+	[NodeType.Bitmap]: {
+		id: NodeType.Bitmap,
+		category: NodeCategory.DataDisplay,
+		type: NodeType.Bitmap,
+		paletteComponent: markRaw(BitmapPalette),
+		nodeComponent: markRaw(BitmapNode),
+		label: 'Bitmap'
+	},
 	[NodeType.TrendChart]: {
 		id: NodeType.TrendChart,
-		category: NodeCategory.FormField,
+		category: NodeCategory.DataDisplay,
 		type: NodeType.TrendChart,
 		paletteComponent: markRaw(TrendChartPalette),
 		nodeComponent: markRaw(TrendChartNode),
@@ -353,7 +356,7 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 	},
 	[NodeType.Sparkline]: {
 		id: NodeType.Sparkline,
-		category: NodeCategory.FormField,
+		category: NodeCategory.DataDisplay,
 		type: NodeType.Sparkline,
 		paletteComponent: markRaw(SparklinePalette),
 		nodeComponent: markRaw(SparklineNode),
@@ -425,5 +428,6 @@ export const IndustrialEquipmentTypes: Record<string, NodeTypeConfig> = {
 export const nodeConfigMap: Record<string, NodeTypeConfig> = {
 	...BasicShapeTypes,
 	...IndustrialEquipmentTypes,
+	...DataDisplayTypes,
 	...GroupNodeTypes
 };

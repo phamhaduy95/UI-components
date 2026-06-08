@@ -1,5 +1,5 @@
 export * from './BaseNode';
-export * from './BitmapNode';
+export * from './DataDisplayNodes';
 export * from './GroupNode';
 export * from './BasicShapeNodes';
 export * from './FormFieldNodes';
