@@ -45,6 +45,8 @@ import {
 	LinePalette,
 	PolylineNode,
 	PolylinePalette,
+	CurveNode,
+	CurvePalette,
 	TextNode,
 	TextPalette,
 	TextFieldNode,
@@ -213,6 +215,14 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		paletteComponent: markRaw(PolylinePalette),
 		nodeComponent: markRaw(PolylineNode),
 		label: 'Polyline'
+	},
+	[NodeType.Curve]: {
+		id: NodeType.Curve,
+		category: NodeCategory.BasicShape,
+		type: NodeType.Curve,
+		paletteComponent: markRaw(CurvePalette),
+		nodeComponent: markRaw(CurveNode),
+		label: 'Curve'
 	},
 	[NodeType.RightArrow]: {
 		id: NodeType.RightArrow,

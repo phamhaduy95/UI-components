@@ -52,7 +52,8 @@ export enum NodeType {
 	Sparkline = 'sparkline',
 	ScatterPlot = 'scatterPlot',
 	Line = 'line',
-	Polyline = 'polyline'
+	Polyline = 'polyline',
+	Curve = 'curve'
 }
 
 export interface TagData {

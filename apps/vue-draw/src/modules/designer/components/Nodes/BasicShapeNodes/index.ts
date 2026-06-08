@@ -20,3 +20,4 @@ export * from './NonagonNode';
 export * from './SquareNode';
 export * from './LineNode';
 export * from './PolylineNode';
+export * from './CurveNode';
