@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconTrendChart from '@/assets/palettes/industrial/trend-chart.svg';
+	import IconTrendChart from '@/assets/palettes/data-display/trend-chart.svg';
 
 	const props = defineProps<BaseNodePaletteProps>();
 </script>

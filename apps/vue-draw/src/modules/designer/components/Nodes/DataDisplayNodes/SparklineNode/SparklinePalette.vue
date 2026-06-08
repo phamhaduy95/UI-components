@@ -5,7 +5,7 @@
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 
-	import IconSparkline from '@/assets/palettes/form-fields/sparkline.svg';
+	import IconSparkline from '@/assets/palettes/data-display/sparkline.svg';
 
 	const props = defineProps<BaseNodePaletteProps>();
 </script>

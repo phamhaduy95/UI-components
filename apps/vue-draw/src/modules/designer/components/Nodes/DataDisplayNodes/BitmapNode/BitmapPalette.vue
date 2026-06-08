@@ -4,7 +4,7 @@
 		type BaseNodePaletteProps
 	} from '@/modules/designer/components/Nodes/BaseNode';
 	import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
-	import IconBitmap from '@/assets/palettes/form-fields/bitmap.svg';
+	import IconBitmap from '@/assets/palettes/data-display/bitmap.svg';
 
 	const props = defineProps<BaseNodePaletteProps>();
 </script>

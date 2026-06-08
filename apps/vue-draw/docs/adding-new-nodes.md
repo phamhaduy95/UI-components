@@ -6,7 +6,7 @@ Adding a new drag-and-drop node to the `vue-draw` designer involves a standardiz
 
 First, create an SVG icon that will represent your node in the left-hand palette.
 
-- Save the SVG in the appropriate folder under `src/assets/palettes/` (e.g., `basic-shapes/`, `AOGs/`, `form-fields/`).
+- Save the SVG in the appropriate folder under `src/assets/palettes/` (e.g., `basic-shapes/`, `industrial/`, `form-fields/`, `data-display/`).
 - **Important**: To ensure your SVG strokes don't distort when the node is scaled on the canvas, ensure your SVG includes the `scada-icon` class which applies `vector-effect: non-scaling-stroke`.
 
 Example (`src/assets/palettes/basic-shapes/my-shape.svg`):
@@ -31,7 +31,7 @@ export enum NodeType {
 
 ## 3. Create the Node Components
 
-Create a new directory for your node under `src/modules/designer/components/Nodes/` (e.g., `MyShapeNode/`). Inside this folder, you will need three files:
+Create a new directory for your node under `src/modules/designer/components/Nodes/` in the appropriate category folder (e.g., `BasicShapeNodes/MyShapeNode/`). Inside this folder, you will need three files:
 
 ### A. The Palette Component (`MyShapePalette.vue`)
 
@@ -39,19 +39,22 @@ This defines how the node looks in the drag-and-drop sidebar.
 
 ```vue
 <script setup lang="ts">
-import { GenericNodePalette, type GenericNodePaletteProps } from '../GenericNode';
+import {
+	BaseNodePalette,
+	type BaseNodePaletteProps
+} from '@/modules/designer/components/Nodes/BaseNode';
 import { NodeCategory, NodeType } from '@/modules/designer/types/Node.type';
 import IconMyShape from '@/assets/palettes/basic-shapes/my-shape.svg';
 
-const props = defineProps<GenericNodePaletteProps>();
+const props = defineProps<BaseNodePaletteProps>();
 </script>
 
 <template>
-	<GenericNodePalette v-bind="props" :category="NodeCategory.BasicShape" :type="NodeType.MyShape">
+	<BaseNodePalette v-bind="props" :category="NodeCategory.BasicShape" :type="NodeType.MyShape">
 		<template #icon>
 			<IconMyShape />
 		</template>
-	</GenericNodePalette>
+	</BaseNodePalette>
 </template>
 ```
 
@@ -63,14 +66,14 @@ This defines how the node is rendered and interacted with on the Vue Flow canvas
 <script setup lang="ts">
 import { computed } from 'vue';
 import {
-	GenericCanvasNode,
-	type GenericCanvasNodeProps,
-	GenericNodeConnector
-} from '../GenericNode';
+	BaseCanvasNode,
+	type BaseCanvasNodeProps,
+	BaseNodeConnector
+} from '@/modules/designer/components/Nodes/BaseNode';
 import type { BasicShapeNodeData } from '@/modules/designer/types/Node.type';
 import { Position } from '@vue-flow/core';
 
-const props = defineProps<GenericCanvasNodeProps>();
+const props = defineProps<BaseCanvasNodeProps>();
 const nodeConfig = computed(() => props.data as BasicShapeNodeData);
 
 // Define your scalable SVG path logic here based on props.dimensions
@@ -83,7 +86,7 @@ const connectors = computed(() => [
 </script>
 
 <template>
-	<GenericCanvasNode v-bind="props">
+	<BaseCanvasNode v-bind="props">
 		<template #default="{ shapeHeight, shapeWidth }">
 			<!-- Your scalable shape rendering -->
 			<svg :viewBox="`0 0 ${shapeWidth} ${shapeHeight}`" overflow="visible">
@@ -91,9 +94,9 @@ const connectors = computed(() => [
 			</svg>
 		</template>
 		<template #connector="connectorProps">
-			<GenericNodeConnector :path="path" v-bind="connectorProps" :connectors="connectors" />
+			<BaseNodeConnector :path="path" v-bind="connectorProps" :connectors="connectors" />
 		</template>
-	</GenericCanvasNode>
+	</BaseCanvasNode>
 </template>
 ```
 
@@ -108,8 +111,8 @@ export { default as MyShapePalette } from './MyShapePalette.vue';
 
 ## 4. Export the Node Globally
 
-Add an export for your new node directory in the global Nodes index.
-**File:** `src/modules/designer/components/Nodes/index.ts`
+Add an export for your new node directory in the corresponding category index.
+**File:** `src/modules/designer/components/Nodes/BasicShapeNodes/index.ts` (or `DataDisplayNodes/index.ts`, etc.)
 
 ```typescript
 export * from './MyShapeNode';
@@ -117,13 +120,13 @@ export * from './MyShapeNode';
 
 ## 5. Register the Node Configuration
 
-Finally, register the node in the designer's central configuration map so the application knows how to instantiate it when dropped onto the canvas.
+Register the node in the designer's central configuration map so the application knows how to instantiate it when dropped onto the canvas.
 **File:** `src/modules/designer/constant/nodeConfig.ts`
 
 ```typescript
 import { MyShapeNode, MyShapePalette } from '@/modules/designer/components';
 
-// Add to the appropriate category record (e.g., BasicShapeTypes, IndustrialEquipmentTypes)
+// Add to the appropriate category record (e.g., BasicShapeTypes, DataDisplayTypes)
 const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 	// ...
 	[NodeType.MyShape]: {
@@ -137,4 +140,29 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 };
 ```
 
-Once registered, your new node will automatically appear in the designer palette, support drag-and-drop, and hook directly into the canvas engine!
+## 6. Add Node Initialization Logic
+
+Finally, you must define the default data and dimensions for your node when it is first generated.
+**File:** `src/modules/designer/utils/node.utils.ts`
+
+```typescript
+export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => {
+	switch (data?.category) {
+		case NodeCategory.BasicShape: {
+			// ...
+			switch (rest.type) {
+				case NodeType.MyShape:
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultNodeData, ...data } as BasicShapeNodeData,
+						dimensions: dimensions ?? { width: 120, height: 120 }
+					} as DesignGraphNode;
+				// ...
+			}
+		}
+	}
+};
+```
+
+Once registered and initialized, your new node will automatically appear in the designer palette, support drag-and-drop, and hook directly into the canvas engine!
