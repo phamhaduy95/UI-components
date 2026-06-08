@@ -1,0 +1,146 @@
+.ProgressBar {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-xs, 4px);
+	width: 100%;
+}
+
+.ProgressBar_Header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.ProgressBar_Label {
+	font-size: var(--text-sm);
+	font-weight: 500;
+	color: var(--color-on-surface);
+}
+
+.ProgressBar_ValueText {
+	font-size: var(--text-sm);
+	color: var(--color-on-surface-variant);
+	font-variant-numeric: tabular-nums;
+}
+
+.ProgressBar_Track {
+	background-color: var(--color-surface-variant);
+	border-radius: var(--radius-full);
+	overflow: hidden;
+}
+
+.ProgressBar_Range {
+	background-color: var(--color-primary);
+	border-radius: var(--radius-full);
+	transition:
+		width 0.2s ease-in-out,
+		height 0.2s ease-in-out;
+}
+
+/* Orientation */
+.ProgressBar--orientation-horizontal .ProgressBar_Track {
+	width: 100%;
+}
+
+.ProgressBar--orientation-horizontal .ProgressBar_Range {
+	height: 100%;
+}
+
+.ProgressBar--orientation-vertical {
+	height: 100%;
+	align-items: center;
+}
+
+.ProgressBar--orientation-vertical .ProgressBar_Track {
+	height: 100%;
+	display: flex;
+	align-items: flex-end;
+}
+
+.ProgressBar--orientation-vertical .ProgressBar_Range {
+	width: 100%;
+}
+
+/* Sizes (Horizontal) */
+.ProgressBar--size-sm.ProgressBar--orientation-horizontal .ProgressBar_Track {
+	height: 4px;
+}
+
+.ProgressBar--size-md.ProgressBar--orientation-horizontal .ProgressBar_Track {
+	height: 8px;
+}
+
+.ProgressBar--size-lg.ProgressBar--orientation-horizontal .ProgressBar_Track {
+	height: 12px;
+}
+
+/* Sizes (Vertical) */
+.ProgressBar--size-sm.ProgressBar--orientation-vertical .ProgressBar_Track {
+	width: 4px;
+}
+
+.ProgressBar--size-md.ProgressBar--orientation-vertical .ProgressBar_Track {
+	width: 8px;
+}
+
+.ProgressBar--size-lg.ProgressBar--orientation-vertical .ProgressBar_Track {
+	width: 12px;
+}
+
+/* Indeterminate Animation */
+.ProgressBar[data-state='indeterminate'] .ProgressBar_Range {
+	width: 100%;
+	animation: indeterminate_progress 1.5s infinite linear;
+	transform-origin: 0% 50%;
+}
+
+.ProgressBar[data-state='indeterminate'].ProgressBar--orientation-vertical .ProgressBar_Range {
+	height: 100%;
+	animation: indeterminate_progress_vertical 1.5s infinite linear;
+	transform-origin: 50% 100%;
+}
+
+@keyframes indeterminate_progress {
+	0% {
+		transform: translateX(0) scaleX(0);
+	}
+	40% {
+		transform: translateX(0) scaleX(0.4);
+	}
+	100% {
+		transform: translateX(100%) scaleX(0.5);
+	}
+}
+
+@keyframes indeterminate_progress_vertical {
+	0% {
+		transform: translateY(0) scaleY(0);
+	}
+	40% {
+		transform: translateY(0) scaleY(0.4);
+	}
+	100% {
+		transform: translateY(-100%) scaleY(0.5);
+	}
+}
+
+/* Colors */
+.ProgressBar--color-primary .ProgressBar_Range {
+	background-color: var(--color-primary);
+}
+
+.ProgressBar--color-secondary .ProgressBar_Range {
+	background-color: var(--color-secondary);
+}
+
+.ProgressBar--color-error .ProgressBar_Range {
+	background-color: var(--color-error);
+}
+
+.ProgressBar--color-warning .ProgressBar_Range {
+	background-color: var(--color-warning);
+}
+
+.ProgressBar--color-success .ProgressBar_Range {
+	background-color: var(--color-success);
+}
