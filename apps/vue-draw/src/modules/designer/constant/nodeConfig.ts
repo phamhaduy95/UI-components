@@ -145,7 +145,7 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 	},
 	[NodeType.Bitmap]: {
 		id: NodeType.Bitmap,
-		category: NodeCategory.BasicShape,
+		category: NodeCategory.FormField,
 		type: NodeType.Bitmap,
 		paletteComponent: markRaw(BitmapPalette),
 		nodeComponent: markRaw(BitmapNode),

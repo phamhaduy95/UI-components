@@ -103,6 +103,13 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
 						dimensions: dimensions ?? { width: 150, height: 60 }
 					} as DesignGraphNode;
+				case 'bitmap':
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
+						dimensions: dimensions ?? { width: 120, height: 120 }
+					} as DesignGraphNode;
 				default:
 					return {
 						...rest,
