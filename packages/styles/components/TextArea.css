@@ -1,0 +1,28 @@
+.TextArea .BaseField_Field {
+	height: auto;
+	min-height: calc(var(--field-height) * 2);
+	align-items: flex-start;
+}
+
+.TextArea_Input {
+	width: 100%;
+	min-height: 100%;
+	padding-inline: var(--field-padding-inline);
+	padding-block: var(--field-padding-block);
+	caret-color: var(--color-primary);
+	background: transparent;
+	border: none;
+	resize: vertical;
+	font-family: inherit;
+	&:focus {
+		outline-style: none;
+	}
+}
+
+.TextArea .BaseField_Field[data-clearable='true'] > .TextArea_Input {
+	padding-right: 8px;
+}
+
+.TextArea .BaseField_Field > .BaseField_Trailing {
+	margin-top: calc(var(--field-padding-block) - 4px);
+}
