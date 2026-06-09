@@ -53,6 +53,8 @@ import {
 	TextPalette,
 	TextFieldNode,
 	TextFieldPalette,
+	TextAreaNode,
+	TextAreaPalette,
 	DatePickerNode,
 	DatePickerPalette,
 	FanNode,
@@ -315,7 +317,15 @@ const BasicShapeTypes: Record<string, NodeTypeConfig> = {
 		type: NodeType.TextField,
 		paletteComponent: markRaw(TextFieldPalette),
 		nodeComponent: markRaw(TextFieldNode),
-		label: 'TextField'
+		label: 'Text Field'
+	},
+	[NodeType.TextArea]: {
+		id: NodeType.TextArea,
+		category: NodeCategory.FormField,
+		type: NodeType.TextArea,
+		paletteComponent: markRaw(TextAreaPalette),
+		nodeComponent: markRaw(TextAreaNode),
+		label: 'Text Area'
 	},
 	[NodeType.DatePicker]: {
 		id: NodeType.DatePicker,

@@ -31,6 +31,7 @@ export enum NodeType {
 	Square = 'square',
 	Text = 'text',
 	TextField = 'textField',
+	TextArea = 'textArea',
 	DatePicker = 'datePicker',
 	Select = 'select',
 	Slider = 'slider',

@@ -92,6 +92,13 @@ export const generateNode = ({ data, dimensions, ...rest }: GenerateNodeArg) => 
 						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
 						dimensions: dimensions ?? { width: 150, height: 60 }
 					} as DesignGraphNode;
+				case NodeType.TextArea:
+					return {
+						...rest,
+						id: generateNodeId(),
+						data: { ...defaultFormFieldData, ...data } as FormFieldNodeData,
+						dimensions: dimensions ?? { width: 250, height: 100 }
+					} as DesignGraphNode;
 				default:
 					return {
 						...rest,

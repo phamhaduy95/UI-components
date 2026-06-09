@@ -1,4 +1,5 @@
 export * from './TextNode';
+export * from './TextAreaNode';
 export * from './TextFieldNode';
 export * from './DatePickerNode';
 export * from './SelectNode';
