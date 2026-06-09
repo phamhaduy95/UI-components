@@ -35,3 +35,4 @@ export * from './SingleSlider';
 export * from './ColorPicker';
 export * from './RadioGroup';
 export * from './ProgressBar';
+export * from './TextArea';
