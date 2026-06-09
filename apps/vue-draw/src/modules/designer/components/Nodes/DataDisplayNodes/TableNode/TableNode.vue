@@ -9,40 +9,41 @@
 
 	const props = defineProps<TableNodeProps>();
 
-	type MockData = {
-		id: number;
-		name: string;
-		status: string;
+	type RowData = {
+		id: string;
+		col1: string;
+		col2: string;
+		col3: string;
 	};
 
-	const mockColumns: DataTableColumn<MockData>[] = [
+	const columns: DataTableColumn<RowData>[] = [
 		{
-			id: 'id',
-			header: 'ID',
-			cell: (_, data: MockData) => String(data.id),
+			id: 'col1',
+			header: 'Column 1',
+			cell: (_, data) => data.col1,
 			type: 'data',
-			field: 'id'
+			field: 'col1'
 		},
 		{
-			id: 'name',
-			header: 'Name',
-			cell: (_, data: MockData) => String(data.name),
+			id: 'col2',
+			header: 'Column 2',
+			cell: (_, data) => data.col2,
 			type: 'data',
-			field: 'name'
+			field: 'col2'
 		},
 		{
-			id: 'status',
-			header: 'Status',
-			cell: (_, data: MockData) => String(data.status),
+			id: 'col3',
+			header: 'Column 3',
+			cell: (_, data) => data.col3,
 			type: 'data',
-			field: 'status'
+			field: 'col3'
 		}
 	];
 
-	const mockData: MockData[] = [
-		{ id: 1, name: 'Item 1', status: 'Active' },
-		{ id: 2, name: 'Item 2', status: 'Inactive' },
-		{ id: 3, name: 'Item 3', status: 'Pending' }
+	const defaultData: RowData[] = [
+		{ id: '1', col1: '', col2: '', col3: '' },
+		{ id: '2', col1: '', col2: '', col3: '' },
+		{ id: '3', col1: '', col2: '', col3: '' }
 	];
 
 	const onKeyDown = (e: KeyboardEvent) => {
@@ -61,8 +62,8 @@
 				@keydown="onKeyDown"
 			>
 				<DataTable
-					:columns="mockColumns"
-					:data="mockData"
+					:columns="columns"
+					:data="defaultData"
 					data-key="id"
 				/>
 			</div>
