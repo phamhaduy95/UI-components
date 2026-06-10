@@ -1,4 +1,5 @@
-import type { GraphNode, Node } from '@vue-flow/core';
+import type { Dimensions, GraphNode, Node } from '@vue-flow/core';
+import type { Component } from 'vue';
 
 export enum NodeCategory {
 	BasicShape = 'basic-shape',
@@ -151,3 +152,21 @@ export type DesignGraphNode<T extends BaseNodeData = BaseNodeData> = Pick<
 >;
 
 export type DesignNode<T extends BaseNodeData = BaseNodeData> = Node<T>;
+
+export type GenerateNodeArg<T extends BaseNodeData = BaseNodeData> = Omit<
+	Partial<DesignGraphNode<T>>,
+	'id' | 'data' | 'dimensions'
+> & {
+	dimensions?: Dimensions;
+	data?: Partial<T>;
+};
+
+export type NodeConfiguration<T extends BaseNodeData = BaseNodeData> = {
+	id: string;
+	category: NodeCategory;
+	type: string;
+	label: string;
+	paletteComponent?: Component;
+	nodeComponent: Component;
+	createNode: (arg: GenerateNodeArg<T>) => DesignGraphNode<T>;
+};

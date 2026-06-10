@@ -10,7 +10,7 @@
 		TextInput
 	} from '@packages/vue-components';
 	import { useNodeConfig } from '@/modules/designer/composables/useNodeConfig';
-	import { defaultNodeData } from '@/modules/designer/constant/default';
+	import { defaultBasicShapeNodeData } from '@/modules/designer/constant/default';
 	import { useTagsStore } from '@/modules/designer/composables/useTagsStore';
 	import {
 		type BasicShapeNodeData,
@@ -38,7 +38,9 @@
 		height: Math.round(selectedNode.value?.dimensions?.height ?? 0)
 	}));
 
-	const nodeConfigurableData = computed(() => selectedNode.value?.data || defaultNodeData);
+	const nodeConfigurableData = computed(
+		() => selectedNode.value?.data || defaultBasicShapeNodeData
+	);
 
 	const handleXChange: NumberInputProps['onValueChange'] = (value) => {
 		updateNodeBasicProps({

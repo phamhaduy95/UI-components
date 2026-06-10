@@ -15,7 +15,7 @@ export const defaultNodeDimensions: Readonly<Dimensions> = {
 	height: 64
 };
 
-export const defaultNodeData: Readonly<BasicShapeNodeData> = {
+export const defaultBasicShapeNodeData: Readonly<BasicShapeNodeData> = {
 	category: NodeCategory.BasicShape,
 	rotation: 0,
 	fill: '#ffffff',
