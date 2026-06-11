@@ -3,6 +3,7 @@
 
 	import { Background } from '@vue-flow/background';
 	import { VueFlow, type Connection, type Edge, type NodeComponent } from '@vue-flow/core';
+	import { MiniMap } from '@vue-flow/minimap';
 
 	import { nodeConfigMap } from '@/modules/designer/constant/nodeConfig';
 	import { NodeContextMenu } from './components/Dialog/NodeContextMenu';
@@ -165,13 +166,20 @@
 						:size="canvasConfig.gridSize"
 						:pattern-color="canvasConfig.gridPatternColor"
 					/>
+
 					<template #connection-line="connectionLineProps">
 						<ConnectionLine v-bind="connectionLineProps" />
 					</template>
 					<template #edge-default="edgeProps">
 						<BaseEdge v-bind="edgeProps" />
 					</template>
+
+					<MiniMap
+						pannable
+						zoomable
+					/>
 				</VueFlow>
+
 				<NodeContextMenu
 					v-if="contextMenu.visible"
 					:node-id="contextMenu.nodeId"
