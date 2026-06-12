@@ -1,28 +1,84 @@
+.Collapsible {
+	display: flex;
+	flex-direction: column;
+	overflow: visible;
+	--collapsible-animation-duration: 100ms;
+}
+
+.Collapsible_Trigger {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	cursor: pointer;
+	border: none;
+
+	&:hover {
+		background-color: var(--color-surface-hover);
+	}
+
+	&:active {
+		background-color: var(--color-surface-active);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--color-primary);
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.5;
+		filter: grayscale(100%);
+	}
+}
+
+.Collapsible_Indicator {
+	margin-left: auto;
+
+	transition: transform var(--collapsible-animation-duration) ease-in-out;
+
+	svg {
+		width: var(--icon-size-sm);
+		height: var(--icon-size-sm);
+	}
+
+	&[data-state='open'] {
+		transform: rotate(90deg);
+	}
+}
+
 .Collapsible_Content {
 	overflow: hidden;
 
 	&[data-state='open'] {
-		animation: 0.1s ease-out slideDown;
+		animation: expand var(--collapsible-animation-duration) ease-out;
+		will-change: height, width;
 	}
+
 	&[data-state='closed'] {
-		animation: 0.1s ease-out slideUp;
+		animation: collapse var(--collapsible-animation-duration) ease-in-out;
+		will-change: height, width;
 	}
 }
 
-@keyframes slideDown {
+.Collapsible_Body {
+	padding: 10px;
+}
+
+@keyframes expand {
 	from {
-		height: 0;
+		height: var(--collapsed-height, 0);
 	}
 	to {
-		height: var(--radix-collapsible-content-height);
+		height: var(--height);
 	}
 }
 
-@keyframes slideUp {
+@keyframes collapse {
 	from {
-		height: var(--radix-collapsible-content-height);
+		height: var(--height);
 	}
 	to {
-		height: 0;
+		height: var(--collapsed-height, 0);
 	}
 }
